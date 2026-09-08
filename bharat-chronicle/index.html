@@ -235,6 +235,8 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
 /* ---- epics ---- */
 .epic-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
 @media (max-width:820px){ .epic-grid{grid-template-columns:1fr;} }
+.epic-grid.single{grid-template-columns:1fr;max-width:none;}
+.epic-grid.single .epic-card{max-width:640px;}
 .epic-card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.5rem 1.6rem 1.7rem;box-shadow:var(--shadow);}
 .epic-card h3{font-size:1.25rem;}
 .lineage-note{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin:0.35rem 0 1.3rem;}
@@ -394,7 +396,26 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
       </div>
       <p class="tree-note">Krishna kills his tyrant uncle Kansa, later relocates the Yadavas to Dwarka after Jarasandha's sieges, and elopes with Rukmini before her forced wedding to a rival king. As Arjuna's charioteer at Kurukshetra, his battlefield counsel is recorded as the Bhagavad Gita.</p>
     </div>
+  </div>
 
+  <div class="kx-card">
+    <h3>The Battle of Kurukshetra</h3>
+    <dl class="kx-grid">
+      <div><dt>Cause</dt><dd>Succession dispute between cousins — Duryodhana's refusal to restore the Pandavas' kingdom after their exile.</dd></div>
+      <div><dt>Location</dt><dd>The plain of Kurukshetra, in present-day Haryana.</dd></div>
+      <div><dt>Duration</dt><dd>Eighteen days, fought in successive named formations (vyuha) under a rotating cast of Kaurava commanders.</dd></div>
+      <div><dt>Turning point</dt><dd>Arjuna's crisis of conscience before the battle, resolved by Krishna's counsel — recorded as the Bhagavad Gita.</dd></div>
+      <div><dt>Outcome</dt><dd>The Pandavas prevail; Duryodhana and nearly the entire Kaurava line are killed. Yudhishthira is crowned king of Hastinapura.</dd></div>
+      <div><dt>Aftermath</dt><dd>Traditionally reckoned as the close of Dvapara Yuga and the start of Kali Yuga, the present age.</dd></div>
+    </dl>
+  </div>
+
+  <div class="refs-head">
+    <h2>Purana — the Hindu pantheon</h2>
+    <p>A separate category from the epics above: the Ramayana and Mahabharata are itihasa, narratives about kings and wars fought by (and among) the gods' avatars and descendants. What follows is Puranic cosmology itself — the gods' own lineages, kept here on their own rather than folded into either epic's family tree.</p>
+  </div>
+
+  <div class="epic-grid single">
     <div class="epic-card">
       <h3>The Trimurti &amp; the Goddess</h3>
       <div class="lineage-note">Brahma · the Creator</div>
@@ -414,18 +435,6 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
       </div>
       <p class="tree-note">Kali, Durga and Parvati are traditionally understood as forms of one Goddess (Devi / Shakti) rather than separate individuals: Parvati as Shiva's gentle consort, Durga and the fiercer Kali as her warrior aspects, invoked against demons such as Mahishasura. The three gods above are usually read together as one cosmic function — Brahma creates, Vishnu preserves (descending as an avatar whenever dharma is threatened), Shiva destroys to allow renewal.</p>
     </div>
-  </div>
-
-  <div class="kx-card">
-    <h3>The Battle of Kurukshetra</h3>
-    <dl class="kx-grid">
-      <div><dt>Cause</dt><dd>Succession dispute between cousins — Duryodhana's refusal to restore the Pandavas' kingdom after their exile.</dd></div>
-      <div><dt>Location</dt><dd>The plain of Kurukshetra, in present-day Haryana.</dd></div>
-      <div><dt>Duration</dt><dd>Eighteen days, fought in successive named formations (vyuha) under a rotating cast of Kaurava commanders.</dd></div>
-      <div><dt>Turning point</dt><dd>Arjuna's crisis of conscience before the battle, resolved by Krishna's counsel — recorded as the Bhagavad Gita.</dd></div>
-      <div><dt>Outcome</dt><dd>The Pandavas prevail; Duryodhana and nearly the entire Kaurava line are killed. Yudhishthira is crowned king of Hastinapura.</dd></div>
-      <div><dt>Aftermath</dt><dd>Traditionally reckoned as the close of Dvapara Yuga and the start of Kali Yuga, the present age.</dd></div>
-    </dl>
   </div>
 
   <div class="rail-shell">
