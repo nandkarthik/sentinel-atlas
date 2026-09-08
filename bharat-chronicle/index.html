@@ -247,7 +247,7 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
 .gen::before{content:"";position:absolute;top:0;left:50%;width:1px;height:1.1rem;background:var(--line);}
 .gen.first{padding-top:0;}
 .gen.first::before{display:none;}
-.person{background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:0.4rem 0.65rem;text-align:center;min-width:6.2em;}
+.person{background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:0.4rem 0.65rem;text-align:center;min-width:6.2em;max-width:19em;}
 .person .portrait-link{display:block;margin:0 auto 0.35rem;width:2.4rem;}
 .person .portrait{width:2.4rem;height:2.4rem;border-radius:50%;object-fit:cover;object-position:top center;border:1px solid var(--line);display:block;}
 .person.lead{border-color:var(--accent);}
@@ -260,11 +260,22 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
 .aside b{display:block;color:var(--ink);font-size:0.82rem;font-weight:600;}
 .tree-note{font-size:0.86rem;color:var(--ink-soft);margin-top:1.3rem;line-height:1.55;}
 .temples-head{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin:1.6rem 0 0.7rem;}
-.temple-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
-.temple-list li{font-size:0.82rem;color:var(--ink-soft);line-height:1.45;}
-.temple-list li b{color:var(--ink);font-weight:600;}
-.temple-list a{color:var(--accent-2);text-decoration:none;border-bottom:1px dotted var(--accent-2);}
-.temple-list a:hover{border-bottom-style:solid;}
+.temple-groups{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 2rem;}
+@media (max-width:640px){.temple-groups{grid-template-columns:1fr;}}
+.temple-group{border-top:1px solid var(--line);padding-top:0.55rem;}
+.tg-deity{font-weight:600;font-size:0.85rem;color:var(--ink);}
+.tg-sub{font-size:0.72rem;color:var(--ink-faint);margin:0.15rem 0 0.55rem;line-height:1.35;}
+.temple-group .tg-deity:last-of-type{margin-bottom:0.55rem;}
+.tg-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.55rem;}
+.tg-list li{font-size:0.82rem;color:var(--ink-soft);line-height:1.4;}
+.tg-list a{color:var(--accent-2);text-decoration:none;border-bottom:1px dotted var(--accent-2);}
+.tg-list a:hover{border-bottom-style:solid;}
+.tg-loc{display:block;font-size:0.68rem;color:var(--ink-faint);margin-top:0.1rem;}
+.map-toggle{display:inline-block;margin-left:0.5rem;font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:3px;padding:0.05rem 0.4rem;cursor:pointer;line-height:1.5;vertical-align:1px;}
+.map-toggle:hover{background:var(--accent);color:var(--bg);}
+.tg-map{width:100%;height:0;border:0;border-radius:4px;margin-top:0.4rem;overflow:hidden;transition:height 0.25s ease;}
+.tg-map.open{height:180px;border:1px solid var(--line);}
+.tg-map iframe{width:100%;height:180px;border:0;display:block;}
 
 .kx-card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.5rem 1.6rem;box-shadow:var(--shadow);margin-top:1.5rem;}
 .kx-card h3{font-size:1.25rem;margin-bottom:1.1rem;}
@@ -447,14 +458,64 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
       </div>
       <p class="tree-note">Kali, Durga and Parvati are traditionally understood as forms of one Goddess (Devi / Shakti) rather than separate individuals: Parvati as Shiva's gentle consort, Durga and the fiercer Kali as her warrior aspects, invoked against demons such as Mahishasura. The three gods above are usually read together as one cosmic function — Brahma creates, Vishnu preserves (descending as an avatar whenever dharma is threatened), Shiva destroys to allow renewal. Consort traditions for Ganesha and Kartikeya vary significantly by region and sect; both are shown here rather than picked as the single "correct" version.</p>
       <div class="temples-head">Major temples, by deity</div>
-      <ul class="temple-list">
-        <li><b>Brahma</b> — worshipped in temple ritual only rarely; the principal exception is the <a href="https://www.google.com/maps/search/?api=1&query=Brahma%20Temple%20Pushkar%20Rajasthan" target="_blank" rel="noopener">Brahma Temple, Pushkar, Rajasthan</a>.</li>
-        <li><b>Vishnu</b> — <a href="https://www.google.com/maps/search/?api=1&query=Tirumala%20Venkateswara%20Temple%20Tirupati" target="_blank" rel="noopener">Tirumala Venkateswara Temple, Tirupati, Andhra Pradesh</a>; <a href="https://www.google.com/maps/search/?api=1&query=Guruvayur%20Temple%20Kerala" target="_blank" rel="noopener">Guruvayur Temple, Guruvayur, Kerala</a>; <a href="https://www.google.com/maps/search/?api=1&query=Ranganathaswamy%20Temple%20Srirangam" target="_blank" rel="noopener">Ranganathaswamy Temple, Srirangam, Tamil Nadu</a>; <a href="https://www.google.com/maps/search/?api=1&query=Badrinath%20Temple%20Uttarakhand" target="_blank" rel="noopener">Badrinath Temple, Badrinath, Uttarakhand</a>.</li>
-        <li><b>Shiva</b> — the twelve Jyotirlinga shrines, among them <a href="https://www.google.com/maps/search/?api=1&query=Kashi%20Vishwanath%20Temple%20Varanasi" target="_blank" rel="noopener">Kashi Vishwanath, Varanasi, Uttar Pradesh</a>; <a href="https://www.google.com/maps/search/?api=1&query=Kedarnath%20Temple%20Uttarakhand" target="_blank" rel="noopener">Kedarnath Temple, Kedarnath, Uttarakhand</a>; <a href="https://www.google.com/maps/search/?api=1&query=Somnath%20Temple%20Gujarat" target="_blank" rel="noopener">Somnath Temple, Somnath, Gujarat</a>; and <a href="https://www.google.com/maps/search/?api=1&query=Mahakaleshwar%20Temple%20Ujjain" target="_blank" rel="noopener">Mahakaleshwar Temple, Ujjain, Madhya Pradesh</a>.</li>
-        <li><b>Devi / Shakti</b> (Kali, Durga, Parvati) — the network of Shakti Peetha shrines, among them <a href="https://www.google.com/maps/search/?api=1&query=Kamakhya%20Temple%20Guwahati" target="_blank" rel="noopener">Kamakhya Temple, Guwahati, Assam</a>; <a href="https://www.google.com/maps/search/?api=1&query=Vaishno%20Devi%20Katra" target="_blank" rel="noopener">Vaishno Devi, Katra, Jammu &amp; Kashmir</a>; and <a href="https://www.google.com/maps/search/?api=1&query=Kalighat%20Kali%20Temple%20Kolkata" target="_blank" rel="noopener">Kalighat Kali Temple, Kolkata, West Bengal</a>.</li>
-        <li><b>Ganesha</b> — <a href="https://www.google.com/maps/search/?api=1&query=Siddhivinayak%20Temple%20Mumbai" target="_blank" rel="noopener">Siddhivinayak Temple, Mumbai, Maharashtra</a>; the eight-shrine <a href="https://www.google.com/maps/search/?api=1&query=Ashtavinayak%20temples%20Maharashtra" target="_blank" rel="noopener">Ashtavinayak circuit</a> around Pune, Maharashtra.</li>
-        <li><b>Kartikeya / Murugan</b> — the Arupadai Veedu, his six sacred abodes in Tamil Nadu: <a href="https://www.google.com/maps/search/?api=1&query=Arulmigu%20Dhandayuthapani%20Swamy%20Temple%20Palani" target="_blank" rel="noopener">Palani</a>, <a href="https://www.google.com/maps/search/?api=1&query=Tiruchendur%20Murugan%20Temple" target="_blank" rel="noopener">Tiruchendur</a>, <a href="https://www.google.com/maps/search/?api=1&query=Swaminatha%20Swamy%20Temple%20Swamimalai" target="_blank" rel="noopener">Swamimalai</a> (near Kumbakonam), <a href="https://www.google.com/maps/search/?api=1&query=Tiruttani%20Murugan%20Temple" target="_blank" rel="noopener">Tiruttani</a>, <a href="https://www.google.com/maps/search/?api=1&query=Pazhamudircholai%20Murugan%20Temple" target="_blank" rel="noopener">Pazhamudircholai</a> and <a href="https://www.google.com/maps/search/?api=1&query=Thiruparankundram%20Murugan%20Temple" target="_blank" rel="noopener">Thiruparankundram</a> (near Madurai).</li>
-      </ul>
+      <div class="temple-groups">
+      <div class="temple-group">
+        <div class="tg-deity">Brahma</div>
+        <div class="tg-sub">rarely worshipped in temple ritual</div>
+        <ul class="tg-list">
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Brahma%20Temple%20Pushkar%20Rajasthan" target="_blank" rel="noopener">Brahma Temple</a><span class="tg-loc">Pushkar, Rajasthan</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Brahma%20Temple%20Pushkar%20Rajasthan')">Map</button><div class="tg-map"></div></li>
+        </ul>
+      </div>
+      <div class="temple-group">
+        <div class="tg-deity">Vishnu</div>
+        
+        <ul class="tg-list">
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Tirumala%20Venkateswara%20Temple%20Tirupati" target="_blank" rel="noopener">Tirumala Venkateswara Temple</a><span class="tg-loc">Tirupati, Andhra Pradesh</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Tirumala%20Venkateswara%20Temple%20Tirupati')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Guruvayur%20Temple%20Kerala" target="_blank" rel="noopener">Guruvayur Temple</a><span class="tg-loc">Guruvayur, Kerala</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Guruvayur%20Temple%20Kerala')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Ranganathaswamy%20Temple%20Srirangam" target="_blank" rel="noopener">Ranganathaswamy Temple</a><span class="tg-loc">Srirangam, Tamil Nadu</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Ranganathaswamy%20Temple%20Srirangam')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Badrinath%20Temple%20Uttarakhand" target="_blank" rel="noopener">Badrinath Temple</a><span class="tg-loc">Badrinath, Uttarakhand</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Badrinath%20Temple%20Uttarakhand')">Map</button><div class="tg-map"></div></li>
+        </ul>
+      </div>
+      <div class="temple-group">
+        <div class="tg-deity">Shiva</div>
+        <div class="tg-sub">four of the twelve Jyotirlinga shrines</div>
+        <ul class="tg-list">
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Kashi%20Vishwanath%20Temple%20Varanasi" target="_blank" rel="noopener">Kashi Vishwanath</a><span class="tg-loc">Varanasi, Uttar Pradesh</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Kashi%20Vishwanath%20Temple%20Varanasi')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Kedarnath%20Temple%20Uttarakhand" target="_blank" rel="noopener">Kedarnath Temple</a><span class="tg-loc">Kedarnath, Uttarakhand</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Kedarnath%20Temple%20Uttarakhand')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Somnath%20Temple%20Gujarat" target="_blank" rel="noopener">Somnath Temple</a><span class="tg-loc">Somnath, Gujarat</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Somnath%20Temple%20Gujarat')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Mahakaleshwar%20Temple%20Ujjain" target="_blank" rel="noopener">Mahakaleshwar Temple</a><span class="tg-loc">Ujjain, Madhya Pradesh</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Mahakaleshwar%20Temple%20Ujjain')">Map</button><div class="tg-map"></div></li>
+        </ul>
+      </div>
+      <div class="temple-group">
+        <div class="tg-deity">Devi / Shakti</div>
+        <div class="tg-sub">Kali, Durga, Parvati — three of the Shakti Peetha shrines</div>
+        <ul class="tg-list">
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Kamakhya%20Temple%20Guwahati" target="_blank" rel="noopener">Kamakhya Temple</a><span class="tg-loc">Guwahati, Assam</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Kamakhya%20Temple%20Guwahati')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Vaishno%20Devi%20Katra" target="_blank" rel="noopener">Vaishno Devi</a><span class="tg-loc">Katra, Jammu &amp; Kashmir</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Vaishno%20Devi%20Katra')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Kalighat%20Kali%20Temple%20Kolkata" target="_blank" rel="noopener">Kalighat Kali Temple</a><span class="tg-loc">Kolkata, West Bengal</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Kalighat%20Kali%20Temple%20Kolkata')">Map</button><div class="tg-map"></div></li>
+        </ul>
+      </div>
+      <div class="temple-group">
+        <div class="tg-deity">Ganesha</div>
+        
+        <ul class="tg-list">
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Siddhivinayak%20Temple%20Mumbai" target="_blank" rel="noopener">Siddhivinayak Temple</a><span class="tg-loc">Mumbai, Maharashtra</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Siddhivinayak%20Temple%20Mumbai')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Ashtavinayak%20temples%20Maharashtra" target="_blank" rel="noopener">Ashtavinayak circuit</a><span class="tg-loc">eight shrines around Pune, Maharashtra</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Ashtavinayak%20temples%20Maharashtra')">Map</button><div class="tg-map"></div></li>
+        </ul>
+      </div>
+      <div class="temple-group">
+        <div class="tg-deity">Kartikeya / Murugan</div>
+        <div class="tg-sub">the Arupadai Veedu — his six sacred abodes, Tamil Nadu</div>
+        <ul class="tg-list">
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Arulmigu%20Dhandayuthapani%20Swamy%20Temple%20Palani" target="_blank" rel="noopener">Palani</a><span class="tg-loc">Palani</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Arulmigu%20Dhandayuthapani%20Swamy%20Temple%20Palani')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Tiruchendur%20Murugan%20Temple" target="_blank" rel="noopener">Tiruchendur</a><span class="tg-loc">Tiruchendur</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Tiruchendur%20Murugan%20Temple')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Swaminatha%20Swamy%20Temple%20Swamimalai" target="_blank" rel="noopener">Swamimalai</a><span class="tg-loc">near Kumbakonam</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Swaminatha%20Swamy%20Temple%20Swamimalai')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Tiruttani%20Murugan%20Temple" target="_blank" rel="noopener">Tiruttani</a><span class="tg-loc">Tiruttani</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Tiruttani%20Murugan%20Temple')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Pazhamudircholai%20Murugan%20Temple" target="_blank" rel="noopener">Pazhamudircholai</a><span class="tg-loc">near Madurai</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Pazhamudircholai%20Murugan%20Temple')">Map</button><div class="tg-map"></div></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Thiruparankundram%20Murugan%20Temple" target="_blank" rel="noopener">Thiruparankundram</a><span class="tg-loc">near Madurai</span> <button class="map-toggle" type="button" onclick="toggleMap(this,'Thiruparankundram%20Murugan%20Temple')">Map</button><div class="tg-map"></div></li>
+        </ul>
+      </div>
+      </div>
       <p class="tree-note">This is a short, well-known list rather than an exhaustive one — regional and community traditions across India name many other major temples for each deity. Each temple name links to its location on Google Maps.</p>
     </div>
   </div>
@@ -1029,4 +1090,27 @@ document.getElementById("mode-constitution").addEventListener("click", ()=>{
 renderConstList();
 renderConstReader();
 
+</script>
+
+<script>
+function toggleMap(btn, query){
+  const li = btn.closest("li");
+  const box = li.querySelector(".tg-map");
+  const isOpen = box.classList.contains("open");
+  if (isOpen){
+    box.classList.remove("open");
+    btn.textContent = "Map";
+    return;
+  }
+  if (!box.dataset.loaded){
+    const iframe = document.createElement("iframe");
+    iframe.loading = "lazy";
+    iframe.referrerPolicy = "no-referrer-when-downgrade";
+    iframe.src = "https://www.google.com/maps?q=" + query + "&output=embed";
+    box.appendChild(iframe);
+    box.dataset.loaded = "1";
+  }
+  box.classList.add("open");
+  btn.textContent = "Hide map";
+}
 </script>
