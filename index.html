@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel Atlas</title>
+<meta name="description" content="A small, growing atlas of interactive references — starting in India, built to wander.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%2312161f%22 stroke=%22%23c9a15c%22 stroke-width=%224%22/><line x1=%2250%22 y1=%228%22 x2=%2250%22 y2=%2292%22 stroke=%22%23c9a15c%22 stroke-width=%222%22 opacity=%220.6%22/><line x1=%228%22 y1=%2250%22 x2=%2292%22 y2=%2250%22 stroke=%22%23c9a15c%22 stroke-width=%222%22 opacity=%220.6%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2ede0;
+  --surface:#e9e1cb;
+  --ink:#1c2130;
+  --ink-soft:#5b5d4a;
+  --ink-faint:#8a8770;
+  --line:rgba(28,33,48,0.16);
+  --accent:#8a5a22;
+  --accent-soft:rgba(138,90,34,0.12);
+  --accent-2:#3d5a78;
+  --shadow:0 10px 30px rgba(28,33,48,0.10);
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12161f;
+    --surface:#1a2030;
+    --ink:#e8e2d0;
+    --ink-soft:#9aa3b5;
+    --ink-faint:#69708a;
+    --line:rgba(232,226,208,0.12);
+    --accent:#c9a15c;
+    --accent-soft:rgba(201,161,92,0.14);
+    --accent-2:#7a8fae;
+    --shadow:0 10px 30px rgba(0,0,0,0.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12161f;
+  --surface:#1a2030;
+  --ink:#e8e2d0;
+  --ink-soft:#9aa3b5;
+  --ink-faint:#69708a;
+  --line:rgba(232,226,208,0.12);
+  --accent:#c9a15c;
+  --accent-soft:rgba(201,161,92,0.14);
+  --accent-2:#7a8fae;
+  --shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+*{box-sizing:border-box;}
+html{color-scheme:light dark;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{
+  max-width:900px;
+  margin:0 auto;
+  padding:5.5rem 1.5rem 4rem;
+}
+
+.meridian{
+  position:relative;
+  height:1px;
+  background:var(--line);
+  margin:0 auto 3.2rem;
+  max-width:340px;
+}
+.meridian::before, .meridian::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--accent);
+  transform:translateY(-50%);
+}
+.meridian::before{ left:0; }
+.meridian::after{ right:0; }
+
+header{ text-align:center; }
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 0.9rem;
+}
+h1{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:clamp(2.6rem, 6vw, 4.2rem);
+  letter-spacing:0.04em;
+  margin:0 0 1.1rem;
+  text-wrap:balance;
+}
+.tagline{
+  font-size:1.05rem;
+  line-height:1.65;
+  color:var(--ink-soft);
+  max-width:34rem;
+  margin:0 auto;
+  text-wrap:balance;
+}
+
+.plates{
+  margin-top:4rem;
+  display:grid;
+  gap:1.25rem;
+}
+
+.plate{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:1.5rem;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:1.6rem 1.9rem;
+  box-shadow:var(--shadow);
+  text-decoration:none;
+  color:inherit;
+  transition:transform .16s ease, border-color .16s ease;
+}
+.plate:hover, .plate:focus-visible{
+  transform:translateY(-2px);
+  border-color:var(--accent);
+  outline:none;
+}
+.plate:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+.plate .no{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  color:var(--ink-faint);
+  letter-spacing:0.08em;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+}
+.plate .body h2{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:1.5rem;
+  margin:0 0 0.4rem;
+  letter-spacing:0.01em;
+}
+.plate .body p{
+  margin:0;
+  color:var(--ink-soft);
+  font-size:0.94rem;
+  line-height:1.55;
+  max-width:38rem;
+}
+.plate .meta{
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  color:var(--ink-faint);
+  letter-spacing:0.06em;
+  white-space:nowrap;
+}
+.plate .arrow{
+  font-family:var(--font-mono);
+  color:var(--accent);
+  font-size:1.1rem;
+}
+@media (max-width:640px){
+  .plate{ grid-template-columns:auto 1fr; }
+  .plate .arrow{ display:none; }
+  .plate .no{ writing-mode:horizontal-tb; transform:none; }
+}
+
+footer{
+  margin-top:4.5rem;
+  padding-top:1.8rem;
+  border-top:1px solid var(--line);
+  text-align:center;
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  color:var(--ink-faint);
+  letter-spacing:0.04em;
+}
+footer a{ color:var(--ink-faint); }
+
+@media (prefers-reduced-motion:no-preference){
+  .plate{ transition:transform .16s ease, border-color .16s ease; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Sentinel Atlas</div>
+    <h1>A small atlas,<br>built to wander</h1>
+    <p class="tagline">Interactive references and long-form reading, one region at a time. It starts in India — more territory gets added as it's mapped.</p>
+  </header>
+
+  <div class="meridian"></div>
+
+  <div class="plates">
+    <a class="plate" href="bharat-chronicle/">
+      <span class="no">PLATE&nbsp;I</span>
+      <span class="body">
+        <h2>Bharat Chronicle</h2>
+        <p>An interactive timeline of Indian history, from the Indus Valley to today, alongside the full verbatim text of the Constitution of India — 494 articles and 12 schedules.</p>
+      </span>
+      <span class="meta">INDIA · HISTORY + LAW</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <footer>
+    Sentinel Atlas · maintained by <a href="https://github.com/nandkarthik">nandkarthik</a>
+  </footer>
+
+</div>
+</body>
+</html>
