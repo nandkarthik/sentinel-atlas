@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel Panchangam</title>
+<meta name="description" content="Daily Panchangam for Andhra Pradesh — Tithi, Nakshatra, Yoga, Karana, Vara, sunrise/sunset, and the day's auspicious and inauspicious muhurta windows, computed live for any date.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%23141726%22 stroke=%22%23e08a3f%22 stroke-width=%224%22/><circle cx=%2250%22 cy=%2250%22 r=%2220%22 fill=%22none%22 stroke=%22%23e08a3f%22 stroke-width=%223%22 opacity=%220.85%22/><line x1=%2250%22 y1=%228%22 x2=%2250%22 y2=%2222%22 stroke=%22%23e08a3f%22 stroke-width=%223%22/><line x1=%2250%22 y1=%2278%22 x2=%2250%22 y2=%2292%22 stroke=%22%23e08a3f%22 stroke-width=%223%22/><line x1=%228%22 y1=%2250%22 x2=%2222%22 y2=%2250%22 stroke=%22%23e08a3f%22 stroke-width=%223%22/><line x1=%2278%22 y1=%2250%22 x2=%2292%22 y2=%2250%22 stroke=%22%23e08a3f%22 stroke-width=%223%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf2df;
+  --surface:#f2e6c9;
+  --surface-2:#eaddba;
+  --ink:#201c2c;
+  --ink-soft:#5c5646;
+  --ink-faint:#8d8571;
+  --line:rgba(32,28,44,0.14);
+  --accent:#c1631f;
+  --accent-soft:rgba(193,99,31,0.12);
+  --gold:#a97a24;
+  --green:#2f7d55;
+  --green-soft:rgba(47,125,85,0.12);
+  --maroon:#9c3b3b;
+  --maroon-soft:rgba(156,59,59,0.12);
+  --indigo:#3d5a86;
+  --brown:#7a5230;
+  --shadow:0 10px 30px rgba(32,28,44,0.10);
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141726;
+    --surface:#1c2136;
+    --surface-2:#242a44;
+    --ink:#f0e6cf;
+    --ink-soft:#aca890;
+    --ink-faint:#6f7286;
+    --line:rgba(240,230,207,0.12);
+    --accent:#e08a3f;
+    --accent-soft:rgba(224,138,63,0.16);
+    --gold:#d8b46a;
+    --green:#57b088;
+    --green-soft:rgba(87,176,136,0.14);
+    --maroon:#e0807f;
+    --maroon-soft:rgba(224,128,127,0.14);
+    --indigo:#8aa3d6;
+    --brown:#c99a68;
+    --shadow:0 10px 30px rgba(0,0,0,0.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141726;
+  --surface:#1c2136;
+  --surface-2:#242a44;
+  --ink:#f0e6cf;
+  --ink-soft:#aca890;
+  --ink-faint:#6f7286;
+  --line:rgba(240,230,207,0.12);
+  --accent:#e08a3f;
+  --accent-soft:rgba(224,138,63,0.16);
+  --gold:#d8b46a;
+  --green:#57b088;
+  --green-soft:rgba(87,176,136,0.14);
+  --maroon:#e0807f;
+  --maroon-soft:rgba(224,128,127,0.14);
+  --indigo:#8aa3d6;
+  --brown:#c99a68;
+  --shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+*{box-sizing:border-box;}
+html{color-scheme:light dark;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{
+  max-width:820px;
+  margin:0 auto;
+  padding:4rem 1.5rem 4rem;
+}
+a{ color:var(--accent); }
+
+.backlink{
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  text-decoration:none;
+  margin-bottom:2rem;
+}
+.backlink:hover{ color:var(--accent); }
+
+header{ text-align:center; margin-bottom:2.4rem; }
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 0.9rem;
+}
+h1{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:clamp(2.2rem, 5.5vw, 3.4rem);
+  letter-spacing:0.02em;
+  margin:0 0 1rem;
+  text-wrap:balance;
+}
+.tagline{
+  font-size:1rem;
+  line-height:1.65;
+  color:var(--ink-soft);
+  max-width:34rem;
+  margin:0 auto;
+  text-wrap:balance;
+}
+
+/* controls */
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:0.9rem;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:1rem 1.2rem;
+  box-shadow:var(--shadow);
+  margin-bottom:1.6rem;
+}
+.date-nav{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.icon-btn{
+  width:34px; height:34px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--bg);
+  color:var(--accent);
+  font-family:var(--font-mono);
+  font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.icon-btn:hover{ border-color:var(--accent); transform:translateY(-1px); }
+.icon-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+.date-display{
+  font-family:var(--font-display);
+  font-size:1.05rem;
+  min-width:11rem;
+  text-align:center;
+}
+.today-btn{
+  font-family:var(--font-mono);
+  font-size:0.68rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:var(--accent);
+  background:none;
+  border:1px solid var(--accent);
+  border-radius:6px;
+  padding:0.3rem 0.6rem;
+  cursor:pointer;
+}
+.date-input{
+  font-family:var(--font-mono);
+  font-size:0.75rem;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--bg);
+  color:var(--ink);
+  padding:0.35rem 0.5rem;
+}
+select.city-select{
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--bg);
+  color:var(--ink);
+  padding:0.45rem 0.6rem;
+}
+
+/* snapshot */
+.snapshot{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:1.4rem 1.5rem;
+  box-shadow:var(--shadow);
+  margin-bottom:1.6rem;
+}
+.snapshot-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:0.6rem;
+  margin-bottom:1rem;
+  padding-bottom:1rem;
+  border-bottom:1px solid var(--line);
+}
+.vara{
+  font-family:var(--font-display);
+  font-size:1.3rem;
+}
+.vara .sanskrit{ color:var(--accent); }
+.sun-times{
+  font-family:var(--font-mono);
+  font-size:0.76rem;
+  color:var(--ink-soft);
+  display:flex;
+  gap:1rem;
+}
+.sun-times span b{ color:var(--gold); font-weight:600; }
+.chip-row{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+  gap:0.8rem;
+}
+.chip{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:0.7rem 0.85rem;
+}
+.chip .label{
+  font-family:var(--font-mono);
+  font-size:0.66rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-bottom:0.25rem;
+}
+.chip .value{
+  font-family:var(--font-display);
+  font-size:1.05rem;
+}
+.chip .sub{
+  font-size:0.76rem;
+  color:var(--ink-soft);
+}
+.chip.tithi .value{ color:var(--accent); }
+.chip.nakshatra .value{ color:var(--indigo); }
+.chip.yoga .value{ color:var(--indigo); }
+.chip.karana .value{ color:var(--brown); }
+.snapshot-note{
+  margin-top:0.9rem;
+  font-size:0.76rem;
+  color:var(--ink-faint);
+}
+
+/* right now */
+.rightnow{
+  display:flex;
+  align-items:center;
+  gap:0.9rem;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:4px solid var(--accent);
+  border-radius:10px;
+  padding:1rem 1.2rem;
+  box-shadow:var(--shadow);
+  margin-bottom:1.6rem;
+}
+.rightnow.active{ border-left-color:var(--rn-color, var(--accent)); }
+.rightnow .badge{
+  font-family:var(--font-mono);
+  font-size:0.66rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--rn-color, var(--accent));
+  margin-bottom:0.15rem;
+}
+.rightnow .title{ font-family:var(--font-display); font-size:1.15rem; }
+.rightnow .meta{ font-size:0.8rem; color:var(--ink-soft); margin-top:0.15rem; }
+
+section.block{
+  margin-bottom:1.6rem;
+}
+section.block h2{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:1.15rem;
+  margin:0 0 0.15rem;
+}
+section.block .block-sub{
+  font-size:0.8rem;
+  color:var(--ink-faint);
+  margin:0 0 0.9rem;
+}
+
+.window-list, .timeline-list{
+  list-style:none;
+  margin:0; padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:0.55rem;
+}
+.window-row, .timeline-row{
+  display:grid;
+  grid-template-columns:78px 3px 1fr;
+  align-items:center;
+  gap:0.8rem;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:0.65rem 0.9rem;
+}
+.time-col{
+  font-family:var(--font-mono);
+  font-size:0.74rem;
+  text-align:right;
+  line-height:1.35;
+}
+.time-col .date-flag{
+  display:block;
+  font-size:0.62rem;
+  color:var(--gold);
+}
+.time-col .end-time{ color:var(--ink-faint); }
+.bar{ width:3px; height:28px; border-radius:2px; background:var(--accent); }
+.row-body .cat{
+  font-family:var(--font-mono);
+  font-size:0.64rem;
+  letter-spacing:0.07em;
+  text-transform:uppercase;
+  margin-bottom:0.1rem;
+}
+.row-body .name{ font-size:0.98rem; }
+.row-body .sub{ font-size:0.76rem; color:var(--ink-faint); }
+
+.cat-sun{ color:var(--gold); }
+.cat-inauspicious{ color:var(--maroon); }
+.cat-auspicious{ color:var(--green); }
+.cat-tithi{ color:var(--accent); }
+.cat-nakshatra, .cat-yoga{ color:var(--indigo); }
+.cat-karana{ color:var(--brown); }
+
+.bar-sun{ background:var(--gold); }
+.bar-inauspicious{ background:var(--maroon); }
+.bar-auspicious{ background:var(--green); }
+.bar-tithi{ background:var(--accent); }
+.bar-nakshatra, .bar-yoga{ background:var(--indigo); }
+.bar-karana{ background:var(--brown); }
+
+footer{
+  margin-top:3rem;
+  padding-top:1.6rem;
+  border-top:1px solid var(--line);
+  text-align:center;
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  color:var(--ink-faint);
+  letter-spacing:0.02em;
+  line-height:1.7;
+}
+footer a{ color:var(--ink-faint); }
+
+@media (max-width:520px){
+  .window-row, .timeline-row{ grid-template-columns:62px 3px 1fr; }
+  .snapshot-top{ flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="backlink" href="../">&larr; Sentinel Atlas</a>
+
+  <header>
+    <div class="eyebrow">Sentinel Atlas &middot; Panchangam</div>
+    <h1>Sentinel Panchangam</h1>
+    <p class="tagline">Daily Tithi, Nakshatra, Yoga, Karana and Vara for Andhra Pradesh, computed live from sun and moon position — plus the day's Rahu Kalam, Yamagandam, Gulika Kalam, Abhijit Muhurta and Brahma Muhurtam.</p>
+  </header>
+
+  <div class="controls">
+    <div class="date-nav">
+      <button class="icon-btn" id="prevDay" aria-label="Previous day">&larr;</button>
+      <div class="date-display" id="dateDisplay">&nbsp;</div>
+      <button class="icon-btn" id="nextDay" aria-label="Next day">&rarr;</button>
+    </div>
+    <button class="today-btn" id="todayBtn">Today</button>
+    <input type="date" class="date-input" id="dateInput">
+    <select class="city-select" id="citySelect"></select>
+  </div>
+
+  <div class="snapshot" id="snapshot"></div>
+
+  <div id="rightNowSlot"></div>
+
+  <section class="block">
+    <h2>Auspicious &amp; Inauspicious Windows</h2>
+    <p class="block-sub">The traditional muhurta windows for this day, favorable and unfavorable for starting new things.</p>
+    <ul class="window-list" id="windowList"></ul>
+  </section>
+
+  <section class="block">
+    <h2>Full Timeline</h2>
+    <p class="block-sub">Ordered by time of day. A day can show more than one Tithi, Nakshatra, Yoga or Karana, since each one's real length rarely lines up with the calendar day.</p>
+    <ul class="timeline-list" id="timelineList"></ul>
+  </section>
+
+  <footer>
+    Sun/moon positions use low-precision public-domain formulas (NOAA/Meeus sunrise equation; four-term lunar theory), accurate to roughly a minute for sunrise/sunset and 15&ndash;30 minutes for Tithi/Nakshatra/Yoga/Karana boundaries &mdash; not scientific-grade, but consistent with what most printed Panchangams target. Lahiri ayanamsa used for sidereal quantities.<br>
+    Sentinel Atlas &middot; maintained by <a href="https://github.com/nandkarthik">nandkarthik</a>
+  </footer>
+
+</div>
+
+<script>
+// ============================================================================
+// Panchangam engine — direct port of ios/SentinelPanchangamApp's Swift
+// calculators (SolarCalculator, Ephemeris, PeriodFinder, TithiCalculator,
+// NakshatraCalculator, YogaCalculator, KaranaCalculator, MuhurtaCalculator).
+// ============================================================================
+function normalizeDegrees(deg){ const n = deg % 360; return n < 0 ? n + 360 : n; }
+
+function julianDayNumber(year, month, day){
+  const a = Math.floor((14 - month) / 12);
+  const y = year + 4800 - a;
+  const m = month + 12 * a - 3;
+  return day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+}
+function dateFromJulianDay(jd){
+  const unixEpochJulianDay = 2440587.5;
+  return new Date((jd - unixEpochJulianDay) * 86400000);
+}
+function sunTimes(year, month, day, latitude, longitude){
+  const jd = julianDayNumber(year, month, day);
+  const lonWest = -longitude;
+  const meanSolarNoonEstimate = Math.round(jd - 2451545.0009 - lonWest / 360.0);
+  const meanAnomalyDeg = normalizeDegrees(357.5291 + 0.98560028 * meanSolarNoonEstimate);
+  const meanAnomaly = meanAnomalyDeg * Math.PI / 180;
+  const equationOfCenter = 1.9148 * Math.sin(meanAnomaly) + 0.0200 * Math.sin(2 * meanAnomaly) + 0.0003 * Math.sin(3 * meanAnomaly);
+  const eclipticLongitudeDeg = normalizeDegrees(meanAnomalyDeg + 102.9372 + equationOfCenter + 180);
+  const eclipticLongitude = eclipticLongitudeDeg * Math.PI / 180;
+  const solarTransitJulian = 2451545.0009 + lonWest / 360.0 + meanSolarNoonEstimate
+    + 0.0053 * Math.sin(meanAnomaly) - 0.0069 * Math.sin(2 * eclipticLongitude);
+  const earthAxialTilt = 23.44 * Math.PI / 180;
+  const sinDeclination = Math.sin(eclipticLongitude) * Math.sin(earthAxialTilt);
+  const declination = Math.asin(sinDeclination);
+  const latitudeRad = latitude * Math.PI / 180;
+  const horizonElevation = -0.833 * Math.PI / 180;
+  const cosHourAngle = (Math.sin(horizonElevation) - Math.sin(latitudeRad) * sinDeclination) / (Math.cos(latitudeRad) * Math.cos(declination));
+  if (cosHourAngle < -1 || cosHourAngle > 1) return null;
+  const hourAngleDeg = Math.acos(cosHourAngle) * 180 / Math.PI;
+  const sunriseJulian = solarTransitJulian - hourAngleDeg / 360.0;
+  const sunsetJulian = solarTransitJulian + hourAngleDeg / 360.0;
+  return { sunrise: dateFromJulianDay(sunriseJulian), sunset: dateFromJulianDay(sunsetJulian), solarNoon: dateFromJulianDay(solarTransitJulian) };
+}
+
+function julianCenturiesSinceJ2000(date){
+  const jd = date.getTime() / 1000 / 86400 + 2440587.5;
+  return (jd - 2451545.0) / 36525.0;
+}
+function sunEclipticLongitude(t){
+  const meanLongitude = normalizeDegrees(280.4664567 + 36000.76982779 * t);
+  const meanAnomalyDeg = normalizeDegrees(357.5291092 + 35999.0502909 * t);
+  const meanAnomaly = meanAnomalyDeg * Math.PI / 180;
+  const eqCenter = 1.914602 * Math.sin(meanAnomaly) + 0.019993 * Math.sin(2 * meanAnomaly) + 0.000289 * Math.sin(3 * meanAnomaly);
+  return normalizeDegrees(meanLongitude + eqCenter);
+}
+function moonEclipticLongitude(t){
+  const meanLongitude = normalizeDegrees(218.3164477 + 481267.88123421 * t);
+  const elongationDeg = normalizeDegrees(297.8501921 + 445267.1114034 * t);
+  const sunAnomalyDeg = normalizeDegrees(357.5291092 + 35999.0502909 * t);
+  const moonAnomalyDeg = normalizeDegrees(134.9633964 + 477198.8675055 * t);
+  const d = elongationDeg * Math.PI / 180, m = sunAnomalyDeg * Math.PI / 180, mp = moonAnomalyDeg * Math.PI / 180;
+  const eqCenter = 6.2886 * Math.sin(mp);
+  const evection = -1.2740 * Math.sin(mp - 2 * d);
+  const variation = 0.6583 * Math.sin(2 * d);
+  const annualEquation = -0.1858 * Math.sin(m);
+  return normalizeDegrees(meanLongitude + eqCenter + evection + variation + annualEquation);
+}
+function lahiriAyanamsa(t){ return 23.8531 + 1.396971 * t; }
+
+function bisectBoundary(earlier, later, indexAt){
+  let lo = earlier.getTime(), hi = later.getTime();
+  const loIndex = indexAt(new Date(lo));
+  while (hi - lo > 10000){
+    const mid = lo + (hi - lo) / 2;
+    if (indexAt(new Date(mid)) === loIndex) lo = mid; else hi = mid;
+  }
+  return new Date(hi);
+}
+function boundaryBefore(date, referenceIndex, maxHours, indexAt){
+  let previous = date, hoursBack = 1.0;
+  while (hoursBack <= maxHours){
+    const candidate = new Date(date.getTime() - hoursBack * 3600000);
+    if (indexAt(candidate) !== referenceIndex) return bisectBoundary(candidate, previous, indexAt);
+    previous = candidate; hoursBack += 1.0;
+  }
+  return previous;
+}
+function boundaryAfter(date, referenceIndex, maxHours, indexAt){
+  let previous = date, hoursForward = 1.0;
+  while (hoursForward <= maxHours){
+    const candidate = new Date(date.getTime() + hoursForward * 3600000);
+    if (indexAt(candidate) !== referenceIndex) return bisectBoundary(previous, candidate, indexAt);
+    previous = candidate; hoursForward += 1.0;
+  }
+  return previous;
+}
+function findPeriods(dayStart, dayEnd, indexAt, valueAt, maxBoundarySearchHours){
+  if (maxBoundarySearchHours === undefined) maxBoundarySearchHours = 30;
+  const sampleCount = 48;
+  const step = (dayEnd.getTime() - dayStart.getTime()) / sampleCount;
+  const internalBoundaries = [];
+  let previousDate = dayStart, previousIndex = indexAt(previousDate);
+  for (let i = 1; i <= sampleCount; i++){
+    const currentDate = i === sampleCount ? dayEnd : new Date(dayStart.getTime() + step * i);
+    const currentIndex = indexAt(currentDate);
+    if (currentIndex !== previousIndex) internalBoundaries.push(bisectBoundary(previousDate, currentDate, indexAt));
+    previousDate = currentDate; previousIndex = currentIndex;
+  }
+  const edges = [dayStart].concat(internalBoundaries, [dayEnd]);
+  const periods = [];
+  for (let i = 0; i < edges.length - 1; i++){
+    const segmentStart = edges[i], segmentEnd = edges[i + 1];
+    const midpoint = new Date(segmentStart.getTime() + (segmentEnd.getTime() - segmentStart.getTime()) / 2);
+    const actualStart = i === 0 ? boundaryBefore(dayStart, indexAt(dayStart), maxBoundarySearchHours, indexAt) : segmentStart;
+    const actualEnd = i === edges.length - 2 ? boundaryAfter(dayEnd, indexAt(dayEnd), maxBoundarySearchHours, indexAt) : segmentEnd;
+    periods.push({ value: valueAt(midpoint), start: actualStart, end: actualEnd });
+  }
+  return periods;
+}
+
+const TITHI_NAMES = [
+  {name:"Padyami"},{name:"Vidiya"},{name:"Tadiya"},{name:"Chaviti"},{name:"Panchami"},
+  {name:"Shashti"},{name:"Saptami"},{name:"Ashtami"},{name:"Navami"},{name:"Dashami"},
+  {name:"Ekadashi"},{name:"Dwadashi"},{name:"Trayodashi"},{name:"Chaturdashi"},
+];
+function elongationAt(date){
+  const t = julianCenturiesSinceJ2000(date);
+  return normalizeDegrees(moonEclipticLongitude(t) - sunEclipticLongitude(t));
+}
+function tithiRawIndex(date){ return Math.floor(elongationAt(date) / 12.0) + 1; }
+function tithiDetails(number, paksha, illuminatedFraction){
+  const clamped = Math.min(Math.max(number, 1), 15);
+  if (clamped === 15){
+    const name = paksha === "shukla" ? "Purnima" : "Amavasya";
+    return { index: clamped, paksha, name, isFullOrNewMoon: true, illuminatedFraction };
+  }
+  return { index: clamped, paksha, name: TITHI_NAMES[clamped - 1].name, isFullOrNewMoon: false, illuminatedFraction };
+}
+function tithiForRawIndex(tithiNumber, elongation){
+  const illum = (1 - Math.cos(elongation * Math.PI / 180)) / 2;
+  return tithiNumber <= 15 ? tithiDetails(tithiNumber, "shukla", illum) : tithiDetails(tithiNumber - 15, "krishna", illum);
+}
+function tithiAt(date){ return tithiForRawIndex(tithiRawIndex(date), elongationAt(date)); }
+function tithiPeriods(dayStart, dayEnd){
+  return findPeriods(dayStart, dayEnd, tithiRawIndex, tithiAt).map(p => ({ tithi: p.value, start: p.start, end: p.end }));
+}
+
+const NAKSHATRA_NAMES = ["Ashwini","Bharani","Krittika","Rohini","Mrigashira","Ardra","Punarvasu","Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni","Hasta","Chitra","Swati","Vishakha","Anuradha","Jyeshtha","Mula","Purvashada","Uttarashada","Shravana","Dhanishta","Shatabhisha","Purva Bhadrapada","Uttara Bhadrapada","Revati"];
+const SEGMENT_27 = 360.0 / 27.0;
+function siderealMoonLongitude(date){
+  const t = julianCenturiesSinceJ2000(date);
+  return normalizeDegrees(moonEclipticLongitude(t) - lahiriAyanamsa(t));
+}
+function nakshatraRawIndex(date){ return Math.floor(siderealMoonLongitude(date) / SEGMENT_27); }
+function nakshatraForIndex(index){ const c = Math.min(Math.max(index, 0), NAKSHATRA_NAMES.length - 1); return { index: c + 1, name: NAKSHATRA_NAMES[c] }; }
+function nakshatraAt(date){ return nakshatraForIndex(nakshatraRawIndex(date)); }
+function nakshatraPeriods(dayStart, dayEnd){
+  return findPeriods(dayStart, dayEnd, nakshatraRawIndex, nakshatraAt).map(p => ({ nakshatra: p.value, start: p.start, end: p.end }));
+}
+
+const YOGA_NAMES = ["Vishkambha","Priti","Ayushman","Saubhagya","Shobhana","Atiganda","Sukarma","Dhriti","Shoola","Ganda","Vriddhi","Dhruva","Vyaghata","Harshana","Vajra","Siddhi","Vyatipata","Variyana","Parigha","Shiva","Siddha","Sadhya","Shubha","Shukla","Brahma","Indra","Vaidhriti"];
+function siderealSunMoonSum(date){
+  const t = julianCenturiesSinceJ2000(date);
+  return normalizeDegrees(sunEclipticLongitude(t) + moonEclipticLongitude(t) - 2 * lahiriAyanamsa(t));
+}
+function yogaRawIndex(date){ return Math.floor(siderealSunMoonSum(date) / SEGMENT_27); }
+function yogaForIndex(index){ const c = Math.min(Math.max(index, 0), YOGA_NAMES.length - 1); return { index: c + 1, name: YOGA_NAMES[c] }; }
+function yogaAt(date){ return yogaForIndex(yogaRawIndex(date)); }
+function yogaPeriods(dayStart, dayEnd){
+  return findPeriods(dayStart, dayEnd, yogaRawIndex, yogaAt).map(p => ({ yoga: p.value, start: p.start, end: p.end }));
+}
+
+const KARANA_MOVABLE = ["Bava","Balava","Kaulava","Taitila","Garaja","Vanija","Vishti"];
+function karanaRawIndex(date){ return Math.floor(elongationAt(date) / 6.0); }
+function karanaForIndex(index){
+  const c = Math.min(Math.max(index, 0), 59);
+  if (c === 0) return { name: "Kimstughna", isFixed: true };
+  if (c === 57) return { name: "Shakuni", isFixed: true };
+  if (c === 58) return { name: "Chatushpada", isFixed: true };
+  if (c === 59) return { name: "Naga", isFixed: true };
+  return { name: KARANA_MOVABLE[(c - 1) % 7], isFixed: false };
+}
+function karanaAt(date){ return karanaForIndex(karanaRawIndex(date)); }
+function karanaPeriods(dayStart, dayEnd){
+  return findPeriods(dayStart, dayEnd, karanaRawIndex, karanaAt, 16).map(p => ({ karana: p.value, start: p.start, end: p.end }));
+}
+
+const RAHU_KALAM_PART = [8,2,7,5,6,4,3];
+const YAMAGANDAM_PART = [5,4,3,2,1,7,6];
+const GULIKA_KALAM_PART = [7,6,5,4,3,2,1];
+function daylightEighth(part, sunrise, sunset){
+  const eighth = (sunset.getTime() - sunrise.getTime()) / 8.0;
+  return { start: new Date(sunrise.getTime() + eighth * (part - 1)), end: new Date(sunrise.getTime() + eighth * part) };
+}
+function rahuKalam(wi, sunrise, sunset){ return daylightEighth(RAHU_KALAM_PART[wi], sunrise, sunset); }
+function yamagandam(wi, sunrise, sunset){ return daylightEighth(YAMAGANDAM_PART[wi], sunrise, sunset); }
+function gulikaKalam(wi, sunrise, sunset){ return daylightEighth(GULIKA_KALAM_PART[wi], sunrise, sunset); }
+function abhijitMuhurta(sunrise, sunset){
+  const fifteenth = (sunset.getTime() - sunrise.getTime()) / 15.0;
+  return { start: new Date(sunrise.getTime() + fifteenth * 7), end: new Date(sunrise.getTime() + fifteenth * 8) };
+}
+function brahmaMuhurtam(sunrise){
+  return { start: new Date(sunrise.getTime() - 96 * 60000), end: new Date(sunrise.getTime() - 48 * 60000) };
+}
+
+// ============================================================================
+// Page data + UI
+// ============================================================================
+const IST_OFFSET_MS = 5.5 * 3600000;
+const LOCATIONS = [
+  { name: "Vijayawada", latitude: 16.5062, longitude: 80.6480 },
+  { name: "Visakhapatnam", latitude: 17.6868, longitude: 83.2185 },
+  { name: "Tirupati", latitude: 13.6288, longitude: 79.4192 },
+  { name: "Guntur", latitude: 16.3067, longitude: 80.4365 },
+  { name: "Rajahmundry", latitude: 17.0005, longitude: 81.8040 },
+  { name: "Kurnool", latitude: 15.8281, longitude: 78.0373 },
+  { name: "Nellore", latitude: 14.4426, longitude: 79.9865 },
+];
+const VARA_NAMES = [
+  { en: "Sunday", sa: "Bhanuvaram" },
+  { en: "Monday", sa: "Somavaram" },
+  { en: "Tuesday", sa: "Mangalavaram" },
+  { en: "Wednesday", sa: "Budhavaram" },
+  { en: "Thursday", sa: "Guruvaram" },
+  { en: "Friday", sa: "Shukravaram" },
+  { en: "Saturday", sa: "Shanivaram" },
+];
+
+function istPartsNow(){
+  const shifted = new Date(Date.now() + IST_OFFSET_MS);
+  return { year: shifted.getUTCFullYear(), month: shifted.getUTCMonth() + 1, day: shifted.getUTCDate() };
+}
+function dayBoundsIST(year, month, day){
+  const dayStart = new Date(Date.UTC(year, month - 1, day) - IST_OFFSET_MS);
+  return { dayStart, dayEnd: new Date(dayStart.getTime() + 86400000) };
+}
+function weekdayIndexFor(year, month, day){ return new Date(Date.UTC(year, month - 1, day)).getUTCDay(); }
+function timeFmt(date){
+  return new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", hour: "numeric", minute: "2-digit", hour12: true }).format(date);
+}
+function dateBadgeFmt(date){
+  return new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", month: "short", day: "numeric" }).format(date);
+}
+function istYMD(date){
+  const shifted = new Date(date.getTime() + IST_OFFSET_MS);
+  return shifted.getUTCFullYear() * 10000 + (shifted.getUTCMonth() + 1) * 100 + shifted.getUTCDate();
+}
+
+let state = (() => { const t = istPartsNow(); return { year: t.year, month: t.month, day: t.day, locationIndex: 0 }; })();
+
+const citySelect = document.getElementById("citySelect");
+LOCATIONS.forEach((loc, i) => {
+  const opt = document.createElement("option");
+  opt.value = i; opt.textContent = loc.name;
+  citySelect.appendChild(opt);
+});
+citySelect.value = state.locationIndex;
+citySelect.addEventListener("change", () => { state.locationIndex = Number(citySelect.value); render(); });
+
+const dateInput = document.getElementById("dateInput");
+dateInput.addEventListener("change", () => {
+  const [y, m, d] = dateInput.value.split("-").map(Number);
+  if (y && m && d){ state.year = y; state.month = m; state.day = d; render(); }
+});
+document.getElementById("prevDay").addEventListener("click", () => shiftDay(-1));
+document.getElementById("nextDay").addEventListener("click", () => shiftDay(1));
+document.getElementById("todayBtn").addEventListener("click", () => {
+  const t = istPartsNow(); state.year = t.year; state.month = t.month; state.day = t.day; render();
+});
+function shiftDay(delta){
+  const utc = new Date(Date.UTC(state.year, state.month - 1, state.day) + delta * 86400000);
+  state.year = utc.getUTCFullYear(); state.month = utc.getUTCMonth() + 1; state.day = utc.getUTCDate();
+  render();
+}
+
+const CATEGORY_LABEL = { sun: "Sun", inauspicious: "Inauspicious", auspicious: "Auspicious", tithi: "Tithi", nakshatra: "Nakshatra", yoga: "Yoga", karana: "Karana" };
+
+function render(){
+  const loc = LOCATIONS[state.locationIndex];
+  const { year, month, day } = state;
+  const { dayStart, dayEnd } = dayBoundsIST(year, month, day);
+  const weekdayIndex = weekdayIndexFor(year, month, day);
+  const vara = VARA_NAMES[weekdayIndex];
+  const todayParts = istPartsNow();
+  const isToday = year === todayParts.year && month === todayParts.month && day === todayParts.day;
+
+  document.getElementById("dateDisplay").textContent = new Intl.DateTimeFormat("en-IN", { weekday: "short", year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }).format(new Date(Date.UTC(year, month - 1, day)));
+  dateInput.value = `${year}-${String(month).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+
+  const sun = sunTimes(year, month, day, loc.latitude, loc.longitude);
+
+  const snapshotEl = document.getElementById("snapshot");
+  const rightNowSlot = document.getElementById("rightNowSlot");
+  const windowListEl = document.getElementById("windowList");
+  const timelineListEl = document.getElementById("timelineList");
+
+  if (!sun){
+    snapshotEl.innerHTML = `<p>Sun times unavailable for this date/location.</p>`;
+    rightNowSlot.innerHTML = "";
+    windowListEl.innerHTML = "";
+    timelineListEl.innerHTML = "";
+    return;
+  }
+
+  const rahu = rahuKalam(weekdayIndex, sun.sunrise, sun.sunset);
+  const yama = yamagandam(weekdayIndex, sun.sunrise, sun.sunset);
+  const gulika = gulikaKalam(weekdayIndex, sun.sunrise, sun.sunset);
+  const abhijit = abhijitMuhurta(sun.sunrise, sun.sunset);
+  const brahma = brahmaMuhurtam(sun.sunrise);
+
+  const tithiPer = tithiPeriods(dayStart, dayEnd);
+  const nakshatraPer = nakshatraPeriods(dayStart, dayEnd);
+  const yogaPer = yogaPeriods(dayStart, dayEnd);
+  const karanaPer = karanaPeriods(dayStart, dayEnd);
+
+  // Snapshot: values "as of now" if today (clamped into the day), else at solar noon.
+  const now = new Date();
+  const snapshotInstant = isToday && now >= dayStart && now < dayEnd ? now : sun.solarNoon;
+  const snapTithi = tithiAt(snapshotInstant);
+  const snapNak = nakshatraAt(snapshotInstant);
+  const snapYoga = yogaAt(snapshotInstant);
+  const snapKarana = karanaAt(snapshotInstant);
+
+  snapshotEl.innerHTML = `
+    <div class="snapshot-top">
+      <div class="vara">${vara.en} <span class="sanskrit">&middot; ${vara.sa}</span></div>
+      <div class="sun-times">
+        <span>Sunrise <b>${timeFmt(sun.sunrise)}</b></span>
+        <span>Noon <b>${timeFmt(sun.solarNoon)}</b></span>
+        <span>Sunset <b>${timeFmt(sun.sunset)}</b></span>
+      </div>
+    </div>
+    <div class="chip-row">
+      <div class="chip tithi"><div class="label">Tithi</div><div class="value">${snapTithi.name}</div><div class="sub">${snapTithi.paksha === "shukla" ? "Shukla Paksha" : "Krishna Paksha"}</div></div>
+      <div class="chip nakshatra"><div class="label">Nakshatra</div><div class="value">${snapNak.name}</div></div>
+      <div class="chip yoga"><div class="label">Yoga</div><div class="value">${snapYoga.name}</div></div>
+      <div class="chip karana"><div class="label">Karana</div><div class="value">${snapKarana.name}</div></div>
+    </div>
+    <p class="snapshot-note">${isToday && now >= dayStart && now < dayEnd ? "As of right now." : "As of solar noon on this date."} A day can span more than one of each &mdash; see the full timeline below.</p>
+  `;
+
+  // Right now card (today only)
+  const specialWindows = [
+    { key: "rahuKalam", category: "inauspicious", label: "Rahu Kalam", window: rahu },
+    { key: "yamagandam", category: "inauspicious", label: "Yamagandam", window: yama },
+    { key: "gulikaKalam", category: "inauspicious", label: "Gulika Kalam", window: gulika },
+    { key: "abhijitMuhurta", category: "auspicious", label: "Abhijit Muhurta", window: abhijit },
+    { key: "brahmaMuhurtam", category: "auspicious", label: "Brahma Muhurtam", window: brahma },
+  ];
+  if (isToday){
+    const active = specialWindows.find(w => w.window.start <= now && now < w.window.end);
+    const upcoming = specialWindows.filter(w => w.window.start > now).sort((a,b) => a.window.start - b.window.start)[0];
+    if (active){
+      const color = active.category === "inauspicious" ? "var(--maroon)" : "var(--green)";
+      rightNowSlot.innerHTML = `
+        <div class="rightnow active" style="--rn-color:${color}">
+          <div>
+            <div class="badge">${CATEGORY_LABEL[active.category]} &middot; right now</div>
+            <div class="title">${active.label}</div>
+            <div class="meta">${active.category === "inauspicious" ? "Traditionally avoided for new beginnings" : "Traditionally favorable for new beginnings"} &middot; until ${timeFmt(active.window.end)}</div>
+          </div>
+        </div>`;
+    } else if (upcoming){
+      const color = upcoming.category === "inauspicious" ? "var(--maroon)" : "var(--green)";
+      rightNowSlot.innerHTML = `
+        <div class="rightnow" style="--rn-color:${color}">
+          <div>
+            <div class="badge">No special window right now</div>
+            <div class="title">Next: ${upcoming.label}</div>
+            <div class="meta">${CATEGORY_LABEL[upcoming.category]} &middot; starts ${timeFmt(upcoming.window.start)}</div>
+          </div>
+        </div>`;
+    } else {
+      rightNowSlot.innerHTML = "";
+    }
+  } else {
+    rightNowSlot.innerHTML = "";
+  }
+
+  // Auspicious/inauspicious window list
+  windowListEl.innerHTML = specialWindows.map(w => windowRowHtml(w, year, month, day)).join("");
+
+  // Full timeline
+  const events = [
+    { category: "sun", name: "Sunrise", sub: null, start: sun.sunrise, end: null },
+    { category: "sun", name: "Solar Noon", sub: null, start: sun.solarNoon, end: null },
+    { category: "sun", name: "Sunset", sub: null, start: sun.sunset, end: null },
+    { category: "inauspicious", name: "Rahu Kalam", sub: null, start: rahu.start, end: rahu.end },
+    { category: "inauspicious", name: "Yamagandam", sub: null, start: yama.start, end: yama.end },
+    { category: "inauspicious", name: "Gulika Kalam", sub: null, start: gulika.start, end: gulika.end },
+    { category: "auspicious", name: "Abhijit Muhurta", sub: null, start: abhijit.start, end: abhijit.end },
+    { category: "auspicious", name: "Brahma Muhurtam", sub: null, start: brahma.start, end: brahma.end },
+  ];
+  tithiPer.forEach(p => events.push({ category: "tithi", name: p.tithi.name, sub: p.tithi.paksha === "shukla" ? "Shukla Paksha" : "Krishna Paksha", start: p.start, end: p.end }));
+  nakshatraPer.forEach(p => events.push({ category: "nakshatra", name: p.nakshatra.name, sub: null, start: p.start, end: p.end }));
+  yogaPer.forEach(p => events.push({ category: "yoga", name: p.yoga.name, sub: null, start: p.start, end: p.end }));
+  karanaPer.forEach(p => events.push({ category: "karana", name: p.karana.name, sub: null, start: p.start, end: p.end }));
+  events.sort((a, b) => a.start - b.start);
+
+  const selectedYMD = year * 10000 + month * 100 + day;
+  timelineListEl.innerHTML = events.map(ev => timelineRowHtml(ev, selectedYMD)).join("");
+}
+
+function windowRowHtml(w, year, month, day){
+  const selectedYMD = year * 10000 + month * 100 + day;
+  return timelineRowHtml({ category: w.category, name: w.label, sub: null, start: w.window.start, end: w.window.end }, selectedYMD);
+}
+
+function timelineRowHtml(ev, selectedYMD){
+  const startOutside = istYMD(ev.start) !== selectedYMD;
+  const endOutside = ev.end && istYMD(ev.end) !== selectedYMD;
+  const timeCol = `
+    <div class="time-col">
+      ${startOutside ? `<span class="date-flag">${dateBadgeFmt(ev.start)}</span>` : ""}
+      <span>${timeFmt(ev.start)}</span>
+      ${ev.end ? `${endOutside ? `<span class="date-flag">${dateBadgeFmt(ev.end)}</span>` : ""}<span class="end-time">${timeFmt(ev.end)}</span>` : ""}
+    </div>`;
+  return `
+    <li class="timeline-row">
+      ${timeCol}
+      <div class="bar bar-${ev.category}"></div>
+      <div class="row-body">
+        <div class="cat cat-${ev.category}">${CATEGORY_LABEL[ev.category]}</div>
+        <div class="name">${ev.name}</div>
+        ${ev.sub ? `<div class="sub">${ev.sub}</div>` : ""}
+      </div>
+    </li>`;
+}
+
+render();
+setInterval(render, 60000);
+</script>
+</body>
+</html>
