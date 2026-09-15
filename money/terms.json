@@ -1,0 +1,2567 @@
+{
+  "version": 1,
+  "terms": [
+    {
+      "id": "compound-interest",
+      "category": "investing",
+      "order": 0,
+      "name": "Compound Interest",
+      "shortDefinition": "Earning money on the money you already earned.",
+      "fullExplanation": "Your savings earn interest, and next year you earn interest on that interest too — like a snowball picking up more snow as it rolls.",
+      "example": {
+        "scenario": "$1,000 at 7%/year grows to about $3,870 in 20 years — without adding another dollar.",
+        "takeaway": "The longer money compounds, the faster it grows."
+      },
+      "chartScenario": {
+        "kind": "compoundGrowth",
+        "defaultParams": {
+          "principal": 1000,
+          "rate": 0.07,
+          "years": 20
+        },
+        "adjustableParams": [
+          {
+            "key": "principal",
+            "label": "Starting Amount",
+            "minValue": 100,
+            "maxValue": 20000,
+            "step": 100,
+            "unit": "$"
+          },
+          {
+            "key": "rate",
+            "label": "Yearly Growth",
+            "minValue": 0.01,
+            "maxValue": 0.15,
+            "step": 0.01,
+            "unit": "%"
+          },
+          {
+            "key": "years",
+            "label": "Years",
+            "minValue": 1,
+            "maxValue": 40,
+            "step": 1,
+            "unit": "yrs"
+          }
+        ]
+      },
+      "quiz": {
+        "question": "Why does compound interest make your money grow faster over time?",
+        "choices": [
+          "You earn interest only on your original deposit",
+          "You earn interest on your deposit AND on the interest you already earned",
+          "The bank adds a bonus every few years",
+          "Interest rates always go up over time"
+        ],
+        "correctIndex": 1,
+        "explanation": "Each year's interest joins your balance, so next year you earn interest on a bigger pile."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "diversification",
+      "category": "investing",
+      "order": 1,
+      "name": "Diversification",
+      "shortDefinition": "Not putting all your eggs in one basket.",
+      "fullExplanation": "Spreading your money across many investments instead of one, so one bad performer doesn't sink everything.",
+      "example": {
+        "scenario": "Priya puts $10,000 in one stock, which drops 40% — a $4,000 loss. Sam spreads $10,000 across 50 stocks and only drops 3%.",
+        "takeaway": "Spreading money around protects you from one bad surprise wiping you out."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the main benefit of diversification?",
+        "choices": [
+          "It guarantees you'll never lose money",
+          "It makes your investments grow faster",
+          "It reduces how much one bad investment can hurt you overall",
+          "It lets you avoid paying taxes"
+        ],
+        "correctIndex": 2,
+        "explanation": "One bad investment can't sink a basket that holds many others."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "stock",
+      "category": "investing",
+      "order": 2,
+      "name": "Stock",
+      "shortDefinition": "A tiny slice of ownership in a company.",
+      "fullExplanation": "A share is a tiny slice of ownership in a company — if the company grows more valuable, your slice does too.",
+      "example": {
+        "scenario": "A lemonade stand's 100 shares are worth $10 each. The business booms and doubles in value — your $10 share is now worth $20.",
+        "takeaway": "Your money's fate is tied to the company's — grow with it, or shrink with it."
+      },
+      "chartScenario": null,
+      "riskLevel": "high",
+      "quiz": {
+        "question": "If you own one share of a company, what do you actually have?",
+        "choices": [
+          "A loan you gave the company that they must repay",
+          "A tiny ownership stake in the company",
+          "A coupon for the company's products",
+          "A job at the company"
+        ],
+        "correctIndex": 1,
+        "explanation": "A share's value rises and falls with how much the whole company is worth."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "index-fund",
+      "category": "investing",
+      "order": 3,
+      "name": "Index Fund",
+      "shortDefinition": "One basket that already holds slices of hundreds of companies.",
+      "fullExplanation": "One fund that automatically holds tiny slices of hundreds of companies at once — instant diversification.",
+      "example": {
+        "scenario": "One index fund share can hold a bit of 500 companies, so no single company's bad year sinks your whole result.",
+        "takeaway": "Index funds diversify for you, without picking hundreds of stocks yourself."
+      },
+      "chartScenario": {
+        "kind": "compoundGrowth",
+        "defaultParams": {
+          "principal": 5000,
+          "rate": 0.08,
+          "years": 25
+        },
+        "adjustableParams": [
+          {
+            "key": "principal",
+            "label": "Starting Amount",
+            "minValue": 500,
+            "maxValue": 50000,
+            "step": 500,
+            "unit": "$"
+          },
+          {
+            "key": "rate",
+            "label": "Yearly Growth",
+            "minValue": 0.02,
+            "maxValue": 0.12,
+            "step": 0.01,
+            "unit": "%"
+          },
+          {
+            "key": "years",
+            "label": "Years",
+            "minValue": 1,
+            "maxValue": 40,
+            "step": 1,
+            "unit": "yrs"
+          }
+        ]
+      },
+      "riskLevel": "medium",
+      "quiz": {
+        "question": "What makes an index fund different from buying stock in a single company?",
+        "choices": [
+          "It only invests in one company, but a safer one",
+          "It automatically spreads your money across many companies at once",
+          "It's not a real investment, just a savings account",
+          "It guarantees a fixed return every year"
+        ],
+        "correctIndex": 1,
+        "explanation": "One share of an index fund spreads you across many companies at once."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "dividend",
+      "category": "investing",
+      "order": 4,
+      "name": "Dividend",
+      "shortDefinition": "A cash 'thank you' some companies pay you just for owning their stock.",
+      "fullExplanation": "A cash payment some companies send you regularly just for owning their stock — no selling required.",
+      "example": {
+        "scenario": "100 shares paying $0.50/quarter each gets you $50 every three months, on top of any price change.",
+        "takeaway": "Dividends let you earn from a stock even if you never sell it."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "When does a shareholder receive a dividend payment?",
+        "choices": [
+          "Only when they sell all their shares",
+          "Automatically, just for owning the stock, if the company pays one",
+          "Only if the company goes bankrupt",
+          "Once, when they first buy the stock"
+        ],
+        "correctIndex": 1,
+        "explanation": "Anyone holding shares when the dividend is paid gets it — no selling needed."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "inflation",
+      "category": "investing",
+      "order": 5,
+      "name": "Inflation",
+      "shortDefinition": "Why the same $20 buys less stuff every year.",
+      "fullExplanation": "Prices creep up over time, so the same dollar buys a little less every year.",
+      "example": {
+        "scenario": "A $10 movie ticket costs about $13.40 in 10 years at 3% inflation — cash sitting still buys less over time.",
+        "takeaway": "Money that just sits still slowly loses buying power."
+      },
+      "chartScenario": {
+        "kind": "compoundGrowth",
+        "defaultParams": {
+          "principal": 100,
+          "rate": -0.03,
+          "years": 30
+        },
+        "adjustableParams": [
+          {
+            "key": "principal",
+            "label": "Today's Buying Power",
+            "minValue": 10,
+            "maxValue": 1000,
+            "step": 10,
+            "unit": "$"
+          },
+          {
+            "key": "rate",
+            "label": "Inflation Rate",
+            "minValue": -0.08,
+            "maxValue": -0.01,
+            "step": 0.01,
+            "unit": "%"
+          },
+          {
+            "key": "years",
+            "label": "Years",
+            "minValue": 1,
+            "maxValue": 40,
+            "step": 1,
+            "unit": "yrs"
+          }
+        ]
+      },
+      "quiz": {
+        "question": "What does it mean when inflation is 3% a year?",
+        "choices": [
+          "Your savings account balance grows by 3%",
+          "Prices for goods and services tend to rise about 3% a year, so money buys a bit less",
+          "The stock market goes up 3%",
+          "Interest rates drop by 3%"
+        ],
+        "correctIndex": 1,
+        "explanation": "Inflation is rising prices — it quietly shrinks what your money can buy."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "expense-ratio",
+      "category": "investing",
+      "order": 6,
+      "name": "Expense Ratio",
+      "shortDefinition": "The small yearly fee a fund charges just to hold your money.",
+      "fullExplanation": "The small yearly fee a fund charges to manage your money — tiny-looking, but it compounds every year.",
+      "example": {
+        "scenario": "A 1% fee vs. a 0.05% fee on $10,000 over 30 years can cost you tens of thousands of dollars.",
+        "takeaway": "A tiny-looking fee can quietly eat a huge chunk of your growth."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why does a 1% expense ratio matter more than it sounds like it should?",
+        "choices": [
+          "It's charged once, so it's a small one-time cost",
+          "It's charged every year, so it compounds against your growth over decades",
+          "It only applies if you sell your investment",
+          "It's illegal so funds rarely charge it"
+        ],
+        "correctIndex": 1,
+        "explanation": "Charged every year, even a small fee compounds into a big cost over decades."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "dollar-cost-averaging",
+      "category": "investing",
+      "order": 7,
+      "name": "Dollar-Cost Averaging",
+      "shortDefinition": "Investing the same small amount regularly, instead of one big lump sum.",
+      "fullExplanation": "Investing a fixed amount on a regular schedule, instead of guessing the perfect moment to invest a lump sum.",
+      "example": {
+        "scenario": "Investing $100 every month buys fewer shares when prices are high, more when they're low — it averages out.",
+        "takeaway": "This turns investing into a steady habit instead of a guessing game."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the main idea behind dollar-cost averaging?",
+        "choices": [
+          "Investing everything at once when prices are lowest",
+          "Investing a fixed amount on a regular schedule, regardless of price",
+          "Only investing when the market is going up",
+          "Borrowing money to invest more"
+        ],
+        "correctIndex": 1,
+        "explanation": "It's about consistency, not predicting the best moment."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "options",
+      "category": "investing",
+      "order": 8,
+      "name": "Options",
+      "shortDefinition": "A contract to buy or sell a stock later at a price you lock in today.",
+      "fullExplanation": "An option lets you buy ('call') or sell ('put') a stock at a locked-in price before it expires, for a small fee (the premium). If it goes your way, you profit; if not, you just lose the premium. The 'writer' who sold it to you has flipped risk — capped profit, uncapped loss — and options on obscure stocks can be hard to exit early.",
+      "example": {
+        "scenario": "A $50 stock: a call option costs $200 and lets you buy at $50. It jumps to $65 — you gain $1,500 minus the $200 paid. If it drops instead, you just lose the $200.",
+        "takeaway": "The most an option buyer can ever lose is the premium they paid."
+      },
+      "chartScenario": null,
+      "riskLevel": "high",
+      "quiz": {
+        "question": "What's the most a buyer of a call option can lose if the stock price drops instead of rising?",
+        "choices": [
+          "An unlimited amount, just like owning the stock",
+          "Only the premium (fee) they paid for the option",
+          "Nothing — options can never lose money",
+          "The full price of the stock"
+        ],
+        "correctIndex": 1,
+        "explanation": "Buying an option only risks the premium — never a forced bad trade."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "hedging",
+      "category": "investing",
+      "order": 9,
+      "name": "Hedging",
+      "shortDefinition": "Buying a little protection now in case something you own drops in value later.",
+      "fullExplanation": "Making a second investment that gains if your main one drops, like buying insurance against a loss.",
+      "example": {
+        "scenario": "A $150 put option cushions a $1,500 stock loss by gaining about $1,300 if the stock drops.",
+        "takeaway": "Hedging trades a small known cost for protection against a big loss."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the main goal of hedging an investment?",
+        "choices": [
+          "To guarantee bigger profits",
+          "To reduce potential losses, usually for a small cost",
+          "To avoid paying any investment fees",
+          "To borrow money to invest more"
+        ],
+        "correctIndex": 1,
+        "explanation": "Hedging limits downside risk — it's protection, not a profit strategy."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "margin",
+      "category": "investing",
+      "order": 10,
+      "name": "Margin",
+      "shortDefinition": "Borrowing from your broker to buy more stock than your cash allows.",
+      "fullExplanation": "Borrowing money from your broker to buy more stock than your own cash allows — it magnifies both gains and losses.",
+      "example": {
+        "scenario": "$5,000 of your own plus $5,000 borrowed buys $10,000 of stock. A 20% rise nets a 40% gain; a 20% drop means a 40% loss.",
+        "takeaway": "Margin doubles both your gains and your losses."
+      },
+      "chartScenario": null,
+      "riskLevel": "high",
+      "quiz": {
+        "question": "What happens to both your potential gains and losses when you buy stock on margin?",
+        "choices": [
+          "Only gains get bigger, losses stay the same",
+          "Both get amplified, because you're investing borrowed money on top of your own",
+          "Margin has no effect on gains or losses",
+          "Only losses get bigger, gains stay the same"
+        ],
+        "correctIndex": 1,
+        "explanation": "Borrowing to invest amplifies outcomes in both directions."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "margin-call",
+      "category": "investing",
+      "order": 11,
+      "name": "Margin Call",
+      "shortDefinition": "Your broker demanding more cash because your borrowed investment lost too much value.",
+      "fullExplanation": "A demand from your broker to add cash immediately because your borrowed investment lost too much value — or they'll sell your holdings for you.",
+      "example": {
+        "scenario": "Your equity falls below the broker's 30% minimum, triggering a margin call: deposit cash now, or they sell your stock at a loss.",
+        "takeaway": "Margin calls can force you to sell at the worst possible time."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What triggers a margin call?",
+        "choices": [
+          "The stock market closes early",
+          "Your account's own equity drops below the broker's required minimum",
+          "You decide to sell your stock voluntarily",
+          "The broker wants you to invest even more for fun"
+        ],
+        "correctIndex": 1,
+        "explanation": "It's triggered when losses shrink your equity below the broker's minimum."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "short-selling",
+      "category": "investing",
+      "order": 12,
+      "name": "Short Selling",
+      "shortDefinition": "Borrowing a stock to sell it now, hoping to buy it back cheaper later.",
+      "fullExplanation": "Borrowing shares to sell now, hoping to buy them back cheaper later. Unlike owning stock, the potential loss is unlimited if the price rises instead.",
+      "example": {
+        "scenario": "Sell 10 borrowed shares at $50 ($500). Buy them back at $35 ($350) for $150 profit — or at $80 ($800) for a $300 loss.",
+        "takeaway": "Short selling profits from falling prices, but the loss has no ceiling."
+      },
+      "chartScenario": null,
+      "riskLevel": "high",
+      "quiz": {
+        "question": "Why is short selling considered riskier than a normal ('long') stock purchase?",
+        "choices": [
+          "Because short selling is illegal in most places",
+          "Because a stock's price can rise without limit, so the potential loss on a short sale is unlimited",
+          "Because short sellers can't ever make a profit",
+          "Because it requires no borrowing at all"
+        ],
+        "correctIndex": 1,
+        "explanation": "A stock can keep rising forever, so a short seller's loss has no cap."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "leverage",
+      "category": "investing",
+      "order": 13,
+      "name": "Leverage",
+      "shortDefinition": "Using borrowed money to control a bigger position than your cash alone.",
+      "fullExplanation": "Using borrowed money to control a bigger investment than your own cash alone — it magnifies both gains and losses.",
+      "example": {
+        "scenario": "5-to-1 leverage turns a 10% stock gain into a 50% return on your money — but a 10% drop becomes a 50% loss.",
+        "takeaway": "Leverage multiplies outcomes — winning bigger and losing bigger, faster."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does leverage do to the size of your investment gains and losses?",
+        "choices": [
+          "It has no effect on the size of gains or losses",
+          "It multiplies both, making them bigger in either direction",
+          "It only multiplies gains, never losses",
+          "It eliminates risk entirely"
+        ],
+        "correctIndex": 1,
+        "explanation": "A small amount of your own money controls a much bigger position, scaling both gains and losses."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "escrow",
+      "category": "mortgage",
+      "order": 0,
+      "name": "Escrow",
+      "shortDefinition": "A shared piggy bank the bank holds for your taxes and insurance.",
+      "fullExplanation": "A shared account your lender holds to pay your property taxes and insurance bills for you.",
+      "example": {
+        "scenario": "$3,600/year in taxes and insurance becomes $300/month added to your mortgage payment, saved until the bills come due.",
+        "takeaway": "Escrow turns big yearly bills into small, predictable monthly ones."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What is an escrow account mainly used for?",
+        "choices": [
+          "Paying down your loan balance faster",
+          "Setting aside money monthly to cover property taxes and insurance",
+          "A savings account you can withdraw from anytime",
+          "An emergency home repair fund"
+        ],
+        "correctIndex": 1,
+        "explanation": "Escrow collects a bit each month so your lender can pay your tax and insurance bills."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "down-payment",
+      "category": "mortgage",
+      "order": 1,
+      "name": "Down Payment",
+      "shortDefinition": "The chunk of the home's price you pay upfront, in cash.",
+      "fullExplanation": "The chunk of a home's price you pay upfront in cash — the rest is what you borrow.",
+      "example": {
+        "scenario": "On a $300,000 home, a 20% down payment is $60,000 upfront; 5% down is only $15,000, but means a bigger loan.",
+        "takeaway": "A bigger down payment means a smaller loan and smaller payments."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does a down payment do?",
+        "choices": [
+          "It's a fee paid to the real estate agent",
+          "It's the upfront cash you pay so you can borrow less",
+          "It's the same thing as your monthly mortgage payment",
+          "It's money the bank pays you to buy the house"
+        ],
+        "correctIndex": 1,
+        "explanation": "Everything above your down payment is what you borrow as the loan."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "principal",
+      "category": "mortgage",
+      "order": 2,
+      "name": "Principal",
+      "shortDefinition": "The actual amount you borrowed — not counting interest.",
+      "fullExplanation": "The actual amount you borrowed — not counting interest. Each payment splits between interest and shrinking the principal.",
+      "example": {
+        "scenario": "You borrow $250,000. Early payments go mostly to interest; later payments chip away more at the $250,000 itself.",
+        "takeaway": "Watching your principal shrink is watching how much of the home you truly own grow."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does 'principal' refer to in a mortgage?",
+        "choices": [
+          "The interest rate you're charged",
+          "The original amount you borrowed, not including interest",
+          "Your monthly payment amount",
+          "The real estate agent's commission"
+        ],
+        "correctIndex": 1,
+        "explanation": "Principal is the amount borrowed; interest is the extra cost on top."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "interest-rate",
+      "category": "mortgage",
+      "order": 3,
+      "name": "Interest Rate (and APR)",
+      "shortDefinition": "The 'rent' you pay the bank for borrowing money, shown as a yearly percentage.",
+      "fullExplanation": "The yearly percentage the lender charges you to borrow. APR adds in extra fees for a fuller picture of the loan's true cost.",
+      "example": {
+        "scenario": "A 6.0% rate with $5,000 in fees becomes a 6.3% APR — sometimes worse than a slightly higher rate with low fees.",
+        "takeaway": "Always compare APR, not just the interest rate — fees matter too."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why is APR usually a more complete number to compare than the interest rate alone?",
+        "choices": [
+          "APR is always lower than the interest rate",
+          "APR includes certain extra fees on top of the interest rate",
+          "APR only applies to car loans, not mortgages",
+          "APR and interest rate are always exactly the same"
+        ],
+        "correctIndex": 1,
+        "explanation": "APR bundles in extra fees, giving a fuller yearly cost than the rate alone."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "amortization",
+      "category": "mortgage",
+      "order": 4,
+      "name": "Amortization",
+      "shortDefinition": "How your fixed payment slowly shifts from mostly interest to mostly principal.",
+      "fullExplanation": "How your fixed monthly payment gradually shifts from mostly interest early on to mostly principal later.",
+      "example": {
+        "scenario": "On a 30-year loan, your first payment might be 70% interest; by year 25, it's mostly principal — same payment amount.",
+        "takeaway": "Paying extra toward principal early can save a lot of interest."
+      },
+      "chartScenario": {
+        "kind": "amortizationSchedule",
+        "defaultParams": {
+          "loanAmount": 300000,
+          "rate": 0.065,
+          "termYears": 30
+        },
+        "adjustableParams": [
+          {
+            "key": "loanAmount",
+            "label": "Loan Amount",
+            "minValue": 50000,
+            "maxValue": 800000,
+            "step": 10000,
+            "unit": "$"
+          },
+          {
+            "key": "rate",
+            "label": "Interest Rate",
+            "minValue": 0.02,
+            "maxValue": 0.09,
+            "step": 0.0025,
+            "unit": "%"
+          },
+          {
+            "key": "termYears",
+            "label": "Loan Term",
+            "minValue": 10,
+            "maxValue": 30,
+            "step": 5,
+            "unit": "yrs"
+          }
+        ]
+      },
+      "quiz": {
+        "question": "As a mortgage gets closer to being paid off, what typically happens to each payment?",
+        "choices": [
+          "More of it goes toward interest",
+          "More of it goes toward principal",
+          "The payment amount doubles",
+          "Nothing changes at all"
+        ],
+        "correctIndex": 1,
+        "explanation": "As the balance shrinks, less interest accrues, so more of each payment goes to principal."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "pmi",
+      "category": "mortgage",
+      "order": 5,
+      "name": "PMI (Private Mortgage Insurance)",
+      "shortDefinition": "Extra insurance you pay if your down payment is small.",
+      "fullExplanation": "Extra insurance you pay if your down payment is under 20% — it protects the lender, not you.",
+      "example": {
+        "scenario": "A 10%-down $300,000 home adds about $150/month in PMI, removable once you reach 20% equity.",
+        "takeaway": "PMI is the cost of a smaller down payment — and it's temporary."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Who does PMI actually protect?",
+        "choices": [
+          "The homebuyer, if they lose their job",
+          "The lender, in case the borrower stops paying",
+          "The real estate agent's commission",
+          "The home's previous owner"
+        ],
+        "correctIndex": 1,
+        "explanation": "PMI protects the lender, which is why it's required on small down payments."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "closing-costs",
+      "category": "mortgage",
+      "order": 6,
+      "name": "Closing Costs",
+      "shortDefinition": "The pile of fees you pay on top of the down payment to finalize the sale.",
+      "fullExplanation": "A stack of fees — appraisal, title, loan processing — paid on top of your down payment to finalize the sale.",
+      "example": {
+        "scenario": "On a $300,000 home, closing costs typically run $6,000–$15,000, separate from the down payment.",
+        "takeaway": "Budget for closing costs separately — they're easy to overlook."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What are closing costs?",
+        "choices": [
+          "Another name for the down payment",
+          "Fees for finalizing the loan and sale, paid separately from the down payment",
+          "The monthly cost of PMI",
+          "A penalty for paying off your loan early"
+        ],
+        "correctIndex": 1,
+        "explanation": "Closing costs are a separate bundle of fees, not the down payment itself."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "equity",
+      "category": "mortgage",
+      "order": 7,
+      "name": "Home Equity",
+      "shortDefinition": "The part of your home you actually own outright.",
+      "fullExplanation": "The part of your home you actually own — its value minus what you still owe.",
+      "example": {
+        "scenario": "A $350,000 home with a $220,000 balance owed leaves you $130,000 in equity.",
+        "takeaway": "Equity grows as you pay down the loan and as the home's value rises."
+      },
+      "chartScenario": {
+        "kind": "amortizationSchedule",
+        "defaultParams": {
+          "loanAmount": 300000,
+          "rate": 0.065,
+          "termYears": 30
+        },
+        "adjustableParams": [
+          {
+            "key": "loanAmount",
+            "label": "Loan Amount",
+            "minValue": 50000,
+            "maxValue": 800000,
+            "step": 10000,
+            "unit": "$"
+          },
+          {
+            "key": "rate",
+            "label": "Interest Rate",
+            "minValue": 0.02,
+            "maxValue": 0.09,
+            "step": 0.0025,
+            "unit": "%"
+          },
+          {
+            "key": "termYears",
+            "label": "Loan Term",
+            "minValue": 10,
+            "maxValue": 30,
+            "step": 5,
+            "unit": "yrs"
+          }
+        ]
+      },
+      "quiz": {
+        "question": "How does home equity grow over time?",
+        "choices": [
+          "Only if you renovate the home",
+          "As you pay down the loan balance and/or the home's value rises",
+          "Only if you refinance",
+          "It never changes once you buy the home"
+        ],
+        "correctIndex": 1,
+        "explanation": "Equity grows from paying down principal and from rising home value."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "emi",
+      "category": "mortgage",
+      "order": 8,
+      "name": "EMI",
+      "shortDefinition": "The fixed monthly payment amount on a loan.",
+      "fullExplanation": "EMI stands for Equated Monthly Installment — the fixed amount you pay every month on a loan. The total stays the same each month, but the mix shifts over time: more goes to interest early on, more to principal later.",
+      "example": {
+        "scenario": "A $300,000 home loan might have an EMI of about $1,900 a month — the same $1,900 whether it's month 1 or month 200, even though how much of it pays down the balance changes.",
+        "takeaway": "EMI is just the name for the fixed loan payment itself — the split behind it is what 'Amortization' explains."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does EMI mean?",
+        "choices": [
+          "The total interest paid over the life of the loan",
+          "The fixed monthly payment amount on a loan",
+          "A one-time fee for approving the loan",
+          "The down payment percentage"
+        ],
+        "correctIndex": 1,
+        "explanation": "EMI (Equated Monthly Installment) is simply the fixed monthly loan payment."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "loan-tenure",
+      "category": "mortgage",
+      "order": 9,
+      "name": "Loan Tenure",
+      "shortDefinition": "How long you have to repay the loan.",
+      "fullExplanation": "The length of time you have to pay back a loan, like 15 or 30 years for a home loan. A longer tenure means smaller monthly payments but more total interest paid.",
+      "example": {
+        "scenario": "A $300,000 loan at 6.5% costs about $1,896/month over 30 years, or about $2,613/month over 15 years — the 15-year loan costs more per month but far less interest overall.",
+        "takeaway": "A shorter tenure means bigger payments now, but a lot less interest paid in total."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What happens if you choose a shorter loan tenure?",
+        "choices": [
+          "Your monthly payment goes up, but you pay less total interest",
+          "Your monthly payment goes down, and you pay less total interest",
+          "Nothing changes except the paperwork",
+          "The interest rate automatically drops to zero"
+        ],
+        "correctIndex": 0,
+        "explanation": "Squeezing repayment into fewer years raises the monthly payment but shrinks total interest paid."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "fixed-vs-floating-rate",
+      "category": "mortgage",
+      "order": 10,
+      "name": "Fixed vs. Floating Rate",
+      "shortDefinition": "Whether your interest rate stays the same or moves with the market.",
+      "fullExplanation": "A fixed rate stays the same for the whole loan, so your payment never changes. A floating (or variable) rate moves up and down with the market, so your payment can rise or fall over time.",
+      "example": {
+        "scenario": "Two neighbors both borrow $300,000 at 6%. One has a fixed rate and pays the same amount for 30 years. The other has a floating rate — when rates rise to 8%, their payment jumps too.",
+        "takeaway": "Fixed rates trade away the chance of a lower payment later for the certainty of never paying more."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the main risk of a floating-rate loan compared to a fixed-rate loan?",
+        "choices": [
+          "It always costs more overall",
+          "Your payment can go up if market interest rates rise",
+          "You can never pay it off early",
+          "It isn't allowed for home loans"
+        ],
+        "correctIndex": 1,
+        "explanation": "A floating rate tracks the market, so payments can rise (or fall) as rates change."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "prepayment",
+      "category": "mortgage",
+      "order": 11,
+      "name": "Prepayment / Foreclosure",
+      "shortDefinition": "Paying off a loan early, sometimes with a penalty.",
+      "fullExplanation": "Prepayment (sometimes called foreclosure of a loan) means paying off some or all of a loan balance before it's due. It saves future interest, but some lenders charge a penalty fee for paying early.",
+      "example": {
+        "scenario": "Someone gets a bonus and pays an extra $20,000 toward their home loan's principal. That cuts years off the loan and saves thousands in future interest — unless their lender charges a prepayment penalty.",
+        "takeaway": "Paying extra toward your loan saves interest, but check for a prepayment penalty first."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why might paying off a loan early cost you extra money?",
+        "choices": [
+          "Because interest rates always increase when you prepay",
+          "Because some lenders charge a prepayment penalty",
+          "Because your credit score automatically drops",
+          "It never costs extra to pay off a loan early"
+        ],
+        "correctIndex": 1,
+        "explanation": "Some lenders charge a fee for prepaying, since it cuts into the interest they expected to earn."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "pre-approval",
+      "category": "mortgage",
+      "order": 12,
+      "name": "Pre-Approval vs. Pre-Qualification",
+      "shortDefinition": "How sure a lender is that they'll actually lend you the money.",
+      "fullExplanation": "Pre-qualification is a quick, informal estimate of what you might be able to borrow, based on numbers you self-report. Pre-approval is a lender actually checking your credit and documents and conditionally committing to a specific loan amount — sellers take it far more seriously.",
+      "example": {
+        "scenario": "Two buyers make similar offers on a house. One only has a pre-qualification letter; the other has a pre-approval letter backed by a verified credit check. The seller picks the pre-approved buyer because the deal is less likely to fall through.",
+        "takeaway": "A pre-approval is a real, checked commitment — a pre-qualification is just a guess."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the key difference between pre-qualification and pre-approval?",
+        "choices": [
+          "Pre-approval involves the lender verifying your credit and financials; pre-qualification is just a rough estimate",
+          "They mean exactly the same thing",
+          "Pre-qualification guarantees the loan; pre-approval doesn't",
+          "Pre-approval is only for cash buyers"
+        ],
+        "correctIndex": 0,
+        "explanation": "Pre-approval is a verified, lender-backed commitment; pre-qualification is an unverified estimate."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "earnest-money",
+      "category": "mortgage",
+      "order": 13,
+      "name": "Earnest Money",
+      "shortDefinition": "A deposit that shows a seller you're serious about buying.",
+      "fullExplanation": "Earnest money is a deposit you put down when you make an offer on a home, showing the seller you're serious. It's usually 1-3% of the price and gets applied toward your down payment if the deal closes — but you can lose it if you back out for reasons the contract doesn't protect.",
+      "example": {
+        "scenario": "You offer $400,000 for a house and put down $8,000 in earnest money. If the deal closes, that $8,000 counts toward your down payment. If you walk away without a valid reason, the seller may keep it.",
+        "takeaway": "Earnest money proves you're serious — but read the contingencies before you sign, or you could lose it."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What is earnest money?",
+        "choices": [
+          "A deposit that shows you're serious about buying, applied to your down payment if the deal closes",
+          "A fee paid only to real estate agents",
+          "A tax charged when you sign the offer",
+          "A refund guaranteed no matter why you cancel"
+        ],
+        "correctIndex": 0,
+        "explanation": "Earnest money is a good-faith deposit tied to the purchase, not a guaranteed-refund fee."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "contingency",
+      "category": "mortgage",
+      "order": 14,
+      "name": "Contingency",
+      "shortDefinition": "A condition that lets you back out of an offer without penalty.",
+      "fullExplanation": "A contingency is a condition written into your offer that must be met for the sale to go through — like the home passing inspection, appraising at value, or you getting final loan approval. If a contingency isn't met, you can usually cancel the deal and get your earnest money back.",
+      "example": {
+        "scenario": "You offer to buy a home 'contingent on inspection.' The inspection reveals a cracked foundation, so you use the contingency to cancel the deal and get your earnest money back instead of losing it.",
+        "takeaway": "Contingencies are your safety net — waiving them to make your offer more competitive also means more risk."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does a contingency in a home offer let you do?",
+        "choices": [
+          "Increase your offer price automatically",
+          "Cancel the deal without losing your earnest money if a condition isn't met",
+          "Skip the home inspection entirely",
+          "Guarantee the lowest possible interest rate"
+        ],
+        "correctIndex": 1,
+        "explanation": "Contingencies protect buyers by letting them exit the deal safely if a specific condition fails."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "appraisal",
+      "category": "mortgage",
+      "order": 15,
+      "name": "Appraisal",
+      "shortDefinition": "An independent expert's check that the home is worth what you're paying.",
+      "fullExplanation": "An appraisal is an independent expert's estimate of a home's market value, required by the lender before they'll approve your loan. If the home appraises for less than the agreed price, the lender won't lend the full amount — and you may need to renegotiate, pay the gap in cash, or walk away.",
+      "example": {
+        "scenario": "You agree to buy a home for $350,000, but the appraisal comes back at $335,000. The bank will only lend based on $335,000, so you either pay the $15,000 gap yourself, renegotiate the price, or cancel using an appraisal contingency.",
+        "takeaway": "The bank won't lend more than a home is actually worth — the appraisal keeps the price honest."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What happens if a home appraises for less than the price you agreed to pay?",
+        "choices": [
+          "The lender still lends the full amount automatically",
+          "You may need to cover the gap, renegotiate, or walk away",
+          "The sale is automatically cancelled by law",
+          "Nothing changes — appraisals are just a formality"
+        ],
+        "correctIndex": 1,
+        "explanation": "A low appraisal creates a funding gap between what the lender will finance and what you agreed to pay."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "counteroffer",
+      "category": "mortgage",
+      "order": 16,
+      "name": "Counteroffer",
+      "shortDefinition": "The seller's reply that changes the terms of your offer.",
+      "fullExplanation": "A counteroffer is when the seller responds to your offer by proposing different terms — usually a higher price, different closing date, or fewer contingencies. It's a normal part of negotiating, and either side can keep countering until they agree or someone walks away.",
+      "example": {
+        "scenario": "You offer $380,000 for a home. The seller counters at $400,000. You counter back at $390,000, and the seller accepts — landing in between where you both started.",
+        "takeaway": "A counteroffer isn't a rejection — it's the seller negotiating, and the deal isn't dead until someone stops responding."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What is a counteroffer?",
+        "choices": [
+          "A legal requirement before any home sale",
+          "The seller's response proposing different terms than your original offer",
+          "A type of home inspection",
+          "A discount automatically applied after 30 days"
+        ],
+        "correctIndex": 1,
+        "explanation": "A counteroffer is simply the seller pushing back with revised terms during negotiation."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "401k",
+      "category": "accounts",
+      "order": 0,
+      "name": "401(k)",
+      "shortDefinition": "A retirement savings account your employer offers, often with free matching money.",
+      "fullExplanation": "A retirement account funded from your paycheck before taxes, often with free employer matching money added on top.",
+      "example": {
+        "scenario": "Contribute 5% ($3,000) of a $60,000 salary with a 100% match, and your employer adds another $3,000 free.",
+        "takeaway": "A 401(k) match is free money — always contribute enough to get all of it."
+      },
+      "chartScenario": {
+        "kind": "compoundGrowth",
+        "defaultParams": {
+          "principal": 6000,
+          "rate": 0.07,
+          "years": 30
+        },
+        "adjustableParams": [
+          {
+            "key": "principal",
+            "label": "Amount Invested",
+            "minValue": 500,
+            "maxValue": 50000,
+            "step": 500,
+            "unit": "$"
+          },
+          {
+            "key": "rate",
+            "label": "Yearly Growth",
+            "minValue": 0.02,
+            "maxValue": 0.12,
+            "step": 0.01,
+            "unit": "%"
+          },
+          {
+            "key": "years",
+            "label": "Years Until Retirement",
+            "minValue": 1,
+            "maxValue": 40,
+            "step": 1,
+            "unit": "yrs"
+          }
+        ]
+      },
+      "quiz": {
+        "question": "What's special about the 'employer match' many 401(k) plans offer?",
+        "choices": [
+          "It's a loan you must repay",
+          "It's free extra money your employer adds when you contribute",
+          "It's a fee taken out of your paycheck",
+          "It only applies after you retire"
+        ],
+        "correctIndex": 1,
+        "explanation": "A match is money added on top of your own contribution, essentially free."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "traditional-ira",
+      "category": "accounts",
+      "order": 1,
+      "name": "Traditional IRA",
+      "shortDefinition": "A personal retirement account where contributions may lower your taxes today.",
+      "fullExplanation": "A retirement account you open yourself; contributions often lower your taxes now, but withdrawals are taxed later.",
+      "example": {
+        "scenario": "Contribute $6,000 and the IRS treats you as if you earned $6,000 less this year — you pay tax later on withdrawals instead.",
+        "takeaway": "You get a tax break today, in exchange for tax on withdrawals later."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "When do you pay taxes on money in a Traditional IRA?",
+        "choices": [
+          "Never — it's completely tax-free",
+          "When you contribute the money",
+          "When you withdraw the money in retirement",
+          "Every single year it grows"
+        ],
+        "correctIndex": 2,
+        "explanation": "Contributions may be tax-deductible now; withdrawals are taxed as income later."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "roth-ira",
+      "category": "accounts",
+      "order": 2,
+      "name": "Roth IRA",
+      "shortDefinition": "A retirement account where you pay taxes now, so withdrawals later are tax-free.",
+      "fullExplanation": "A retirement account funded with already-taxed money — but growth and withdrawals in retirement come out completely tax-free.",
+      "example": {
+        "scenario": "$6,000 contributed at 25 grows to $90,000 by retirement — and you owe $0 in tax on any of it.",
+        "takeaway": "Decades of tax-free growth can make a Roth especially powerful for young savers."
+      },
+      "chartScenario": {
+        "kind": "compoundGrowth",
+        "defaultParams": {
+          "principal": 6000,
+          "rate": 0.07,
+          "years": 40
+        },
+        "adjustableParams": [
+          {
+            "key": "principal",
+            "label": "Amount Invested",
+            "minValue": 500,
+            "maxValue": 50000,
+            "step": 500,
+            "unit": "$"
+          },
+          {
+            "key": "rate",
+            "label": "Yearly Growth",
+            "minValue": 0.02,
+            "maxValue": 0.12,
+            "step": 0.01,
+            "unit": "%"
+          },
+          {
+            "key": "years",
+            "label": "Years Until Retirement",
+            "minValue": 1,
+            "maxValue": 40,
+            "step": 1,
+            "unit": "yrs"
+          }
+        ]
+      },
+      "quiz": {
+        "question": "What's the main advantage of a Roth IRA?",
+        "choices": [
+          "You get a tax deduction today",
+          "Withdrawals in retirement, including all the growth, are tax-free",
+          "There's no limit to how much you can contribute",
+          "Your employer automatically matches contributions"
+        ],
+        "correctIndex": 1,
+        "explanation": "You pay tax upfront, but decades of growth can be withdrawn completely tax-free."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "529-plan",
+      "category": "accounts",
+      "order": 3,
+      "name": "529 Plan",
+      "shortDefinition": "A savings account for education costs where growth and withdrawals stay tax-free.",
+      "fullExplanation": "A savings account like a Roth IRA, but for education — growth and withdrawals are tax-free when spent on qualified school costs.",
+      "example": {
+        "scenario": "$200/month from birth grows to about $70,000 by college — withdrawn tax-free for tuition.",
+        "takeaway": "529 savings grow and come out tax-free, as long as it's spent on school."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What must 529 plan withdrawals be used for to stay tax-free?",
+        "choices": [
+          "Any purchase at all",
+          "Qualified education expenses, like tuition",
+          "Retirement living expenses",
+          "Paying off a mortgage"
+        ],
+        "correctIndex": 1,
+        "explanation": "529 withdrawals stay tax-free only when used for qualified education costs."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "emergency-fund",
+      "category": "accounts",
+      "order": 4,
+      "name": "Emergency Fund",
+      "shortDefinition": "Cash set aside for surprises, kept separate from your everyday spending.",
+      "fullExplanation": "An emergency fund is cash you keep in an easy-to-reach savings account for surprises like a job loss, car repair, or medical bill — so you don't have to sell investments or go into debt when something unexpected happens.",
+      "example": {
+        "scenario": "Someone keeps $9,000 in a savings account — about three months of expenses. When their car breaks down and costs $1,800 to fix, they pay from the fund instead of putting it on a credit card.",
+        "takeaway": "An emergency fund isn't for growth — it's for peace of mind when life goes sideways."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What is an emergency fund mainly used for?",
+        "choices": [
+          "Maximizing investment growth",
+          "Covering unexpected costs without going into debt or selling investments",
+          "Paying your regular monthly bills",
+          "Avoiding taxes on your paycheck"
+        ],
+        "correctIndex": 1,
+        "explanation": "An emergency fund's job is easy access for surprises, not growth."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "hsa",
+      "category": "accounts",
+      "order": 5,
+      "name": "HSA (Health Savings Account)",
+      "shortDefinition": "A savings account for medical costs with three layers of tax breaks.",
+      "fullExplanation": "A Health Savings Account lets you set aside money for medical expenses tax-free going in, growing tax-free, and coming out tax-free when spent on qualified healthcare costs — available if you have a high-deductible health plan.",
+      "example": {
+        "scenario": "Someone puts $3,000 a year into an HSA. They don't pay tax on the contribution, it grows tax-free if invested, and withdrawals for doctor visits or prescriptions are also tax-free.",
+        "takeaway": "An HSA is one of the few accounts that skips taxes at every stage — in, growth, and out."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What makes an HSA unusual compared to most accounts?",
+        "choices": [
+          "It only works for retirement savings",
+          "It offers tax-free treatment going in, growing, and coming out for medical costs",
+          "It has no contribution limits at all",
+          "It's only available to people over 65"
+        ],
+        "correctIndex": 1,
+        "explanation": "HSAs are unique for offering tax advantages at every stage, as long as the money goes to qualified medical costs."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "certificate-of-deposit",
+      "category": "accounts",
+      "order": 6,
+      "name": "CD (Certificate of Deposit / Fixed Deposit)",
+      "shortDefinition": "A savings account that locks your money up for a set time in exchange for a higher rate.",
+      "fullExplanation": "A Certificate of Deposit is a savings account where you agree to leave your money untouched for a fixed period — like 6 months or 2 years — in exchange for a higher, locked-in interest rate. Take the money out early and you usually pay a penalty. In the U.S. this is called a CD; in India and many other countries the same idea is called a Fixed Deposit (FD) — same tradeoff, different name.",
+      "example": {
+        "scenario": "Someone puts $5,000 into a 1-year CD paying 5%, versus a regular savings account paying 1%. If they leave it untouched for the year, they earn about $250 instead of $50 — but withdrawing early costs them a penalty.",
+        "takeaway": "A CD trades flexibility for a better rate — only use it for money you won't need soon."
+      },
+      "chartScenario": null,
+      "riskLevel": "low",
+      "quiz": {
+        "question": "What do you usually give up in exchange for a CD's higher interest rate?",
+        "choices": [
+          "Nothing — CDs have no downsides",
+          "Easy access to your money until the CD term ends",
+          "Any government protection on your deposit",
+          "The ability to ever withdraw the money at all"
+        ],
+        "correctIndex": 1,
+        "explanation": "CDs lock your money away for a set term, trading flexibility for a higher rate."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "fdic-insurance",
+      "category": "accounts",
+      "order": 7,
+      "name": "FDIC Insurance",
+      "shortDefinition": "A government guarantee that protects your bank deposits if the bank fails.",
+      "fullExplanation": "FDIC insurance is a U.S. government guarantee that protects your money in a bank account — up to $250,000 per depositor, per bank — even if the bank itself goes out of business.",
+      "example": {
+        "scenario": "A bank with $200,000 of someone's savings collapses. Because the account is FDIC-insured and under the $250,000 limit, the depositor gets their full $200,000 back from the government-backed fund.",
+        "takeaway": "FDIC insurance means a bank failure doesn't have to mean losing your savings — as long as you're under the coverage limit."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does FDIC insurance protect against?",
+        "choices": [
+          "Stock market losses in your investment account",
+          "Losing your bank deposits if the bank fails, up to a coverage limit",
+          "Identity theft and fraud",
+          "Interest rates going down"
+        ],
+        "correctIndex": 1,
+        "explanation": "FDIC insurance covers bank deposits against bank failure, not investment losses or fraud."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "timing-the-market",
+      "category": "mistakes",
+      "order": 0,
+      "name": "Timing the Market",
+      "shortDefinition": "Trying to guess the exact best moments to buy and sell - and usually guessing wrong.",
+      "fullExplanation": "Trying to guess the exact best moments to buy and sell — even professionals usually get this wrong.",
+      "example": {
+        "scenario": "Missing just the market's 10 best days over 20 years, out of thousands, can badly hurt your returns.",
+        "takeaway": "Staying invested usually beats trying to guess the perfect moments."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why is trying to time the market risky?",
+        "choices": [
+          "It's illegal to try",
+          "Missing even a few of the market's best days can significantly hurt long-term returns",
+          "The market never actually moves",
+          "It guarantees you'll beat the market"
+        ],
+        "correctIndex": 1,
+        "explanation": "Some of the best market days follow the scariest drops — selling in fear often misses the rebound."
+      },
+      "relatedCategory": "investing"
+    },
+    {
+      "id": "panic-selling",
+      "category": "mistakes",
+      "order": 1,
+      "name": "Panic Selling",
+      "shortDefinition": "Selling out of fear during a drop, locking in a loss that might have recovered.",
+      "fullExplanation": "Selling out of fear during a drop, which locks in a loss that might otherwise have recovered.",
+      "example": {
+        "scenario": "A 30% drop panics an investor into selling, locking in a loss — the market then fully recovers over two years without them.",
+        "takeaway": "A drop is only a real loss once you sell — staying in gives it a chance to recover."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What turns a temporary market drop into a permanent loss?",
+        "choices": [
+          "Waiting patiently for a recovery",
+          "Selling your investments while prices are down",
+          "Buying more while prices are down",
+          "Ignoring the market entirely"
+        ],
+        "correctIndex": 1,
+        "explanation": "A loss only becomes permanent once you sell during the dip."
+      },
+      "relatedCategory": "investing"
+    },
+    {
+      "id": "skipping-the-match",
+      "category": "mistakes",
+      "order": 2,
+      "name": "Leaving Free Money on the Table",
+      "shortDefinition": "Not contributing enough to get your employer's full 401(k) match.",
+      "fullExplanation": "Contributing less than what's needed to get your full 401(k) employer match — leaving free money unclaimed.",
+      "example": {
+        "scenario": "Only contributing 2% instead of 5% means missing out on about $1,800/year in free matching money.",
+        "takeaway": "Check your employer's match — getting the full match is an easy win."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What happens if you contribute less than your employer's full match threshold?",
+        "choices": [
+          "Nothing - the match doesn't matter",
+          "You miss out on free matching money your employer would have added",
+          "Your employer contributes even more to make up for it",
+          "You get a tax penalty"
+        ],
+        "correctIndex": 1,
+        "explanation": "Contributing below the match threshold leaves free employer money unclaimed."
+      },
+      "relatedCategory": "accounts"
+    },
+    {
+      "id": "ignoring-fees",
+      "category": "mistakes",
+      "order": 3,
+      "name": "Paying High Fees Without Realizing It",
+      "shortDefinition": "Not checking what a fund or advisor charges — and quietly losing growth to fees.",
+      "fullExplanation": "Not checking what a fund or advisor charges — small-looking fees compound into a huge cost over decades.",
+      "example": {
+        "scenario": "A 1.5% fee vs. 0.05% on $10,000 over 30 years leaves tens of thousands of dollars less, even with similar performance.",
+        "takeaway": "Always check fees before investing — small percentages add up over time."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why do investment fees deserve extra attention even when they look small?",
+        "choices": [
+          "They're only charged once",
+          "They're charged every year and compound against your growth over time",
+          "They don't actually affect your returns",
+          "They're always illegal above 1%"
+        ],
+        "correctIndex": 1,
+        "explanation": "Fees are charged every year, so small percentages compound into large costs."
+      },
+      "relatedCategory": "investing"
+    },
+    {
+      "id": "house-poor",
+      "category": "mistakes",
+      "order": 4,
+      "name": "Becoming House Poor",
+      "shortDefinition": "Buying a home so pricey your mortgage leaves little room for anything else.",
+      "fullExplanation": "Buying a home so expensive that the mortgage eats your budget, leaving little for savings or emergencies.",
+      "example": {
+        "scenario": "A $2,800 monthly payment on $80,000 income leaves nothing for savings — one car repair means credit card debt.",
+        "takeaway": "Being approved for a loan doesn't mean you should borrow the max."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does it mean to be 'house poor'?",
+        "choices": [
+          "Owning multiple homes",
+          "Spending so much on housing costs that little income is left for anything else",
+          "Renting instead of buying",
+          "Having a home with no mortgage at all"
+        ],
+        "correctIndex": 1,
+        "explanation": "House poor means housing costs squeeze out savings and everyday flexibility."
+      },
+      "relatedCategory": "mortgage"
+    },
+    {
+      "id": "skipping-inspection",
+      "category": "mistakes",
+      "order": 5,
+      "name": "Skipping the Home Inspection",
+      "shortDefinition": "Waiving a home inspection to win a bidding war — and risking a costly surprise.",
+      "fullExplanation": "Waiving a professional home inspection to win a bidding war — risking costly hidden problems.",
+      "example": {
+        "scenario": "Skipping inspection to win a $400,000 home leads to $35,000 in surprise roof and wiring repairs.",
+        "takeaway": "An inspection costs little, but the problems it catches can cost thousands."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the main risk of skipping a home inspection?",
+        "choices": [
+          "It has no real risk, it's just a formality",
+          "You might discover expensive hidden problems only after you've already bought the home",
+          "It guarantees the home is haunted",
+          "It automatically raises your interest rate"
+        ],
+        "correctIndex": 1,
+        "explanation": "Skipping inspection means finding hidden problems only after you already own the home."
+      },
+      "relatedCategory": "mortgage"
+    },
+    {
+      "id": "ignoring-prepayment-penalty",
+      "category": "mistakes",
+      "order": 6,
+      "name": "Ignoring Prepayment Penalties",
+      "shortDefinition": "Paying extra toward your loan without checking if there's a penalty for it.",
+      "fullExplanation": "Assuming you can always pay off a loan early for free — some lenders charge a prepayment penalty, and finding out after you've already sent the extra money can turn a smart move into a costly surprise.",
+      "example": {
+        "scenario": "Someone pays an extra $30,000 toward their mortgage after a bonus, only to discover a 2% prepayment penalty — a surprise $600 fee they never budgeted for.",
+        "takeaway": "Always check your loan terms for a prepayment penalty before paying extra."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the risk of paying extra toward a loan without checking the terms first?",
+        "choices": [
+          "There's no risk — extra payments are always free",
+          "Your interest rate automatically increases",
+          "You could get hit with a prepayment penalty you didn't budget for",
+          "The lender must automatically refund your interest"
+        ],
+        "correctIndex": 2,
+        "explanation": "Some lenders charge a fee for paying early, so it pays to check the terms first."
+      },
+      "relatedCategory": "mortgage"
+    },
+    {
+      "id": "mutual-fund",
+      "category": "investing",
+      "order": 14,
+      "name": "Mutual Fund",
+      "shortDefinition": "A pooled fund where a manager actively picks investments, trying to beat the market.",
+      "fullExplanation": "A pooled fund where a manager actively picks investments to try to beat the market — usually with higher fees than an index fund, and rarely better results.",
+      "example": {
+        "scenario": "An index fund charging 0.05% ends up ahead of a similarly-performing mutual fund charging 1%, purely from the fee gap.",
+        "takeaway": "Active management costs more, but rarely beats a low-cost index fund after fees."
+      },
+      "chartScenario": null,
+      "riskLevel": "medium",
+      "quiz": {
+        "question": "What's the main practical difference between a mutual fund and an index fund?",
+        "choices": [
+          "Mutual funds only hold one company's stock",
+          "A mutual fund is actively managed by a professional trying to beat the market, which usually means higher fees",
+          "An index fund is riskier than a mutual fund",
+          "Mutual funds are not allowed in retirement accounts"
+        ],
+        "correctIndex": 1,
+        "explanation": "Active management is the key difference — and its cost often isn't earned back."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "high-frequency-trading",
+      "category": "investing",
+      "order": 15,
+      "name": "High-Frequency Trading (HFT)",
+      "shortDefinition": "Computer trading that buys and sells in fractions of a second for tiny price gaps.",
+      "fullExplanation": "Computer-driven trading that buys and sells in fractions of a second to profit from tiny, fleeting price gaps.",
+      "example": {
+        "scenario": "An algorithm spots a stock priced slightly differently on two exchanges and profits instantly, thousands of times a second.",
+        "takeaway": "HFT is a specialized game everyday investors can't compete with — don't read into minute-by-minute price swings."
+      },
+      "chartScenario": null,
+      "riskLevel": "high",
+      "quiz": {
+        "question": "What best describes high-frequency trading?",
+        "choices": [
+          "Individual investors checking their portfolio frequently",
+          "Computer-driven trading that executes huge numbers of trades in fractions of a second",
+          "A type of savings account",
+          "A government program that sets stock prices"
+        ],
+        "correctIndex": 1,
+        "explanation": "HFT profits from speed and tiny price gaps — a different world from everyday investing."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "day-trading",
+      "category": "investing",
+      "order": 16,
+      "name": "Day Trading",
+      "shortDefinition": "Buying and selling within the same day to chase short-term price swings.",
+      "fullExplanation": "Buying and selling within the same day to chase short-term price swings — most day traders lose money once costs and taxes are counted.",
+      "example": {
+        "scenario": "A day trader buys and sells daily hoping for small gains — over a year, taxes and costs typically leave most traders behind a simple index fund.",
+        "takeaway": "The odds favor patient long-term investors, not short-term traders."
+      },
+      "chartScenario": null,
+      "riskLevel": "high",
+      "quiz": {
+        "question": "What does research on retail day traders generally show?",
+        "choices": [
+          "Most day traders consistently beat the market",
+          "The large majority of day traders lose money over time once costs are factored in",
+          "Day trading guarantees faster returns than long-term investing",
+          "Day trading has no risk if you're careful"
+        ],
+        "correctIndex": 1,
+        "explanation": "Studies show most retail day traders lose money after costs and taxes."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "pe-ratio",
+      "category": "investing",
+      "order": 17,
+      "name": "P/E Ratio",
+      "shortDefinition": "How much people pay for $1 of a company's profit.",
+      "fullExplanation": "The Price-to-Earnings ratio compares a stock's price to how much profit the company makes per share — a quick way to see if a stock looks expensive or cheap.",
+      "example": {
+        "scenario": "Two companies both earn $2 per share. One stock costs $20 (P/E of 10), the other costs $60 (P/E of 30) — investors are paying three times more for the same profit.",
+        "takeaway": "A higher P/E means investors expect faster future growth — or are simply paying more for the same earnings."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does a stock's P/E ratio tell you?",
+        "choices": [
+          "How many shares the company has issued",
+          "How much investors are paying for each dollar of the company's profit",
+          "How much dividend the stock pays",
+          "How risky the company's debt is"
+        ],
+        "correctIndex": 1,
+        "explanation": "P/E just divides price by earnings per share — a quick expensive-vs-cheap yardstick."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "alpha",
+      "category": "investing",
+      "order": 18,
+      "name": "Alpha",
+      "shortDefinition": "How much an investment beat (or missed) its benchmark.",
+      "fullExplanation": "Alpha measures whether an investment did better or worse than a benchmark it's compared against, like the S&P 500 — after accounting for risk.",
+      "example": {
+        "scenario": "The market rises 8% this year. Your fund rises 11% — that's +3% of alpha. Your friend's fund only rises 5% — that's -3% of alpha.",
+        "takeaway": "Positive alpha means beating the market; most funds fail to do this consistently."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "If a fund has positive alpha, what does that mean?",
+        "choices": [
+          "It only invests in gold",
+          "It has no fees",
+          "It outperformed its benchmark",
+          "It guarantees no losses"
+        ],
+        "correctIndex": 2,
+        "explanation": "Alpha is just the gap between an investment's return and its benchmark's return."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "options-greeks",
+      "category": "investing",
+      "order": 19,
+      "name": "Options Greeks (Theta & Gamma)",
+      "shortDefinition": "The numbers that show how an option's price reacts to time and price moves.",
+      "fullExplanation": "Theta measures how much value an option loses each day just from time ticking by. Gamma measures how fast an option's sensitivity to the stock price changes as the stock moves. Both are advanced tools options traders use to manage risk.",
+      "example": {
+        "scenario": "An option loses $5 in value overnight even though the stock price didn't move — that's theta at work. If the stock jumps, the option's price sensitivity can shift suddenly — that's gamma.",
+        "takeaway": "Options aren't just about direction — time and speed of price moves matter too."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does theta measure about an option?",
+        "choices": [
+          "How much value it loses each day just from time passing",
+          "How much the company's stock price will rise",
+          "The total number of shares outstanding",
+          "The dividend paid by the stock"
+        ],
+        "correctIndex": 0,
+        "explanation": "Theta is the daily 'time decay' that eats into an option's value as expiration nears."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "etf",
+      "category": "investing",
+      "order": 20,
+      "name": "ETF (Exchange-Traded Fund)",
+      "shortDefinition": "A basket of investments, like a mutual fund, but bought and sold like a stock throughout the day.",
+      "fullExplanation": "An ETF bundles many stocks or bonds into a single investment, similar to an index fund or mutual fund. The key difference is how it trades: a traditional mutual fund is only priced and traded once a day after the market closes, while an ETF trades all day on an exchange at a live, constantly-changing price — just like a share of stock. ETFs also tend to have lower costs and fewer minimum-investment requirements than mutual funds, which is part of why they've become so popular.",
+      "example": {
+        "scenario": "Someone buys shares of an S&P 500 ETF for $500 at 10am while the market is open. If the market rises during the day, they could sell those same shares for $510 by 2pm — a traditional mutual fund can't do that, since it only trades once, after the market closes for the day.",
+        "takeaway": "An ETF combines a fund's built-in diversification with a stock's anytime-during-the-day flexibility."
+      },
+      "chartScenario": null,
+      "riskLevel": "medium",
+      "quiz": {
+        "question": "What's the main difference between an ETF and a traditional mutual fund?",
+        "choices": [
+          "An ETF can only hold one company's stock",
+          "An ETF trades throughout the day on an exchange like a stock, while a mutual fund is priced and traded only once a day",
+          "An ETF guarantees a fixed return every year",
+          "An ETF can only be purchased by large institutions"
+        ],
+        "correctIndex": 1,
+        "explanation": "That intraday tradability is the defining difference — the underlying holdings can be very similar to an index fund or mutual fund."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "real-estate-investing",
+      "category": "investing",
+      "order": 21,
+      "name": "Real Estate Investing",
+      "shortDefinition": "Buying property — a house, apartment, or land — to earn rental income, benefit from rising value, or both.",
+      "fullExplanation": "Real estate can make money two ways at once: rental income (a tenant's monthly rent covers costs and leaves some profit) and appreciation (the property becomes worth more over time). Directly owning property means a large upfront cost, a mortgage, ongoing maintenance, and the hassle of finding tenants or a buyer — and it's illiquid, since selling a house can take months. A REIT (Real Estate Investment Trust) offers a hands-off alternative: it's a company that owns and operates income-producing real estate — apartment buildings, malls, warehouses — and its shares trade on the stock market just like a stock, so anyone can invest in real estate without ever buying a physical building.",
+      "example": {
+        "scenario": "Someone buys a rental property for $300,000 using a mortgage. Rent of $2,200 a month covers the mortgage payment and expenses with some profit left over, and five years later the property has appreciated to $360,000.",
+        "takeaway": "Real estate can pay off twice — rent along the way and a higher sale price later — but it's illiquid and requires active management, or a REIT for a hands-off alternative."
+      },
+      "chartScenario": null,
+      "riskLevel": "medium",
+      "quiz": {
+        "question": "What is a REIT?",
+        "choices": [
+          "A type of mortgage that requires no down payment",
+          "A company that owns income-producing real estate and trades on the stock market like a stock, letting people invest in real estate without buying property directly",
+          "A government program that gives free land to first-time buyers",
+          "A tax paid only when real estate is sold"
+        ],
+        "correctIndex": 1,
+        "explanation": "REITs let ordinary investors own a slice of large real estate portfolios — like shopping malls or apartment buildings — by simply buying shares, with no mortgage or property management required."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "precious-metals",
+      "category": "investing",
+      "order": 23,
+      "name": "Gold & Precious Metals",
+      "shortDefinition": "Physical assets like gold and silver that investors often hold as a store of value, especially during economic uncertainty.",
+      "fullExplanation": "Gold, silver, and other precious metals don't pay dividends or interest the way stocks or FDs do — the only way to profit is if the price is higher when it's sold than when it was bought. Because they aren't tied to any single company's or government's financial health, precious metals are often used as a hedge against inflation and a falling currency, and investors tend to buy more of them when they're worried about the economy. There are two main ways to invest: buying the physical metal itself (bars, coins, jewelry — which requires secure storage), or buying a gold ETF or fund that tracks the price without needing to store any metal. Either way, prices can still swing significantly in the short term based on investor sentiment, and the metal itself generates no ongoing income while it's held.",
+      "example": {
+        "scenario": "An investor buys 1 ounce of gold for $2,000 as a hedge during a period of high inflation. Two years later they sell it for $2,400 — but the gold sat idle the entire time, earning no dividend or interest, unlike a stock or FD generating ongoing income.",
+        "takeaway": "Precious metals can help protect a portfolio when prices or currencies lose value, but unlike stocks or FDs, they don't generate any income on their own."
+      },
+      "chartScenario": null,
+      "riskLevel": "medium",
+      "quiz": {
+        "question": "What is a key difference between gold and something like a stock or FD?",
+        "choices": [
+          "Gold guarantees a fixed interest payment every year",
+          "Gold produces no income — no dividends or interest — so any profit comes only from selling it for more than it cost",
+          "Gold can never lose value",
+          "Gold is automatically insured by the government up to $250,000"
+        ],
+        "correctIndex": 1,
+        "explanation": "Unlike a stock's dividends or an FD's interest, gold generates no ongoing income — it's a store of value that only pays off if it's sold for more than it was bought for."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "bonds",
+      "category": "investing",
+      "order": 24,
+      "name": "Bonds",
+      "shortDefinition": "Lending money to a government or company in exchange for regular interest payments and your money back at a set date.",
+      "fullExplanation": "Buying a bond means lending money to whoever issued it — a government (like a U.S. Treasury bond) or a company (a corporate bond) — for a fixed term. In exchange, the issuer pays you regular interest payments (called the 'coupon') and returns the full amount you lent (the 'face value') when the bond matures. Bonds are generally less risky than stocks because that interest payment schedule is a legal obligation, not a hope — but risk still varies a lot by issuer. A U.S. Treasury bond is considered about as safe as an investment gets, since the government can always raise taxes or print money to pay it back. A corporate bond from a shaky company carries real default risk — if the company goes bankrupt, bondholders might not get fully repaid. Bond prices also move opposite to interest rates: when rates rise, existing bonds paying the old, lower rate become less attractive, so their resale value falls.",
+      "example": {
+        "scenario": "Someone buys a $1,000, 10-year U.S. Treasury bond paying 4% interest. They receive $40 a year for 10 years, then get their original $1,000 back at maturity — regardless of what the stock market does in between.",
+        "takeaway": "Bonds trade the higher potential upside of stocks for a predictable, contractual stream of interest payments — with the safety depending heavily on who's issuing the bond."
+      },
+      "chartScenario": null,
+      "riskLevel": "low",
+      "quiz": {
+        "question": "Why is a U.S. Treasury bond considered safer than a corporate bond?",
+        "choices": [
+          "Treasury bonds pay much higher interest rates",
+          "The U.S. government is far less likely to default than a company, which could go bankrupt and fail to repay bondholders",
+          "Corporate bonds are not legally required to pay interest",
+          "Treasury bonds can be cashed in for full value at any time with no penalty"
+        ],
+        "correctIndex": 1,
+        "explanation": "A bond's safety depends on how likely the issuer is to repay it — a government is generally far more reliable than an individual company."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "cryptocurrency",
+      "category": "investing",
+      "order": 25,
+      "name": "Cryptocurrency",
+      "shortDefinition": "A digital currency, like Bitcoin, that isn't backed by any government or company and can swing wildly in price.",
+      "fullExplanation": "Cryptocurrency is a digital asset — like Bitcoin or Ethereum — that exists only as entries on a decentralized, shared ledger called a blockchain, with no central bank or government backing its value. Unlike a stock, it represents no ownership in a company and pays no dividend; unlike a bond, no one has promised to pay it back. Its price is driven purely by what buyers are willing to pay at any given moment, which makes it extremely volatile — it's not unusual for its value to rise or fall by double-digit percentages in a single day. Crypto held on an exchange (rather than in a personal digital wallet) also carries the added risk that the exchange itself could mismanage or lose customer funds, as happened with FTX.",
+      "example": {
+        "scenario": "Someone buys $1,000 of Bitcoin. A month later, a wave of buying interest pushes the price up 40%, so it's worth $1,400. Two months after that, negative news causes a sell-off and it drops to $700 — all without the person doing anything.",
+        "takeaway": "Cryptocurrency can move dramatically in either direction with no company earnings or interest payments underneath it — only what someone else is willing to pay for it next."
+      },
+      "chartScenario": null,
+      "riskLevel": "high",
+      "quiz": {
+        "question": "What backs the value of a cryptocurrency like Bitcoin?",
+        "choices": [
+          "A government guarantee, like FDIC insurance on a bank account",
+          "Ownership of a share in a real company's profits",
+          "Nothing but what other buyers are willing to pay for it — there's no company, dividend, or government promise behind it",
+          "A fixed exchange rate set by the issuing bank"
+        ],
+        "correctIndex": 2,
+        "explanation": "Cryptocurrency has no underlying cash flow or government backing — its price reflects pure supply and demand, which is why it can be so volatile."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "money-market-fund",
+      "category": "investing",
+      "order": 26,
+      "name": "Money Market Fund",
+      "shortDefinition": "A low-risk fund that pools money into very short-term, high-quality debt — a common place to park cash while earning a bit of interest.",
+      "fullExplanation": "A money market fund is a type of mutual fund that invests in very short-term, high-quality debt — things like U.S. Treasury bills, and short-term loans between banks and large corporations — that mature in a matter of days or months. Because the underlying debt is so short-term and high-quality, the fund's share price is designed to stay stable (usually right around $1.00 per share) while still paying out interest, unlike a stock or bond fund whose value can swing. It's a popular place to keep cash that isn't needed immediately but should still earn something, such as an emergency fund or money waiting to be invested elsewhere. It isn't the same as a bank savings account, though — a money market fund isn't FDIC-insured, even though in practice its ultra-short-term, high-quality holdings make a loss of principal extremely rare.",
+      "example": {
+        "scenario": "Someone parks $10,000 in a money market fund paying 5% while deciding where to invest it long-term. A month later they still have essentially $10,000 (plus a bit of interest), unlike if they'd put it in a stock that could have dropped 10% in that time.",
+        "takeaway": "A money market fund is built for stability and easy access, not growth — it's a parking spot for cash, not a long-term investment."
+      },
+      "chartScenario": null,
+      "riskLevel": "low",
+      "quiz": {
+        "question": "What is a money market fund mainly used for?",
+        "choices": [
+          "Maximizing long-term growth by investing in high-risk stocks",
+          "Parking cash safely for the short term while still earning some interest, since it holds very short-term, high-quality debt",
+          "Guaranteeing FDIC insurance like a bank savings account",
+          "Locking money away for a fixed multi-year term like a CD"
+        ],
+        "correctIndex": 1,
+        "explanation": "Money market funds hold ultra-short-term, high-quality debt so their value stays stable, making them a common place to keep cash that needs to stay safe and accessible."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "pump-and-dump",
+      "category": "scams",
+      "order": 0,
+      "name": "Pump and Dump",
+      "shortDefinition": "Hyping a cheap stock with false claims to drive up the price, then secretly selling before it crashes.",
+      "fullExplanation": "Hyping a cheap stock with false claims to drive up the price, then secretly selling before it crashes.",
+      "example": {
+        "scenario": "Promoters hype an obscure stock online, it triples, they sell at the peak, and it crashes — leaving buyers with losses.",
+        "takeaway": "Be skeptical of urgent 'hot tips' on obscure stocks — the pressure is often the scam."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the telltale pattern of a pump-and-dump scheme?",
+        "choices": [
+          "A stock's price rises slowly over years based on real earnings growth",
+          "A stock is hyped with exaggerated claims, the price spikes, then insiders sell and it crashes",
+          "A company issues a dividend to shareholders",
+          "A stock splits into more shares at a lower price"
+        ],
+        "correctIndex": 1,
+        "explanation": "The 'pump' (hype) followed by the 'dump' (insiders selling) is the telltale pattern."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "ponzi-scheme",
+      "category": "scams",
+      "order": 1,
+      "name": "Ponzi Scheme",
+      "shortDefinition": "A fake investment that pays 'returns' to earlier investors using money from new investors.",
+      "fullExplanation": "A fake investment that pays 'returns' to earlier investors using money from new investors, not real profits — it collapses once new money slows.",
+      "example": {
+        "scenario": "A manager promises a steady 12% return with no real trading behind it — it works until a downturn causes mass withdrawals, and it collapses.",
+        "takeaway": "Steady, guaranteed-sounding high returns with no clear source is a huge red flag."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "How does a Ponzi scheme actually pay its 'returns'?",
+        "choices": [
+          "From real profits generated by trading",
+          "Using money from newer investors to pay earlier investors",
+          "From government insurance",
+          "From company dividends"
+        ],
+        "correctIndex": 1,
+        "explanation": "New investors' money pays 'returns' to earlier ones — it collapses once new money stops."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "pyramid-scheme",
+      "category": "scams",
+      "order": 2,
+      "name": "Pyramid Scheme",
+      "shortDefinition": "A scheme where you're paid mainly for recruiting, not selling a real product.",
+      "fullExplanation": "A scheme where you earn mainly by recruiting new members, not by selling a real product — it collapses once recruiting dries up.",
+      "example": {
+        "scenario": "You pay $500 to join and earn by recruiting others who also pay — running out of new recruits means most people never earn it back.",
+        "takeaway": "If income comes mainly from recruiting rather than real sales, it's a pyramid scheme."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the core problem with a pyramid scheme's structure?",
+        "choices": [
+          "It requires too much paperwork",
+          "It relies on ever-increasing recruitment, which is mathematically impossible to sustain",
+          "It only works for people who join in December",
+          "It's a legal way to guarantee investment returns"
+        ],
+        "correctIndex": 1,
+        "explanation": "Each layer needs more recruits than the one above — the structure runs out of people and collapses."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "insider-trading",
+      "category": "scams",
+      "order": 3,
+      "name": "Insider Trading",
+      "shortDefinition": "Trading a stock using important non-public information — illegal in most cases.",
+      "fullExplanation": "Trading a stock using important non-public information — illegal because it lets a few profit unfairly at everyone else's expense.",
+      "example": {
+        "scenario": "An executive secretly buys shares before a merger announcement, then sells at a big profit once it's public — a federal crime.",
+        "takeaway": "Trading on secret information isn't a clever edge — it's a prosecuted crime."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What makes insider trading illegal?",
+        "choices": [
+          "Trading stocks at all is illegal for individuals",
+          "Trading based on material, non-public information gives an unfair advantage over other investors",
+          "It's only illegal if you lose money",
+          "It's illegal to buy more than 100 shares at once"
+        ],
+        "correctIndex": 1,
+        "explanation": "It's illegal because it undermines the level playing field markets depend on."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "affinity-fraud",
+      "category": "scams",
+      "order": 4,
+      "name": "Affinity Fraud",
+      "shortDefinition": "A scam that targets a tight-knit community, using shared trust to lower people's guard.",
+      "fullExplanation": "A scam that targets a tight-knit community — church, workplace, immigrant group — using shared trust to lower people's guard.",
+      "example": {
+        "scenario": "A trusted community member privately pitches an 'exclusive' investment; the shared trust masks a Ponzi scheme that later collapses.",
+        "takeaway": "Shared trust isn't proof of legitimacy — scammers target close-knit groups on purpose."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why do scammers specifically target tight-knit communities with affinity fraud?",
+        "choices": [
+          "Community members are legally required to invest together",
+          "Shared trust within the group makes people skip their normal skepticism",
+          "It's easier to get government approval",
+          "Tight-knit communities have better legal protections"
+        ],
+        "correctIndex": 1,
+        "explanation": "The scam relies on borrowed trust from within a group people already trust."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "boiler-room",
+      "category": "scams",
+      "order": 5,
+      "name": "Boiler Room Scam",
+      "shortDefinition": "High-pressure cold calls pushing a 'can't-miss' investment before you can research it.",
+      "fullExplanation": "High-pressure cold calls pushing a 'can't-miss' investment, using urgency to stop you from researching it first.",
+      "example": {
+        "scenario": "A caller insists you wire money today to lock in a 'ground floor' deal — that pressure itself is the scam.",
+        "takeaway": "A legitimate investment can withstand you taking time to research it."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the biggest red flag of a boiler room scam?",
+        "choices": [
+          "The salesperson offers you a written prospectus",
+          "High-pressure urgency demanding you invest immediately, before you can research or think it over",
+          "The investment has a low expense ratio",
+          "The caller recommends a diversified index fund"
+        ],
+        "correctIndex": 1,
+        "explanation": "Manufactured urgency to act immediately is the classic boiler room red flag."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "credit-score",
+      "category": "credit",
+      "order": 1,
+      "name": "Credit Score",
+      "shortDefinition": "A three-digit number lenders use to judge how risky it is to lend you money.",
+      "fullExplanation": "A credit score is a three-digit number (typically 300-850) that summarizes how reliably you've paid back debt in the past. Lenders use it to decide whether to approve you for a loan or credit card, and what interest rate to charge - a higher score usually means lower rates.",
+      "example": {
+        "scenario": "Two people apply for the same $300,000 mortgage. One has a 780 credit score and gets a 6% rate; the other has a 620 score and gets 7.5% - a difference of hundreds of dollars a month.",
+        "takeaway": "A higher credit score doesn't just get you approved - it can save you real money on every loan you take out."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does a credit score mainly tell a lender?",
+        "choices": [
+          "How much money you currently have in the bank",
+          "How reliably you've paid back debt in the past",
+          "Your annual income",
+          "How many bank accounts you own"
+        ],
+        "correctIndex": 1,
+        "explanation": "Credit scores are built from your borrowing and repayment history, not your income or savings."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "credit-utilization",
+      "category": "credit",
+      "order": 2,
+      "name": "Credit Utilization",
+      "shortDefinition": "How much of your available credit you're actually using, shown as a percentage.",
+      "fullExplanation": "Credit utilization is the percentage of your total available credit that you're currently using. Using a small share of your limit signals to lenders that you're not overly reliant on credit - using most or all of it can lower your credit score, even if you pay on time.",
+      "example": {
+        "scenario": "Someone has a $10,000 credit limit and carries a $6,000 balance - 60% utilization, which is high enough to hurt their score even though every payment has been on time.",
+        "takeaway": "Keeping your balance well below your limit (experts often suggest under 30%) helps your credit score, separate from whether you pay on time."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why can high credit utilization lower your credit score even if you always pay on time?",
+        "choices": [
+          "It doesn't - only late payments affect your score",
+          "Using most of your available credit signals higher risk to lenders",
+          "Utilization is only used for mortgage applications",
+          "It automatically counts as a missed payment"
+        ],
+        "correctIndex": 1,
+        "explanation": "High utilization is a separate risk signal from payment history - both matter to your score."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "apr-vs-apy",
+      "category": "credit",
+      "order": 3,
+      "name": "APR vs. APY",
+      "shortDefinition": "APR is what you pay to borrow; APY is what you earn by saving - and APY compounds, APR usually doesn't.",
+      "fullExplanation": "APR (Annual Percentage Rate) is the yearly cost of borrowing money, like on a credit card or loan. APY (Annual Percentage Yield) is the yearly return on money you save or invest, and it accounts for compounding - so APY is usually the more useful number when comparing savings accounts.",
+      "example": {
+        "scenario": "A credit card charges 24% APR on unpaid balances, while a savings account advertises 4.5% APY. The APR is what it costs you to carry debt; the APY is what you earn by keeping money parked.",
+        "takeaway": "Seeing 'APR' should make you think 'cost of borrowing'; seeing 'APY' should make you think 'return on saving.'"
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Which of these numbers accounts for compounding?",
+        "choices": [
+          "APR",
+          "APY",
+          "Both equally",
+          "Neither"
+        ],
+        "correctIndex": 1,
+        "explanation": "APY includes the effect of compounding, which is why it's used to describe how savings grow."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "debt-to-income-ratio",
+      "category": "credit",
+      "order": 4,
+      "name": "Debt-to-Income Ratio (DTI)",
+      "shortDefinition": "The share of your monthly income that goes toward debt payments.",
+      "fullExplanation": "Debt-to-income ratio (DTI) compares your total monthly debt payments to your gross monthly income. Lenders use it - often alongside your credit score - to judge whether you can comfortably take on a new loan like a mortgage.",
+      "example": {
+        "scenario": "Someone earns $6,000 a month and pays $1,800 total toward a car loan, student loans, and credit cards - a 30% DTI. Most mortgage lenders want to see DTI below 43% after adding the new mortgage payment.",
+        "takeaway": "DTI measures whether your income can support more debt, separate from your credit score, which measures how reliably you've repaid debt in the past."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does debt-to-income ratio measure?",
+        "choices": [
+          "Your credit score history",
+          "How much of your monthly income already goes toward debt payments",
+          "The total dollar amount of all debt you've ever had",
+          "Your savings account balance"
+        ],
+        "correctIndex": 1,
+        "explanation": "DTI is about cash flow - how much of your income is already committed to debt payments each month."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "minimum-payment",
+      "category": "credit",
+      "order": 5,
+      "name": "Minimum Payment",
+      "shortDefinition": "The smallest amount you must pay on a credit card each month to avoid a penalty.",
+      "fullExplanation": "The minimum payment is the smallest amount a lender requires you to pay each billing cycle to keep your account in good standing. Paying only the minimum avoids a late fee, but interest keeps accruing on the rest of your balance - which can make debt take years to pay off.",
+      "example": {
+        "scenario": "Someone has a $5,000 credit card balance at 22% APR and pays only the $150 minimum each month. Because so much of that payment goes to interest, it could take over 4 years and cost thousands in interest to pay off - even without adding new charges.",
+        "takeaway": "Paying the minimum keeps you out of trouble, but paying more than the minimum is what actually gets rid of the debt."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the main downside of paying only the minimum payment on a credit card?",
+        "choices": [
+          "It counts as a missed payment",
+          "Interest keeps building on the rest of the balance, dragging out the payoff for years",
+          "It immediately lowers your credit score",
+          "The lender can cancel your card"
+        ],
+        "correctIndex": 1,
+        "explanation": "The minimum payment avoids penalties, but leaves most of the balance to keep accruing interest."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "snowball-vs-avalanche",
+      "category": "credit",
+      "order": 6,
+      "name": "Snowball vs. Avalanche",
+      "shortDefinition": "Two strategies for paying off multiple debts: smallest balance first, or highest interest rate first.",
+      "fullExplanation": "The snowball method pays off your smallest debt first for a quick psychological win, then rolls that payment into the next-smallest debt. The avalanche method pays off the highest-interest debt first, which saves the most money over time. Both work - the best one is whichever keeps you motivated enough to stick with it.",
+      "example": {
+        "scenario": "Someone has three debts: a $500 balance at 15%, a $2,000 balance at 22%, and a $6,000 balance at 8%. Snowball tackles the $500 balance first for a fast win; avalanche tackles the $2,000 balance first because its rate is highest.",
+        "takeaway": "Avalanche saves more in interest on paper, but snowball's quick wins help many people actually finish paying off their debt."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the key difference between the snowball and avalanche debt payoff methods?",
+        "choices": [
+          "Snowball pays highest-interest debt first; avalanche pays smallest-balance first",
+          "Snowball pays smallest-balance debt first; avalanche pays highest-interest debt first",
+          "They're the same method with different names",
+          "Avalanche only works for mortgage debt"
+        ],
+        "correctIndex": 1,
+        "explanation": "Snowball prioritizes small wins by balance size; avalanche prioritizes interest savings by rate."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "marginal-tax-bracket",
+      "category": "taxes",
+      "order": 1,
+      "name": "Marginal Tax Bracket",
+      "shortDefinition": "Only the portion of your income inside a tax bracket is taxed at that bracket's rate - not your whole income.",
+      "fullExplanation": "The U.S. uses a marginal tax system with brackets - different slices of your income are taxed at different rates. Moving into a higher bracket doesn't mean all your income gets taxed at the higher rate, only the portion that falls within it.",
+      "example": {
+        "scenario": "Someone's income puts them in a bracket where the last few thousand dollars they earned is taxed at 22%, but their earlier income was still taxed at lower rates like 10% and 12% - their overall (effective) tax rate ends up well below 22%.",
+        "takeaway": "A 'higher tax bracket' only taxes the income within that bracket more, not everything you earn."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "If you move into a higher tax bracket, what happens to your income?",
+        "choices": [
+          "All of your income is taxed at the new, higher rate",
+          "Only the income that falls within the new bracket is taxed at the higher rate",
+          "Your tax rate stays exactly the same",
+          "You automatically owe a penalty"
+        ],
+        "correctIndex": 1,
+        "explanation": "Marginal brackets only apply to the slice of income within that bracket, not your entire income."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "capital-gains",
+      "category": "taxes",
+      "order": 2,
+      "name": "Capital Gains (Short-Term vs. Long-Term)",
+      "shortDefinition": "Profit from selling an investment - taxed at a lower rate if you held it over a year.",
+      "fullExplanation": "A capital gain is the profit you make when you sell an investment for more than you paid. Short-term gains (held one year or less) are taxed like regular income; long-term gains (held over a year) get a lower tax rate - a built-in reward for holding investments longer.",
+      "example": {
+        "scenario": "Someone buys stock for $5,000 and sells it a year and a half later for $8,000 - a $3,000 gain taxed at the lower long-term rate. If they'd sold after 11 months instead, that same $3,000 would be taxed at their regular, higher income tax rate.",
+        "takeaway": "Holding an investment for more than a year before selling can significantly lower the tax you owe on the profit."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What generally determines whether a capital gain is taxed at the lower long-term rate?",
+        "choices": [
+          "How much profit you made",
+          "Whether you held the investment for more than a year before selling",
+          "The type of investment account you used",
+          "Your age when you sell"
+        ],
+        "correctIndex": 1,
+        "explanation": "The holding period - over a year vs. a year or less - determines long-term vs. short-term treatment."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "w2-vs-1099",
+      "category": "taxes",
+      "order": 3,
+      "name": "W-2 vs. 1099",
+      "shortDefinition": "W-2 means you're an employee with taxes withheld automatically; 1099 means you're a contractor who pays taxes yourself.",
+      "fullExplanation": "A W-2 is the tax form employers send to employees - taxes are automatically withheld from each paycheck. A 1099 is sent to independent contractors and freelancers, who receive their full pay upfront and are responsible for setting aside and paying their own taxes, usually quarterly.",
+      "example": {
+        "scenario": "Two people each earn $60,000 a year. The W-2 employee sees taxes already taken out of every paycheck. The 1099 freelancer gets the full $60,000 paid out and must set aside money themselves to pay estimated taxes four times a year.",
+        "takeaway": "1099 income isn't tax-free just because nothing was withheld - the tax is still owed, just not automatically collected."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the key difference between W-2 and 1099 income?",
+        "choices": [
+          "1099 income is exempt from taxes",
+          "W-2 has taxes automatically withheld; 1099 workers must set aside and pay their own taxes",
+          "W-2 is only for part-time work",
+          "There's no real difference"
+        ],
+        "correctIndex": 1,
+        "explanation": "The core difference is who handles the tax withholding - the employer (W-2) or the worker themselves (1099)."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "standard-deduction",
+      "category": "taxes",
+      "order": 4,
+      "name": "Standard Deduction",
+      "shortDefinition": "A flat amount the IRS lets you subtract from your income before calculating tax, no receipts needed.",
+      "fullExplanation": "The standard deduction is a fixed dollar amount you can subtract from your taxable income automatically, without needing to itemize or provide receipts. Most filers take it because it's simpler than tracking individual deductible expenses - unless their itemized deductions would add up to more.",
+      "example": {
+        "scenario": "Someone earns $50,000 and takes the standard deduction of roughly $14,600 (a single filer's 2024 amount), so they're only taxed on about $35,400 of income instead of the full $50,000.",
+        "takeaway": "The standard deduction lowers your taxable income automatically - you don't need receipts or itemized expenses to claim it."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What's the main benefit of the standard deduction?",
+        "choices": [
+          "It eliminates all taxes owed",
+          "It lowers your taxable income by a flat amount without needing to itemize expenses",
+          "It only applies to homeowners",
+          "It replaces the need to file taxes at all"
+        ],
+        "correctIndex": 1,
+        "explanation": "It's a simple, no-paperwork way to reduce the income you're taxed on."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "tax-loss-harvesting",
+      "category": "taxes",
+      "order": 5,
+      "name": "Tax-Loss Harvesting",
+      "shortDefinition": "Selling an investment at a loss on purpose to offset taxable gains elsewhere.",
+      "fullExplanation": "Tax-loss harvesting means selling an investment that's currently down to 'realize' the loss, which can offset capital gains from other investments and reduce your tax bill. It's a way to turn a losing position into a small silver lining come tax time.",
+      "example": {
+        "scenario": "Someone has a $4,000 gain from selling one stock and a $1,500 loss sitting in another. By also selling the losing stock, they offset the gain and only owe tax on a net $2,500 instead of the full $4,000.",
+        "takeaway": "Tax-loss harvesting doesn't erase a loss, but it can meaningfully lower the tax bill on your other gains."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does tax-loss harvesting accomplish?",
+        "choices": [
+          "It guarantees your investments will recover in value",
+          "It uses a realized investment loss to offset taxable gains, lowering your tax bill",
+          "It removes the loss from your investment history",
+          "It's a way to avoid ever paying capital gains tax"
+        ],
+        "correctIndex": 1,
+        "explanation": "Harvesting a loss offsets gains for tax purposes - it doesn't undo the loss itself."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "withholding",
+      "category": "taxes",
+      "order": 6,
+      "name": "Withholding",
+      "shortDefinition": "Money your employer sets aside from each paycheck to prepay your income taxes.",
+      "fullExplanation": "Withholding is the portion of your paycheck your employer sends directly to the government on your behalf, based on the info you give them (like on a W-4 form). It's essentially prepaying your tax bill throughout the year instead of owing it all at once in April.",
+      "example": {
+        "scenario": "Someone earns $4,000 a month, but their paycheck shows only about $3,100 after federal and state withholding. At tax time, if too much was withheld, they get a refund; if too little, they owe more.",
+        "takeaway": "A big tax refund isn't free money - it usually means too much was withheld from your paychecks all year."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does a large tax refund usually mean?",
+        "choices": [
+          "The government gave you a bonus",
+          "Too much money was withheld from your paychecks over the year",
+          "You paid no taxes at all",
+          "You made an error on your tax return"
+        ],
+        "correctIndex": 1,
+        "explanation": "A refund means you overpaid via withholding throughout the year and are getting the excess back."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "recession",
+      "category": "crashes",
+      "order": 1,
+      "name": "Recession",
+      "shortDefinition": "A widespread economic slowdown — falling production, income, and jobs — that lasts more than a few months.",
+      "fullExplanation": "A recession is when the whole economy shrinks instead of growing: businesses sell less, so they earn less, so they hire less (or lay people off), so people spend less, which makes businesses sell even less. Economists often look for GDP (the total value of everything the economy produces) falling for two quarters in a row, along with rising unemployment. Recessions are a normal, if painful, part of the economic cycle — periods of growth are eventually followed by a slowdown before things recover.",
+      "example": {
+        "scenario": "During the 2008 recession, U.S. unemployment roughly doubled, from about 5% to 10%, as companies across many industries cut spending and laid off workers.",
+        "takeaway": "Recessions build gradually — falling spending leads to job losses, which lead to even less spending, in a self-reinforcing cycle."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What do economists usually look for to call a downturn a recession?",
+        "choices": [
+          "A new president taking office",
+          "Falling GDP for two straight quarters, along with rising unemployment",
+          "The stock market closing for a day",
+          "Interest rates going up once"
+        ],
+        "correctIndex": 1,
+        "explanation": "Two consecutive quarters of falling GDP plus rising unemployment is the classic rule of thumb for a recession."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "accounting-fraud",
+      "category": "crashes",
+      "order": 2,
+      "name": "Accounting Fraud (the Enron Story)",
+      "shortDefinition": "Using misleading or fake accounting tricks to hide debt or invent profits that don't actually exist.",
+      "fullExplanation": "Accounting fraud is when a company's books are manipulated to look healthier than reality — hiding real debt, inflating real profit, or both. Enron, once one of the largest energy companies in the U.S., used complex off-the-books entities to hide billions of dollars in debt while reporting fake profits to investors. When the truth came out in 2001, the stock collapsed almost overnight, employees lost retirement savings that were tied up in Enron stock, and even Enron's outside auditor, Arthur Andersen, was brought down for signing off on the deception. The scandal led directly to the Sarbanes-Oxley Act, which tightened rules on corporate accounting.",
+      "example": {
+        "scenario": "Enron's stock traded around $90 a share in mid-2000. Once the hidden debt and fake profits were exposed in late 2001, the stock fell to under $1 within months, and the company filed for what was then the largest bankruptcy in U.S. history.",
+        "takeaway": "A stock price built on fake numbers can collapse just as fast as the truth comes out."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why were Enron employees hit especially hard when the company collapsed?",
+        "choices": [
+          "They were legally required to pay back their salaries",
+          "Much of their retirement savings was invested in Enron's own stock, which became nearly worthless",
+          "The company sued its employees for damages",
+          "Employees were forced to buy more company stock every year"
+        ],
+        "correctIndex": 1,
+        "explanation": "Many employees had large portions of their 401(k) retirement savings in Enron stock, so the collapse wiped out both their jobs and their savings at once."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "startup-fraud",
+      "category": "crashes",
+      "order": 3,
+      "name": "Startup Fraud (the Theranos Story)",
+      "shortDefinition": "Misrepresenting what a product or technology can actually do to keep investor money flowing in.",
+      "fullExplanation": "Not every corporate collapse involves hidden debt — sometimes the fraud is about the product itself. Theranos, a blood-testing startup founded by Elizabeth Holmes, claimed its technology could run hundreds of medical tests from a single finger-prick of blood. In reality, the technology didn't work reliably, and the company used standard lab equipment behind the scenes while hiding that fact from investors, business partners, and patients — some of whom received inaccurate results. The company raised hundreds of millions of dollars before investigative reporting exposed the gap between the claims and the reality, and Holmes was later convicted of fraud.",
+      "example": {
+        "scenario": "Theranos raised over $700 million from investors and was once valued at around $9 billion, based largely on claims about technology that could not actually deliver accurate results at scale.",
+        "takeaway": "A big valuation and confident claims don't guarantee a product actually works — investors and companies both got fooled here for years."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What was the core problem at the center of the Theranos collapse?",
+        "choices": [
+          "It failed because of a broader economic recession",
+          "Its blood-testing technology didn't actually work as advertised, and the company hid that",
+          "It never raised any money from investors",
+          "A competitor bought the company and shut it down"
+        ],
+        "correctIndex": 1,
+        "explanation": "Unlike an accounting fraud, Theranos's core issue was that the product itself couldn't do what the company claimed."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "financial-crisis-2008",
+      "category": "crashes",
+      "order": 4,
+      "name": "The 2008 Financial Crisis (Lehman Brothers)",
+      "shortDefinition": "When risky mortgage bets by heavily indebted banks triggered a global recession — Lehman Brothers' collapse was the tipping point.",
+      "fullExplanation": "In the years before 2008, banks made huge numbers of home loans, including many 'subprime' loans to borrowers unlikely to repay them, then bundled those loans into investments called mortgage-backed securities and sold them worldwide. When U.S. home prices stopped rising and started falling around 2006-2007, defaults spiked and those investments turned out to be worth far less than expected. Lehman Brothers, a major investment bank, was heavily leveraged — meaning it had borrowed far more money than it actually owned — so losses on these mortgage investments wiped out its financial cushion. Unlike some other banks, Lehman didn't get a bailout or a buyer in time, and it filed for bankruptcy in September 2008, the largest bankruptcy in U.S. history. That collapse froze confidence across the financial system and turned a bad situation into a full global recession.",
+      "example": {
+        "scenario": "Lehman Brothers held roughly $30 of debt for every $1 of its own capital. That level of leverage meant even a relatively small drop in the value of its mortgage investments was enough to wipe out its entire financial cushion.",
+        "takeaway": "Heavy borrowing (leverage) can turn a moderate loss into a total collapse — small cracks become fatal fast when there's little cushion to absorb them."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What made Lehman Brothers especially vulnerable when mortgage-backed securities lost value?",
+        "choices": [
+          "It had no investments tied to mortgages at all",
+          "It was highly leveraged, so a relatively small loss wiped out its capital cushion",
+          "It only did business outside the United States",
+          "New government regulation forced it to close early"
+        ],
+        "correctIndex": 1,
+        "explanation": "Heavy leverage meant Lehman had very little capital cushion, so losses on its mortgage investments were enough to wipe it out entirely."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "crypto-exchange-collapse",
+      "category": "crashes",
+      "order": 5,
+      "name": "Crypto Exchange Collapse (FTX)",
+      "shortDefinition": "When a crypto exchange secretly used customer deposits to cover its own losses, then couldn't pay withdrawals.",
+      "fullExplanation": "FTX was once one of the largest cryptocurrency exchanges in the world, run by Sam Bankman-Fried. Customers believed their deposits were sitting safely on the exchange, ready to withdraw at any time. In reality, FTX had secretly funneled billions of dollars of customer funds to a sister trading firm, Alameda Research, to cover that firm's own risky bets and losses — without customers' knowledge or consent. When rumors spread in November 2022 and customers rushed to withdraw their money, FTX couldn't pay them back, because the money wasn't actually there. FTX filed for bankruptcy within days, and Bankman-Fried was later convicted of fraud.",
+      "example": {
+        "scenario": "A customer who believed they had $1,000 sitting safely on FTX tried to withdraw it during the November 2022 panic and found the exchange had frozen withdrawals — much of that money had already been lent out and lost.",
+        "takeaway": "An exchange holding your money isn't the same as a bank account — if customer funds aren't kept separate and safe, they can vanish before you ever try to withdraw."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What was the central problem with FTX, in the simplest terms?",
+        "choices": [
+          "It charged unusually high trading fees",
+          "It secretly used customer deposits to cover a sister company's losses instead of keeping customer funds separate and safe",
+          "It refused to let anyone buy cryptocurrency",
+          "A stock market crash forced it to shut down"
+        ],
+        "correctIndex": 1,
+        "explanation": "FTX's core failure was mixing customer deposits with a sister trading firm's risky bets, leaving no real money behind when customers tried to withdraw."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "ponzi-scheme-madoff",
+      "category": "crashes",
+      "order": 6,
+      "name": "Ponzi Scheme (Bernie Madoff)",
+      "shortDefinition": "A scheme that pays earlier investors with new investors' money, instead of real profits — until the money runs out.",
+      "fullExplanation": "A Ponzi scheme isn't a real investment at all — it's a shuffle. The person running it takes money from new investors and uses it to pay 'returns' to earlier investors, creating the illusion of steady, reliable profits. Bernie Madoff ran the largest known Ponzi scheme in history, claiming to run an investment fund that delivered smooth, consistent returns for decades. In reality, no real trading was happening — client statements were fabricated, and payouts to existing investors were funded entirely by new deposits. The scheme only works as long as new money coming in exceeds withdrawals going out. When the 2008 financial crisis hit and many investors tried to pull their money out at once, there wasn't enough new money left to cover it, and the scheme collapsed. Madoff's fraud was estimated at around $65 billion and he was sentenced to 150 years in prison.",
+      "example": {
+        "scenario": "Someone invests $100,000 with Madoff and is told they earned a steady 10%, or $10,000, that year. In reality, that $10,000 'return' was simply money a new investor had just deposited — no actual investment ever took place.",
+        "takeaway": "A Ponzi scheme's 'returns' aren't profit at all — they're just other people's money, moved around and relabeled."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What makes a Ponzi scheme different from a real investment fund that's simply losing money?",
+        "choices": [
+          "A Ponzi scheme only invests in riskier stocks than normal funds",
+          "A Ponzi scheme pays 'returns' using new investors' money instead of real investment profits, and collapses once withdrawals outpace new deposits",
+          "A Ponzi scheme only accepts money from banks, never individuals",
+          "A Ponzi scheme is technically legal as long as investors are told about it"
+        ],
+        "correctIndex": 1,
+        "explanation": "There's no real underlying investment — just new money being used to pay off earlier investors, which only works while enough fresh money keeps coming in."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "bank-run",
+      "category": "crashes",
+      "order": 7,
+      "name": "Bank Run (Silicon Valley Bank)",
+      "shortDefinition": "When enough depositors rush to withdraw their money at once that even a healthy-looking bank runs out of cash.",
+      "fullExplanation": "Banks don't keep all of their depositors' money sitting in a vault — they lend most of it out or invest it, keeping only a fraction on hand for everyday withdrawals. That works fine as long as only a small share of depositors want their cash back on any given day. Silicon Valley Bank (SVB) had a depositor base concentrated in tech startups and had invested heavily in long-term bonds, which lost value as interest rates rose sharply in 2022-2023. When word spread that SVB might be in trouble, startup founders — many connected through the same investor networks and group chats — rushed to withdraw their funds within days. To cover the withdrawals, SVB had to sell its bonds at a loss, which confirmed the fear and accelerated the run even further. Regulators shut the bank down in March 2023, one of the largest bank failures in U.S. history.",
+      "example": {
+        "scenario": "SVB held deposits but kept only a small slice in ready cash, with the rest tied up in long-term bonds. When depositors tried to withdraw about $42 billion in a single day, the bank couldn't turn its assets into cash fast enough and was shut down by regulators the next morning.",
+        "takeaway": "Banks are built on the assumption that not everyone asks for their money back on the same day — a bank run breaks that assumption."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why can a bank fail during a bank run even if its assets are technically sound long-term?",
+        "choices": [
+          "Because banks are legally required to shut down after any bad news",
+          "Because banks only keep a fraction of deposits in ready cash and can't quickly convert everything else into cash to meet a sudden wave of withdrawals",
+          "Because bank runs are caused by government shutdowns",
+          "Because interest rates always drop to zero during a bank run"
+        ],
+        "correctIndex": 1,
+        "explanation": "Banks rely on only needing to cover a small share of withdrawals on any given day — a sudden, concentrated rush breaks that model even if the bank's long-term assets are fundamentally fine."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "employer-match-vesting",
+      "category": "accounts",
+      "order": 8,
+      "name": "Employer Match & Vesting",
+      "shortDefinition": "The free money your employer adds to your retirement account — and the rules for when it's really yours.",
+      "fullExplanation": "Many employers match a portion of what you contribute to your 401(k) — say, 50 cents for every dollar you put in, up to a limit. That match isn't yours free-and-clear the moment it lands, though: vesting is the schedule that decides how much you actually keep if you leave the job early. \"Immediate vesting\" means it's yours right away; a \"3-year cliff\" means you get none of it if you leave before year three, then all of it at once.",
+      "example": {
+        "scenario": "You contribute $200/month and your employer matches 50% up to $100/month — $1,200/year of free money. But your plan has a 3-year cliff, and you leave after 2 years.",
+        "takeaway": "You'd forfeit the match entirely — always check your plan's vesting schedule before assuming that money is yours."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What does a \"3-year cliff\" vesting schedule mean?",
+        "choices": [
+          "You get 1/3 of the match each year",
+          "You get none of the employer match until you've worked there 3 years, then all of it at once",
+          "The match stops after 3 years",
+          "You can only withdraw after 3 years"
+        ],
+        "correctIndex": 1,
+        "explanation": "A cliff schedule gives you nothing until you cross the cliff, then the full match vests at once."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "catch-up-contributions",
+      "category": "accounts",
+      "order": 9,
+      "name": "Catch-Up Contributions",
+      "shortDefinition": "Extra amounts the IRS lets you add to retirement accounts once you turn 50, on top of the normal limit.",
+      "fullExplanation": "Retirement accounts like 401(k)s and IRAs cap how much you can contribute each year. Once you turn 50, the IRS lets you contribute extra — a \"catch-up\" — on top of that normal limit, meant to help people who started saving late make up for lost time.",
+      "example": {
+        "scenario": "The normal 401(k) limit might be $23,000/year, but at 50+ you could add another $7,500 in catch-up contributions, for $30,500 total.",
+        "takeaway": "If you're 50 or older and can afford it, catch-up contributions are a fast way to close a retirement savings gap."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What is a catch-up contribution?",
+        "choices": [
+          "A penalty for withdrawing early",
+          "An extra amount people 50+ are allowed to contribute above the normal annual limit",
+          "A one-time bonus from your employer",
+          "A tax you pay on old contributions"
+        ],
+        "correctIndex": 1,
+        "explanation": "It's an IRS-allowed extra contribution for savers 50 and older, on top of the standard limit."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "safe-withdrawal-rate",
+      "category": "accounts",
+      "order": 10,
+      "name": "Safe Withdrawal Rate (the 4% Rule)",
+      "shortDefinition": "A rule of thumb for how much you can spend each year in retirement without running out of money.",
+      "fullExplanation": "The 4% rule says that if you withdraw about 4% of your retirement savings in your first year, then adjust that amount for inflation each year after, your money should reasonably last 30 years. Flip it around and it gives you a target: you need roughly 25 times your desired annual spending saved up.",
+      "example": {
+        "scenario": "You want $60,000/year in retirement income. At the 4% rule, you'd need roughly $60,000 x 25 = $1,500,000 saved.",
+        "takeaway": "Multiplying your desired annual spending by 25 gives you a rough retirement savings target."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Under the 4% rule, roughly how much do you need saved to safely withdraw $40,000/year?",
+        "choices": [
+          "$400,000",
+          "$800,000",
+          "$1,000,000",
+          "$4,000,000"
+        ],
+        "correctIndex": 2,
+        "explanation": "$40,000 is 4% of $1,000,000 — so $1,000,000 is roughly the target (40,000 x 25)."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "target-date-fund",
+      "category": "accounts",
+      "order": 11,
+      "name": "Target-Date Fund",
+      "shortDefinition": "A single fund that automatically shifts from riskier to safer investments as your chosen retirement year approaches.",
+      "fullExplanation": "A target-date fund is named for a future year, like \"2055,\" and holds a mix of stocks and bonds that automatically becomes more conservative as that year gets closer — heavy on stocks (and growth) decades out, shifting toward bonds (and safety) as retirement nears. It's a \"set it and forget it\" option for people who don't want to manually rebalance.",
+      "example": {
+        "scenario": "A 30-year-old picks a \"2060\" target-date fund. Today it's 90% stocks; by 2058 it's automatically down to 30% stocks, 70% bonds.",
+        "takeaway": "The fund does the rebalancing for you — you just pick the year closest to when you plan to retire."
+      },
+      "chartScenario": {
+        "kind": "compoundGrowth",
+        "defaultParams": {
+          "principal": 6000,
+          "rate": 0.07,
+          "years": 30
+        },
+        "adjustableParams": [
+          {
+            "key": "principal",
+            "label": "Amount Invested",
+            "minValue": 500,
+            "maxValue": 50000,
+            "step": 500,
+            "unit": "$"
+          },
+          {
+            "key": "rate",
+            "label": "Yearly Growth",
+            "minValue": 0.02,
+            "maxValue": 0.12,
+            "step": 0.01,
+            "unit": "%"
+          },
+          {
+            "key": "years",
+            "label": "Years Until Retirement",
+            "minValue": 1,
+            "maxValue": 40,
+            "step": 1,
+            "unit": "yrs"
+          }
+        ]
+      },
+      "quiz": {
+        "question": "What makes a target-date fund shift its mix automatically over time?",
+        "choices": [
+          "Daily stock market news",
+          "Getting closer to the year named in the fund",
+          "The fund manager's personal predictions",
+          "Random rebalancing"
+        ],
+        "correctIndex": 1,
+        "explanation": "The fund's glide path is tied to how many years remain until its named target date."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "social-security",
+      "category": "accounts",
+      "order": 12,
+      "name": "Social Security",
+      "shortDefinition": "A monthly government benefit in retirement, funded by taxes you paid while working.",
+      "fullExplanation": "Social Security is a U.S. government program that pays a monthly benefit in retirement (or if you become disabled), based on your earnings history and the age you start claiming. Claiming earlier (as young as 62) means a smaller monthly check for life; waiting (up to 70) means a bigger one.",
+      "example": {
+        "scenario": "Someone eligible for $2,000/month at their full retirement age would get about $1,400/month by claiming at 62, or about $2,480/month by waiting until 70.",
+        "takeaway": "Claiming later permanently increases your monthly benefit — it's a real trade-off, not free money either way."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What happens to your monthly Social Security benefit if you claim earlier than your full retirement age?",
+        "choices": [
+          "It stays exactly the same",
+          "It's permanently reduced",
+          "It doubles",
+          "You lose eligibility entirely"
+        ],
+        "correctIndex": 1,
+        "explanation": "Claiming before full retirement age locks in a smaller monthly check for the rest of your life."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "required-minimum-distribution",
+      "category": "accounts",
+      "order": 13,
+      "name": "Required Minimum Distribution (RMD)",
+      "shortDefinition": "The minimum amount the IRS forces you to withdraw each year from certain retirement accounts once you reach a set age.",
+      "fullExplanation": "Traditional 401(k)s and IRAs let your money grow tax-deferred, but the IRS won't let that last forever — starting at a set age (73, under recent rules), you're required to withdraw a minimum amount each year, called an RMD, and pay income tax on it. Roth IRAs are exempt from RMDs during the original owner's lifetime.",
+      "example": {
+        "scenario": "At 73, someone with $500,000 in a Traditional IRA might be required to withdraw around $18,900 that year, based on IRS life-expectancy tables.",
+        "takeaway": "Missing an RMD triggers a steep IRS penalty — this is one deadline retirees can't just skip."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why do Traditional 401(k)s and IRAs have Required Minimum Distributions?",
+        "choices": [
+          "To limit how much you can invest",
+          "Because the IRS eventually wants to start collecting tax on money that grew tax-deferred",
+          "To fund Social Security",
+          "Because the accounts have a maximum balance"
+        ],
+        "correctIndex": 1,
+        "explanation": "RMDs make sure the government eventually collects income tax on money that was allowed to grow untaxed for years."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "retirement-nest-egg",
+      "category": "accounts",
+      "order": 14,
+      "name": "Retirement Nest Egg",
+      "shortDefinition": "The total amount of savings and investments you'll live off once you stop working.",
+      "fullExplanation": "Your \"nest egg\" is simply the sum of everything you've saved and invested for retirement — 401(k)s, IRAs, brokerage accounts, and more — added together into one number. Building it comes down to three things you can control: how early you start, how much you contribute, and how it's invested.",
+      "example": {
+        "scenario": "Starting at 25 instead of 35 with the same $300/month contribution and 7% return can mean over double the nest egg by 65 — purely from ten extra years of compounding.",
+        "takeaway": "Starting early matters more than almost any other single decision in building a nest egg."
+      },
+      "chartScenario": {
+        "kind": "compoundGrowth",
+        "defaultParams": {
+          "principal": 8000,
+          "rate": 0.07,
+          "years": 35
+        },
+        "adjustableParams": [
+          {
+            "key": "principal",
+            "label": "Amount Invested",
+            "minValue": 500,
+            "maxValue": 50000,
+            "step": 500,
+            "unit": "$"
+          },
+          {
+            "key": "rate",
+            "label": "Yearly Growth",
+            "minValue": 0.02,
+            "maxValue": 0.12,
+            "step": 0.01,
+            "unit": "%"
+          },
+          {
+            "key": "years",
+            "label": "Years Until Retirement",
+            "minValue": 1,
+            "maxValue": 40,
+            "step": 1,
+            "unit": "yrs"
+          }
+        ]
+      },
+      "quiz": {
+        "question": "Which factor gives compounding the most time to work in building your nest egg?",
+        "choices": [
+          "How much you earn in your final year of work",
+          "Starting to save and invest as early as possible",
+          "Checking your balance frequently",
+          "Picking the highest-fee fund available"
+        ],
+        "correctIndex": 1,
+        "explanation": "The earlier you start, the more years compounding has to work, which tends to matter more than almost any other factor."
+      },
+      "relatedCategory": null
+    }
+  ]
+}

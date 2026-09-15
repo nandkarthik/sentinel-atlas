@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel Money</title>
+<meta name="description" content="A plain-English money glossary — 90 terms on investing, mortgages, retirement, credit and taxes, each with an example and a quiz — plus mortgage, compound-interest and retirement calculators.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%230f1912%22 stroke=%22%234fce90%22 stroke-width=%224%22/><path d=%22M50 26 L50 74 M38 34 Q50 34 50 44 Q50 54 38 54 L62 54 Q50 54 50 64 Q50 74 62 66%22 fill=%22none%22 stroke=%22%234fce90%22 stroke-width=%224%22 stroke-linecap=%22round%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eeeadb;
+  --surface:#e2ddc6;
+  --surface-2:#d6cfb2;
+  --ink:#1d2a20;
+  --ink-soft:#51604c;
+  --ink-faint:#82896f;
+  --line:rgba(29,42,32,0.15);
+  --accent:#1f6f4c;
+  --accent-soft:rgba(31,111,76,0.12);
+  --gold:#a67c2e;
+  --gold-soft:rgba(166,124,46,0.14);
+  --risk-low:#2f7d4f;
+  --risk-low-soft:rgba(47,125,79,0.14);
+  --risk-medium:#a8701f;
+  --risk-medium-soft:rgba(168,112,31,0.16);
+  --risk-high:#9c3b3b;
+  --risk-high-soft:rgba(156,59,59,0.14);
+  --shadow:0 10px 30px rgba(29,42,32,0.10);
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1912;
+    --surface:#16221a;
+    --surface-2:#1c2e22;
+    --ink:#e6ecdf;
+    --ink-soft:#a7b59f;
+    --ink-faint:#6d7c6c;
+    --line:rgba(230,236,223,0.12);
+    --accent:#4fce90;
+    --accent-soft:rgba(79,206,144,0.16);
+    --gold:#d8b15c;
+    --gold-soft:rgba(216,177,92,0.16);
+    --risk-low:#5fbd85;
+    --risk-low-soft:rgba(95,189,133,0.16);
+    --risk-medium:#e0a34c;
+    --risk-medium-soft:rgba(224,163,76,0.16);
+    --risk-high:#e08585;
+    --risk-high-soft:rgba(224,133,133,0.16);
+    --shadow:0 10px 30px rgba(0,0,0,0.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1912;
+  --surface:#16221a;
+  --surface-2:#1c2e22;
+  --ink:#e6ecdf;
+  --ink-soft:#a7b59f;
+  --ink-faint:#6d7c6c;
+  --line:rgba(230,236,223,0.12);
+  --accent:#4fce90;
+  --accent-soft:rgba(79,206,144,0.16);
+  --gold:#d8b15c;
+  --gold-soft:rgba(216,177,92,0.16);
+  --risk-low:#5fbd85;
+  --risk-low-soft:rgba(95,189,133,0.16);
+  --risk-medium:#e0a34c;
+  --risk-medium-soft:rgba(224,163,76,0.16);
+  --risk-high:#e08585;
+  --risk-high-soft:rgba(224,133,133,0.16);
+  --shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+*{box-sizing:border-box;}
+html{color-scheme:light dark;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{
+  max-width:900px;
+  margin:0 auto;
+  padding:4rem 1.5rem 5rem;
+}
+a{ color:var(--accent); }
+button{ font-family:inherit; }
+
+.backlink{
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  text-decoration:none;
+  margin-bottom:2rem;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0;
+}
+.backlink:hover{ color:var(--accent); }
+
+header.page-head{ text-align:center; margin-bottom:2.6rem; }
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 0.9rem;
+}
+h1{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:clamp(2.2rem, 5.5vw, 3.4rem);
+  letter-spacing:0.02em;
+  margin:0 0 1rem;
+  text-wrap:balance;
+}
+.tagline{
+  font-size:1rem;
+  line-height:1.65;
+  color:var(--ink-soft);
+  max-width:34rem;
+  margin:0 auto;
+  text-wrap:balance;
+}
+
+h2.section-title{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:1.3rem;
+  margin:0 0 1rem;
+}
+section.block{ margin-bottom:2.4rem; }
+
+/* card grids */
+.card-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0.9rem;
+}
+@media (max-width:640px){ .card-grid{ grid-template-columns:1fr; } }
+
+.card{
+  display:flex;
+  flex-direction:column;
+  gap:0.35rem;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:1.1rem 1.2rem;
+  text-decoration:none;
+  color:inherit;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  transition:transform .15s ease, border-color .15s ease;
+  text-align:left;
+  font-family:inherit;
+}
+.card:hover, .card:focus-visible{ transform:translateY(-2px); border-color:var(--accent); outline:none; }
+.card .card-title{ font-family:var(--font-display); font-size:1.15rem; }
+.card .card-sub{ font-size:0.84rem; color:var(--ink-soft); line-height:1.5; }
+.card .card-meta{
+  margin-top:0.4rem;
+  font-family:var(--font-mono);
+  font-size:0.68rem;
+  letter-spacing:0.04em;
+  color:var(--accent);
+}
+.card.tool .card-meta{ color:var(--gold); }
+
+/* term list */
+.term-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:1rem;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:0.85rem 1rem;
+  text-decoration:none;
+  color:inherit;
+  cursor:pointer;
+  width:100%;
+  text-align:left;
+  font-family:inherit;
+  margin-bottom:0.55rem;
+}
+.term-row:hover, .term-row:focus-visible{ border-color:var(--accent); outline:none; }
+.term-row .term-name{ font-family:var(--font-display); font-size:1.05rem; }
+.term-row .term-def{ font-size:0.85rem; color:var(--ink-soft); margin-top:0.15rem; }
+.term-row .learned-check{ color:var(--accent); font-size:1.1rem; flex-shrink:0; }
+.group-heading{
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin:1.4rem 0 0.6rem;
+}
+.group-heading:first-child{ margin-top:0; }
+
+.badge{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  font-weight:600;
+  padding:0.2rem 0.55rem;
+  border-radius:99px;
+  margin-top:0.35rem;
+}
+.badge.risk-low{ color:var(--risk-low); background:var(--risk-low-soft); }
+.badge.risk-medium{ color:var(--risk-medium); background:var(--risk-medium-soft); }
+.badge.risk-high{ color:var(--risk-high); background:var(--risk-high-soft); }
+.badge.learned{ color:var(--accent); background:var(--accent-soft); }
+
+/* term detail */
+.term-detail h1{ font-size:clamp(1.9rem,4.5vw,2.6rem); text-align:left; margin-bottom:0.5rem; }
+.term-detail-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  flex-wrap:wrap;
+  margin-bottom:0.6rem;
+}
+.term-explanation{ font-size:1.05rem; line-height:1.7; margin:1.2rem 0 1.8rem; }
+h3.sub-head{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:1.15rem;
+  margin:0 0 0.7rem;
+}
+.example-box{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:4px solid var(--gold);
+  border-radius:8px;
+  padding:1.1rem 1.3rem;
+  margin-bottom:1.8rem;
+}
+.example-box p{ margin:0 0 0.6rem; line-height:1.6; }
+.example-box .takeaway{ color:var(--accent); font-weight:600; margin:0; }
+
+.quiz-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--accent-soft);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:0.9rem 1.2rem;
+  color:var(--ink);
+  text-decoration:none;
+  font-weight:600;
+  cursor:pointer;
+  width:100%;
+  text-align:left;
+  font-family:inherit;
+  font-size:1rem;
+}
+.quiz-link:hover{ border-color:var(--accent); }
+
+/* chart */
+.chart-section{ margin-bottom:1.8rem; }
+.chart-wrap{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:1.2rem 1.3rem 1.4rem;
+}
+.chart-svg-holder svg{ width:100%; height:auto; display:block; }
+.chart-legend{ display:flex; gap:1.2rem; margin-bottom:0.6rem; flex-wrap:wrap; }
+.chart-legend .item{ display:flex; align-items:center; gap:0.4rem; font-size:0.76rem; color:var(--ink-soft); font-family:var(--font-mono); }
+.chart-legend .dot{ width:8px; height:8px; border-radius:50%; }
+.chart-params{ margin-top:1rem; display:flex; flex-direction:column; gap:0.9rem; }
+
+/* sliders */
+.slider-row{ display:flex; flex-direction:column; gap:0.3rem; }
+.slider-row .slider-top{ display:flex; justify-content:space-between; align-items:baseline; font-size:0.88rem; }
+.slider-row .slider-top .slabel{ color:var(--ink); }
+.slider-row .slider-top .sval{ font-family:var(--font-mono); color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+input[type="range"]{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  height:4px;
+  border-radius:2px;
+  background:var(--surface-2);
+  outline:none;
+}
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:16px; height:16px;
+  border-radius:50%;
+  background:var(--accent);
+  border:2px solid var(--bg);
+  box-shadow:0 0 0 1px var(--accent);
+  cursor:pointer;
+}
+input[type="range"]::-moz-range-thumb{
+  width:16px; height:16px;
+  border-radius:50%;
+  background:var(--accent);
+  border:2px solid var(--bg);
+  box-shadow:0 0 0 1px var(--accent);
+  cursor:pointer;
+}
+select, .seg-group{
+  font-family:var(--font-mono);
+  font-size:0.8rem;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--bg);
+  color:var(--ink);
+  padding:0.5rem 0.65rem;
+}
+
+/* calculators */
+.calc-total-card{
+  text-align:center;
+  padding:1.6rem 1rem;
+  border-radius:12px;
+  background:var(--accent-soft);
+  margin-bottom:1.6rem;
+}
+.calc-total-card.warn{ background:var(--risk-medium-soft); }
+.calc-total-card .ct-label{ font-size:0.85rem; color:var(--ink-soft); margin-bottom:0.3rem; }
+.calc-total-card .ct-value{ font-family:var(--font-display); font-size:2.6rem; }
+.calc-total-card .ct-caption{ font-size:0.8rem; color:var(--ink-faint); margin-top:0.3rem; }
+
+.calc-section{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:1.2rem 1.3rem;
+  margin-bottom:1.1rem;
+}
+.calc-section .calc-section-title{
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  letter-spacing:0.07em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin:0 0 1rem;
+}
+.calc-section .calc-rows{ display:flex; flex-direction:column; gap:1rem; }
+.calc-footnote{ font-size:0.78rem; color:var(--ink-faint); margin-top:0.8rem; line-height:1.55; }
+
+.breakdown-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:0.92rem;
+  padding:0.35rem 0;
+  border-bottom:1px solid var(--line);
+}
+.breakdown-row:last-child{ border-bottom:none; }
+.breakdown-row .val{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; }
+
+.seg-toggle{ display:flex; gap:0.5rem; }
+.seg-btn{
+  flex:1;
+  text-align:center;
+  padding:0.5rem;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--bg);
+  color:var(--ink-soft);
+  cursor:pointer;
+  font-family:var(--font-mono);
+  font-size:0.8rem;
+}
+.seg-btn.active{ border-color:var(--accent); color:var(--accent); background:var(--accent-soft); font-weight:600; }
+
+/* quiz */
+.quiz-question{ font-family:var(--font-display); font-size:1.3rem; margin-bottom:1.3rem; }
+.quiz-choice{
+  display:block;
+  width:100%;
+  text-align:left;
+  padding:0.85rem 1rem;
+  margin-bottom:0.6rem;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--ink);
+  cursor:pointer;
+  font-family:inherit;
+  font-size:0.95rem;
+}
+.quiz-choice.selected{ border-color:var(--accent); background:var(--accent-soft); }
+.quiz-choice.correct{ border-color:var(--risk-low); background:var(--risk-low-soft); }
+.quiz-choice.incorrect{ border-color:var(--risk-high); background:var(--risk-high-soft); }
+.quiz-choice:disabled{ cursor:default; }
+.quiz-submit{
+  width:100%;
+  padding:0.85rem;
+  border-radius:8px;
+  border:none;
+  background:var(--accent);
+  color:var(--bg);
+  font-weight:600;
+  font-size:0.95rem;
+  cursor:pointer;
+  margin-top:0.4rem;
+}
+.quiz-submit:disabled{ opacity:0.4; cursor:default; }
+.quiz-feedback{
+  padding:1rem 1.2rem;
+  border-radius:8px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  margin-top:0.6rem;
+}
+.quiz-feedback.right{ border-color:var(--risk-low); }
+.quiz-feedback.wrong{ border-color:var(--gold); }
+.quiz-feedback .ff-title{ font-weight:600; margin-bottom:0.4rem; }
+.quiz-feedback.right .ff-title{ color:var(--risk-low); }
+.quiz-feedback.wrong .ff-title{ color:var(--gold); }
+.quiz-feedback p{ margin:0; font-size:0.9rem; color:var(--ink-soft); line-height:1.55; }
+
+footer{
+  margin-top:3rem;
+  padding-top:1.6rem;
+  border-top:1px solid var(--line);
+  text-align:center;
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  color:var(--ink-faint);
+  letter-spacing:0.02em;
+  line-height:1.7;
+}
+footer a{ color:var(--ink-faint); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="../">&larr; Sentinel Atlas</a>
+  <header class="page-head">
+    <div class="eyebrow">Sentinel Atlas &middot; Money</div>
+    <h1>Sentinel Money</h1>
+    <p class="tagline">A plain-English glossary of investing, home-buying, credit and tax terms &mdash; each with an example and a quiz &mdash; plus mortgage, compound-interest, and retirement calculators.</p>
+  </header>
+  <div id="app"></div>
+  <footer>
+    Calculators are generic what-if estimators, not financial advice; property tax rates are statewide averages, not a quote for a specific address. Glossary content adapted from Sentinel Money for iOS.<br>
+    Sentinel Atlas &middot; maintained by <a href="https://github.com/nandkarthik">nandkarthik</a>
+  </footer>
+</div>
+
+<script>
+// ============================================================================
+// Data
+// ============================================================================
+const CATEGORY_META = {
+  investing: { name: "Investing", tagline: "Growing your money, explained simply" },
+  mortgage: { name: "Buying a Home", tagline: "Home loans, explained simply" },
+  accounts: { name: "Savings & Retirement Accounts", tagline: "Tax-smart accounts, explained simply" },
+  credit: { name: "Credit & Debt", tagline: "Borrowing and credit scores, explained simply" },
+  taxes: { name: "Taxes", tagline: "What you owe and why, explained simply" },
+  mistakes: { name: "Common Mistakes", tagline: "Pitfalls to avoid, explained simply" },
+  scams: { name: "Investing Scams", tagline: "Red flags to watch for, explained simply" },
+  crashes: { name: "Crashes & Scandals", tagline: "Famous collapses, explained simply" },
+};
+const CATEGORY_ORDER = ["investing", "mortgage", "accounts", "credit", "taxes", "mistakes", "scams", "crashes"];
+
+const PROPERTY_TAX_RATES = [
+  ["Alabama", 0.0041], ["Alaska", 0.0104], ["Arizona", 0.0051], ["Arkansas", 0.0061],
+  ["California", 0.0071], ["Colorado", 0.0051], ["Connecticut", 0.0179], ["Delaware", 0.0043],
+  ["District of Columbia", 0.0056], ["Florida", 0.0080], ["Georgia", 0.0072], ["Hawaii", 0.0027],
+  ["Idaho", 0.0050], ["Illinois", 0.0195], ["Indiana", 0.0075], ["Iowa", 0.0129],
+  ["Kansas", 0.0119], ["Kentucky", 0.0072], ["Louisiana", 0.0051], ["Maine", 0.0109],
+  ["Maryland", 0.0098], ["Massachusetts", 0.0104], ["Michigan", 0.0132], ["Minnesota", 0.0095],
+  ["Mississippi", 0.0065], ["Missouri", 0.0088], ["Montana", 0.0069], ["Nebraska", 0.0146],
+  ["Nevada", 0.0044], ["New Hampshire", 0.0161], ["New Jersey", 0.0208], ["New Mexico", 0.0060],
+  ["New York", 0.0130], ["North Carolina", 0.0070], ["North Dakota", 0.0090], ["Ohio", 0.0130],
+  ["Oklahoma", 0.0083], ["Oregon", 0.0082], ["Pennsylvania", 0.0129], ["Rhode Island", 0.0130],
+  ["South Carolina", 0.0046], ["South Dakota", 0.0107], ["Tennessee", 0.0051], ["Texas", 0.0147],
+  ["Utah", 0.0047], ["Vermont", 0.0173], ["Virginia", 0.0075], ["Washington", 0.0076],
+  ["West Virginia", 0.0053], ["Wisconsin", 0.0151], ["Wyoming", 0.0055],
+];
+function propertyTaxRate(state){
+  const found = PROPERTY_TAX_RATES.find(([s]) => s === state);
+  return found ? found[1] : 0.0090;
+}
+
+let TERMS = [];
+
+// ============================================================================
+// Formatting
+// ============================================================================
+const usdFmt0 = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+const usdCompact = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", notation: "compact", maximumFractionDigits: 1 });
+function fmtUSD(v){ return usdFmt0.format(v); }
+function fmtUSDCompact(v){ return usdCompact.format(v); }
+function fmtPercent(v, decimals){ return v.toFixed(decimals === undefined ? 2 : decimals) + "%"; }
+function esc(s){ const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+
+// ============================================================================
+// Chart engine (mirrors ChartEngine.swift)
+// ============================================================================
+function compoundGrowthPoints(params){
+  const principal = params.principal || 0;
+  const rate = params.rate || 0;
+  const years = Math.max(0, Math.floor(params.years || 0));
+  const pts = [];
+  for (let year = 0; year <= years; year++){
+    pts.push({ x: year, y: principal * Math.pow(1 + rate, year), series: "Value" });
+  }
+  return pts;
+}
+function amortizationPoints(params){
+  const loanAmount = params.loanAmount || 0;
+  const annualRate = params.rate || 0;
+  const termYears = Math.max(0, Math.floor(params.termYears || 0));
+  if (termYears <= 0 || loanAmount <= 0) return [];
+  const monthlyRate = annualRate / 12;
+  const totalMonths = termYears * 12;
+  const monthlyPayment = monthlyRate > 0
+    ? loanAmount * monthlyRate / (1 - Math.pow(1 + monthlyRate, -totalMonths))
+    : loanAmount / totalMonths;
+  let balance = loanAmount, cumulativeInterest = 0;
+  const pts = [
+    { x: 0, y: balance, series: "Balance Remaining" },
+    { x: 0, y: 0, series: "Interest Paid So Far" },
+  ];
+  for (let month = 1; month <= totalMonths; month++){
+    const interestThisMonth = balance * monthlyRate;
+    const principalThisMonth = monthlyPayment - interestThisMonth;
+    balance = Math.max(0, balance - principalThisMonth);
+    cumulativeInterest += interestThisMonth;
+    if (month % 12 === 0){
+      const year = month / 12;
+      pts.push({ x: year, y: balance, series: "Balance Remaining" });
+      pts.push({ x: year, y: cumulativeInterest, series: "Interest Paid So Far" });
+    }
+  }
+  return pts;
+}
+function chartPoints(scenario, params){
+  return scenario.kind === "compoundGrowth" ? compoundGrowthPoints(params) : amortizationPoints(params);
+}
+const SERIES_COLOR = { "Value": "var(--accent)", "Balance Remaining": "var(--accent)", "Interest Paid So Far": "var(--gold)" };
+
+function buildLineChartSVG(points){
+  const W = 640, H = 220, padL = 54, padR = 16, padT = 14, padB = 28;
+  if (points.length === 0) return `<svg viewBox="0 0 ${W} ${H}"></svg>`;
+  const seriesNames = [...new Set(points.map(p => p.series))];
+  const xs = points.map(p => p.x), ys = points.map(p => p.y);
+  const xMax = Math.max(...xs, 1), xMin = 0;
+  const yMaxRaw = Math.max(...ys, 1), yMin = Math.min(0, ...ys);
+  const yMax = yMaxRaw * 1.08 || 1;
+  const xScale = x => padL + (x - xMin) / ((xMax - xMin) || 1) * (W - padL - padR);
+  const yScale = y => H - padB - (y - yMin) / ((yMax - yMin) || 1) * (H - padT - padB);
+
+  const yTickCount = 4;
+  let gridLines = "", yLabels = "";
+  for (let i = 0; i <= yTickCount; i++){
+    const val = yMin + (yMax - yMin) * i / yTickCount;
+    const y = yScale(val);
+    gridLines += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="var(--line)" stroke-width="1"/>`;
+    yLabels += `<text x="${padL - 8}" y="${y + 3}" text-anchor="end" font-size="9" font-family="var(--font-mono)" fill="var(--ink-faint)">${esc(fmtUSDCompact(val))}</text>`;
+  }
+  let xStep = xMax <= 10 ? Math.max(1, Math.round(xMax / 5)) : xMax <= 20 ? 5 : xMax <= 40 ? 10 : 15;
+  let xLabels = "";
+  for (let x = 0; x <= xMax; x += xStep){
+    xLabels += `<text x="${xScale(x)}" y="${H - 8}" text-anchor="middle" font-size="9" font-family="var(--font-mono)" fill="var(--ink-faint)">Yr ${x}</text>`;
+  }
+  if (xMax % xStep !== 0){
+    xLabels += `<text x="${xScale(xMax)}" y="${H - 8}" text-anchor="middle" font-size="9" font-family="var(--font-mono)" fill="var(--ink-faint)">Yr ${xMax}</text>`;
+  }
+
+  let lines = "";
+  seriesNames.forEach(name => {
+    const seriesPts = points.filter(p => p.series === name).sort((a, b) => a.x - b.x);
+    const pointsAttr = seriesPts.map(p => `${xScale(p.x)},${yScale(p.y)}`).join(" ");
+    const color = SERIES_COLOR[name] || "var(--accent)";
+    lines += `<polyline points="${pointsAttr}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  });
+
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Chart">${gridLines}${yLabels}${xLabels}${lines}</svg>`;
+}
+
+// ============================================================================
+// Progress (browser-local only)
+// ============================================================================
+const PROGRESS_KEY = "sentinel-money-progress";
+function loadProgress(){
+  try { return JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}"); }
+  catch (e) { return {}; }
+}
+function isLearned(termId){
+  return !!loadProgress()[termId];
+}
+function markLearned(termId){
+  try {
+    const p = loadProgress();
+    p[termId] = true;
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(p));
+  } catch (e) { /* private-browsing or storage disabled; quiz still works, just not remembered */ }
+}
+function learnedCountIn(terms){
+  const p = loadProgress();
+  return terms.filter(t => p[t.id]).length;
+}
+
+// ============================================================================
+// Router
+// ============================================================================
+const app = document.getElementById("app");
+
+function parseHash(){
+  const h = location.hash.replace(/^#\/?/, "");
+  const parts = h.split("/").filter(Boolean);
+  return parts;
+}
+function navigate(path){ location.hash = path; }
+
+function render(){
+  window.scrollTo(0, 0);
+  const parts = parseHash();
+  if (parts.length === 0) return renderHome();
+  if (parts[0] === "tools" && parts[1]) return renderCalculator(parts[1]);
+  if (parts[0] === "category" && parts[1]) return renderCategory(parts[1]);
+  if (parts[0] === "term" && parts[1] && parts[2] === "quiz") return renderQuiz(parts[1]);
+  if (parts[0] === "term" && parts[1]) return renderTermDetail(parts[1]);
+  return renderHome();
+}
+window.addEventListener("hashchange", render);
+
+// ============================================================================
+// Views
+// ============================================================================
+function renderHome(){
+  const toolCards = [
+    { id: "mortgage", title: "Mortgage Calculator", sub: "Estimate your monthly payment, including property tax by state", meta: "TOOL" },
+    { id: "compound-interest", title: "Compound Interest Calculator", sub: "See how your savings could grow over time", meta: "TOOL" },
+    { id: "retirement", title: "Retirement Calculator", sub: "See if you're on track to hit your retirement goal", meta: "TOOL" },
+  ];
+  const toolsHTML = toolCards.map(c => `
+    <button class="card tool" data-nav="tools/${c.id}">
+      <span class="card-title">${esc(c.title)}</span>
+      <span class="card-sub">${esc(c.sub)}</span>
+      <span class="card-meta">${c.meta}</span>
+    </button>`).join("");
+
+  const catHTML = CATEGORY_ORDER.map(catId => {
+    const meta = CATEGORY_META[catId];
+    const terms = TERMS.filter(t => t.category === catId);
+    const learned = learnedCountIn(terms);
+    return `
+    <button class="card" data-nav="category/${catId}">
+      <span class="card-title">${esc(meta.name)}</span>
+      <span class="card-sub">${esc(meta.tagline)}</span>
+      <span class="card-meta">${learned}/${terms.length} LEARNED</span>
+    </button>`;
+  }).join("");
+
+  app.innerHTML = `
+    <section class="block">
+      <h2 class="section-title">Tools</h2>
+      <div class="card-grid">${toolsHTML}</div>
+    </section>
+    <section class="block">
+      <h2 class="section-title">Learning</h2>
+      <div class="card-grid">${catHTML}</div>
+    </section>`;
+  bindNav();
+}
+
+function renderCategory(catId){
+  const meta = CATEGORY_META[catId];
+  if (!meta) return renderHome();
+  const terms = TERMS.filter(t => t.category === catId);
+  const progress = loadProgress();
+
+  function rowHTML(t){
+    const riskBadge = t.riskLevel ? `<span class="badge risk-${t.riskLevel}">${t.riskLevel === "low" ? "Low Risk" : t.riskLevel === "medium" ? "Medium Risk" : "High Risk"}</span>` : "";
+    const check = progress[t.id] ? `<span class="learned-check">&#10003;</span>` : "";
+    return `
+    <button class="term-row" data-nav="term/${t.id}">
+      <span>
+        <span class="term-name">${esc(t.name)}</span>
+        <div class="term-def">${esc(t.shortDefinition)}</div>
+        ${riskBadge}
+      </span>
+      ${check}
+    </button>`;
+  }
+
+  let listHTML;
+  if (catId === "mistakes"){
+    const grouped = {};
+    terms.forEach(t => {
+      const g = t.relatedCategory || catId;
+      (grouped[g] = grouped[g] || []).push(t);
+    });
+    listHTML = CATEGORY_ORDER.filter(g => grouped[g] && grouped[g].length).map(g => `
+      <div class="group-heading">${esc(CATEGORY_META[g].name)}</div>
+      ${grouped[g].map(rowHTML).join("")}
+    `).join("");
+  } else {
+    listHTML = terms.map(rowHTML).join("");
+  }
+
+  app.innerHTML = `
+    <button class="backlink" data-nav="">&larr; All Categories</button>
+    <h2 class="section-title">${esc(meta.name)}</h2>
+    <div>${listHTML}</div>`;
+  bindNav();
+}
+
+function renderTermDetail(termId){
+  const term = TERMS.find(t => t.id === termId);
+  if (!term) return renderHome();
+  const learned = isLearned(term.id);
+  const riskBadge = term.riskLevel ? `<span class="badge risk-${term.riskLevel}">${term.riskLevel === "low" ? "Low Risk" : term.riskLevel === "medium" ? "Medium Risk" : "High Risk"}</span>` : "<span></span>";
+  const learnedBadge = learned ? `<span class="badge learned">&#10003; Learned</span>` : "";
+
+  app.innerHTML = `
+    <button class="backlink" data-nav="category/${term.category}">&larr; ${esc(CATEGORY_META[term.category].name)}</button>
+    <div class="term-detail">
+      <h1>${esc(term.name)}</h1>
+      <div class="term-detail-top">${riskBadge}${learnedBadge}</div>
+      <p class="term-explanation">${esc(term.fullExplanation)}</p>
+      <h3 class="sub-head">For Example</h3>
+      <div class="example-box">
+        <p>${esc(term.example.scenario)}</p>
+        <p class="takeaway">${esc(term.example.takeaway)}</p>
+      </div>
+      ${term.chartScenario ? `<div class="chart-section"><h3 class="sub-head">Try It Yourself</h3><div class="chart-wrap" id="chart-holder"></div></div>` : ""}
+      <button class="quiz-link" data-nav="term/${term.id}/quiz">
+        <span>${learned ? "Try the Quiz Again" : "Take the Quiz"}</span>
+        <span>&rarr;</span>
+      </button>
+    </div>`;
+  bindNav();
+  if (term.chartScenario) mountScenarioChart(document.getElementById("chart-holder"), term.chartScenario);
+}
+
+function mountScenarioChart(container, scenario){
+  const params = { ...scenario.defaultParams };
+  const seriesNames = [...new Set(chartPoints(scenario, params).map(p => p.series))];
+  const legendHTML = seriesNames.length > 1
+    ? `<div class="chart-legend">${seriesNames.map(n => `<span class="item"><span class="dot" style="background:${SERIES_COLOR[n] || "var(--accent)"}"></span>${esc(n)}</span>`).join("")}</div>`
+    : "";
+
+  container.innerHTML = `
+    ${legendHTML}
+    <div class="chart-svg-holder"></div>
+    <div class="chart-params">
+      ${scenario.adjustableParams.map(p => `
+        <div class="slider-row" data-param="${esc(p.key)}">
+          <div class="slider-top"><span class="slabel">${esc(p.label)}</span><span class="sval"></span></div>
+          <input type="range" min="${p.minValue}" max="${p.maxValue}" step="${p.step}" value="${params[p.key]}">
+        </div>`).join("")}
+    </div>`;
+
+  const svgHolder = container.querySelector(".chart-svg-holder");
+  function formatParamValue(value, unit){
+    if (unit === "%") return fmtPercent(value * 100, 1);
+    if (unit === "$") return fmtUSD(value);
+    return `${Math.round(value)} ${unit}`;
+  }
+  function update(){
+    svgHolder.innerHTML = buildLineChartSVG(chartPoints(scenario, params));
+    scenario.adjustableParams.forEach(p => {
+      const row = container.querySelector(`.slider-row[data-param="${CSS.escape(p.key)}"]`);
+      row.querySelector(".sval").textContent = formatParamValue(params[p.key], p.unit);
+    });
+  }
+  scenario.adjustableParams.forEach(p => {
+    const row = container.querySelector(`.slider-row[data-param="${CSS.escape(p.key)}"]`);
+    row.querySelector("input[type=range]").addEventListener("input", e => {
+      params[p.key] = parseFloat(e.target.value);
+      update();
+    });
+  });
+  update();
+}
+
+function renderQuiz(termId){
+  const term = TERMS.find(t => t.id === termId);
+  if (!term) return renderHome();
+  const quiz = term.quiz;
+  let selectedIndex = null, submitted = false;
+
+  function choicesHTML(){
+    return quiz.choices.map((choice, i) => {
+      let cls = "quiz-choice";
+      let mark = "";
+      if (submitted){
+        const isCorrectChoice = i === quiz.correctIndex;
+        const isSelected = i === selectedIndex;
+        if (isCorrectChoice) { cls += " correct"; mark = " &#10003;"; }
+        else if (isSelected) { cls += " incorrect"; mark = " &#10007;"; }
+      } else if (i === selectedIndex){
+        cls += " selected";
+      }
+      return `<button class="${cls}" data-choice="${i}" ${submitted ? "disabled" : ""}>${esc(choice)}${mark}</button>`;
+    }).join("");
+  }
+
+  function feedbackHTML(){
+    if (!submitted) return "";
+    const isRight = selectedIndex === quiz.correctIndex;
+    return `
+      <div class="quiz-feedback ${isRight ? "right" : "wrong"}">
+        <div class="ff-title">${isRight ? "You got it!" : "Not quite"}</div>
+        <p>${esc(quiz.explanation)}</p>
+      </div>`;
+  }
+
+  function paint(){
+    app.innerHTML = `
+      <button class="backlink" data-nav="term/${term.id}">&larr; ${esc(term.name)}</button>
+      <div class="quiz-question">${esc(quiz.question)}</div>
+      <div id="quiz-choices">${choicesHTML()}</div>
+      ${submitted ? feedbackHTML() : `<button class="quiz-submit" id="quiz-submit-btn" ${selectedIndex === null ? "disabled" : ""}>Check My Answer</button>`}
+    `;
+    document.querySelector('[data-nav="term/' + term.id + '"]').addEventListener("click", () => navigate("term/" + term.id));
+    if (!submitted){
+      app.querySelectorAll(".quiz-choice").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedIndex = parseInt(btn.dataset.choice, 10);
+          paint();
+        });
+      });
+      const submitBtn = document.getElementById("quiz-submit-btn");
+      if (submitBtn) submitBtn.addEventListener("click", () => {
+        submitted = true;
+        if (selectedIndex === quiz.correctIndex) markLearned(term.id);
+        paint();
+      });
+    }
+  }
+  paint();
+}
+
+// ============================================================================
+// Calculators
+// ============================================================================
+function renderCalculator(kind){
+  if (kind === "mortgage") return renderMortgageCalculator();
+  if (kind === "compound-interest") return renderCompoundInterestCalculator();
+  if (kind === "retirement") return renderRetirementCalculator();
+  return renderHome();
+}
+
+function sliderRowHTML(id, label, valueText){
+  return `<div class="slider-row"><div class="slider-top"><span class="slabel">${label}</span><span class="sval" id="${id}-val">${valueText}</span></div><input type="range" id="${id}">`;
+}
+
+function renderMortgageCalculator(){
+  const state = {
+    homePrice: 400000, downPaymentPercent: 20, interestRate: 6.5,
+    termYears: 30, selectedState: "California", annualInsurance: 1400,
+  };
+
+  const stateOptions = PROPERTY_TAX_RATES.map(([s]) => `<option value="${esc(s)}" ${s === state.selectedState ? "selected" : ""}>${esc(s)}</option>`).join("");
+
+  app.innerHTML = `
+    <button class="backlink" data-nav="">&larr; Tools</button>
+    <h2 class="section-title">Mortgage Calculator</h2>
+    <div class="calc-total-card" id="total-card">
+      <div class="ct-label">Estimated Monthly Payment</div>
+      <div class="ct-value" id="total-value"></div>
+      <div class="ct-caption">Principal, interest, property tax &amp; insurance</div>
+    </div>
+    <div class="calc-section">
+      <div class="calc-section-title">Home &amp; Loan</div>
+      <div class="calc-rows">
+        ${sliderRowHTML("homePrice", "Home Price", "")}
+        ${sliderRowHTML("downPayment", "Down Payment", "")}
+        ${sliderRowHTML("interestRate", "Interest Rate", "")}
+        <div class="slider-row">
+          <div class="slider-top"><span class="slabel">Loan Term</span></div>
+          <div class="seg-toggle" id="term-toggle">
+            <button class="seg-btn" data-term="15">15 years</button>
+            <button class="seg-btn" data-term="30">30 years</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="calc-section">
+      <div class="calc-section-title">Property Tax &amp; Insurance</div>
+      <div class="calc-rows">
+        <div class="slider-row">
+          <div class="slider-top"><span class="slabel">State</span><span class="sval" id="tax-rate-val"></span></div>
+          <select id="state-select">${stateOptions}</select>
+        </div>
+        ${sliderRowHTML("insurance", "Annual Home Insurance", "")}
+      </div>
+      <p class="calc-footnote">Property tax rates are set locally and vary by county &mdash; these are statewide averages to help you estimate. Check your county assessor for the exact rate where you're buying.</p>
+    </div>
+    <div class="calc-section">
+      <div class="calc-section-title">Estimated Monthly Payment</div>
+      <div id="breakdown"></div>
+    </div>`;
+
+  const el = id => document.getElementById(id);
+  el("homePrice").min = 50000; el("homePrice").max = 2000000; el("homePrice").step = 5000; el("homePrice").value = state.homePrice;
+  el("downPayment").min = 0; el("downPayment").max = 50; el("downPayment").step = 1; el("downPayment").value = state.downPaymentPercent;
+  el("interestRate").min = 2; el("interestRate").max = 10; el("interestRate").step = 0.125; el("interestRate").value = state.interestRate;
+  el("insurance").min = 300; el("insurance").max = 6000; el("insurance").step = 50; el("insurance").value = state.annualInsurance;
+
+  function update(){
+    const downPaymentAmount = state.homePrice * state.downPaymentPercent / 100;
+    const loanAmount = Math.max(0, state.homePrice - downPaymentAmount);
+    const monthlyRate = state.interestRate / 100 / 12;
+    const totalMonths = state.termYears * 12;
+    const monthlyPI = totalMonths > 0 && loanAmount > 0
+      ? (monthlyRate > 0 ? loanAmount * monthlyRate / (1 - Math.pow(1 + monthlyRate, -totalMonths)) : loanAmount / totalMonths)
+      : 0;
+    const taxRate = propertyTaxRate(state.selectedState);
+    const monthlyPropertyTax = state.homePrice * taxRate / 12;
+    const monthlyInsurance = state.annualInsurance / 12;
+    const monthlyPMI = state.downPaymentPercent < 20 ? loanAmount * 0.0055 / 12 : 0;
+    const total = monthlyPI + monthlyPropertyTax + monthlyInsurance + monthlyPMI;
+
+    el("total-value").textContent = fmtUSD(total);
+    el("homePrice-val").textContent = fmtUSD(state.homePrice);
+    el("downPayment-val").textContent = `${Math.round(state.downPaymentPercent)}% – ${fmtUSD(downPaymentAmount)}`;
+    el("interestRate-val").textContent = fmtPercent(state.interestRate, 2) + "";
+    el("interestRate-val").textContent = state.interestRate.toFixed(3).replace(/0+$/, "").replace(/\.$/, "") + "%";
+    el("insurance-val").textContent = fmtUSD(state.annualInsurance);
+    el("tax-rate-val").textContent = fmtPercent(taxRate * 100, 2) + " / yr";
+
+    let breakdown = `
+      <div class="breakdown-row"><span>Principal &amp; Interest</span><span class="val">${fmtUSD(monthlyPI)}</span></div>
+      <div class="breakdown-row"><span>Property Tax (${esc(state.selectedState)})</span><span class="val">${fmtUSD(monthlyPropertyTax)}</span></div>
+      <div class="breakdown-row"><span>Home Insurance</span><span class="val">${fmtUSD(monthlyInsurance)}</span></div>`;
+    if (monthlyPMI > 0) breakdown += `<div class="breakdown-row"><span>PMI (under 20% down)</span><span class="val">${fmtUSD(monthlyPMI)}</span></div>`;
+    el("breakdown").innerHTML = breakdown;
+
+    document.querySelectorAll("#term-toggle .seg-btn").forEach(btn => {
+      btn.classList.toggle("active", parseInt(btn.dataset.term, 10) === state.termYears);
+    });
+  }
+
+  el("homePrice").addEventListener("input", e => { state.homePrice = parseFloat(e.target.value); update(); });
+  el("downPayment").addEventListener("input", e => { state.downPaymentPercent = parseFloat(e.target.value); update(); });
+  el("interestRate").addEventListener("input", e => { state.interestRate = parseFloat(e.target.value); update(); });
+  el("insurance").addEventListener("input", e => { state.annualInsurance = parseFloat(e.target.value); update(); });
+  el("state-select").addEventListener("change", e => { state.selectedState = e.target.value; update(); });
+  document.querySelectorAll("#term-toggle .seg-btn").forEach(btn => {
+    btn.addEventListener("click", () => { state.termYears = parseInt(btn.dataset.term, 10); update(); });
+  });
+
+  update();
+  bindNav();
+}
+
+function renderCompoundInterestCalculator(){
+  const state = { initialInvestment: 10000, monthlyContribution: 200, annualReturnRate: 7, years: 20 };
+
+  app.innerHTML = `
+    <button class="backlink" data-nav="">&larr; Tools</button>
+    <h2 class="section-title">Compound Interest Calculator</h2>
+    <div class="calc-total-card">
+      <div class="ct-label">Estimated Future Value</div>
+      <div class="ct-value" id="total-value"></div>
+      <div class="ct-caption" id="total-caption"></div>
+    </div>
+    <div class="calc-section">
+      <div class="calc-section-title">Starting Point</div>
+      <div class="calc-rows">
+        ${sliderRowHTML("initial", "Initial Investment", "")}
+        ${sliderRowHTML("monthly", "Monthly Contribution", "")}
+      </div>
+    </div>
+    <div class="calc-section">
+      <div class="calc-section-title">Growth Assumptions</div>
+      <div class="calc-rows">
+        ${sliderRowHTML("rate", "Annual Return", "")}
+        ${sliderRowHTML("years", "Years to Grow", "")}
+      </div>
+    </div>
+    <div class="calc-section">
+      <div class="calc-section-title">Where the Money Came From</div>
+      <div id="breakdown"></div>
+      <p class="calc-footnote">Total Interest Earned grows faster the longer you leave your money invested &mdash; that's compounding at work.</p>
+    </div>`;
+
+  const el = id => document.getElementById(id);
+  el("initial").min = 0; el("initial").max = 500000; el("initial").step = 500; el("initial").value = state.initialInvestment;
+  el("monthly").min = 0; el("monthly").max = 5000; el("monthly").step = 25; el("monthly").value = state.monthlyContribution;
+  el("rate").min = 1; el("rate").max = 12; el("rate").step = 0.25; el("rate").value = state.annualReturnRate;
+  el("years").min = 1; el("years").max = 40; el("years").step = 1; el("years").value = state.years;
+
+  function update(){
+    const totalMonths = state.years * 12;
+    const monthlyRate = state.annualReturnRate / 100 / 12;
+    const growthFactor = totalMonths > 0 ? Math.pow(1 + monthlyRate, totalMonths) : 1;
+    const principalGrowth = totalMonths > 0 ? state.initialInvestment * growthFactor : state.initialInvestment;
+    const contributionsGrowth = totalMonths > 0
+      ? (monthlyRate > 0 ? state.monthlyContribution * ((growthFactor - 1) / monthlyRate) : state.monthlyContribution * totalMonths)
+      : 0;
+    const futureValue = principalGrowth + contributionsGrowth;
+    const totalContributions = state.initialInvestment + state.monthlyContribution * totalMonths;
+    const totalInterestEarned = Math.max(0, futureValue - totalContributions);
+
+    el("total-value").textContent = fmtUSD(futureValue);
+    el("total-caption").textContent = `After ${Math.round(state.years)} years of growth`;
+    el("initial-val").textContent = fmtUSD(state.initialInvestment);
+    el("monthly-val").textContent = fmtUSD(state.monthlyContribution);
+    el("rate-val").textContent = state.annualReturnRate.toFixed(2) + "%";
+    el("years-val").textContent = `${Math.round(state.years)} years`;
+
+    el("breakdown").innerHTML = `
+      <div class="breakdown-row"><span>Total Contributions</span><span class="val">${fmtUSD(totalContributions)}</span></div>
+      <div class="breakdown-row"><span>Total Interest Earned</span><span class="val">${fmtUSD(totalInterestEarned)}</span></div>`;
+  }
+
+  el("initial").addEventListener("input", e => { state.initialInvestment = parseFloat(e.target.value); update(); });
+  el("monthly").addEventListener("input", e => { state.monthlyContribution = parseFloat(e.target.value); update(); });
+  el("rate").addEventListener("input", e => { state.annualReturnRate = parseFloat(e.target.value); update(); });
+  el("years").addEventListener("input", e => { state.years = parseFloat(e.target.value); update(); });
+
+  update();
+  bindNav();
+}
+
+function renderRetirementCalculator(){
+  const state = {
+    currentAge: 30, retirementAge: 65, currentSavings: 20000,
+    monthlyContribution: 500, annualReturnRate: 7, desiredAnnualIncome: 60000,
+  };
+
+  app.innerHTML = `
+    <button class="backlink" data-nav="">&larr; Tools</button>
+    <h2 class="section-title">Retirement Calculator</h2>
+    <div class="calc-total-card" id="total-card">
+      <div class="ct-label" id="total-label"></div>
+      <div class="ct-value" id="total-value"></div>
+      <div class="ct-caption" id="total-caption"></div>
+    </div>
+    <div class="calc-section">
+      <div class="calc-section-title">Your Timeline</div>
+      <div class="calc-rows">
+        ${sliderRowHTML("currentAge", "Current Age", "")}
+        ${sliderRowHTML("retireAge", "Retirement Age", "")}
+      </div>
+    </div>
+    <div class="calc-section">
+      <div class="calc-section-title">Savings &amp; Contributions</div>
+      <div class="calc-rows">
+        ${sliderRowHTML("savings", "Current Savings", "")}
+        ${sliderRowHTML("monthly", "Monthly Contribution", "")}
+        ${sliderRowHTML("rate", "Annual Return", "")}
+      </div>
+    </div>
+    <div class="calc-section">
+      <div class="calc-section-title">Retirement Goal</div>
+      <div class="calc-rows">
+        ${sliderRowHTML("income", "Desired Annual Income", "")}
+      </div>
+      <p class="calc-footnote">Based on the 4% rule, your target nest egg is about 25x your desired annual income.</p>
+    </div>
+    <div class="calc-section">
+      <div class="calc-section-title">How You're Tracking</div>
+      <div id="breakdown"></div>
+      <p class="calc-footnote" id="tracking-note"></p>
+    </div>`;
+
+  const el = id => document.getElementById(id);
+  el("currentAge").min = 18; el("currentAge").max = 75; el("currentAge").step = 1; el("currentAge").value = state.currentAge;
+  el("retireAge").min = 40; el("retireAge").max = 80; el("retireAge").step = 1; el("retireAge").value = state.retirementAge;
+  el("savings").min = 0; el("savings").max = 1000000; el("savings").step = 1000; el("savings").value = state.currentSavings;
+  el("monthly").min = 0; el("monthly").max = 5000; el("monthly").step = 25; el("monthly").value = state.monthlyContribution;
+  el("rate").min = 1; el("rate").max = 12; el("rate").step = 0.25; el("rate").value = state.annualReturnRate;
+  el("income").min = 10000; el("income").max = 300000; el("income").step = 1000; el("income").value = state.desiredAnnualIncome;
+
+  function update(){
+    const yearsUntilRetirement = Math.max(0, Math.round(state.retirementAge) - Math.round(state.currentAge));
+    const totalMonths = yearsUntilRetirement * 12;
+    const monthlyRate = state.annualReturnRate / 100 / 12;
+    const growthFactor = totalMonths > 0 ? Math.pow(1 + monthlyRate, totalMonths) : 1;
+    const savingsGrowth = totalMonths > 0 ? state.currentSavings * growthFactor : state.currentSavings;
+    const contributionsGrowth = totalMonths > 0
+      ? (monthlyRate > 0 ? state.monthlyContribution * ((growthFactor - 1) / monthlyRate) : state.monthlyContribution * totalMonths)
+      : 0;
+    const projectedNestEgg = savingsGrowth + contributionsGrowth;
+    const targetNestEgg = state.desiredAnnualIncome * 25;
+    const isOnTrack = projectedNestEgg >= targetNestEgg;
+    const shortfallOrSurplus = projectedNestEgg - targetNestEgg;
+
+    document.getElementById("total-card").classList.toggle("warn", !isOnTrack);
+    el("total-label").textContent = isOnTrack ? "On Track for Retirement" : "Projected Shortfall";
+    el("total-value").textContent = fmtUSD(projectedNestEgg);
+    el("total-caption").textContent = `Projected nest egg at age ${Math.round(state.retirementAge)}`;
+
+    el("currentAge-val").textContent = Math.round(state.currentAge);
+    el("retireAge-val").textContent = Math.round(state.retirementAge);
+    el("savings-val").textContent = fmtUSD(state.currentSavings);
+    el("monthly-val").textContent = fmtUSD(state.monthlyContribution);
+    el("rate-val").textContent = state.annualReturnRate.toFixed(2) + "%";
+    el("income-val").textContent = fmtUSD(state.desiredAnnualIncome);
+
+    el("breakdown").innerHTML = `
+      <div class="breakdown-row"><span>Projected Nest Egg</span><span class="val">${fmtUSD(projectedNestEgg)}</span></div>
+      <div class="breakdown-row"><span>Target Nest Egg (4% Rule)</span><span class="val">${fmtUSD(targetNestEgg)}</span></div>`;
+
+    el("tracking-note").textContent = isOnTrack
+      ? `You're projected to be on track by ${Math.round(state.retirementAge)}, with a surplus of ${fmtUSD(shortfallOrSurplus)}.`
+      : `You're projected to fall short by ${Math.round(state.retirementAge)} by ${fmtUSD(Math.abs(shortfallOrSurplus))} — try increasing your monthly contribution or retiring a bit later.`;
+  }
+
+  ["currentAge", "retireAge", "savings", "monthly", "rate", "income"].forEach(id => {
+    el(id).addEventListener("input", e => {
+      const map = { currentAge: "currentAge", retireAge: "retirementAge", savings: "currentSavings", monthly: "monthlyContribution", rate: "annualReturnRate", income: "desiredAnnualIncome" };
+      state[map[id]] = parseFloat(e.target.value);
+      update();
+    });
+  });
+
+  update();
+  bindNav();
+}
+
+// ============================================================================
+// Nav binding + boot
+// ============================================================================
+function bindNav(){
+  document.querySelectorAll("[data-nav]").forEach(elx => {
+    elx.addEventListener("click", () => navigate(elx.dataset.nav));
+  });
+}
+
+fetch("./terms.json")
+  .then(r => r.json())
+  .then(data => {
+    TERMS = data.terms.slice().sort((a, b) => a.order - b.order);
+    render();
+  })
+  .catch(err => {
+    app.innerHTML = `<p>Could not load glossary content.</p>`;
+    console.error(err);
+  });
+</script>
+</body>
+</html>
