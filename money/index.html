@@ -434,6 +434,150 @@ select, .seg-group{
 .quiz-feedback.wrong .ff-title{ color:var(--gold); }
 .quiz-feedback p{ margin:0; font-size:0.9rem; color:var(--ink-soft); line-height:1.55; }
 
+/* net worth */
+.nw-section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  flex-wrap:wrap;
+  margin-bottom:1rem;
+}
+.nw-section-head .section-title{ margin:0; }
+.nw-section-actions{ display:flex; gap:0.5rem; flex-wrap:wrap; }
+.nw-add-btn{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:var(--accent);
+  background:var(--accent-soft);
+  border:1px solid var(--line);
+  border-radius:99px;
+  padding:0.45rem 0.9rem;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.nw-add-btn:hover{ border-color:var(--accent); }
+.nw-add-btn.secondary{ color:var(--ink-soft); background:var(--surface-2); }
+.nw-add-btn.secondary:hover{ border-color:var(--ink-faint); }
+.nw-add-btn:disabled{ opacity:0.45; cursor:not-allowed; }
+.nw-add-btn:disabled:hover{ border-color:var(--line); }
+
+.nw-group{ margin-bottom:1.4rem; }
+.nw-group-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-bottom:0.5rem;
+}
+.nw-group-head .nw-group-total{ font-variant-numeric:tabular-nums; color:var(--ink-soft); }
+.nw-group[data-kind="liability"] .nw-group-total{ color:var(--risk-high); }
+
+.nw-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:0.85rem 1rem;
+  margin-bottom:0.55rem;
+  flex-wrap:wrap;
+}
+.nw-row-main{ min-width:0; flex:1 1 12rem; }
+.nw-row-name{ font-family:var(--font-display); font-size:1.02rem; display:block; }
+.nw-row-type{ font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.03em; text-transform:uppercase; color:var(--ink-faint); }
+.nw-row-notes{ font-size:0.82rem; color:var(--ink-soft); margin-top:0.3rem; line-height:1.5; }
+.nw-doc-link{ display:inline-block; margin-top:0.4rem; font-size:0.78rem; color:var(--accent); text-decoration:none; }
+.nw-doc-link:hover{ text-decoration:underline; }
+.nw-row-value{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; font-size:1rem; white-space:nowrap; flex-shrink:0; }
+.nw-row-value.liability{ color:var(--risk-high); }
+.nw-row-actions{ display:flex; gap:0.4rem; flex-shrink:0; }
+.nw-row-actions button{
+  font-family:var(--font-mono);
+  font-size:0.68rem;
+  letter-spacing:0.03em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  background:none;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:0.3rem 0.55rem;
+  cursor:pointer;
+}
+.nw-row-actions button:hover{ color:var(--ink); border-color:var(--ink-faint); }
+.nw-row-actions button.danger:hover{ color:var(--risk-high); border-color:var(--risk-high); }
+
+.nw-form{
+  background:var(--surface);
+  border:1px solid var(--accent);
+  border-radius:10px;
+  padding:1.2rem 1.3rem;
+  margin-bottom:1rem;
+  display:flex;
+  flex-direction:column;
+  gap:0.9rem;
+}
+.nw-form-row{ display:flex; flex-direction:column; gap:0.35rem; }
+.nw-form-row label{ font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-faint); }
+.nw-form-row input[type="text"], .nw-form-row input[type="number"], .nw-form-row select, .nw-form-row textarea{
+  font-family:var(--font-body);
+  font-size:0.95rem;
+  padding:0.6rem 0.7rem;
+  border-radius:6px;
+  border:1px solid var(--line);
+  background:var(--bg);
+  color:var(--ink);
+  width:100%;
+}
+.nw-form-row textarea{ resize:vertical; min-height:2.4rem; }
+.nw-form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; }
+@media (max-width:640px){ .nw-form-grid{ grid-template-columns:1fr; } }
+.nw-file-row{ display:flex; align-items:center; gap:0.7rem; flex-wrap:wrap; }
+.nw-file-name{ font-size:0.82rem; color:var(--ink-soft); }
+.nw-form-actions{ display:flex; gap:0.6rem; justify-content:flex-end; }
+.nw-btn-primary{
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  letter-spacing:0.03em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:var(--bg);
+  background:var(--accent);
+  border:none;
+  border-radius:6px;
+  padding:0.55rem 1.1rem;
+  cursor:pointer;
+}
+.nw-btn-secondary{
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  letter-spacing:0.03em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  background:none;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:0.55rem 1.1rem;
+  cursor:pointer;
+}
+.nw-empty{
+  text-align:center;
+  padding:2rem 1rem;
+  color:var(--ink-faint);
+  font-size:0.88rem;
+  border:1px dashed var(--line);
+  border-radius:8px;
+}
+
 footer{
   margin-top:3rem;
   padding-top:1.6rem;
@@ -620,6 +764,155 @@ function learnedCountIn(terms){
 }
 
 // ============================================================================
+// Net worth (browser-local, IndexedDB — supports file attachments, unlike
+// the plain localStorage progress tracker above)
+// ============================================================================
+const NW_DB_NAME = "sentinel-money-networth";
+const NW_DB_VERSION = 1;
+const NW_STORE = "entries";
+
+const NET_WORTH_GROUPS = [
+  { id: "cash", label: "Cash & Savings", kind: "asset" },
+  { id: "retirement", label: "Retirement & Education Accounts", kind: "asset" },
+  { id: "investments", label: "Investments", kind: "asset" },
+  { id: "property", label: "Property & Land", kind: "asset" },
+  { id: "other-asset", label: "Other Assets", kind: "asset" },
+  { id: "liabilities", label: "Liabilities", kind: "liability" },
+];
+const NET_WORTH_TYPES = [
+  { id: "checking-savings", label: "Checking / Savings", group: "cash" },
+  { id: "cash-other", label: "Cash & Equivalents", group: "cash" },
+  { id: "401k", label: "401(k)", group: "retirement" },
+  { id: "403b", label: "403(b)", group: "retirement" },
+  { id: "traditional-ira", label: "Traditional IRA", group: "retirement" },
+  { id: "roth-ira", label: "Roth IRA", group: "retirement" },
+  { id: "529", label: "529 Plan", group: "retirement" },
+  { id: "pension", label: "Pension", group: "retirement" },
+  { id: "hsa", label: "HSA", group: "retirement" },
+  { id: "brokerage", label: "Brokerage / Stocks", group: "investments" },
+  { id: "bonds", label: "Bonds", group: "investments" },
+  { id: "crypto", label: "Cryptocurrency", group: "investments" },
+  { id: "investment-other", label: "Other Investment", group: "investments" },
+  { id: "home", label: "Primary Home", group: "property" },
+  { id: "land", label: "Land", group: "property" },
+  { id: "farmland", label: "Farm Land", group: "property" },
+  { id: "rental", label: "Rental / Investment Property", group: "property" },
+  { id: "vehicle", label: "Vehicle", group: "other-asset" },
+  { id: "business", label: "Business Interest", group: "other-asset" },
+  { id: "other-asset-type", label: "Other Asset", group: "other-asset" },
+  { id: "mortgage", label: "Mortgage", group: "liabilities" },
+  { id: "auto-loan", label: "Auto Loan", group: "liabilities" },
+  { id: "student-loan", label: "Student Loan", group: "liabilities" },
+  { id: "credit-card", label: "Credit Card Debt", group: "liabilities" },
+  { id: "other-debt", label: "Other Debt", group: "liabilities" },
+];
+const NET_WORTH_TYPES_BY_ID = Object.fromEntries(NET_WORTH_TYPES.map(t => [t.id, t]));
+
+function nwOpenDB(){
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(NW_DB_NAME, NW_DB_VERSION);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(NW_STORE)) {
+        db.createObjectStore(NW_STORE, { keyPath: "id", autoIncrement: true });
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+async function nwGetAll(){
+  const db = await nwOpenDB();
+  return new Promise((resolve, reject) => {
+    const req = db.transaction(NW_STORE, "readonly").objectStore(NW_STORE).getAll();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+async function nwPut(entry){
+  const db = await nwOpenDB();
+  return new Promise((resolve, reject) => {
+    const store = db.transaction(NW_STORE, "readwrite").objectStore(NW_STORE);
+    const req = entry.id ? store.put(entry) : store.add(entry);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+async function nwDelete(id){
+  const db = await nwOpenDB();
+  return new Promise((resolve, reject) => {
+    const req = db.transaction(NW_STORE, "readwrite").objectStore(NW_STORE).delete(id);
+    req.onsuccess = () => resolve();
+    req.onerror = () => reject(req.error);
+  });
+}
+function nwGroupFor(entry){
+  const type = NET_WORTH_TYPES_BY_ID[entry.type];
+  return type && NET_WORTH_GROUPS.find(g => g.id === type.group);
+}
+function nwIsLiability(entry){
+  const g = nwGroupFor(entry);
+  return !!g && g.kind === "liability";
+}
+
+// Export/import as a single JSON file — files travel as base64 data URLs so a
+// backup is one self-contained file, loadable back in on any device/browser.
+function nwBlobToDataURL(blob){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+function nwDataURLToBlob(dataURL){
+  const match = /^data:(.*?);base64,(.*)$/.exec(dataURL);
+  if (!match) throw new Error("Not a base64 data URL");
+  const binary = atob(match[2]);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new Blob([bytes], { type: match[1] });
+}
+async function nwExportAll(){
+  const entries = await nwGetAll();
+  const exportEntries = await Promise.all(entries.map(async e => {
+    const { id, fileBlob, ...rest } = e;
+    if (fileBlob) rest.fileData = await nwBlobToDataURL(fileBlob);
+    return rest;
+  }));
+  const payload = { app: "sentinel-money-networth", version: 1, exportedAt: new Date().toISOString(), entries: exportEntries };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `sentinel-money-networth-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+async function nwImportFile(file){
+  const payload = JSON.parse(await file.text());
+  const entries = Array.isArray(payload.entries) ? payload.entries : (Array.isArray(payload) ? payload : null);
+  if (!entries) throw new Error("Not a Sentinel Money Net Worth backup file");
+  let count = 0;
+  for (const raw of entries) {
+    if (!raw || typeof raw.name !== "string" || typeof raw.value !== "number") continue;
+    const entry = { name: raw.name, type: raw.type || "cash-other", value: raw.value, notes: raw.notes || "", createdAt: raw.createdAt || Date.now() };
+    if (raw.fileData) {
+      try {
+        entry.fileBlob = nwDataURLToBlob(raw.fileData);
+        entry.fileName = raw.fileName || "attachment";
+        entry.fileType = raw.fileType || entry.fileBlob.type;
+      } catch (e) { /* skip a corrupt attachment, still import the entry itself */ }
+    }
+    await nwPut(entry);
+    count++;
+  }
+  return count;
+}
+
+// ============================================================================
 // Router
 // ============================================================================
 const app = document.getElementById("app");
@@ -648,6 +941,7 @@ window.addEventListener("hashchange", render);
 // ============================================================================
 function renderHome(){
   const toolCards = [
+    { id: "networth", title: "Net Worth", sub: "Add up savings, retirement accounts, property and land — see where the family stands", meta: "TOOL" },
     { id: "mortgage", title: "Mortgage Calculator", sub: "Estimate your monthly payment, including property tax by state", meta: "TOOL" },
     { id: "compound-interest", title: "Compound Interest Calculator", sub: "See how your savings could grow over time", meta: "TOOL" },
     { id: "retirement", title: "Retirement Calculator", sub: "See if you're on track to hit your retirement goal", meta: "TOOL" },
@@ -856,6 +1150,7 @@ function renderQuiz(termId){
 // Calculators
 // ============================================================================
 function renderCalculator(kind){
+  if (kind === "networth") return renderNetWorth();
   if (kind === "mortgage") return renderMortgageCalculator();
   if (kind === "compound-interest") return renderCompoundInterestCalculator();
   if (kind === "retirement") return renderRetirementCalculator();
@@ -1131,6 +1426,194 @@ function renderRetirementCalculator(){
 
   update();
   bindNav();
+}
+
+async function renderNetWorth(){
+  app.innerHTML = `
+    <button class="backlink" data-nav="">&larr; Tools</button>
+    <h2 class="section-title">Net Worth</h2>
+    <p class="calc-footnote" style="margin-top:-0.6rem;">Everything you add here stays in this browser only — nothing is uploaded or synced anywhere.</p>
+    <div id="nw-root"><div class="nw-empty">Loading…</div></div>`;
+  bindNav();
+  let entries = [];
+  try { entries = await nwGetAll(); }
+  catch (e) { console.error(e); }
+  nwRenderRoot(entries);
+}
+
+function nwRenderRoot(entries){
+  const root = document.getElementById("nw-root");
+  if (!root) return;
+
+  const totalAssets = entries.filter(e => !nwIsLiability(e)).reduce((s, e) => s + e.value, 0);
+  const totalLiabilities = entries.filter(nwIsLiability).reduce((s, e) => s + e.value, 0);
+  const netWorth = totalAssets - totalLiabilities;
+
+  const groupsHTML = NET_WORTH_GROUPS.map(g => {
+    const groupEntries = entries.filter(e => nwGroupFor(e)?.id === g.id);
+    if (groupEntries.length === 0) return "";
+    const groupTotal = groupEntries.reduce((s, e) => s + e.value, 0);
+    return `
+    <div class="nw-group" data-kind="${g.kind}">
+      <div class="nw-group-head"><span>${esc(g.label)}</span><span class="nw-group-total">${fmtUSD(groupTotal)}</span></div>
+      ${groupEntries.map(nwRowHTML).join("")}
+    </div>`;
+  }).join("");
+
+  root.innerHTML = `
+    <div class="calc-total-card">
+      <div class="ct-label">Family Net Worth</div>
+      <div class="ct-value">${fmtUSD(netWorth)}</div>
+      <div class="ct-caption">${fmtUSD(totalAssets)} in assets &minus; ${fmtUSD(totalLiabilities)} in liabilities</div>
+    </div>
+    <div class="nw-section-head">
+      <h3 class="section-title" style="margin:0;">Assets &amp; Liabilities</h3>
+      <div class="nw-section-actions">
+        <button class="nw-add-btn secondary" id="nw-export-btn" ${entries.length ? "" : "disabled"}>Export</button>
+        <button class="nw-add-btn secondary" id="nw-import-btn">Import</button>
+        <input type="file" id="nw-import-file" accept="application/json,.json" hidden>
+        <button class="nw-add-btn" id="nw-add-toggle">+ Add Entry</button>
+      </div>
+    </div>
+    <div id="nw-form-slot"></div>
+    ${entries.length ? groupsHTML : `<div class="nw-empty">Nothing added yet. Add savings, a 401(k) or IRA, a 529 plan, land, farmland — anything that's part of the family's net worth.</div>`}`;
+
+  document.getElementById("nw-add-toggle").addEventListener("click", () => nwShowForm(entries));
+  document.getElementById("nw-export-btn").addEventListener("click", () => nwExportAll());
+  document.getElementById("nw-import-btn").addEventListener("click", () => document.getElementById("nw-import-file").click());
+  document.getElementById("nw-import-file").addEventListener("change", async e => {
+    const file = e.target.files[0];
+    e.target.value = "";
+    if (!file) return;
+    try {
+      const count = await nwImportFile(file);
+      nwRenderRoot(await nwGetAll());
+      alert(count ? `Imported ${count} ${count === 1 ? "entry" : "entries"}.` : "No valid entries found in that file.");
+    } catch (err) {
+      console.error(err);
+      alert("Couldn't read that file as a Sentinel Money Net Worth backup.");
+    }
+  });
+  root.querySelectorAll("[data-nw-edit]").forEach(btn => {
+    btn.addEventListener("click", () => nwShowForm(entries, entries.find(e => e.id === Number(btn.dataset.nwEdit))));
+  });
+  root.querySelectorAll("[data-nw-delete]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      if (!confirm("Delete this entry? This can't be undone.")) return;
+      await nwDelete(Number(btn.dataset.nwDelete));
+      nwRenderRoot(await nwGetAll());
+    });
+  });
+  root.querySelectorAll("[data-nw-view-file]").forEach(a => {
+    a.addEventListener("click", ev => {
+      ev.preventDefault();
+      const entry = entries.find(x => x.id === Number(a.dataset.nwViewFile));
+      if (!entry || !entry.fileBlob) return;
+      const url = URL.createObjectURL(entry.fileBlob);
+      window.open(url, "_blank");
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    });
+  });
+}
+
+function nwRowHTML(e){
+  const type = NET_WORTH_TYPES_BY_ID[e.type];
+  const liability = nwIsLiability(e);
+  const docLink = e.fileName ? `<a class="nw-doc-link" href="#" data-nw-view-file="${e.id}">&#128206; ${esc(e.fileName)}</a>` : "";
+  return `
+  <div class="nw-row">
+    <div class="nw-row-main">
+      <span class="nw-row-name">${esc(e.name)}</span>
+      <span class="nw-row-type">${esc(type ? type.label : e.type)}</span>
+      ${e.notes ? `<div class="nw-row-notes">${esc(e.notes)}</div>` : ""}
+      ${docLink}
+    </div>
+    <div class="nw-row-value${liability ? " liability" : ""}">${liability ? "&minus;" : ""}${fmtUSD(e.value)}</div>
+    <div class="nw-row-actions">
+      <button data-nw-edit="${e.id}">Edit</button>
+      <button class="danger" data-nw-delete="${e.id}">Delete</button>
+    </div>
+  </div>`;
+}
+
+function nwShowForm(entries, editing){
+  const slot = document.getElementById("nw-form-slot");
+  if (!slot) return;
+  const isEdit = !!editing;
+  const typeOptionsHTML = NET_WORTH_GROUPS.map(g => `
+    <optgroup label="${esc(g.label)}">
+      ${NET_WORTH_TYPES.filter(t => t.group === g.id).map(t => `<option value="${t.id}">${esc(t.label)}</option>`).join("")}
+    </optgroup>`).join("");
+
+  slot.innerHTML = `
+    <div class="nw-form">
+      <div class="nw-form-grid">
+        <div class="nw-form-row">
+          <label for="nw-name">Name</label>
+          <input type="text" id="nw-name" placeholder="e.g. Chase Savings, 40-acre plot near Guntur" value="${editing ? esc(editing.name) : ""}">
+        </div>
+        <div class="nw-form-row">
+          <label for="nw-type">Type</label>
+          <select id="nw-type">${typeOptionsHTML}</select>
+        </div>
+      </div>
+      <div class="nw-form-grid">
+        <div class="nw-form-row">
+          <label for="nw-value">Estimated Value ($)</label>
+          <input type="number" id="nw-value" min="0" step="100" value="${editing ? editing.value : ""}">
+        </div>
+        <div class="nw-form-row">
+          <label for="nw-file">Attach a document (optional)</label>
+          <div class="nw-file-row">
+            <input type="file" id="nw-file">
+            <span class="nw-file-name" id="nw-file-name">${editing && editing.fileName ? "Current: " + esc(editing.fileName) : ""}</span>
+          </div>
+        </div>
+      </div>
+      <div class="nw-form-row">
+        <label for="nw-notes">Notes (optional)</label>
+        <textarea id="nw-notes">${editing ? esc(editing.notes || "") : ""}</textarea>
+      </div>
+      <div class="nw-form-actions">
+        <button class="nw-btn-secondary" id="nw-cancel">Cancel</button>
+        <button class="nw-btn-primary" id="nw-save">${isEdit ? "Save Changes" : "Add Entry"}</button>
+      </div>
+    </div>`;
+
+  document.getElementById("nw-type").value = editing ? editing.type : "checking-savings";
+  document.getElementById("nw-cancel").addEventListener("click", () => { slot.innerHTML = ""; });
+  document.getElementById("nw-file").addEventListener("change", e => {
+    const f = e.target.files[0];
+    document.getElementById("nw-file-name").textContent = f ? f.name : "No file chosen";
+  });
+
+  document.getElementById("nw-save").addEventListener("click", async () => {
+    const name = document.getElementById("nw-name").value.trim();
+    const type = document.getElementById("nw-type").value;
+    const value = parseFloat(document.getElementById("nw-value").value);
+    const notes = document.getElementById("nw-notes").value.trim();
+    const file = document.getElementById("nw-file").files[0];
+
+    if (!name || isNaN(value) || value < 0) {
+      alert("Please enter a name and a valid estimated value.");
+      return;
+    }
+
+    const entry = editing ? { ...editing } : {};
+    entry.name = name;
+    entry.type = type;
+    entry.value = value;
+    entry.notes = notes;
+    entry.createdAt = entry.createdAt || Date.now();
+    if (file) {
+      entry.fileBlob = file;
+      entry.fileName = file.name;
+      entry.fileType = file.type;
+    }
+
+    await nwPut(entry);
+    nwRenderRoot(await nwGetAll());
+  });
 }
 
 // ============================================================================
