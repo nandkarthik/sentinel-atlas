@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sentinel Panchangam</title>
-<meta name="description" content="Daily Panchangam for Andhra Pradesh — Tithi, Nakshatra, Yoga, Karana, Vara, sunrise/sunset, and the day's auspicious and inauspicious muhurta windows, computed live for any date.">
+<meta name="description" content="Daily Panchangam for Andhra Pradesh and the United States — Tithi, Nakshatra, Yoga, Karana, Vara, sunrise/sunset, and the day's auspicious and inauspicious muhurta windows, computed live for any date.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%23141726%22 stroke=%22%23e08a3f%22 stroke-width=%224%22/><circle cx=%2250%22 cy=%2250%22 r=%2220%22 fill=%22none%22 stroke=%22%23e08a3f%22 stroke-width=%223%22 opacity=%220.85%22/><line x1=%2250%22 y1=%228%22 x2=%2250%22 y2=%2222%22 stroke=%22%23e08a3f%22 stroke-width=%223%22/><line x1=%2250%22 y1=%2278%22 x2=%2250%22 y2=%2292%22 stroke=%22%23e08a3f%22 stroke-width=%223%22/><line x1=%228%22 y1=%2250%22 x2=%2222%22 y2=%2250%22 stroke=%22%23e08a3f%22 stroke-width=%223%22/><line x1=%2278%22 y1=%2250%22 x2=%2292%22 y2=%2250%22 stroke=%22%23e08a3f%22 stroke-width=%223%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -423,7 +423,7 @@ footer a{ color:var(--ink-faint); }
   <header>
     <div class="eyebrow">Sentinel Atlas &middot; Panchangam</div>
     <h1>Sentinel Panchangam</h1>
-    <p class="tagline">Daily Tithi, Nakshatra, Yoga, Karana and Vara for Andhra Pradesh, computed live from sun and moon position — plus the day's Rahu Kalam, Yamagandam, Gulika Kalam, Abhijit Muhurta and Brahma Muhurtam.</p>
+    <p class="tagline">Daily Tithi, Nakshatra, Yoga, Karana and Vara for Andhra Pradesh and the United States, computed live from sun and moon position — plus the day's Rahu Kalam, Yamagandam, Gulika Kalam, Abhijit Muhurta and Brahma Muhurtam.</p>
   </header>
 
   <div class="view-tabs" role="tablist"><button class="view-tab" role="tab" id="tabDay" aria-selected="true">Day</button><button class="view-tab" role="tab" id="tabMonth" aria-selected="false">Month</button></div>
@@ -689,15 +689,26 @@ function brahmaMuhurtam(sunrise){
 // ============================================================================
 // Page data + UI
 // ============================================================================
-const IST_OFFSET_MS = 5.5 * 3600000;
 const LOCATIONS = [
-  { name: "Vijayawada", latitude: 16.5062, longitude: 80.6480 },
-  { name: "Visakhapatnam", latitude: 17.6868, longitude: 83.2185 },
-  { name: "Tirupati", latitude: 13.6288, longitude: 79.4192 },
-  { name: "Guntur", latitude: 16.3067, longitude: 80.4365 },
-  { name: "Rajahmundry", latitude: 17.0005, longitude: 81.8040 },
-  { name: "Kurnool", latitude: 15.8281, longitude: 78.0373 },
-  { name: "Nellore", latitude: 14.4426, longitude: 79.9865 },
+  { name: "Delhi", latitude: 28.6139, longitude: 77.2090, tz: "Asia/Kolkata", region: "India" },
+  { name: "Vijayawada", latitude: 16.5062, longitude: 80.648, tz: "Asia/Kolkata", region: "India" },
+  { name: "Visakhapatnam", latitude: 17.6868, longitude: 83.2185, tz: "Asia/Kolkata", region: "India" },
+  { name: "Tirupati", latitude: 13.6288, longitude: 79.4192, tz: "Asia/Kolkata", region: "India" },
+  { name: "Guntur", latitude: 16.3067, longitude: 80.4365, tz: "Asia/Kolkata", region: "India" },
+  { name: "Rajahmundry", latitude: 17.0005, longitude: 81.804, tz: "Asia/Kolkata", region: "India" },
+  { name: "Kurnool", latitude: 15.8281, longitude: 78.0373, tz: "Asia/Kolkata", region: "India" },
+  { name: "Nellore", latitude: 14.4426, longitude: 79.9865, tz: "Asia/Kolkata", region: "India" },
+  { name: "Edison, NJ", latitude: 40.5187, longitude: -74.4121, tz: "America/New_York", region: "United States" },
+  { name: "Washington, DC", latitude: 38.9072, longitude: -77.0369, tz: "America/New_York", region: "United States" },
+  { name: "Atlanta, GA", latitude: 33.749, longitude: -84.388, tz: "America/New_York", region: "United States" },
+  { name: "Chicago, IL", latitude: 41.8781, longitude: -87.6298, tz: "America/Chicago", region: "United States" },
+  { name: "Dallas, TX", latitude: 32.7767, longitude: -96.797, tz: "America/Chicago", region: "United States" },
+  { name: "Houston, TX", latitude: 29.7604, longitude: -95.3698, tz: "America/Chicago", region: "United States" },
+  { name: "Denver, CO", latitude: 39.7392, longitude: -104.9903, tz: "America/Denver", region: "United States" },
+  { name: "Phoenix, AZ", latitude: 33.4484, longitude: -112.074, tz: "America/Phoenix", region: "United States" },
+  { name: "San Jose, CA", latitude: 37.3382, longitude: -121.8863, tz: "America/Los_Angeles", region: "United States" },
+  { name: "Seattle, WA", latitude: 47.6062, longitude: -122.3321, tz: "America/Los_Angeles", region: "United States" },
+  { name: "Los Angeles, CA", latitude: 34.0522, longitude: -118.2437, tz: "America/Los_Angeles", region: "United States" },
 ];
 const VARA_NAMES = [
   { en: "Sunday", sa: "Bhanuvaram" },
@@ -709,24 +720,47 @@ const VARA_NAMES = [
   { en: "Saturday", sa: "Shanivaram" },
 ];
 
-function istPartsNow(){
-  const shifted = new Date(Date.now() + IST_OFFSET_MS);
-  return { year: shifted.getUTCFullYear(), month: shifted.getUTCMonth() + 1, day: shifted.getUTCDate() };
+const tzFmtCache = {};
+function tzParts(date, tz){
+  let f = tzFmtCache[tz];
+  if (!f) f = tzFmtCache[tz] = new Intl.DateTimeFormat("en-US", { timeZone: tz, hourCycle: "h23", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" });
+  const o = {};
+  f.formatToParts(date).forEach(p => { if (p.type !== "literal") o[p.type] = Number(p.value); });
+  return o;
 }
-function dayBoundsIST(year, month, day){
-  const dayStart = new Date(Date.UTC(year, month - 1, day) - IST_OFFSET_MS);
-  return { dayStart, dayEnd: new Date(dayStart.getTime() + 86400000) };
+function tzOffsetMs(date, tz){
+  const o = tzParts(date, tz);
+  return Date.UTC(o.year, o.month - 1, o.day, o.hour, o.minute, o.second) - Math.floor(date.getTime() / 1000) * 1000;
+}
+function activeTZ(){ return LOCATIONS[state.locationIndex].tz; }
+function nowParts(tz){
+  const o = tzParts(new Date(), tz);
+  return { year: o.year, month: o.month, day: o.day };
+}
+function dayBounds(year, month, day, tz){
+  const startOf = (y, m, d) => {
+    const guess = Date.UTC(y, m - 1, d);
+    let t = guess - tzOffsetMs(new Date(guess), tz);
+    t = guess - tzOffsetMs(new Date(t), tz);
+    return new Date(t);
+  };
+  const next = new Date(Date.UTC(year, month - 1, day) + 86400000);
+  return { dayStart: startOf(year, month, day), dayEnd: startOf(next.getUTCFullYear(), next.getUTCMonth() + 1, next.getUTCDate()) };
 }
 function weekdayIndexFor(year, month, day){ return new Date(Date.UTC(year, month - 1, day)).getUTCDay(); }
-function timeFmt(date){
-  return new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", hour: "numeric", minute: "2-digit", hour12: true }).format(date);
+function timeFmt(date, withZone){
+  const opts = { timeZone: activeTZ(), hour: "numeric", minute: "2-digit", hour12: true };
+  if (withZone) opts.timeZoneName = "short";
+  let out = new Intl.DateTimeFormat("en-US", opts).format(date);
+  if (withZone && activeTZ() === "Asia/Kolkata") out = out.replace(/GMT\+5:30/, "IST");
+  return out;
 }
 function dateBadgeFmt(date){
-  return new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", month: "short", day: "numeric" }).format(date);
+  return new Intl.DateTimeFormat("en-US", { timeZone: activeTZ(), month: "short", day: "numeric" }).format(date);
 }
-function istYMD(date){
-  const shifted = new Date(date.getTime() + IST_OFFSET_MS);
-  return shifted.getUTCFullYear() * 10000 + (shifted.getUTCMonth() + 1) * 100 + shifted.getUTCDate();
+function localYMD(date, tz){
+  const o = tzParts(date, tz);
+  return o.year * 10000 + o.month * 100 + o.day;
 }
 
 // ---- Lunar months & festivals (Amanta / Telugu calendar) ----
@@ -744,9 +778,9 @@ function newMoonNear(date){
   }
   return new Date(t);
 }
-function ymdFromIST(date){
-  const s = new Date(date.getTime() + IST_OFFSET_MS);
-  return [s.getUTCFullYear(), s.getUTCMonth() + 1, s.getUTCDate()];
+function ymdInTZ(date, tz){
+  const o = tzParts(date, tz);
+  return [o.year, o.month, o.day];
 }
 function addDaysYMD(y, m, d, n){
   const u = new Date(Date.UTC(y, m - 1, d) + n * 86400000);
@@ -806,7 +840,7 @@ function festivalsForYear(year, loc){
     const masa = (mo.sign + 1) % 12;
     const list = FESTIVALS.filter(f => f[1] === masa);
     if (!list.length && masa !== 4) continue;
-    const s = ymdFromIST(mo.start), e = ymdFromIST(mo.end);
+    const s = ymdInTZ(mo.start, loc.tz), e = ymdInTZ(mo.end, loc.tz);
     const nDays = Math.round((Date.UTC(e[0], e[1] - 1, e[2]) - Date.UTC(s[0], s[1] - 1, s[2])) / 86400000) + 1;
     const days = [];
     for (let i = 0; i <= nDays; i++){
@@ -840,7 +874,7 @@ function festivalsForYear(year, loc){
   // Makara Sankranti: Sun enters sidereal Capricorn (270 degrees)
   let lo = Date.UTC(year, 0, 10), hi = Date.UTC(year, 0, 20);
   for (let i = 0; i < 40; i++){ const mid = (lo + hi) / 2; if (sunSiderealLongitude(new Date(mid)) >= 270) hi = mid; else lo = mid; }
-  const cross = new Date(hi), cy = ymdFromIST(cross);
+  const cross = new Date(hi), cy = ymdInTZ(cross, loc.tz);
   const csun = sunTimes(cy[0], cy[1], cy[2], loc.latitude, loc.longitude);
   const sk = csun && cross > csun.sunset ? addDaysYMD(cy[0], cy[1], cy[2], 1) : cy;
   add(addDaysYMD(sk[0], sk[1], sk[2], -1), "Bhogi");
@@ -852,13 +886,16 @@ function festivalsOn(year, month, day, loc){
   return festivalsForYear(year, loc)[year * 10000 + month * 100 + day] || [];
 }
 
-let state = (() => { const t = istPartsNow(); return { year: t.year, month: t.month, day: t.day, locationIndex: 0, view: "day", calYear: t.year, calMonth: t.month }; })();
+let state = (() => { const browserTZ = (() => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { return null; } })(); const tzIdx = LOCATIONS.findIndex(l => l.tz === browserTZ && browserTZ !== "Asia/Kolkata"); const idx = tzIdx >= 0 ? tzIdx : LOCATIONS.findIndex(l => l.name === "Vijayawada"); const t = nowParts(LOCATIONS[idx].tz); return { year: t.year, month: t.month, day: t.day, locationIndex: idx, view: "day", calYear: t.year, calMonth: t.month }; })();
 
 const citySelect = document.getElementById("citySelect");
+const cityGroups = {};
 LOCATIONS.forEach((loc, i) => {
+  let g = cityGroups[loc.region];
+  if (!g) { g = cityGroups[loc.region] = document.createElement("optgroup"); g.label = loc.region; citySelect.appendChild(g); }
   const opt = document.createElement("option");
   opt.value = i; opt.textContent = loc.name;
-  citySelect.appendChild(opt);
+  g.appendChild(opt);
 });
 citySelect.value = state.locationIndex;
 citySelect.addEventListener("change", () => { state.locationIndex = Number(citySelect.value); render(); });
@@ -871,7 +908,7 @@ dateInput.addEventListener("change", () => {
 document.getElementById("prevDay").addEventListener("click", () => shiftDay(-1));
 document.getElementById("nextDay").addEventListener("click", () => shiftDay(1));
 document.getElementById("todayBtn").addEventListener("click", () => {
-  const t = istPartsNow(); state.year = t.year; state.month = t.month; state.day = t.day; state.calYear = t.year; state.calMonth = t.month; render();
+  const t = nowParts(activeTZ()); state.year = t.year; state.month = t.month; state.day = t.day; state.calYear = t.year; state.calMonth = t.month; render();
 });
 function setView(v){
   state.view = v;
@@ -910,12 +947,12 @@ function renderMonth(){
   document.getElementById("monthTitle").textContent = new Intl.DateTimeFormat("en-IN", { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(Date.UTC(y, m - 1, 1)));
   const first = new Date(Date.UTC(y, m - 1, 1)).getUTCDay();
   const days = new Date(Date.UTC(y, m, 0)).getUTCDate();
-  const t = istPartsNow();
+  const t = nowParts(activeTZ());
   let html = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d => `<div class="cal-dow">${d}</div>`).join("");
   for (let i = 0; i < first; i++) html += `<div class="cal-cell blank"></div>`;
   for (let d = 1; d <= days; d++) {
     const sun = sunTimes(y, m, d, loc.latitude, loc.longitude);
-    const at = sun ? sun.sunrise : dayBoundsIST(y, m, d).dayStart;
+    const at = sun ? sun.sunrise : dayBounds(y, m, d, loc.tz).dayStart;
     const tithi = tithiAt(at), nak = nakshatraAt(at), tag = keyTithiTag(tithi);
     const dow = (first + d - 1) % 7;
     const fests = festivalsOn(y, m, d, loc);
@@ -947,10 +984,10 @@ function render(){
   if (monthMode) { renderMonth(); return; }
   const loc = LOCATIONS[state.locationIndex];
   const { year, month, day } = state;
-  const { dayStart, dayEnd } = dayBoundsIST(year, month, day);
+  const { dayStart, dayEnd } = dayBounds(year, month, day, loc.tz);
   const weekdayIndex = weekdayIndexFor(year, month, day);
   const vara = VARA_NAMES[weekdayIndex];
-  const todayParts = istPartsNow();
+  const todayParts = nowParts(loc.tz);
   const isToday = year === todayParts.year && month === todayParts.month && day === todayParts.day;
 
   document.getElementById("dateDisplay").textContent = new Intl.DateTimeFormat("en-IN", { weekday: "short", year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }).format(new Date(Date.UTC(year, month - 1, day)));
@@ -996,9 +1033,9 @@ function render(){
     <div class="snapshot-top">
       <div class="vara">${vara.en} <span class="sanskrit">&middot; ${vara.sa}</span></div>
       <div class="sun-times">
-        <span>Sunrise <b>${timeFmt(sun.sunrise)}</b></span>
-        <span>Noon <b>${timeFmt(sun.solarNoon)}</b></span>
-        <span>Sunset <b>${timeFmt(sun.sunset)}</b></span>
+        <span>Sunrise <b>${timeFmt(sun.sunrise, true)}</b></span>
+        <span>Noon <b>${timeFmt(sun.solarNoon, false)}</b></span>
+        <span>Sunset <b>${timeFmt(sun.sunset, false)}</b></span>
       </div>
     </div>
     <div class="chip-row">
@@ -1078,8 +1115,8 @@ function windowRowHtml(w, year, month, day){
 }
 
 function timelineRowHtml(ev, selectedYMD){
-  const startOutside = istYMD(ev.start) !== selectedYMD;
-  const endOutside = ev.end && istYMD(ev.end) !== selectedYMD;
+  const startOutside = localYMD(ev.start, activeTZ()) !== selectedYMD;
+  const endOutside = ev.end && localYMD(ev.end, activeTZ()) !== selectedYMD;
   const timeCol = `
     <div class="time-col">
       ${startOutside ? `<span class="date-flag">${dateBadgeFmt(ev.start)}</span>` : ""}
