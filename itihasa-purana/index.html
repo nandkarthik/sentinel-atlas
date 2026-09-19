@@ -256,6 +256,57 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
 .person .portrait-link{display:block;margin:0 auto 0.35rem;width:2.4rem;}
 .person .portrait{width:2.4rem;height:2.4rem;border-radius:50%;object-fit:cover;object-position:top center;border:1px solid var(--line);display:block;}
 .deity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(8.5rem,1fr));gap:0.7rem;margin:0.4rem 0 0.8rem;}.deity{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:5px;overflow:hidden;text-align:center;}.deity img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;}.deity figcaption{padding:0.4rem 0.4rem 0.5rem;}.deity .n{display:block;font-size:0.82rem;font-weight:600;}.deity .r{display:block;font-size:0.66rem;color:var(--ink-soft);margin-top:0.15rem;line-height:1.3;}
+.gx-card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.2rem 1.3rem 1.5rem;box-shadow:var(--shadow);}
+.gx-controls{display:grid;gap:0.8rem;margin-bottom:1rem;}
+.gx-search{display:grid;gap:0.25rem;max-width:22rem;}
+.gx-search span,.gx-lab{font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-faint);}
+.gx-search input{font:inherit;font-size:0.95rem;padding:0.45rem 0.6rem;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink);}
+.gx-chipbox{display:flex;flex-wrap:wrap;align-items:center;gap:0.4rem 0.6rem;}
+.gx-chips{display:flex;flex-wrap:wrap;gap:0.35rem;}
+.gx-chip{font-family:var(--font-mono);font-size:0.64rem;letter-spacing:0.03em;padding:0.3rem 0.6rem;border-radius:99px;border:1px solid var(--line);background:var(--bg);color:var(--ink-soft);cursor:pointer;display:inline-flex;align-items:center;gap:0.4rem;}
+.gx-chip i{width:0.7rem;height:0.7rem;border-radius:50%;display:inline-block;border:2px solid var(--c);background:transparent;}
+.gx-chip[aria-pressed="true"]{color:var(--ink);border-color:var(--c);}
+.gx-chip[aria-pressed="true"] i{background:var(--c);}
+.gx-chip:focus-visible,.gx-zoom button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.gx-main{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(16rem,1fr);gap:1rem;align-items:start;}
+@media (max-width:820px){.gx-main{grid-template-columns:1fr;}}
+.gx-stage{position:relative;background:var(--bg);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+#gx-svg{display:block;width:100%;height:auto;aspect-ratio:1000/680;touch-action:none;cursor:grab;user-select:none;}
+@media (max-width:820px){#gx-svg{aspect-ratio:1/1.05;}}
+.gx-zoom{position:absolute;right:0.5rem;top:0.5rem;display:flex;flex-direction:column;gap:0.25rem;}
+.gx-zoom button{width:1.8rem;height:1.8rem;border-radius:5px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:1rem;cursor:pointer;line-height:1;}
+.gx-legend{position:absolute;left:0.5rem;bottom:0.4rem;display:flex;gap:0.7rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:0.6rem;color:var(--ink-soft);}
+.gx-legend span{display:inline-flex;align-items:center;gap:0.3rem;}
+.gx-legend i{width:0.6rem;height:0.6rem;border-radius:50%;display:inline-block;}
+.gx-e{fill:none;stroke-width:1.3;opacity:0.7;}
+.gx-e.dash{stroke-dasharray:4 3;}
+.gx-e.dim,.gx-n.dim{opacity:0.08;}
+.gx-e.hi{opacity:1;stroke-width:2.2;}
+.gx-n{cursor:pointer;}
+.gx-n circle{stroke:var(--bg);stroke-width:1.5;}
+.gx-n.sel circle{stroke:var(--ink);stroke-width:3;}
+.gx-n text{font-family:var(--font-body);font-size:11px;fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round;pointer-events:none;}
+.gx-n.nolabel text{display:none;}
+.gx-detail{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:1rem 1.1rem;font-size:0.9rem;max-height:44rem;overflow:auto;}
+.gx-detail h4{font-family:var(--font-display);font-size:1.3rem;margin:0.1rem 0 0.2rem;}
+.gx-tag{font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-faint);}
+.gx-detail p{margin:0.5rem 0;color:var(--ink-soft);}
+.gx-facts{display:grid;grid-template-columns:auto 1fr;gap:0.25rem 0.7rem;margin:0.6rem 0;font-size:0.85rem;}
+.gx-facts dt{font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);padding-top:0.15rem;}
+.gx-facts dd{margin:0;}
+.gx-rel{margin-top:0.7rem;}
+.gx-rel h5{margin:0.6rem 0 0.25rem;font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-faint);font-weight:500;}
+.gx-rel div{display:flex;flex-wrap:wrap;gap:0.3rem;}
+.gx-link{font:inherit;font-size:0.82rem;padding:0.15rem 0.5rem;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;}
+.gx-link:hover{border-color:var(--accent);color:var(--accent);}
+.gx-vahana{margin-top:1.5rem;}
+.gx-vahana h3{font-size:1.15rem;margin:0 0 0.3rem;}
+.gx-vahana>p{color:var(--ink-soft);font-size:0.9rem;margin:0 0 0.7rem;}
+.gx-tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;}
+.gx-vahana table{border-collapse:collapse;width:100%;font-size:0.85rem;min-width:36rem;}
+.gx-vahana th{font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;text-align:left;color:var(--ink-faint);padding:0.5rem 0.7rem;background:var(--bg);}
+.gx-vahana td{padding:0.45rem 0.7rem;border-top:1px solid var(--line);vertical-align:top;}
+.gx-vahana td:first-child button{font:inherit;font-weight:600;background:none;border:0;color:var(--accent);cursor:pointer;padding:0;text-align:left;}
 .person.lead{border-color:var(--accent);}
 .person .n{display:block;font-size:0.82rem;font-weight:600;}
 .person .r{display:block;font-size:0.66rem;color:var(--ink-soft);margin-top:0.15rem;line-height:1.3;}
@@ -405,6 +456,7 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
     <button id="sub-nav-itihasa" class="active" role="tab" aria-selected="true">Itihasa — the epics</button>
     <button id="sub-nav-timeline-itihasa" role="tab" aria-selected="false">Itihasa timeline</button>
     <button id="sub-nav-purana" role="tab" aria-selected="false">Purana — the pantheon</button>
+    <button id="sub-nav-graph" role="tab" aria-selected="false">Graph of gods</button>
   </div>
 
 <div id="sub-itihasa" class="subview">
@@ -515,6 +567,31 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
     <div id="tl-body"></div>
   </div>
 
+  </div>
+
+  <div id="sub-graph" class="subview" hidden>
+  <div class="refs-head">
+    <h2>The gods and their links</h2>
+    <p>Who is whose parent, spouse, avatar or vehicle. Start from any god: click a node to see their family, their vahana (the animal or vehicle they ride) and what they carry. Switch on the epic characters to see which gods they descend from, for example Karna, son of Surya through Kunti, or Bhishma, son of Ganga.</p>
+  </div>
+  <div class="gx-card">
+    <div class="gx-controls">
+      <label class="gx-search"><span>Find a god or character</span><input id="gx-q" list="gx-names" placeholder="Shiva, Agni, Bhairava, Karna…" autocomplete="off"><datalist id="gx-names"></datalist></label>
+      <div class="gx-chipbox"><span class="gx-lab">Show</span><div id="gx-layers" class="gx-chips"></div></div>
+      <div class="gx-chipbox"><span class="gx-lab">Links</span><div id="gx-types" class="gx-chips"></div></div>
+    </div>
+    <div class="gx-main">
+      <div class="gx-stage"><svg id="gx-svg" role="img" aria-label="Network of gods and their relationships" viewBox="0 0 1000 680"><defs id="gx-defs"></defs><g id="gx-vp"><g id="gx-edges"></g><g id="gx-nodes"></g></g></svg>
+        <div class="gx-zoom"><button id="gx-zin" aria-label="Zoom in">+</button><button id="gx-zout" aria-label="Zoom out">−</button><button id="gx-zreset" aria-label="Reset view">⟲</button></div>
+        <div id="gx-legend" class="gx-legend"></div></div>
+      <aside id="gx-detail" class="gx-detail" aria-live="polite"></aside>
+    </div>
+    <div class="gx-vahana">
+      <h3>Vahanas and symbols</h3>
+      <p>The vehicle each deity rides, and what they carry. Tap a name to jump to it in the graph.</p>
+      <div class="gx-tablewrap"><table><thead><tr><th>Deity</th><th>Vahana</th><th>Symbols</th><th>Consort(s)</th></tr></thead><tbody id="gx-tbody"></tbody></table></div>
+    </div>
+  </div>
   </div>
 
   <div id="sub-purana" class="subview" hidden>
@@ -665,15 +742,16 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
 })();
 </script>
 <script>
-["itihasa", "timeline-itihasa", "purana"].forEach(function(name){
+["itihasa", "timeline-itihasa", "purana", "graph"].forEach(function(name){
   document.getElementById("sub-nav-" + name).addEventListener("click", function(){
-    ["itihasa", "timeline-itihasa", "purana"].forEach(function(other){
+    ["itihasa", "timeline-itihasa", "purana", "graph"].forEach(function(other){
       var btn = document.getElementById("sub-nav-" + other);
       var active = other === name;
       btn.classList.toggle("active", active);
       btn.setAttribute("aria-selected", active ? "true" : "false");
       document.getElementById("sub-" + other).hidden = !active;
     });
+    if (name === "graph" && window.__graphReady) setTimeout(window.__graphReady, 0);
     if (name === "purana" && window.__templeOverviewMap) setTimeout(function(){ window.__templeOverviewMap.invalidateSize(); }, 0);
   });
 });
@@ -734,6 +812,213 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
   });
   draw("ramayana");
 })();
+</script>
+<script>
+(function(){
+  var D = {"nodes":[{"id":"Dasharatha","g":"r","note":"King of Ayodhya; father of the four princes. Dies of grief after Rama's exile, as a sage's curse had foretold."},{"id":"Kausalya","g":"r","note":"Eldest queen; Rama's mother."},{"id":"Kaikeyi","g":"r","note":"Second queen; Bharata's mother. Claims two old boons — Rama's exile and Bharata's crown — at Manthara's urging."},{"id":"Sumitra","g":"r","note":"Third queen; mother of Lakshmana and Shatrughna."},{"id":"Manthara","g":"r","note":"Kaikeyi's hunchbacked maid, whose whispering sets the exile in motion."},{"id":"Rama","g":"a","note":"Eldest prince and the seventh avatar of Vishnu; the ideal king.","v":"None","s":"Kodanda bow"},{"id":"Bharata","g":"r","note":"Refuses the throne, places Rama's sandals on it and rules as his regent."},{"id":"Lakshmana","g":"r","note":"Rama's devoted younger brother; shares the exile and kills Indrajit."},{"id":"Shatrughna","g":"r","note":"Lakshmana's twin; kills the demon Lavana of Mathura in the later tradition."},{"id":"Urmila","g":"r","note":"Lakshmana's wife and Sita's sister, left behind in Ayodhya for fourteen years."},{"id":"Mandavi","g":"r","note":"Bharata's wife, a cousin of Sita."},{"id":"Shrutakirti","g":"r","note":"Shatrughna's wife, a cousin of Sita."},{"id":"Vasishtha","g":"r","note":"Royal preceptor of the Ikshvaku line."},{"id":"Sumantra","g":"r","note":"Dasharatha's minister and charioteer; drives Rama to the forest's edge."},{"id":"Guha","g":"r","note":"Nishada chieftain of Shringaverapura who ferries Rama across the Ganga."},{"id":"Shravana Kumara","g":"r","note":"The boy whose accidental death by Dasharatha's arrow brings the curse on the king."},{"id":"Lava and Kusha","g":"r","note":"Rama and Sita's twin sons, raised at Valmiki's hermitage."},{"id":"Sita","g":"r","note":"Princess of Mithila, found in a furrow by Janaka; Rama's wife."},{"id":"Janaka","g":"r","note":"King of Mithila; sets the Shiva-bow test for Sita's hand."},{"id":"Vishvamitra","g":"r","note":"Sage who takes the boys to kill Tataka and gives them divine weapons."},{"id":"Ahalya","g":"r","note":"Wife of Gautama, cursed to stone and freed when Rama arrives at her hermitage."},{"id":"Parashurama","g":"a","note":"Warrior-sage who confronts Rama after the Shiva-bow breaks, and yields.","v":"None","s":"Axe (parashu)"},{"id":"Agastya","g":"r","note":"Sage of the south who arms Rama for the war."},{"id":"Anasuya","g":"r","note":"Sage Atri's wife; gives Sita garments and ornaments that never fade."},{"id":"Valmiki","g":"r","note":"Adikavi, the first poet; author of the Ramayana and protector of Sita and her sons."},{"id":"Sabari","g":"r","note":"Ascetic who offers Rama berries, tasting each first."},{"id":"Jatayu","g":"r","note":"Aged vulture king who fights Ravana to save Sita and dies of his wounds."},{"id":"Sampati","g":"r","note":"Jatayu's brother; from his sight the vanaras learn that Sita is in Lanka."},{"id":"Hanuman","g":"r","note":"Son of the wind god; leaps to Lanka, finds Sita and burns the city.","v":"None; he flies","s":"Gada mace, the Sanjeevani mountain"},{"id":"Sugriva","g":"r","note":"Exiled vanara king; allies with Rama and is restored to the throne."},{"id":"Vali","g":"r","note":"Sugriva's elder brother, killed by Rama's arrow from hiding."},{"id":"Tara","g":"r","note":"Vali's wife and a wise counselor; later Sugriva's queen."},{"id":"Angada","g":"r","note":"Vali's son; leads an embassy to Ravana before the war."},{"id":"Jambavan","g":"r","note":"King of the bears; reminds Hanuman of his own strength."},{"id":"Nala","g":"r","note":"Vanara engineer who builds the bridge across the sea."},{"id":"Nila","g":"r","note":"Vanara general; kills Prahasta."},{"id":"Sushena","g":"r","note":"Vanara physician who names the herbs that revive Lakshmana."},{"id":"Ravana","g":"r","note":"Ten-headed king of Lanka, learned in the Vedas and armed with Brahma's boon."},{"id":"Mandodari","g":"r","note":"Chief queen; warns Ravana to return Sita."},{"id":"Kumbhakarna","g":"r","note":"Giant brother who sleeps for months; killed by Rama."},{"id":"Vibhishana","g":"r","note":"Righteous younger brother; joins Rama and is crowned king of Lanka."},{"id":"Shurpanakha","g":"r","note":"Sister whose mutilation at Lakshmana's hands starts the chain to war."},{"id":"Indrajit","g":"r","note":"Ravana's son, also called Meghanada; conqueror of Indra, killed by Lakshmana."},{"id":"Atikaya","g":"r","note":"Ravana's son, a huge warrior killed by Lakshmana."},{"id":"Prahasta","g":"r","note":"Ravana's commander-in-chief."},{"id":"Kubera","g":"r","note":"Ravana's half-brother and lord of wealth, whose Pushpaka chariot Ravana seizes.","v":"Pushpaka vimana, or a man-drawn palanquin","s":"Mace, money pot"},{"id":"Maricha","g":"r","note":"Rakshasa who becomes the golden deer that lures Rama away."},{"id":"Tataka","g":"r","note":"Yakshini terrorizing the forest near Ayodhya; Rama's first battle."},{"id":"Khara and Dushana","g":"r","note":"Rakshasa lords of Janasthana, destroyed by Rama after Shurpanakha's complaint."},{"id":"Kabandha","g":"r","note":"Headless demon who points Rama toward Sugriva."},{"id":"Trijata","g":"r","note":"Rakshasi guard who dreams of Lanka's fall and comforts Sita."},{"id":"Shantanu","g":"m","note":"King of Hastinapura; father of Bhishma."},{"id":"Ganga","g":"m","note":"The river goddess; Shantanu's first wife and Bhishma's mother.","v":"Makara","s":"Water pot, lotus"},{"id":"Satyavati","g":"m","note":"Fisherman's daughter who becomes Shantanu's queen; mother of Vichitravirya and Vyasa."},{"id":"Bhishma","g":"m","note":"Vows lifelong celibacy; the grandsire, commander of the Kaurava army, who dies on a bed of arrows."},{"id":"Vyasa","g":"m","note":"Sage who composes the epic and fathers Dhritarashtra, Pandu and Vidura."},{"id":"Amba","g":"m","note":"Princess Bhishma carries off; vows revenge and is reborn as Shikhandi."},{"id":"Ambika and Ambalika","g":"m","note":"Widowed queens of Vichitravirya; mothers of Dhritarashtra and Pandu."},{"id":"Dhritarashtra","g":"m","note":"Blind king whose love for Duryodhana blinds his judgment."},{"id":"Gandhari","g":"m","note":"His wife; binds her own eyes for life and mothers a hundred sons."},{"id":"Pandu","g":"m","note":"Father of the Pandavas; dies under a sage's curse."},{"id":"Kunti","g":"m","note":"Mother of Karna, Yudhishthira, Bhima and Arjuna; the Pandavas' guardian."},{"id":"Madri","g":"m","note":"Pandu's second wife; mother of Nakula and Sahadeva."},{"id":"Vidura","g":"m","note":"Wise half-brother of Pandu who counsels peace and is ignored."},{"id":"Sanjaya","g":"m","note":"Charioteer-bard granted divine sight to narrate the war to Dhritarashtra."},{"id":"Duryodhana","g":"m","note":"Eldest Kaurava; refuses to yield the Pandavas even a village."},{"id":"Dushasana","g":"m","note":"Duryodhana's brother; drags Draupadi into the assembly and is killed by Bhima."},{"id":"Vikarna","g":"m","note":"The Kaurava who alone protests Draupadi's humiliation."},{"id":"Yuyutsu","g":"m","note":"Dhritarashtra's son by a maid; crosses to the Pandavas before the battle."},{"id":"Dushala","g":"m","note":"Duryodhana's sister; wife of Jayadratha."},{"id":"Shakuni","g":"m","note":"Gandhari's brother; the crooked dice player behind the Pandavas' exile."},{"id":"Karna","g":"m","note":"Kunti's firstborn, raised by a charioteer; the loyal friend of Duryodhana."},{"id":"Drona","g":"m","note":"Teacher of the Kuru princes; Kaurava commander until his death."},{"id":"Kripa","g":"m","note":"Royal teacher and Drona's brother-in-law; one of the war's few survivors."},{"id":"Ashwatthama","g":"m","note":"Drona's son, who avenges his father with a night massacre of the Pandava camp."},{"id":"Kritavarma","g":"m","note":"Yadava warrior who fights for the Kauravas."},{"id":"Shalya","g":"m","note":"King of Madra and brother of Madri; misled into fighting for Duryodhana."},{"id":"Jayadratha","g":"m","note":"King of Sindhu; his death avenges Abhimanyu."},{"id":"Yudhishthira","g":"m","note":"Eldest Pandava, known for truthfulness; king of Indraprastha, then Hastinapura."},{"id":"Bhima","g":"m","note":"Second Pandava, of enormous strength; kills Dushasana and Duryodhana."},{"id":"Arjuna","g":"m","note":"Third Pandava and peerless archer; Krishna's friend and student in the Gita."},{"id":"Nakula","g":"m","note":"Fourth Pandava; a horse expert."},{"id":"Sahadeva","g":"m","note":"Youngest Pandava; skilled in astronomy and cattle-keeping."},{"id":"Draupadi","g":"m","note":"Princess of Panchala, born from a sacrificial fire; wife to all five Pandavas."},{"id":"Subhadra","g":"m","note":"Krishna's sister; Arjuna's wife and Abhimanyu's mother."},{"id":"Abhimanyu","g":"m","note":"Arjuna's son, killed in the chakravyuha at sixteen."},{"id":"Uttara","g":"m","note":"Abhimanyu's wife, daughter of Virata; mother of Parikshit."},{"id":"Parikshit","g":"m","note":"Abhimanyu's posthumous son; the Pandavas' heir."},{"id":"Hidimbi","g":"m","note":"Rakshasi who marries Bhima; mother of Ghatotkacha."},{"id":"Ghatotkacha","g":"m","note":"Half-rakshasa son of Bhima who dominates the second night of war."},{"id":"Ulupi","g":"m","note":"Naga princess who marries Arjuna; mother of Iravan."},{"id":"Iravan","g":"m","note":"Arjuna's son by Ulupi, a warrior offered as a sacrifice before the battle."},{"id":"Chitrangada","g":"m","note":"Princess of Manipura; Arjuna's wife and mother of Babruvahana."},{"id":"Babruvahana","g":"m","note":"Arjuna's son by Chitrangada and king of Manipura."},{"id":"Upapandavas","g":"m","note":"Draupadi's five sons, killed in their sleep by Ashwatthama."},{"id":"Krishna","g":"a","note":"Yadava prince and avatar of Vishnu; Arjuna's charioteer and the Pandavas' guide.","v":"None (Arjuna's chariot driver)","s":"Flute, Sudarshana, peacock feather"},{"id":"Balarama","g":"m","note":"Krishna's elder brother; stays neutral and goes on pilgrimage during the war.","v":"None","s":"Plough (hala), club"},{"id":"Satyaki","g":"m","note":"Yadava warrior and Arjuna's student; fights for the Pandavas."},{"id":"Drupada","g":"m","note":"King of Panchala; Draupadi's father and Drona's old rival."},{"id":"Dhrishtadyumna","g":"m","note":"Draupadi's brother; commander of the Pandava army; kills Drona."},{"id":"Shikhandi","g":"m","note":"Born a princess (the reincarnated Amba); his presence in the front line stops Bhishma from fighting."},{"id":"Virata","g":"m","note":"King of Matsya who shelters the Pandavas during their year in hiding."},{"id":"Kichaka","g":"m","note":"Virata's general, killed by Bhima for molesting Draupadi."},{"id":"Jarasandha","g":"m","note":"Powerful king of Magadha; a long-time enemy of Krishna, killed by Bhima."},{"id":"Shishupala","g":"m","note":"King of Chedi and Krishna's cousin; his insults at the Rajasuya end in his death."},{"id":"Eklavya","g":"m","note":"Nishada prince who teaches himself archery and loses his thumb to Drona's demand."},{"id":"Vishnu","g":"g","note":"The Preserver of the Trimurti. Descends to the world as avatars whenever dharma declines.","v":"Garuda, the eagle","s":"Sudarshana chakra, Panchajanya conch, Kaumodaki mace, lotus"},{"id":"Lakshmi","g":"g","note":"Goddess of fortune; Vishnu's consort, reborn beside each of his avatars.","v":"Owl (Ulluka); elephants at her side","s":"Lotus, gold coins"},{"id":"Brahma","g":"g","note":"The Creator of the Trimurti; born from the lotus rising from Vishnu's navel.","v":"Hamsa, the swan","s":"Vedas, kamandalu, lotus"},{"id":"Saraswati","g":"g","note":"Goddess of knowledge, music and speech; Brahma's consort.","v":"Swan (hamsa); also the peacock","s":"Veena, book, prayer beads"},{"id":"Shiva","g":"g","note":"The Destroyer and transformer of the Trimurti; also Mahadeva, lord of yogis.","v":"Nandi, the bull","s":"Trident, damaru, crescent moon, Ganga in his hair"},{"id":"Parvati","g":"g","note":"Shiva's consort, the gentle form of the Goddess (Devi / Shakti).","v":"Lion or tiger","s":"Lotus; lion when shown as Durga"},{"id":"Durga","g":"g","note":"The warrior form of the Goddess, slayer of Mahishasura. At Vijayawada she is worshipped as Kanaka Durga on Indrakeeladri.","v":"Lion (or tiger)","s":"Eight weapons: trident, discus, conch, bow, sword and more"},{"id":"Kali (goddess)","g":"g","note":"The fiercest form of the Goddess, destroyer of demons and of time. Not to be confused with Kali the age (Kali Yuga, in this graph as 'Kali (the age)'): that Kali is the spirit of the current dark age and is unrelated to the goddess.","v":"None; she stands on Shiva's chest. Jackals attend her.","s":"Sword, severed head, skull garland"},{"id":"Ganesha","g":"g","note":"Elephant-headed remover of obstacles; son of Shiva and Parvati, and scribe of the Mahabharata.","v":"Mushika, the mouse","s":"Broken tusk, modaka sweet, noose, goad"},{"id":"Kartikeya","g":"g","note":"God of war, also Skanda / Murugan; son of Shiva and Parvati.","v":"Peacock (Paravani)","s":"Vel spear, rooster banner"},{"id":"Riddhi & Siddhi","g":"g","note":"Ganesha's consorts, prosperity and attainment (North Indian tradition)."},{"id":"Devasena","g":"g","note":"Kartikeya's consort, daughter of Indra."},{"id":"Narada","g":"g","note":"Divine sage, Brahma's mind-born son, and wandering messenger between worlds."},{"id":"Daksha","g":"g","note":"Prajapati, a mind-born son of Brahma and father of many of the gods' consorts."},{"id":"Indra","g":"g","note":"King of the devas and lord of heaven and thunder.","v":"Airavata, the white elephant","s":"Vajra thunderbolt"},{"id":"Shachi","g":"g","note":"Indrani, Indra's queen."},{"id":"Surya","g":"g","note":"The Sun god.","v":"Chariot of seven horses, driven by Aruna","s":"Lotus, the solar disc"},{"id":"Vayu","g":"g","note":"The Wind god.","v":"Black antelope","s":"Banner, the life-breath (prana)"},{"id":"Yama (Dharma)","g":"g","note":"Lord of death and of dharma.","v":"Buffalo (Mahisha)","s":"Danda staff, noose"},{"id":"Agni","g":"g","note":"God of fire, messenger between gods and humans.","v":"Ram (Mesha)","s":"Flames, sacrificial ladle"},{"id":"Varuna","g":"g","note":"Lord of the waters and cosmic order.","v":"Makara, the sea monster","s":"Noose (pasha)"},{"id":"Vishvakarma","g":"g","note":"Architect of the gods."},{"id":"Chandra","g":"g","note":"The Moon god (Soma).","v":"Chariot drawn by antelopes or white horses","s":"Crescent, nectar"},{"id":"Ashwini Kumaras","g":"g","note":"Twin physician gods.","v":"Golden chariot","s":"Healing herbs"},{"id":"Brihaspati","g":"g","note":"Teacher of the gods.","v":"Chariot of horses","s":"Rosary, book"},{"id":"The eight Vasus","g":"g","note":"Eight elemental gods; cursed to be born on earth, seven were freed at birth and one lived long as Bhishma."},{"id":"Shesha","g":"g","note":"The cosmic serpent on whom Vishnu rests; reborn as Lakshmana and Balarama."},{"id":"Nara","g":"g","note":"The sage-god twin of Narayana (Vishnu); reborn as Arjuna."},{"id":"Jaya & Vijaya","g":"g","note":"Vishnu's gatekeepers, cursed by sages to be born three times as his enemies."},{"id":"Kali (the age)","g":"g","note":"The spirit of the Kali Yuga, embodied in Duryodhana. Not the goddess Kali: this is the spirit of the current dark age, which the goddess is unrelated to."},{"id":"Matsya","g":"a","note":"1st avatar: the fish who saved Manu and the Vedas from the flood."},{"id":"Kurma","g":"a","note":"2nd avatar: the tortoise who bore Mandara during the churning of the ocean."},{"id":"Varaha","g":"a","note":"3rd avatar: the boar who lifted the earth from the cosmic waters."},{"id":"Narasimha","g":"a","note":"4th avatar: the man-lion who destroyed Hiranyakashipu."},{"id":"Vamana","g":"a","note":"5th avatar: the dwarf brahmin who measured the worlds in three steps."},{"id":"Buddha","g":"a","note":"9th avatar in many Vaishnava lists."},{"id":"Kalki","g":"a","note":"10th avatar: still to come, at the end of the Kali Yuga."},{"id":"Hiranyakashipu","g":"g","note":"Asura king slain by Narasimha; father of Prahlada."},{"id":"Prahlada","g":"g","note":"Devoted child of Hiranyakashipu and a great devotee of Vishnu."},{"id":"Bali","g":"g","note":"Asura king humbled by Vamana; Prahlada's grandson."},{"id":"Kashyapa","g":"g","note":"Ancient sage, father of the devas (via Aditi), the daityas (via Diti), the nagas (via Kadru) and Garuda (via Vinata)."},{"id":"Aditi","g":"g","note":"Mother of the Adityas: Indra, Surya, Varuna and Vishnu's dwarf avatar Vamana."},{"id":"Diti","g":"g","note":"Mother of the daityas, including Hiranyakashipu."},{"id":"Kadru","g":"g","note":"Mother of the nagas (serpents)."},{"id":"Vinata","g":"g","note":"Kadru's sister and rival; mother of Garuda and Aruna."},{"id":"Garuda","g":"g","note":"The great eagle, king of birds; Vishnu's vahana and devoted servant, and an enemy of the nagas.","v":"Is Vishnu's vahana","s":"Sun-bright eagle, banner of Vishnu"},{"id":"Nandi","g":"g","note":"The sacred bull, Shiva's vahana and the chief of his attendants (ganas).","v":"Is Shiva's vahana","s":"Shiva's chief attendant"},{"id":"Vasuki","g":"g","note":"King of the nagas; wound around Shiva's neck, and the rope in the churning of the ocean."},{"id":"Takshaka","g":"g","note":"Naga chief who killed King Parikshit, provoking Janamejaya's serpent sacrifice."},{"id":"Manasa","g":"g","note":"Goddess of snakes, sister of Vasuki; worshipped against snakebite.","v":"Swan; snakes","s":"Serpents"},{"id":"Bhairava","g":"g","note":"The fierce form of Shiva (Kala Bhairava), guardian of time and of temples; rides a dog. Kali is the Goddess in her fierce form; Bhairava is Shiva in his fierce form.","v":"Dog (Shvana)","s":"Trident, skull, damaru"},{"id":"Veerabhadra","g":"g","note":"Born from Shiva's rage at Sati's death; he destroyed Daksha's sacrifice.","v":"None","s":"Sword, garland of skulls"},{"id":"Sati","g":"g","note":"Daksha's daughter and Shiva's first wife; she gave up her life at her father's sacrifice, and was reborn as Parvati."},{"id":"Himavan","g":"g","note":"The Himalaya personified; father of Parvati and of Ganga."},{"id":"Kamadeva","g":"g","note":"God of desire, the flower-arrowed love god; burnt by Shiva's third eye and reborn as Pradyumna.","v":"Parrot (Shuka)","s":"Sugarcane bow, flower arrows"},{"id":"Rati","g":"g","note":"Kamadeva's consort."},{"id":"Ayyappa","g":"g","note":"Hariharaputra, son of Shiva and Vishnu's form Mohini; worshipped at Sabarimala.","v":"Tiger (or a horse)","s":"Bow, the bell at his neck"},{"id":"Mohini","g":"a","note":"Vishnu's enchantress form, taken to trick the asuras at the churning and to captivate Shiva."},{"id":"Venkateshwara","g":"a","note":"Vishnu as Lord of the Seven Hills at Tirumala-Tirupati (Balaji, Srinivasa).","v":"Garuda, as Vishnu","s":"Conch, discus, the Vaikuntha tilak"},{"id":"Padmavati","g":"g","note":"Venkateshwara's consort at Tirupati, an avatar of Lakshmi."},{"id":"Shani","g":"g","note":"God of Saturn, the planet of consequence; son of Surya and Chhaya.","v":"Crow (also vulture)","s":"Iron staff, the color black"},{"id":"Sanjna","g":"g","note":"Surya's wife and the mother of Yama and Yamuna."},{"id":"Yamuna","g":"g","note":"The river goddess; Yama's twin and Surya's daughter, and dear to Krishna.","v":"Tortoise (Kurma)","s":"Water pot"},{"id":"Radha","g":"g","note":"Krishna's beloved, revered as his eternal consort and as an aspect of Lakshmi."},{"id":"Rukmini","g":"g","note":"Krishna's chief queen, an avatar of Lakshmi."},{"id":"Pradyumna","g":"g","note":"Son of Krishna and Rukmini; Kamadeva reborn."},{"id":"Vasudeva","g":"g","note":"Krishna's father, a Yadava chief; Kunti's brother."},{"id":"Devaki","g":"g","note":"Krishna's mother, and Kamsa's sister."},{"id":"Yashoda","g":"g","note":"Krishna's foster mother in Gokula."},{"id":"Kamsa","g":"g","note":"The tyrant king of Mathura, Devaki's brother, killed by Krishna."},{"id":"Anjana","g":"g","note":"Hanuman's mother, an apsara cursed to be born a vanara."},{"id":"Kesari","g":"g","note":"Hanuman's father on earth, a vanara chief."}],"edges":[["Vishnu","AV","Matsya"],["Vishnu","AV","Kurma"],["Vishnu","AV","Varaha"],["Vishnu","AV","Narasimha"],["Vishnu","AV","Vamana"],["Vishnu","AV","Parashurama"],["Vishnu","AV","Rama"],["Vishnu","AV","Krishna"],["Vishnu","AV","Buddha"],["Vishnu","AV","Kalki"],["Lakshmi","AV","Sita"],["Vishnu","PART","Vyasa"],["Shesha","PART","Lakshmana"],["Shesha","PART","Balarama"],["Nara","PART","Arjuna"],["Shiva","PART","Hanuman"],["Shiva","PART","Ashwatthama"],["Brihaspati","PART","Drona"],["Shachi","PART","Draupadi"],["Kali (the age)","PART","Duryodhana"],["Chandra","PART","Abhimanyu"],["The eight Vasus","PART","Bhishma"],["Yama (Dharma)","PART","Vidura"],["Parvati","FORM","Durga"],["Parvati","FORM","Kali (goddess)"],["Jaya & Vijaya","REB","Hiranyakashipu"],["Jaya & Vijaya","REB","Ravana"],["Jaya & Vijaya","REB","Kumbhakarna"],["Jaya & Vijaya","REB","Shishupala"],["Amba","REB","Shikhandi"],["Indra","SONOF","Arjuna"],["Indra","SONOF","Vali"],["Surya","SONOF","Karna"],["Surya","SONOF","Sugriva"],["Vayu","SONOF","Hanuman"],["Vayu","SONOF","Bhima"],["Yama (Dharma)","SONOF","Yudhishthira"],["Ashwini Kumaras","SONOF","Nakula"],["Ashwini Kumaras","SONOF","Sahadeva"],["Agni","SONOF","Nila"],["Varuna","SONOF","Sushena"],["Vishvakarma","SONOF","Nala"],["Brahma","SONOF","Jambavan"],["Brahma","GC","Narada"],["Brahma","GC","Daksha"],["Vishnu","GC","Brahma"],["Shiva","GC","Ganesha"],["Parvati","GC","Ganesha"],["Shiva","GC","Kartikeya"],["Parvati","GC","Kartikeya"],["Indra","GC","Devasena"],["Hiranyakashipu","GC","Prahlada"],["Prahlada","GC","Bali"],["Vishnu","GS","Lakshmi"],["Brahma","GS","Saraswati"],["Shiva","GS","Parvati"],["Ganesha","GS","Riddhi & Siddhi"],["Kartikeya","GS","Devasena"],["Indra","GS","Shachi"],["Vishnu","SERV","Shesha"],["Vishnu","SERV","Nara"],["Narasimha","FO","Hiranyakashipu"],["Vamana","FO","Bali"],["Indra","FO","Indrajit"],["Narada","GU","Valmiki"],["Surya","GU","Hanuman"],["Ganesha","GU","Vyasa"],["Dasharatha","CHILD","Rama"],["Dasharatha","CHILD","Bharata"],["Dasharatha","CHILD","Lakshmana"],["Dasharatha","CHILD","Shatrughna"],["Kausalya","CHILD","Rama"],["Kaikeyi","CHILD","Bharata"],["Sumitra","CHILD","Lakshmana"],["Sumitra","CHILD","Shatrughna"],["Janaka","CHILD","Sita"],["Janaka","CHILD","Urmila"],["Rama","CHILD","Lava and Kusha"],["Sita","CHILD","Lava and Kusha"],["Vali","CHILD","Angada"],["Tara","CHILD","Angada"],["Ravana","CHILD","Indrajit"],["Mandodari","CHILD","Indrajit"],["Ravana","CHILD","Atikaya"],["Tataka","CHILD","Maricha"],["Dasharatha","SP","Kausalya"],["Dasharatha","SP","Kaikeyi"],["Dasharatha","SP","Sumitra"],["Rama","SP","Sita"],["Lakshmana","SP","Urmila"],["Bharata","SP","Mandavi"],["Shatrughna","SP","Shrutakirti"],["Vali","SP","Tara"],["Ravana","SP","Mandodari"],["Ravana","SIB","Kumbhakarna"],["Ravana","SIB","Vibhishana"],["Ravana","SIB","Shurpanakha"],["Ravana","SIB","Kubera"],["Jatayu","SIB","Sampati"],["Vali","SIB","Sugriva"],["Shurpanakha","SIB","Khara and Dushana"],["Vasishtha","GU","Rama"],["Vishvamitra","GU","Rama"],["Agastya","GU","Rama"],["Valmiki","GU","Lava and Kusha"],["Vasishtha","GU","Dasharatha"],["Rama","AL","Hanuman"],["Rama","AL","Sugriva"],["Rama","AL","Angada"],["Rama","AL","Vibhishana"],["Rama","AL","Guha"],["Rama","AL","Sabari"],["Rama","AL","Jambavan"],["Rama","AL","Nala"],["Rama","AL","Nila"],["Rama","AL","Sushena"],["Rama","AL","Jatayu"],["Rama","AL","Kabandha"],["Rama","AL","Ahalya"],["Sita","AL","Anasuya"],["Sita","AL","Trijata"],["Manthara","AL","Kaikeyi"],["Sumantra","AL","Dasharatha"],["Hanuman","AL","Sita"],["Ravana","AL","Maricha"],["Ravana","AL","Prahasta"],["Rama","FO","Ravana"],["Rama","FO","Vali"],["Rama","FO","Kumbhakarna"],["Rama","FO","Parashurama"],["Rama","FO","Tataka"],["Rama","FO","Khara and Dushana"],["Lakshmana","FO","Indrajit"],["Lakshmana","FO","Atikaya"],["Hanuman","FO","Prahasta"],["Kubera","FO","Ravana"],["Dasharatha","FO","Shravana Kumara"],["Kaikeyi","FO","Rama"],["Ravana","FO","Sita"],["Ravana","FO","Jatayu"],["Shantanu","CHILD","Bhishma"],["Ganga","CHILD","Bhishma"],["Vyasa","CHILD","Dhritarashtra"],["Vyasa","CHILD","Pandu"],["Vyasa","CHILD","Vidura"],["Ambika and Ambalika","CHILD","Dhritarashtra"],["Ambika and Ambalika","CHILD","Pandu"],["Dhritarashtra","CHILD","Duryodhana"],["Dhritarashtra","CHILD","Dushasana"],["Dhritarashtra","CHILD","Vikarna"],["Dhritarashtra","CHILD","Yuyutsu"],["Dhritarashtra","CHILD","Dushala"],["Gandhari","CHILD","Duryodhana"],["Gandhari","CHILD","Dushasana"],["Kunti","CHILD","Yudhishthira"],["Kunti","CHILD","Bhima"],["Kunti","CHILD","Arjuna"],["Kunti","CHILD","Karna"],["Pandu","CHILD","Yudhishthira"],["Pandu","CHILD","Bhima"],["Pandu","CHILD","Arjuna"],["Pandu","CHILD","Nakula"],["Pandu","CHILD","Sahadeva"],["Madri","CHILD","Nakula"],["Madri","CHILD","Sahadeva"],["Satyavati","CHILD","Vyasa"],["Drupada","CHILD","Draupadi"],["Drupada","CHILD","Dhrishtadyumna"],["Drupada","CHILD","Shikhandi"],["Virata","CHILD","Uttara"],["Arjuna","CHILD","Abhimanyu"],["Subhadra","CHILD","Abhimanyu"],["Abhimanyu","CHILD","Parikshit"],["Uttara","CHILD","Parikshit"],["Bhima","CHILD","Ghatotkacha"],["Hidimbi","CHILD","Ghatotkacha"],["Arjuna","CHILD","Iravan"],["Ulupi","CHILD","Iravan"],["Arjuna","CHILD","Babruvahana"],["Chitrangada","CHILD","Babruvahana"],["Draupadi","CHILD","Upapandavas"],["Drona","CHILD","Ashwatthama"],["Shantanu","SP","Ganga"],["Shantanu","SP","Satyavati"],["Dhritarashtra","SP","Gandhari"],["Pandu","SP","Kunti"],["Pandu","SP","Madri"],["Draupadi","SP","Yudhishthira"],["Draupadi","SP","Bhima"],["Draupadi","SP","Arjuna"],["Draupadi","SP","Nakula"],["Draupadi","SP","Sahadeva"],["Subhadra","SP","Arjuna"],["Abhimanyu","SP","Uttara"],["Hidimbi","SP","Bhima"],["Ulupi","SP","Arjuna"],["Chitrangada","SP","Arjuna"],["Jayadratha","SP","Dushala"],["Gandhari","SIB","Shakuni"],["Madri","SIB","Shalya"],["Krishna","SIB","Balarama"],["Krishna","SIB","Subhadra"],["Balarama","SIB","Subhadra"],["Kunti","SIB","Krishna"],["Drona","GU","Arjuna"],["Drona","GU","Duryodhana"],["Drona","GU","Yudhishthira"],["Drona","GU","Bhima"],["Drona","GU","Karna"],["Parashurama","GU","Karna"],["Parashurama","GU","Bhishma"],["Parashurama","GU","Drona"],["Drona","GU","Eklavya"],["Kripa","GU","Parikshit"],["Duryodhana","AL","Karna"],["Duryodhana","AL","Shakuni"],["Duryodhana","AL","Jayadratha"],["Duryodhana","AL","Ashwatthama"],["Duryodhana","AL","Kritavarma"],["Karna","AL","Shalya"],["Krishna","AL","Arjuna"],["Krishna","AL","Draupadi"],["Krishna","AL","Yudhishthira"],["Krishna","AL","Satyaki"],["Krishna","AL","Kritavarma"],["Dhritarashtra","AL","Sanjaya"],["Dhritarashtra","AL","Vidura"],["Drupada","AL","Yudhishthira"],["Virata","AL","Yudhishthira"],["Vidura","AL","Yudhishthira"],["Yudhishthira","AL","Yuyutsu"],["Bhishma","AL","Duryodhana"],["Kripa","AL","Duryodhana"],["Amba","FO","Bhishma"],["Arjuna","FO","Karna"],["Bhima","FO","Duryodhana"],["Bhima","FO","Dushasana"],["Bhima","FO","Kichaka"],["Bhima","FO","Jarasandha"],["Krishna","FO","Jarasandha"],["Krishna","FO","Shishupala"],["Kichaka","FO","Draupadi"],["Arjuna","FO","Jayadratha"],["Arjuna","FO","Bhishma"],["Shikhandi","FO","Bhishma"],["Drona","FO","Drupada"],["Dhrishtadyumna","FO","Drona"],["Ashwatthama","FO","Dhrishtadyumna"],["Karna","FO","Ghatotkacha"],["Draupadi","FO","Dushasana"],["Daksha","GC","Aditi"],["Daksha","GC","Diti"],["Daksha","GC","Kadru"],["Daksha","GC","Vinata"],["Daksha","GC","Sati"],["Aditi","GC","Indra"],["Aditi","GC","Surya"],["Aditi","GC","Varuna"],["Aditi","GC","Vamana"],["Diti","GC","Hiranyakashipu"],["Kadru","GC","Shesha"],["Kadru","GC","Vasuki"],["Kadru","GC","Takshaka"],["Vinata","GC","Garuda"],["Himavan","GC","Parvati"],["Himavan","GC","Ganga"],["Sanjna","GC","Yama (Dharma)"],["Sanjna","GC","Yamuna"],["Sanjna","GC","Ashwini Kumaras"],["Surya","GC","Yama (Dharma)"],["Surya","GC","Yamuna"],["Surya","GC","Shani"],["Surya","GC","Ashwini Kumaras"],["Shiva","GC","Veerabhadra"],["Shiva","GC","Ayyappa"],["Mohini","GC","Ayyappa"],["Krishna","GC","Pradyumna"],["Rukmini","GC","Pradyumna"],["Vasudeva","GC","Krishna"],["Devaki","GC","Krishna"],["Yashoda","GC","Krishna"],["Vasudeva","GC","Balarama"],["Devaki","GC","Balarama"],["Vasudeva","GC","Subhadra"],["Anjana","GC","Hanuman"],["Kesari","GC","Hanuman"],["Kashyapa","GS","Aditi"],["Kashyapa","GS","Diti"],["Kashyapa","GS","Kadru"],["Kashyapa","GS","Vinata"],["Shiva","GS","Sati"],["Surya","GS","Sanjna"],["Kamadeva","GS","Rati"],["Krishna","GS","Rukmini"],["Vasudeva","GS","Devaki"],["Kesari","GS","Anjana"],["Venkateshwara","GS","Padmavati"],["Yama (Dharma)","GB","Yamuna"],["Manasa","GB","Vasuki"],["Kamsa","GB","Devaki"],["Kunti","GB","Vasudeva"],["Kadru","GB","Vinata"],["Kubera","GB","Ravana"],["Vishnu","AV","Mohini"],["Vishnu","AV","Venkateshwara"],["Lakshmi","PART","Rukmini"],["Lakshmi","PART","Padmavati"],["Lakshmi","PART","Radha"],["Shiva","FORM","Bhairava"],["Sati","REB","Parvati"],["Kamadeva","REB","Pradyumna"],["Vishnu","VAH","Garuda"],["Shiva","VAH","Nandi"],["Shiva","BEAR","Ganga"],["Shiva","BEAR","Vasuki"],["Krishna","BEL","Radha"],["Shiva","FO","Kamadeva"],["Garuda","FO","Vasuki"],["Krishna","FO","Kamsa"],["Takshaka","FO","Parikshit"],["Shiva","FO","Daksha"],["Veerabhadra","FO","Daksha"],["Shiva","AL","Kubera"]],"types":{"VAH":"vh","BEAR":"gf","BEL":"gf","AV":"av","PART":"av","REB":"av","FORM":"av","SONOF":"dv","CHILD":"fam","SIB":"fam","KIN":"fam","SP":"sp","GU":"gu","AL":"al","SERV":"al","FO":"fo","GC":"gf","GS":"gf","GB":"gf"}};
+  var TYPES = {
+    av:{name:"Avatar / incarnation",color:"#d9622b",on:true,arrow:true},
+    dv:{name:"Divine parentage",color:"#c9982a",on:true,arrow:true},
+    gf:{name:"Gods' families",color:"#8b5fb0",on:true,arrow:true},
+    vh:{name:"Vahana",color:"#2f9e8f",on:true,arrow:true},
+    sp:{name:"Spouses",color:"#d1497f",on:false},
+    fam:{name:"Family",color:"#7b8794",on:false,arrow:true},
+    gu:{name:"Teacher",color:"#4f8fd1",on:false,arrow:true},
+    al:{name:"Allies",color:"#5aa05a",on:false},
+    fo:{name:"Foes",color:"#c0392b",on:false,dash:true}
+  };
+  var VERBS = {
+    AV:["incarnates as","avatar of"],PART:["incarnates partly as","partial incarnation of"],REB:["is reborn as","reborn from"],FORM:["manifests as","form of"],
+    SONOF:["divine parent of","born of"],CHILD:["parent of","child of"],SIB:["sibling of","sibling of"],KIN:["kin of","kin of"],SP:["spouse of","spouse of"],
+    GU:["teacher of","student of"],AL:["ally of","ally of"],SERV:["master of","serves"],FO:["foe of","foe of"],GC:["parent of","child of"],GS:["spouse of","spouse of"],
+    GB:["sibling of","sibling of"],VAH:["rides","is the vahana of"],BEAR:["bears","is borne by"],BEL:["beloved of","beloved of"]
+  };
+  var GROUPS = {g:{name:"Gods",color:"#d4a017"},a:{name:"Avatars",color:"#e0673a"},r:{name:"Ramayana",color:"#2f9e8f"},m:{name:"Mahabharata",color:"#6a86d8"}};
+  var layers = {r:false,m:false};
+  var byId = {}, adj = {}, edges = [];
+  D.nodes.forEach(function(n){ byId[n.id]=n; adj[n.id]=[]; n.deg=0; });
+  D.edges.forEach(function(e){
+    var v=VERBS[e[1]], t=D.types[e[1]], o={a:e[0],b:e[2],v:e[1],t:t,fwd:v[0],rev:v[1]};
+    edges.push(o); adj[o.a].push(o); adj[o.b].push(o); byId[o.a].deg++; byId[o.b].deg++;
+  });
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("gx-svg"), vp=document.getElementById("gx-vp"),
+      gE=document.getElementById("gx-edges"), gN=document.getElementById("gx-nodes"), defs=document.getElementById("gx-defs"),
+      detail=document.getElementById("gx-detail");
+  function el(n,a,p){ var x=document.createElementNS(NS,n); for(var k in a) x.setAttribute(k,a[k]); if(p)p.appendChild(x); return x; }
+  function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  Object.keys(TYPES).forEach(function(k){
+    if(!TYPES[k].arrow) return;
+    var m=el("marker",{id:"gx-ar-"+k,viewBox:"0 0 10 10",refX:"10",refY:"5",markerWidth:"6",markerHeight:"6",orient:"auto-start-reverse"},defs);
+    el("path",{d:"M0 0 L10 5 L0 10 z",fill:TYPES[k].color},m);
+  });
+  var view={k:1,x:0,y:0}, sel=null, hover=null, nodes=[], vis={}, draw=[], alpha=0, raf=0;
+  function applyView(){ vp.setAttribute("transform","translate("+view.x+","+view.y+") scale("+view.k+")"); labels(); }
+  function radius(n){ return (n.g==="g"||n.g==="a"?6:4)+Math.sqrt(n.deg)*1.5; }
+  function edgeOn(e){
+    if(!TYPES[e.t].on) return false;
+    var A=byId[e.a],B=byId[e.b];
+    return layerOn(A)&&layerOn(B);
+  }
+  function layerOn(n){ return n.g==="r"?layers.r:n.g==="m"?layers.m:true; }
+  function rebuild(){
+    gE.textContent=""; gN.textContent="";
+    var use={}; draw=[];
+    edges.forEach(function(e){ if(edgeOn(e)){ use[e.a]=1; use[e.b]=1; draw.push(e); } });
+    if(sel && byId[sel] && layerOn(byId[sel])) use[sel]=1;
+    nodes=D.nodes.filter(function(n){ return use[n.id]; });
+    vis={}; nodes.forEach(function(n,i){
+      vis[n.id]=n;
+      if(n.x===undefined||n.hidden){ var an=anchor(n); n.x=an[0]+(Math.random()-0.5)*160; n.y=an[1]+(Math.random()-0.5)*160; n.vx=0; n.vy=0; }
+      n.hidden=false;
+    });
+    D.nodes.forEach(function(n){ if(!use[n.id]) n.hidden=true; });
+    draw.forEach(function(e){
+      var p=el("path",{"class":"gx-e"+(TYPES[e.t].dash?" dash":""),stroke:TYPES[e.t].color},gE);
+      if(TYPES[e.t].arrow) p.setAttribute("marker-end","url(#gx-ar-"+e.t+")");
+      e.el=p;
+    });
+    nodes.forEach(function(n){
+      var g=el("g",{"class":"gx-n",tabindex:"0",role:"button","aria-label":n.id},gN);
+      el("circle",{r:radius(n),fill:GROUPS[n.g].color},g);
+      var t=el("text",{x:radius(n)+3,y:3.5},g); t.textContent=n.id;
+      n.el=g;
+      g.addEventListener("pointerdown",function(ev){ startDrag(ev,n); });
+      g.addEventListener("keydown",function(ev){ if(ev.key==="Enter"||ev.key===" "){ ev.preventDefault(); select(n.id); } });
+      g.addEventListener("mouseenter",function(){ hover=n.id; paint(); });
+      g.addEventListener("mouseleave",function(){ hover=null; paint(); });
+    });
+    heat(1); paint();
+  }
+  function anchor(n){ return n.g==="r"?[200,470]:n.g==="m"?[800,470]:n.g==="a"?[500,340]:[500,240]; }
+  function heat(a){ alpha=Math.max(alpha,a); if(!raf) raf=requestAnimationFrame(tick); }
+  function tick(){
+    raf=0; var N=nodes.length, i,j,a,b,dx,dy,d2,d,f;
+    for(i=0;i<N;i++){ a=nodes[i];
+      for(j=i+1;j<N;j++){ b=nodes[j]; dx=b.x-a.x; dy=b.y-a.y; d2=dx*dx+dy*dy+0.01;
+        if(d2>90000) continue; d=Math.sqrt(d2); f=(900/d2)*alpha; dx/=d; dy/=d;
+        a.vx-=dx*f*d; a.vy-=dy*f*d; b.vx+=dx*f*d; b.vy+=dy*f*d; }
+    }
+    draw.forEach(function(e){ var A=vis[e.a],B=vis[e.b]; dx=B.x-A.x; dy=B.y-A.y; d=Math.sqrt(dx*dx+dy*dy)+0.01;
+      f=(d-70)*0.045*alpha; dx=dx/d*f; dy=dy/d*f; A.vx+=dx; A.vy+=dy; B.vx-=dx; B.vy-=dy; });
+    nodes.forEach(function(n){ var an=anchor(n), k=(n.g==="r"||n.g==="m")?0.06:0.07;
+      n.vx+=(an[0]-n.x)*k*alpha; n.vy+=(an[1]-n.y)*k*alpha;
+      n.vx*=0.6; n.vy*=0.6; if(!n.fx){ n.x+=n.vx; n.y+=n.vy; } else { n.x=n.fx; n.y=n.fy; }
+    });
+    alpha*=0.985; place();
+    if(alpha>0.02) raf=requestAnimationFrame(tick); else { place(); if(autoFit) fit(); }
+  }
+  var autoFit=true, VH=680;
+  function sizeView(){ var r=svg.getBoundingClientRect(); if(!r.width) return; VH=Math.round(1000*r.height/r.width); svg.setAttribute("viewBox","0 0 1000 "+VH); }
+  window.addEventListener("resize",function(){ sizeView(); if(autoFit) fit(); });
+  function fit(){
+    if(!nodes.length) return;
+    var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9; nodes.forEach(function(n){ x0=Math.min(x0,n.x-30); y0=Math.min(y0,n.y-14); x1=Math.max(x1,n.x+70); y1=Math.max(y1,n.y+14); });
+    var k=Math.min(2.2,Math.min(960/(x1-x0),(VH-40)/(y1-y0))); view.k=k; view.x=500-(x0+x1)/2*k; view.y=VH/2-(y0+y1)/2*k; applyView();
+  }
+  function place(){
+    nodes.forEach(function(n){ n.el.setAttribute("transform","translate("+n.x.toFixed(1)+","+n.y.toFixed(1)+")"); });
+    draw.forEach(function(e){
+      var A=vis[e.a],B=vis[e.b],dx=B.x-A.x,dy=B.y-A.y,d=Math.sqrt(dx*dx+dy*dy)||1,r=radius(B)+(TYPES[e.t].arrow?3:0);
+      e.el.setAttribute("d","M"+A.x.toFixed(1)+" "+A.y.toFixed(1)+"L"+(B.x-dx/d*r).toFixed(1)+" "+(B.y-dy/d*r).toFixed(1));
+    });
+  }
+  function neighborsOf(id){ var s={}; s[id]=1; adj[id].forEach(function(e){ if(vis[e.a]&&vis[e.b]&&edgeOn(e)){ s[e.a]=1; s[e.b]=1; } }); return s; }
+  function paint(){
+    var f=hover||sel, nb=f?neighborsOf(f):null;
+    nodes.forEach(function(n){ n.el.classList.toggle("dim",!!nb&&!nb[n.id]); n.el.classList.toggle("sel",n.id===sel); });
+    draw.forEach(function(e){ var on=!!f&&(e.a===f||e.b===f); e.el.classList.toggle("hi",on); e.el.classList.toggle("dim",!!f&&!on); });
+    labels();
+  }
+  function labels(){
+    var f=hover||sel, nb=f?neighborsOf(f):null, q=document.getElementById("gx-q").value.trim().toLowerCase();
+    nodes.forEach(function(n){
+      var show=n.g==="g"||n.g==="a"?true:(view.k>=1.7||n.deg>=6);
+      if(nb&&nb[n.id]) show=true;
+      n.el.classList.toggle("nolabel",!show);
+    });
+  }
+  function select(id){
+    var n=byId[id]; if(!n) return;
+    if(!vis[id]){ if(n.g==="r") layers.r=true; if(n.g==="m") layers.m=true;
+      if(!adj[id].some(function(e){ return edgeOn(e); })) adj[id].forEach(function(e){ TYPES[e.t].on=true; });
+      buildChips(); }
+    sel=id; rebuild(); showDetail(n);
+    if(vis[id]){ centerOn(vis[id]); }
+  }
+  function centerOn(n){ autoFit=false; if(view.k<1.1){ view.k=1.1; } view.x=500-n.x*view.k; view.y=VH/2-n.y*view.k; applyView(); }
+  function showDetail(n){
+    var fam={}, order=[];
+    adj[n.id].forEach(function(e){
+      var other=e.a===n.id?e.b:e.a, verb=e.a===n.id?e.fwd:e.rev, key=verb;
+      if(!fam[key]){ fam[key]=[]; order.push(key); } fam[key].push(other);
+    });
+    var facts="";
+    if(n.v) facts+="<dt>Vahana</dt><dd>"+esc(n.v)+"</dd>";
+    if(n.s) facts+="<dt>Carries</dt><dd>"+esc(n.s)+"</dd>";
+    var h="<div class=\"gx-tag\">"+GROUPS[n.g].name+(n.g==="r"||n.g==="m"?" character":"")+"</div><h4>"+esc(n.id)+"</h4><p>"+esc(n.note)+"</p>";
+    if(facts) h+="<dl class=\"gx-facts\">"+facts+"</dl>";
+    h+="<div class=\"gx-rel\">";
+    order.forEach(function(k){
+      h+="<h5>"+esc(k)+"</h5><div>"+fam[k].map(function(o){ return "<button class=\"gx-link\" data-id=\""+esc(o)+"\">"+esc(o)+"</button>"; }).join("")+"</div>";
+    });
+    h+="</div>";
+    detail.innerHTML=h;
+  }
+  detail.addEventListener("click",function(ev){ var b=ev.target.closest(".gx-link"); if(b) select(b.getAttribute("data-id")); });
+  function svgPt(ev){ var r=svg.getBoundingClientRect(), s=r.width/1000, ox=0, oy=0;
+    return {x:(ev.clientX-r.left-ox)/s, y:(ev.clientY-r.top-oy)/s, s:s}; }
+  var drag=null, moved=false;
+  function startDrag(ev,n){ ev.stopPropagation(); ev.preventDefault(); drag={n:n,id:ev.pointerId}; moved=false; svg.setPointerCapture(ev.pointerId); }
+  var pan=null;
+  svg.addEventListener("pointerdown",function(ev){ if(drag) return; var p=svgPt(ev); pan={x:ev.clientX,y:ev.clientY,vx:view.x,vy:view.y,s:p.s,moved:false}; svg.setPointerCapture(ev.pointerId); svg.style.cursor="grabbing"; });
+  svg.addEventListener("pointermove",function(ev){
+    if(drag){ var p=svgPt(ev); moved=true; drag.n.fx=(p.x-view.x)/view.k; drag.n.fy=(p.y-view.y)/view.k; drag.n.x=drag.n.fx; drag.n.y=drag.n.fy; heat(0.4); }
+    else if(pan){ var dx=(ev.clientX-pan.x)/pan.s, dy=(ev.clientY-pan.y)/pan.s; if(Math.abs(dx)+Math.abs(dy)>3){ pan.moved=true; autoFit=false; } view.x=pan.vx+dx; view.y=pan.vy+dy; applyView(); }
+  });
+  function endPtr(ev){
+    if(drag){ var n=drag.n; n.fx=n.fy=undefined; if(!moved) select(n.id); drag=null; }
+    else if(pan){ if(!pan.moved){ sel=null; detailDefault(); paint(); } pan=null; }
+    svg.style.cursor="";
+  }
+  svg.addEventListener("pointerup",endPtr); svg.addEventListener("pointercancel",endPtr);
+  function zoomAt(f,cx,cy){ autoFit=false; var k=Math.max(0.5,Math.min(4,view.k*f)); f=k/view.k; view.x=cx-(cx-view.x)*f; view.y=cy-(cy-view.y)*f; view.k=k; applyView(); }
+  svg.addEventListener("wheel",function(ev){ ev.preventDefault(); var p=svgPt(ev); zoomAt(ev.deltaY<0?1.15:1/1.15,p.x,p.y); },{passive:false});
+  document.getElementById("gx-zin").onclick=function(){ zoomAt(1.3,500,VH/2); };
+  document.getElementById("gx-zout").onclick=function(){ zoomAt(1/1.3,500,VH/2); };
+  document.getElementById("gx-zreset").onclick=function(){ autoFit=true; fit(); };
+  function chip(label,color,pressed,cb){
+    var b=document.createElement("button"); b.className="gx-chip"; b.style.setProperty("--c",color); b.setAttribute("aria-pressed",pressed?"true":"false");
+    b.innerHTML="<i></i>"+esc(label); b.onclick=function(){ cb(); }; return b;
+  }
+  function buildChips(){ 
+    var L=document.getElementById("gx-layers"), T=document.getElementById("gx-types"); L.textContent=""; T.textContent="";
+    L.appendChild(chip("Ramayana characters",GROUPS.r.color,layers.r,function(){ layers.r=!layers.r; autoFit=true; buildChips(); rebuild(); }));
+    L.appendChild(chip("Mahabharata characters",GROUPS.m.color,layers.m,function(){ layers.m=!layers.m; autoFit=true; buildChips(); rebuild(); }));
+    Object.keys(TYPES).forEach(function(k){ T.appendChild(chip(TYPES[k].name,TYPES[k].color,TYPES[k].on,function(){ TYPES[k].on=!TYPES[k].on; autoFit=true; buildChips(); rebuild(); })); });
+  }
+  var leg=document.getElementById("gx-legend");
+  Object.keys(GROUPS).forEach(function(k){ leg.innerHTML+="<span><i style=\"background:"+GROUPS[k].color+"\"></i>"+GROUPS[k].name+"</span>"; });
+  var dl=document.getElementById("gx-names");
+  D.nodes.slice().sort(function(a,b){ return a.id<b.id?-1:1; }).forEach(function(n){ var o=document.createElement("option"); o.value=n.id; dl.appendChild(o); });
+  var q=document.getElementById("gx-q");
+  q.addEventListener("change",function(){ var v=q.value.trim().toLowerCase(); if(!v) return;
+    var m=D.nodes.filter(function(n){ return n.id.toLowerCase()===v; })[0]||D.nodes.filter(function(n){ return n.id.toLowerCase().indexOf(v)===0; })[0]||D.nodes.filter(function(n){ return n.id.toLowerCase().indexOf(v)>=0; })[0];
+    if(m) select(m.id); });
+  function detailDefault(){
+    detail.innerHTML="<div class=\"gx-tag\">Start here</div><h4>Pick any deity</h4><p>Each node is a deity or character. Arrows read from parent to child, or from a god to the form or vehicle they take. Drag a node to move it, drag the background to pan, and scroll to zoom.</p><p><strong>Two things that trip people up.</strong> <em>Kali</em> the goddess is the Goddess in her fierce form; <em>Bhairava</em> is Shiva in his fierce form; and <em>Kali</em> the age (Kali Yuga) is a different being altogether. Also, Karna is Surya's son, born to Kunti.</p><div class=\"gx-rel\"><h5>Try</h5><div>"+["Shiva","Vishnu","Surya","Agni","Vayu","Bhairava","Kali (goddess)","Kashyapa"].map(function(o){ return "<button class=\"gx-link\" data-id=\""+o+"\">"+o+"</button>"; }).join("")+"</div></div>";
+  }
+  var tb=document.getElementById("gx-tbody");
+  D.nodes.filter(function(n){ return n.v; }).forEach(function(n){
+    var sp=adj[n.id].filter(function(e){ return e.v==="GS"||e.v==="SP"; }).map(function(e){ return e.a===n.id?e.b:e.a; });
+    var tr=document.createElement("tr");
+    tr.innerHTML="<td><button data-id=\""+esc(n.id)+"\">"+esc(n.id)+"</button></td><td>"+esc(n.v)+"</td><td>"+esc(n.s||"")+"</td><td>"+(sp.length?esc(sp.join(", ")):"")+"</td>";
+    tb.appendChild(tr);
+  });
+  tb.addEventListener("click",function(ev){ var b=ev.target.closest("button"); if(b){ select(b.getAttribute("data-id")); svg.scrollIntoView({behavior:"smooth",block:"center"}); } });
+  window.__graphReady=function(){ sizeView(); rebuild(); };
+  buildChips(); detailDefault(); rebuild();
+})();
+
 </script>
 </body>
 </html>
