@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sentinel Money</title>
-<meta name="description" content="A plain-English money glossary — 90 terms on investing, mortgages, retirement, credit and taxes, each with an example and a quiz — plus mortgage, compound-interest and retirement calculators.">
+<meta name="description" content="A plain-English money glossary — 90 terms on investing, mortgages, retirement, credit and taxes, each with an example and a quiz — plus calculators, converters and a family net worth tracker.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%230f1912%22 stroke=%22%234fce90%22 stroke-width=%224%22/><path d=%22M50 26 L50 74 M38 34 Q50 34 50 44 Q50 54 38 54 L62 54 Q50 54 50 64 Q50 74 62 66%22 fill=%22none%22 stroke=%22%234fce90%22 stroke-width=%224%22 stroke-linecap=%22round%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -445,6 +445,13 @@ select, .seg-group{
 }
 .nw-section-head .section-title{ margin:0; }
 .nw-section-actions{ display:flex; gap:0.5rem; flex-wrap:wrap; }
+.nw-form-row[hidden], .nw-form-grid[hidden], #tx-in[hidden], #tx-us[hidden]{ display:none; }
+#tx-in, #tx-us{ display:flex; flex-direction:column; gap:0.9rem; }
+.tf-table-wrap{ overflow-x:auto; }
+.tf-table{ border-collapse:collapse; width:100%; font-size:0.85rem; font-variant-numeric:tabular-nums; }
+.tf-table th, .tf-table td{ padding:0.45rem 0.6rem; border-bottom:1px solid var(--line); text-align:left; white-space:nowrap; }
+.tf-table th{ font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-faint); font-weight:400; }
+.tf-table .r{ text-align:right; }
 .nw-menu{ position:relative; }
 .nw-menu-list{ position:absolute; right:0; top:calc(100% + 4px); background:var(--surface); border:1px solid var(--line); border-radius:8px; z-index:5; min-width:12rem; display:flex; flex-direction:column; box-shadow:0 8px 24px rgba(0,0,0,.18); overflow:hidden; }
 .nw-menu-list[hidden]{ display:none; }
@@ -603,7 +610,7 @@ footer a{ color:var(--ink-faint); }
   <header class="page-head">
     <div class="eyebrow">Sentinel Atlas &middot; Money</div>
     <h1>Sentinel Money</h1>
-    <p class="tagline">A plain-English glossary of investing, home-buying, credit and tax terms &mdash; each with an example and a quiz &mdash; plus mortgage, compound-interest, and retirement calculators.</p>
+    <p class="tagline">A plain-English glossary of investing, home-buying, credit and tax terms &mdash; each with an example and a quiz &mdash; plus calculators, converters and a family net worth tracker.</p>
   </header>
   <div id="app"></div>
   <footer>
@@ -1037,6 +1044,14 @@ window.addEventListener("hashchange", render);
 function renderHome(){
   const toolCards = [
     { id: "networth", title: "Net Worth", sub: "Add up savings, retirement accounts, property and land — see where the family stands", meta: "TOOL" },
+    { id: "unit-converter", title: "Unit Converter", sub: "Acres, guntas, sq ft, kilos, litres and more — with Indian land units", meta: "TOOL" },
+    { id: "currency", title: "Currency Converter", sub: "USD, INR and other currencies at live rates", meta: "TOOL" },
+    { id: "loan", title: "Loan / EMI Calculator", sub: "Monthly instalment, total interest, and the effect of prepaying", meta: "TOOL" },
+    { id: "property-costs", title: "Property Buying Costs", sub: "Stamp duty, registration and closing costs on top of the price", meta: "TOOL" },
+    { id: "rent-vs-buy", title: "Rent vs Buy", sub: "Which leaves you better off after a few years?", meta: "TOOL" },
+    { id: "sip", title: "SIP Calculator", sub: "Grow a monthly investment, with lump sum and yearly step-up", meta: "TOOL" },
+    { id: "goal", title: "Goal Planner", sub: "How much to invest monthly to reach a target", meta: "TOOL" },
+    { id: "income-tax", title: "Income Tax Estimator", sub: "India (new regime) and US federal, side by side", meta: "TOOL" },
     { id: "mortgage", title: "Mortgage Calculator", sub: "Estimate your monthly payment, including property tax by state", meta: "TOOL" },
     { id: "compound-interest", title: "Compound Interest Calculator", sub: "See how your savings could grow over time", meta: "TOOL" },
     { id: "retirement", title: "Retirement Calculator", sub: "See if you're on track to hit your retirement goal", meta: "TOOL" },
@@ -1249,7 +1264,338 @@ function renderCalculator(kind){
   if (kind === "mortgage") return renderMortgageCalculator();
   if (kind === "compound-interest") return renderCompoundInterestCalculator();
   if (kind === "retirement") return renderRetirementCalculator();
+  const extra = { "unit-converter": renderUnitConverter, currency: renderCurrencyConverter, loan: renderLoanCalculator, "property-costs": renderPropertyCosts, "rent-vs-buy": renderRentVsBuy, sip: renderSipCalculator, goal: renderGoalPlanner, "income-tax": renderIncomeTax };
+  if (extra[kind]) return extra[kind]();
   return renderHome();
+}
+
+// ============================================================================
+// Utility tools: unit converter, currency, loan/EMI, property costs,
+// rent vs buy, SIP, goal planner, income tax
+// ============================================================================
+function tfFmtCur(v, cur, digits){
+  return new Intl.NumberFormat(cur === "INR" ? "en-IN" : "en-US", { style: "currency", currency: cur || "USD", maximumFractionDigits: digits === undefined ? 0 : digits, minimumFractionDigits: digits === undefined ? 0 : digits }).format(v);
+}
+function tfNum(id, label, value, attrs){
+  return `<div class="nw-form-row" id="${id}-row"><label for="${id}">${label}</label><input type="number" id="${id}" value="${value}" step="any" inputmode="decimal" ${attrs || ""}></div>`;
+}
+function tfSel(id, label, options, selected){
+  return `<div class="nw-form-row" id="${id}-row"><label for="${id}">${label}</label><select id="${id}">${options.map(o => `<option value="${esc(String(o[0]))}"${String(o[0]) === String(selected) ? " selected" : ""}>${esc(o[1])}</option>`).join("")}</select></div>`;
+}
+function tfGrid(){ return `<div class="nw-form-grid">${Array.from(arguments).join("")}</div>`; }
+function tfTotal(label, value, caption){
+  return `<div class="calc-total-card"><div class="ct-label">${label}</div><div class="ct-value">${value}</div>${caption ? `<div class="ct-caption">${caption}</div>` : ""}</div>`;
+}
+function tfRows(title, rows, foot){
+  return `<div class="calc-section"><div class="calc-section-title">${title}</div>${rows.map(r => `<div class="breakdown-row"><span>${r[0]}</span><span class="val">${r[1]}</span></div>`).join("")}${foot ? `<p class="calc-footnote">${foot}</p>` : ""}</div>`;
+}
+function tfTable(title, head, rows, foot){
+  return `<div class="calc-section"><div class="calc-section-title">${title}</div><div class="tf-table-wrap"><table class="tf-table"><tr>${head.map((h, i) => `<th${i ? ' class="r"' : ""}>${h}</th>`).join("")}</tr>${rows.map(r => `<tr>${r.map((c, i) => `<td${i ? ' class="r"' : ""}>${c}</td>`).join("")}</tr>`).join("")}</table></div>${foot ? `<p class="calc-footnote">${foot}</p>` : ""}</div>`;
+}
+const TF_CURRENCIES = [["USD", "US Dollar ($)"], ["INR", "Indian Rupee (₹)"]];
+
+function tfMount(title, sub, inputsHTML, compute, onChange){
+  app.innerHTML = `<button class="backlink" data-nav="">&larr; Tools</button><h2 class="section-title">${title}</h2>${sub ? `<p class="calc-footnote" style="margin-top:-0.6rem;">${sub}</p>` : ""}<div class="nw-form" id="tf-form">${inputsHTML}</div><div id="tf-out"></div>`;
+  const form = document.getElementById("tf-form"), out = document.getElementById("tf-out");
+  const get = {
+    n: id => { const v = parseFloat(document.getElementById(id).value); return isFinite(v) ? v : 0; },
+    s: id => document.getElementById(id).value,
+  };
+  const run = e => { if (onChange) onChange(get, e); out.innerHTML = compute(get); };
+  form.addEventListener("input", run);
+  form.addEventListener("change", run);
+  run();
+  bindNav();
+  return run;
+}
+
+// ---- Unit converter --------------------------------------------------------
+const UC_CATEGORIES = {
+  area: { label: "Area & Land", def: "acre", foot: "Regional land units vary: gunta (1,089 sq ft) is used in Telangana, Andhra Pradesh, Karnataka and Maharashtra; 1 acre = 40 guntas. Cent (435.6 sq ft) is common in Kerala, Tamil Nadu and Andhra Pradesh. Kanal and marla follow the Punjab/Haryana convention (1 kanal = 20 marla). Bigha differs by state, so two common values are shown. Always confirm with your local revenue records for a purchase.", units: [
+    ["sqft", "Square feet (sq ft)", 1], ["sqyd", "Square yards (gaj)", 9], ["sqm", "Square metres", 10.7639104167],
+    ["acre", "Acre", 43560], ["hectare", "Hectare", 107639.104167], ["gunta", "Gunta / Guntha", 1089],
+    ["cent", "Cent", 435.6], ["ground", "Ground (Tamil Nadu)", 2400], ["kanal", "Kanal", 5445], ["marla", "Marla", 272.25],
+    ["bigha-rj", "Bigha (Rajasthan, pucca)", 27225], ["bigha-gj", "Bigha (Gujarat)", 17424],
+    ["sqkm", "Square kilometre", 10763910.4167], ["sqmi", "Square mile", 27878400]] },
+  weight: { label: "Weight", def: "kg", foot: "Tola = 11.6638 g. Seer = 80 tola and maund = 40 seer (traditional Indian units).", units: [
+    ["mg", "Milligram", 0.000001], ["g", "Gram", 0.001], ["kg", "Kilogram", 1], ["quintal", "Quintal (100 kg)", 100],
+    ["tonne", "Tonne (metric)", 1000], ["lb", "Pound (lb)", 0.45359237], ["oz", "Ounce (oz)", 0.028349523125],
+    ["stone", "Stone", 6.35029318], ["tola", "Tola", 0.0116638038], ["seer", "Seer (80 tola)", 0.933104304], ["maund", "Maund (40 seer)", 37.3241722]] },
+  volume: { label: "Volume", def: "l", foot: "US customary cups, pints, quarts and gallons. Imperial gallon = 4.546 litres.", units: [
+    ["ml", "Millilitre", 0.001], ["l", "Litre", 1], ["m3", "Cubic metre", 1000], ["tsp", "Teaspoon (US)", 0.00492892159],
+    ["tbsp", "Tablespoon (US)", 0.0147867648], ["floz", "Fluid ounce (US)", 0.0295735296], ["cup", "Cup (US)", 0.2365882365],
+    ["pint", "Pint (US)", 0.473176473], ["quart", "Quart (US)", 0.946352946], ["gal", "Gallon (US)", 3.785411784],
+    ["gal-uk", "Gallon (Imperial)", 4.54609], ["ft3", "Cubic foot", 28.316846592]] },
+  length: { label: "Length & Distance", def: "m", foot: "", units: [
+    ["mm", "Millimetre", 0.001], ["cm", "Centimetre", 0.01], ["m", "Metre", 1], ["km", "Kilometre", 1000],
+    ["in", "Inch", 0.0254], ["ft", "Foot", 0.3048], ["yd", "Yard", 0.9144], ["mi", "Mile", 1609.344], ["nmi", "Nautical mile", 1852]] },
+};
+function ucFmt(x){
+  if (x === 0) return "0";
+  const a = Math.abs(x);
+  if (a >= 1e15 || a < 1e-6) return x.toExponential(4);
+  return Number(x.toPrecision(10)).toLocaleString("en-US", { maximumFractionDigits: a >= 1000 ? 4 : 6 });
+}
+function renderUnitConverter(){
+  const inputs = tfSel("uc-cat", "Category", Object.keys(UC_CATEGORIES).map(k => [k, UC_CATEGORIES[k].label]), "area") +
+    tfGrid(tfNum("uc-val", "Value", 1, 'min="0"'), tfSel("uc-unit", "From unit", [], ""));
+  tfMount("Unit Converter", "Land, weight, volume and length &mdash; every unit updates as you type.", inputs, get => {
+    const cat = UC_CATEGORIES[get.s("uc-cat")];
+    const from = cat.units.find(u => u[0] === get.s("uc-unit")) || cat.units[0];
+    const base = get.n("uc-val") * from[2];
+    const rows = cat.units.map(u => {
+      const v = ucFmt(base / u[2]);
+      return u[0] === from[0] ? [`<b>${u[1]}</b>`, `<b>${v}</b>`] : [u[1], v];
+    });
+    return tfRows("Equivalent values", rows, cat.foot);
+  }, (get, e) => {
+    const sel = document.getElementById("uc-unit");
+    if (!e || e.target.id === "uc-cat") {
+      const cat = UC_CATEGORIES[get.s("uc-cat")];
+      sel.innerHTML = cat.units.map(u => `<option value="${u[0]}"${u[0] === cat.def ? " selected" : ""}>${u[1]}</option>`).join("");
+    }
+  });
+}
+
+// ---- Currency converter ----------------------------------------------------
+const FX_CODES = ["USD", "INR", "EUR", "GBP", "AED", "CAD", "AUD", "SGD", "JPY", "CHF", "SAR", "CNY"];
+function renderCurrencyConverter(){
+  let fx = null, status = "Loading live rates…", manual = false;
+  const CK = "sm-fx-rates";
+  try { const c = JSON.parse(localStorage.getItem(CK)); if (c && c.rates) fx = c; } catch (e) { /* no cache */ }
+  const inputs = tfNum("fx-amt", "Amount", 1000, 'min="0"') +
+    tfGrid(tfSel("fx-from", "From", FX_CODES.map(c => [c, c]), "USD"), tfSel("fx-to", "To", FX_CODES.map(c => [c, c]), "INR")) +
+    tfNum("fx-rate", "Rate (1 unit of From = ? To) — editable", 0, 'min="0"');
+  const run = tfMount("Currency Converter", "Live rates from open.er-api.com. You can override the rate to use your bank's or remittance provider's rate.", inputs, get => {
+    const from = get.s("fx-from"), to = get.s("fx-to"), rate = get.n("fx-rate"), amt = get.n("fx-amt");
+    const digits = 2;
+    const stamp = fx && fx.updated ? `Rates updated ${esc(fx.updated)}.` : "";
+    if (!rate) return `<div class="calc-section"><p class="calc-footnote">${esc(status)} Enter a rate manually to convert.</p></div>`;
+    return tfTotal(`${tfFmtCur(amt, from, digits)} =`, tfFmtCur(amt * rate, to, digits), `1 ${from} = ${rate.toLocaleString("en-US", { maximumFractionDigits: 4 })} ${to}`) +
+      `<p class="calc-footnote">${manual ? "Using your custom rate." : esc(stamp || status)}</p>`;
+  }, (get, e) => {
+    const id = e && e.target.id;
+    if (id === "fx-rate") { manual = true; return; }
+    if (id === "fx-from" || id === "fx-to") manual = false;
+    if (!manual && fx) {
+      const r = fx.rates[get.s("fx-to")] / fx.rates[get.s("fx-from")];
+      if (isFinite(r)) document.getElementById("fx-rate").value = +r.toPrecision(8);
+    }
+  });
+  const fresh = fx && Date.now() - fx.t < 6 * 3600 * 1000;
+  if (!fresh) {
+    fetch("https://open.er-api.com/v6/latest/USD").then(r => r.json()).then(d => {
+      if (d.result !== "success") throw new Error("bad response");
+      fx = { t: Date.now(), rates: d.rates, updated: (d.time_last_update_utc || "").slice(0, 16) };
+      try { localStorage.setItem(CK, JSON.stringify(fx)); } catch (e) { /* ignore */ }
+      if (document.getElementById("fx-rate")) { manual = false; run(); }
+    }).catch(() => {
+      status = fx ? "Couldn't refresh live rates; showing the last saved rates." : "Couldn't load live rates (offline?).";
+      if (document.getElementById("fx-rate")) run();
+    });
+  }
+}
+
+// ---- Loan / EMI ------------------------------------------------------------
+function tfAmortize(P, annualRate, months, extra){
+  const r = annualRate / 1200;
+  const emi = r > 0 ? P * r * Math.pow(1 + r, months) / (Math.pow(1 + r, months) - 1) : P / months;
+  let bal = P, interest = 0, m = 0, yi = 0, yp = 0;
+  const years = [];
+  while (bal > 0.005 && m < months * 2 + 12) {
+    m++;
+    const i = bal * r;
+    const princ = Math.min(emi + extra - i, bal);
+    bal -= princ; interest += i; yi += i; yp += princ;
+    if (m % 12 === 0 || bal <= 0.005) { years.push([Math.ceil(m / 12), yp, yi, Math.max(bal, 0)]); yi = 0; yp = 0; }
+  }
+  return { emi, months: m, interest, years };
+}
+function tfDuration(months){
+  const y = Math.floor(months / 12), m = months % 12;
+  return (y ? `${y} yr${y > 1 ? "s" : ""}` : "") + (y && m ? " " : "") + (m ? `${m} mo` : "") || "0 mo";
+}
+function renderLoanCalculator(){
+  const inputs = tfGrid(tfSel("ln-cur", "Currency", TF_CURRENCIES, "INR"), tfNum("ln-amt", "Loan amount", 5000000, 'min="0"')) +
+    tfGrid(tfNum("ln-rate", "Interest rate (% per year)", 8.75, 'min="0" max="40"'), tfNum("ln-yrs", "Term (years)", 20, 'min="1" max="40"')) +
+    tfNum("ln-extra", "Extra prepayment each month (optional)", 0, 'min="0"');
+  tfMount("Loan / EMI Calculator", "Monthly instalment, total interest and the effect of paying a little extra every month.", inputs, get => {
+    const cur = get.s("ln-cur"), P = get.n("ln-amt"), months = Math.max(1, Math.round(get.n("ln-yrs") * 12)), extra = get.n("ln-extra");
+    if (P <= 0) return "";
+    const base = tfAmortize(P, get.n("ln-rate"), months, 0);
+    const f = v => tfFmtCur(v, cur);
+    let html = tfTotal("Monthly EMI", f(base.emi), `${f(base.interest)} total interest over ${tfDuration(months)}`);
+    html += tfRows("Without prepayment", [["Total interest", f(base.interest)], ["Total paid", f(P + base.interest)], ["Interest as % of loan", (base.interest / P * 100).toFixed(1) + "%"]]);
+    let sched = base;
+    if (extra > 0) {
+      const pre = tfAmortize(P, get.n("ln-rate"), months, extra);
+      sched = pre;
+      html += tfRows("With prepayment", [["Loan closes in", tfDuration(pre.months)], ["Time saved", tfDuration(base.months - pre.months)], ["Interest saved", f(base.interest - pre.interest)], ["Total interest", f(pre.interest)]]);
+    }
+    html += tfTable("Year by year" + (extra > 0 ? " (with prepayment)" : ""), ["Year", "Principal", "Interest", "Balance"], sched.years.map(y => [y[0], f(y[1]), f(y[2]), f(y[3])]));
+    return html;
+  });
+}
+
+// ---- Property buying costs -------------------------------------------------
+const PROP_STATES = [
+  ["ts", "Telangana", 5.5, 0.5], ["ap", "Andhra Pradesh", 7.0, 0.5], ["ka", "Karnataka", 5.6, 1.0],
+  ["mh", "Maharashtra", 6.0, 1.0], ["tn", "Tamil Nadu", 7.0, 2.0], ["custom", "Custom rates", 5.0, 1.0],
+];
+function renderPropertyCosts(){
+  const inputs = tfNum("pc-price", "Agreement / sale price (₹)", 7500000, 'min="0"') +
+    tfNum("pc-guide", "Government guideline / registrar value (₹, optional)", 0, 'min="0"') +
+    tfSel("pc-state", "State (fills typical rates — edit freely)", PROP_STATES.map(s => [s[0], s[1]]), "ts") +
+    tfGrid(tfNum("pc-stamp", "Stamp + transfer duty (%)", 5.5, 'min="0" step="0.05"'), tfNum("pc-reg", "Registration fee (%)", 0.5, 'min="0" step="0.05"')) +
+    tfNum("pc-other", "Legal, brokerage &amp; other costs (%)", 1, 'min="0" step="0.05"');
+  tfMount("Property Buying Costs", "What you pay on top of the price: stamp duty, registration and other closing costs.", inputs, get => {
+    const price = get.n("pc-price"), guide = get.n("pc-guide");
+    const base = Math.max(price, guide);
+    const stamp = base * get.n("pc-stamp") / 100, reg = base * get.n("pc-reg") / 100, other = price * get.n("pc-other") / 100;
+    const extra = stamp + reg + other, f = v => tfFmtCur(v, "INR");
+    return tfTotal("Total cost to buy", f(price + extra), `${f(extra)} on top of the price (${price ? (extra / price * 100).toFixed(1) : 0}%)`) +
+      tfRows("Breakdown", [["Property price", f(price)], ["Duty charged on", f(base) + (guide > price ? " (guideline value)" : "")], ["Stamp + transfer duty", f(stamp)], ["Registration fee", f(reg)], ["Legal, brokerage &amp; other", f(other)], ["Total upfront extras", f(extra)]],
+        "Duty is generally charged on the higher of the sale price and the government guideline value. Rates shown are typical ones and change often; some states give concessions (e.g. for women buyers), cap registration fees, or add cess/surcharge. Confirm with your sub-registrar before budgeting.");
+  }, (get, e) => {
+    if (e && e.target.id === "pc-state") {
+      const s = PROP_STATES.find(x => x[0] === get.s("pc-state"));
+      if (s && s[0] !== "custom") { document.getElementById("pc-stamp").value = s[2]; document.getElementById("pc-reg").value = s[3]; }
+    }
+  });
+}
+
+// ---- Rent vs buy -----------------------------------------------------------
+function renderRentVsBuy(){
+  const inputs = tfGrid(tfSel("rb-cur", "Currency", TF_CURRENCIES, "USD"), tfNum("rb-price", "Home price", 500000, 'min="0"')) +
+    tfGrid(tfNum("rb-down", "Down payment (%)", 20, 'min="0" max="100"'), tfNum("rb-rate", "Mortgage rate (% per year)", 6.5, 'min="0"')) +
+    tfGrid(tfNum("rb-term", "Mortgage term (years)", 30, 'min="1" max="40"'), tfNum("rb-hold", "Tax, upkeep &amp; insurance (% of value / yr)", 1.5, 'min="0" step="0.1"')) +
+    tfGrid(tfNum("rb-appr", "Home appreciation (% / yr)", 4, 'step="0.1"'), tfNum("rb-close", "Buying closing costs (%)", 3, 'min="0" step="0.1"')) +
+    tfGrid(tfNum("rb-rent", "Monthly rent for a comparable home", 2500, 'min="0"'), tfNum("rb-rentg", "Rent increase (% / yr)", 3, 'step="0.1"')) +
+    tfGrid(tfNum("rb-inv", "Return on investments (% / yr)", 7, 'step="0.1"'), tfNum("rb-sell", "Selling costs (%)", 6, 'min="0" step="0.1"')) +
+    tfNum("rb-years", "How long will you stay? (years)", 10, 'min="1" max="40"');
+  tfMount("Rent vs Buy", "Compares your net worth after a set number of years if you buy, versus rent and invest the difference.", inputs, get => {
+    const cur = get.s("rb-cur"), f = v => tfFmtCur(v, cur);
+    const price = get.n("rb-price"), termM = Math.max(1, Math.round(get.n("rb-term") * 12)), H = Math.max(1, Math.round(get.n("rb-years"))) * 12;
+    const down = price * get.n("rb-down") / 100, loan = price - down, r = get.n("rb-rate") / 1200;
+    const emi = loan <= 0 ? 0 : (r > 0 ? loan * r * Math.pow(1 + r, termM) / (Math.pow(1 + r, termM) - 1) : loan / termM);
+    const ir = get.n("rb-inv") / 1200, ag = Math.pow(1 + get.n("rb-appr") / 100, 1 / 12);
+    let bal = loan, home = price, renter = down + price * get.n("rb-close") / 100, buyer = 0, paid = down + price * get.n("rb-close") / 100, rentPaid = 0;
+    for (let m = 1; m <= H; m++) {
+      let pay = 0;
+      if (m <= termM && bal > 0) { const i = bal * r; bal -= Math.min(emi - i, bal); pay = emi; }
+      home *= ag;
+      const rentM = get.n("rb-rent") * Math.pow(1 + get.n("rb-rentg") / 100, Math.floor((m - 1) / 12));
+      const buyCost = pay + home * get.n("rb-hold") / 1200;
+      paid += buyCost; rentPaid += rentM;
+      const diff = buyCost - rentM;
+      renter = renter * (1 + ir) + Math.max(diff, 0);
+      buyer = buyer * (1 + ir) + Math.max(-diff, 0);
+    }
+    const buyNet = home * (1 - get.n("rb-sell") / 100) - bal + buyer;
+    const better = buyNet >= renter ? "Buying" : "Renting";
+    return tfTotal(`${better} comes out ahead by`, f(Math.abs(buyNet - renter)), `after ${H / 12} years, in net worth`) +
+      tfRows("If you buy", [["Home value at the end", f(home)], ["Loan still owed", f(bal)], ["After selling costs, net equity", f(home * (1 - get.n("rb-sell") / 100) - bal)], ["Total spent on buying costs", f(paid)], ["Net worth", f(buyNet)]]) +
+      tfRows("If you rent and invest", [["Total rent paid", f(rentPaid)], ["Investments at the end", f(renter)], ["Net worth", f(renter)]],
+        "Renter invests the down payment and closing costs up front, then invests any monthly savings versus owning (and the buyer does the same if renting would cost more). Simplified: ignores taxes, mortgage-interest deductions and changes in rates.");
+  });
+}
+
+// ---- SIP calculator --------------------------------------------------------
+function renderSipCalculator(){
+  const inputs = tfGrid(tfSel("sp-cur", "Currency", TF_CURRENCIES, "INR"), tfNum("sp-monthly", "Monthly investment (SIP)", 10000, 'min="0"')) +
+    tfGrid(tfNum("sp-lump", "One-time lump sum today (optional)", 0, 'min="0"'), tfNum("sp-step", "Yearly step-up in SIP (%)", 0, 'min="0" step="0.5"')) +
+    tfGrid(tfNum("sp-rate", "Expected return (% per year)", 12, 'min="0" step="0.25"'), tfNum("sp-years", "Years", 15, 'min="1" max="50"')) +
+    tfNum("sp-infl", "Inflation (% per year) — for today's-money value", 6, 'min="0" step="0.25"');
+  tfMount("SIP Calculator", "Grow a monthly investment, with an optional lump sum and yearly step-up.", inputs, get => {
+    const cur = get.s("sp-cur"), f = v => tfFmtCur(v, cur), years = Math.max(1, Math.round(get.n("sp-years")));
+    const r = get.n("sp-rate") / 1200, step = get.n("sp-step") / 100;
+    let val = get.n("sp-lump"), invested = val, sip = get.n("sp-monthly");
+    const rows = [];
+    for (let y = 1; y <= years; y++) {
+      for (let m = 0; m < 12; m++) { val = (val + sip) * (1 + r); invested += sip; }
+      sip *= 1 + step;
+      rows.push([y, f(invested), f(val - invested), f(val)]);
+    }
+    const real = val / Math.pow(1 + get.n("sp-infl") / 100, years);
+    return tfTotal(`Value after ${years} years`, f(val), `${f(invested)} invested · ${f(val - invested)} growth`) +
+      tfRows("Summary", [["Total invested", f(invested)], ["Estimated growth", f(val - invested)], ["Growth as multiple of invested", (invested ? val / invested : 0).toFixed(2) + "x"], ["Value in today's money", f(real)]],
+        "Each monthly instalment is invested at the start of the month and compounds monthly. Real returns fluctuate; this is an illustration, not a forecast.") +
+      tfTable("Year by year", ["Year", "Invested", "Growth", "Value"], rows);
+  });
+}
+
+// ---- Goal planner ----------------------------------------------------------
+function renderGoalPlanner(){
+  const inputs = tfGrid(tfSel("gp-cur", "Currency", TF_CURRENCIES, "INR"), tfNum("gp-target", "Goal amount (in today's money)", 5000000, 'min="0"')) +
+    tfGrid(tfNum("gp-years", "Years to reach it", 10, 'min="1" max="50"'), tfNum("gp-have", "Already saved for it", 0, 'min="0"')) +
+    tfGrid(tfNum("gp-rate", "Expected return (% per year)", 10, 'min="0" step="0.25"'), tfNum("gp-infl", "Inflation (% per year)", 6, 'min="0" step="0.25"'));
+  tfMount("Goal Planner", "How much to invest each month to reach a goal — a child's education, a plot of land, a wedding.", inputs, get => {
+    const cur = get.s("gp-cur"), f = v => tfFmtCur(v, cur), years = Math.max(1, Math.round(get.n("gp-years"))), n = years * 12;
+    const r = get.n("gp-rate") / 1200;
+    const future = get.n("gp-target") * Math.pow(1 + get.n("gp-infl") / 100, years);
+    const haveGrown = get.n("gp-have") * Math.pow(1 + r, n);
+    const need = Math.max(0, future - haveGrown);
+    const factor = r > 0 ? ((Math.pow(1 + r, n) - 1) / r) * (1 + r) : n;
+    const sip = need / factor;
+    return tfTotal("Invest each month", f(sip), `for ${years} years to reach your goal`) +
+      tfRows("Working", [["Goal in today's money", f(get.n("gp-target"))], ["Cost of the goal in " + years + " years (with inflation)", f(future)], ["Your existing savings will grow to", f(haveGrown)], ["Still needed from monthly investing", f(need)], ["Total you will put in", f(sip * n)]],
+        "Instalments are invested at the start of each month. An illustration only; actual returns and inflation will differ.");
+  });
+}
+
+// ---- Income tax estimator --------------------------------------------------
+const TAX_IN_SLABS = [[400000, 0], [800000, 0.05], [1200000, 0.10], [1600000, 0.15], [2000000, 0.20], [2400000, 0.25], [Infinity, 0.30]];
+const TAX_US = {
+  single: { label: "Single", std: 15750, slabs: [[11925, .10], [48475, .12], [103350, .22], [197300, .24], [250525, .32], [626350, .35], [Infinity, .37]] },
+  mfj: { label: "Married filing jointly", std: 31500, slabs: [[23850, .10], [96950, .12], [206700, .22], [394600, .24], [501050, .32], [751600, .35], [Infinity, .37]] },
+  hoh: { label: "Head of household", std: 23625, slabs: [[17000, .10], [64850, .12], [103350, .22], [197300, .24], [250500, .32], [626350, .35], [Infinity, .37]] },
+};
+function taxSlabs(income, slabs){
+  let prev = 0, tax = 0;
+  const rows = [];
+  for (const s of slabs) {
+    if (income > prev) { const part = Math.min(income, s[0]) - prev; tax += part * s[1]; rows.push([prev, s[0], s[1], part * s[1]]); }
+    prev = s[0];
+  }
+  return { tax, rows };
+}
+function renderIncomeTax(){
+  const inputs = tfSel("tx-country", "Country", [["in", "India — new regime, FY 2025-26"], ["us", "United States — federal, tax year 2025"]], "in") +
+    tfNum("tx-income", "Annual gross income", 1500000, 'min="0"') +
+    `<div id="tx-in">${tfGrid(tfSel("tx-sal", "Salaried?", [["y", "Yes (₹75,000 standard deduction)"], ["n", "No"]], "y"), tfNum("tx-ded-in", "Other deductions, e.g. employer NPS (₹)", 0, 'min="0"'))}</div>` +
+    `<div id="tx-us" hidden>${tfGrid(tfSel("tx-fs", "Filing status", Object.keys(TAX_US).map(k => [k, TAX_US[k].label]), "single"), tfNum("tx-ded-us", "Pre-tax deductions (401k, HSA…) or itemized ($)", 0, 'min="0"'))}</div>`;
+  tfMount("Income Tax Estimator", "A quick estimate of income tax. Not tax advice &mdash; it ignores credits and special-rate income.", inputs, get => {
+    const us = get.s("tx-country") === "us", gross = get.n("tx-income"), cur = us ? "USD" : "INR", f = v => tfFmtCur(v, cur);
+    let taxable, tax, rowsHtml, extraRows = [], foot;
+    if (us) {
+      const fs = TAX_US[get.s("tx-fs")], ded = get.n("tx-ded-us");
+      taxable = Math.max(0, gross - Math.max(fs.std, ded));
+      const t = taxSlabs(taxable, fs.slabs);
+      tax = t.tax;
+      rowsHtml = tfTable("By bracket", ["Bracket", "Rate", "Tax"], t.rows.map(r => [`${f(r[0])} – ${r[1] === Infinity ? "above" : f(r[1])}`, (r[2] * 100) + "%", f(r[3])]));
+      extraRows = [["Deduction used", f(Math.max(fs.std, ded)) + (ded > fs.std ? " (yours)" : " (standard)")]];
+      foot = "Federal income tax only, tax year 2025. Excludes state tax, Social Security/Medicare, capital-gains rates, credits and AMT.";
+    } else {
+      const std = get.s("tx-sal") === "y" ? 75000 : 0;
+      taxable = Math.max(0, gross - std - get.n("tx-ded-in"));
+      const t = taxSlabs(taxable, TAX_IN_SLABS);
+      let slabTax = t.tax;
+      if (taxable <= 1200000) slabTax = 0; else slabTax = Math.min(slabTax, taxable - 1200000);
+      const sur = slabTax > 0 ? slabTax * (taxable > 20000000 ? 0.25 : taxable > 10000000 ? 0.15 : taxable > 5000000 ? 0.10 : 0) : 0;
+      const cess = (slabTax + sur) * 0.04;
+      tax = slabTax + sur + cess;
+      rowsHtml = tfTable("By slab", ["Slab", "Rate", "Tax"], t.rows.map(r => [`${f(r[0])} – ${r[1] === Infinity ? "above" : f(r[1])}`, (r[2] * 100) + "%", f(r[3])]));
+      extraRows = [["Tax after rebate", f(slabTax)], ["Surcharge", f(sur)], ["Health &amp; education cess (4%)", f(cess)]];
+      foot = "New tax regime, FY 2025-26: full rebate up to ₹12,00,000 taxable income (with marginal relief just above it). Salary and other ordinary income only. Excludes capital-gains special rates, surcharge marginal relief and the old regime.";
+    }
+    const eff = gross > 0 ? tax / gross * 100 : 0;
+    return tfTotal("Estimated income tax", f(tax), `${eff.toFixed(1)}% of gross income · ${f(Math.max(0, gross - tax) / 12)} per month after tax`) +
+      tfRows("Summary", [["Gross income", f(gross)], ["Taxable income", f(taxable)], ...extraRows, ["Total tax", f(tax)], ["Income after tax", f(Math.max(0, gross - tax))]], foot) + rowsHtml;
+  }, get => {
+    const us = get.s("tx-country") === "us";
+    document.getElementById("tx-in").hidden = us;
+    document.getElementById("tx-us").hidden = !us;
+  });
 }
 
 function sliderRowHTML(id, label, valueText){
