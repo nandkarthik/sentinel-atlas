@@ -445,6 +445,11 @@ select, .seg-group{
 }
 .nw-section-head .section-title{ margin:0; }
 .nw-section-actions{ display:flex; gap:0.5rem; flex-wrap:wrap; }
+.nw-menu{ position:relative; }
+.nw-menu-list{ position:absolute; right:0; top:calc(100% + 4px); background:var(--surface); border:1px solid var(--line); border-radius:8px; z-index:5; min-width:12rem; display:flex; flex-direction:column; box-shadow:0 8px 24px rgba(0,0,0,.18); overflow:hidden; }
+.nw-menu-list[hidden]{ display:none; }
+.nw-menu-item{ background:none; border:0; color:var(--ink); font:inherit; text-align:left; padding:0.6rem 0.9rem; cursor:pointer; }
+.nw-menu-item:hover, .nw-menu-item:focus-visible{ background:var(--accent-soft); }
 .nw-add-btn{
   font-family:var(--font-mono);
   font-size:0.72rem;
@@ -881,11 +886,13 @@ async function nwExportAll(){
     return rest;
   }));
   const payload = { app: "sentinel-money-networth", version: 1, exportedAt: new Date().toISOString(), entries: exportEntries };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  nwDownload(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }), "json");
+}
+function nwDownload(blob, ext){
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `sentinel-money-networth-${new Date().toISOString().slice(0, 10)}.json`;
+  a.download = `sentinel-money-networth-${new Date().toISOString().slice(0, 10)}.${ext}`;
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -910,6 +917,94 @@ async function nwImportFile(file){
     count++;
   }
   return count;
+}
+
+function nwCsvCell(v){
+  v = String(v == null ? "" : v);
+  return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+}
+async function nwExportCSV(){
+  const entries = await nwGetAll();
+  const rows = [["Name", "Type", "Category", "Value", "Kind", "Notes", "Attachment"]];
+  for (const e of entries) {
+    const t = NET_WORTH_TYPES_BY_ID[e.type];
+    const g = nwGroupFor(e);
+    rows.push([e.name, t ? t.label : e.type, g ? g.label : "", e.value, nwIsLiability(e) ? "Liability" : "Asset", e.notes || "", e.fileName || ""]);
+  }
+  const text = "\ufeff" + rows.map(r => r.map(nwCsvCell).join(",")).join("\r\n");
+  nwDownload(new Blob([text], { type: "text/csv;charset=utf-8" }), "csv");
+}
+function nwParseCSV(text){
+  text = text.replace(/^\ufeff/, "");
+  const rows = [];
+  let row = [], cell = "", q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) {
+      if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; }
+      else cell += c;
+    } else if (c === '"') q = true;
+    else if (c === ",") { row.push(cell); cell = ""; }
+    else if (c === "\n" || c === "\r") {
+      if (c === "\r" && text[i + 1] === "\n") i++;
+      row.push(cell); cell = "";
+      if (row.some(x => x.trim() !== "")) rows.push(row);
+      row = [];
+    } else cell += c;
+  }
+  row.push(cell);
+  if (row.some(x => x.trim() !== "")) rows.push(row);
+  return rows;
+}
+async function nwImportCSV(file){
+  const rows = nwParseCSV(await file.text());
+  if (rows.length < 2) throw new Error("The CSV has no data rows");
+  const head = rows[0].map(h => h.trim().toLowerCase());
+  const col = n => head.indexOf(n);
+  const iName = col("name"), iValue = col("value");
+  if (iName < 0 || iValue < 0) throw new Error("The CSV needs at least Name and Value columns");
+  const iType = col("type"), iKind = col("kind"), iNotes = col("notes");
+  const byLabel = {};
+  NET_WORTH_TYPES.forEach(t => { byLabel[t.label.toLowerCase()] = t.id; byLabel[t.id.toLowerCase()] = t.id; });
+  let count = 0;
+  for (const r of rows.slice(1)) {
+    const name = (r[iName] || "").trim();
+    const value = parseFloat((r[iValue] || "").replace(/[$,\s]/g, ""));
+    if (!name || !isFinite(value)) continue;
+    const liability = iKind >= 0 && /liab/i.test(r[iKind] || "");
+    const type = (iType >= 0 && byLabel[(r[iType] || "").trim().toLowerCase()]) || (liability ? "other-debt" : "other-asset-type");
+    await nwPut({ name, type, value, notes: iNotes >= 0 ? (r[iNotes] || "").trim() : "", createdAt: Date.now() });
+    count++;
+  }
+  return count;
+}
+async function nwImportAny(file){
+  return /\.csv$/i.test(file.name) ? nwImportCSV(file) : nwImportFile(file);
+}
+async function nwReportHTML(entries){
+  let assets = 0, liabs = 0;
+  entries.forEach(e => { if (nwIsLiability(e)) liabs += e.value; else assets += e.value; });
+  const sections = NET_WORTH_GROUPS.map(g => {
+    const items = entries.filter(e => { const eg = nwGroupFor(e); return eg && eg.id === g.id; });
+    if (!items.length) return "";
+    const sub = items.reduce((a, e) => a + e.value, 0);
+    return `<h2>${esc(g.label)} &mdash; ${fmtUSD(sub)}</h2><table><tr><th>Name</th><th>Type</th><th class="r">Value</th><th>Notes</th><th>Attachment</th></tr>` +
+      items.map(e => `<tr><td>${esc(e.name)}</td><td>${esc((NET_WORTH_TYPES_BY_ID[e.type] || {}).label || e.type)}</td><td class="r">${fmtUSD(e.value)}</td><td>${esc(e.notes || "")}</td><td>${esc(e.fileName || "")}</td></tr>`).join("") + `</table>`;
+  }).join("");
+  const ns = ' xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"';
+  return `<!DOCTYPE html><html${ns}><head><meta charset="utf-8"><title>Family Net Worth</title><style>
+body{font-family:Georgia,serif;color:#1b2a24;margin:2rem;}
+h1{font-size:22pt;margin:0 0 .2rem;} .sub{color:#666;margin:0 0 1.2rem;}
+.tot{margin:0 0 1rem;font-size:12pt;} .tot b{font-size:16pt;}
+h2{font-size:13pt;margin:1.3rem 0 .4rem;border-bottom:1px solid #999;padding-bottom:.2rem;}
+table{border-collapse:collapse;width:100%;font-size:10pt;} th,td{border:1px solid #ccc;padding:4px 8px;text-align:left;vertical-align:top;}
+th{background:#eef3f0;} .r{text-align:right;}
+</style></head><body><h1>Family Net Worth</h1><p class="sub">Sentinel Money &middot; ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
+<p class="tot">Net worth <b>${fmtUSD(assets - liabs)}</b><br>${fmtUSD(assets)} in assets &minus; ${fmtUSD(liabs)} in liabilities</p>${sections}</body></html>`;
+}
+async function nwExportWord(){
+  const html = await nwReportHTML(await nwGetAll());
+  nwDownload(new Blob(["\ufeff", html], { type: "application/msword" }), "doc");
 }
 
 // ============================================================================
@@ -1469,9 +1564,16 @@ function nwRenderRoot(entries){
     <div class="nw-section-head">
       <h3 class="section-title" style="margin:0;">Assets &amp; Liabilities</h3>
       <div class="nw-section-actions">
-        <button class="nw-add-btn secondary" id="nw-export-btn" ${entries.length ? "" : "disabled"}>Export</button>
+        <div class="nw-menu">
+          <button class="nw-add-btn secondary" id="nw-export-btn" aria-haspopup="true" aria-expanded="false" ${entries.length ? "" : "disabled"}>Export &#9662;</button>
+          <div class="nw-menu-list" id="nw-export-menu" hidden>
+            <button class="nw-menu-item" data-fmt="csv">CSV (spreadsheet)</button>
+            <button class="nw-menu-item" data-fmt="json">JSON (full backup)</button>
+            <button class="nw-menu-item" data-fmt="word">Word document</button>
+          </div>
+        </div>
         <button class="nw-add-btn secondary" id="nw-import-btn">Import</button>
-        <input type="file" id="nw-import-file" accept="application/json,.json" hidden>
+        <input type="file" id="nw-import-file" accept=".json,.csv,application/json,text/csv" hidden>
         <button class="nw-add-btn" id="nw-add-toggle">+ Add Entry</button>
       </div>
     </div>
@@ -1479,14 +1581,28 @@ function nwRenderRoot(entries){
     ${entries.length ? groupsHTML : `<div class="nw-empty">Nothing added yet. Add savings, a 401(k) or IRA, a 529 plan, land, farmland — anything that's part of the family's net worth.</div>`}`;
 
   document.getElementById("nw-add-toggle").addEventListener("click", () => nwShowForm(entries));
-  document.getElementById("nw-export-btn").addEventListener("click", () => nwExportAll());
+  const menu = document.getElementById("nw-export-menu");
+  const exportBtn = document.getElementById("nw-export-btn");
+  const setMenu = open => { menu.hidden = !open; exportBtn.setAttribute("aria-expanded", String(open)); };
+  exportBtn.addEventListener("click", e => { e.stopPropagation(); setMenu(menu.hidden); });
+  menu.addEventListener("click", async e => {
+    const b = e.target.closest("[data-fmt]");
+    if (!b) return;
+    setMenu(false);
+    const fn = { csv: nwExportCSV, json: nwExportAll, word: nwExportWord }[b.dataset.fmt];
+    try { await fn(); } catch (err) { alert("Export failed: " + err.message); }
+  });
+  document.addEventListener("click", function nwCloseMenu(){
+    if (!document.body.contains(menu)) { document.removeEventListener("click", nwCloseMenu); return; }
+    setMenu(false);
+  });
   document.getElementById("nw-import-btn").addEventListener("click", () => document.getElementById("nw-import-file").click());
   document.getElementById("nw-import-file").addEventListener("change", async e => {
     const file = e.target.files[0];
     e.target.value = "";
     if (!file) return;
     try {
-      const count = await nwImportFile(file);
+      const count = await nwImportAny(file);
       nwRenderRoot(await nwGetAll());
       alert(count ? `Imported ${count} ${count === 1 ? "entry" : "entries"}.` : "No valid entries found in that file.");
     } catch (err) {
