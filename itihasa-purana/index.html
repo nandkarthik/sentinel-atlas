@@ -373,6 +373,21 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
 .cast-person .s{display:block;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-faint);margin:0.1rem 0 0.25rem;}
 .cast-person .r{display:block;font-size:0.8rem;color:var(--ink-soft);line-height:1.4;}
 .cast-empty{color:var(--ink-faint);font-size:0.85rem;padding:0.5rem 0;}
+
+.tl-card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.5rem 1.6rem 1.7rem;box-shadow:var(--shadow);}
+.yuga-strip{display:flex;flex-wrap:wrap;gap:0.6rem;margin:0 0 1.4rem;}
+.yuga-strip div{flex:1 1 12rem;background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:0.55rem 0.8rem;}
+.yuga-strip b{display:block;font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-2);font-weight:500;}
+.yuga-strip span{display:block;font-size:0.82rem;color:var(--ink-soft);margin-top:0.15rem;line-height:1.4;}
+.tl-controls{display:flex;gap:0.3rem;margin-bottom:1.2rem;}
+.tl-controls button{font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.04em;text-transform:uppercase;padding:0.42rem 0.85rem;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink-soft);cursor:pointer;}
+.tl-controls button.active{background:var(--accent);color:var(--bg);border-color:var(--accent);}
+.tl-book{margin:1.6rem 0 0.7rem;font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-2);font-weight:500;}
+.tl-list{list-style:none;margin:0;padding:0 0 0 1.3rem;border-left:1px solid var(--line);}
+.tl-list li{position:relative;padding:0 0 1rem 0.4rem;}
+.tl-list li::before{content:"";position:absolute;left:-1.62rem;top:0.4rem;width:0.55rem;height:0.55rem;border-radius:50%;background:var(--accent);}
+.tl-list h4{margin:0;font-size:0.95rem;font-weight:600;}
+.tl-list p{margin:0.15rem 0 0;font-size:0.86rem;color:var(--ink-soft);line-height:1.5;max-width:65ch;}
 </style>
 
 <div class="wrap">
@@ -387,6 +402,7 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
 
   <div class="sub-nav" role="tablist" aria-label="Sections">
     <button id="sub-nav-itihasa" class="active" role="tab" aria-selected="true">Itihasa — the epics</button>
+    <button id="sub-nav-timeline-itihasa" role="tab" aria-selected="false">Itihasa timeline</button>
     <button id="sub-nav-purana" role="tab" aria-selected="false">Purana — the pantheon</button>
   </div>
 
@@ -474,6 +490,28 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
       <input id="cast-search" type="search" placeholder="Search characters…" autocomplete="off" aria-label="Search characters">
     </div>
     <div id="cast-list"></div>
+  </div>
+
+  </div>
+
+  <div id="sub-timeline-itihasa" class="subview" hidden>
+
+  <div class="refs-head">
+    <h2>Itihasa timeline</h2>
+    <p>Each epic's story in the order it is told, book by book. Neither has calendar dates: tradition places the Ramayana in the Treta Yuga and the Mahabharata at the close of the Dvapara Yuga, and the war at Kurukshetra is the hinge into the present age.</p>
+  </div>
+
+  <div class="tl-card">
+    <div class="yuga-strip">
+      <div><b>Treta Yuga</b><span>Rama's reign; the Ramayana</span></div>
+      <div><b>Dvapara Yuga</b><span>Krishna and the Pandavas; the Mahabharata</span></div>
+      <div><b>Kali Yuga</b><span>The present age, begun as Krishna departs</span></div>
+    </div>
+    <div class="tl-controls" role="tablist" aria-label="Epic">
+      <button id="tl-ramayana" class="active" role="tab" aria-selected="true">Ramayana</button>
+      <button id="tl-mahabharata" role="tab" aria-selected="false">Mahabharata</button>
+    </div>
+    <div id="tl-body"></div>
   </div>
 
   </div>
@@ -625,9 +663,9 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
 })();
 </script>
 <script>
-["itihasa", "purana"].forEach(function(name){
+["itihasa", "timeline-itihasa", "purana"].forEach(function(name){
   document.getElementById("sub-nav-" + name).addEventListener("click", function(){
-    ["itihasa", "purana"].forEach(function(other){
+    ["itihasa", "timeline-itihasa", "purana"].forEach(function(other){
       var btn = document.getElementById("sub-nav-" + other);
       var active = other === name;
       btn.classList.toggle("active", active);
@@ -671,6 +709,28 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
   });
   q.addEventListener("input", draw);
   draw();
+})();
+</script>
+<script>
+(function(){
+  var TL = {"ramayana": [["Bala Kanda — the childhood", [["Birth of the four princes", "Childless Dasharatha performs a fire sacrifice; Rama, Bharata, Lakshmana and Shatrughna are born in Ayodhya."], ["Vishvamitra's request", "The sage takes Rama and Lakshmana to guard his sacrifice; Rama kills Tataka and Subahu and drives off Maricha."], ["Ahalya freed", "On the road to Mithila, Rama's arrival lifts the curse that had turned Ahalya to stone."], ["The Shiva-bow and the wedding", "Rama strings and breaks Shiva's bow and wins Sita. Four brothers marry four sisters and cousins. Parashurama challenges Rama, and yields."]]], ["Ayodhya Kanda — the exile", [["The coronation that never was", "Dasharatha announces Rama's coronation; Manthara sets Kaikeyi against it."], ["Two boons", "Kaikeyi claims her old boons: Bharata for king, Rama to the forest for fourteen years. Rama, Sita and Lakshmana leave."], ["Dasharatha's death", "Grief-stricken, the king dies, recalling the curse of Shravana Kumara's parents."], ["The sandals", "Bharata finds Rama at Chitrakuta and begs him to return. Rama refuses; Bharata rules from Nandigrama in Rama's name."]]], ["Aranya Kanda — the forest", [["Dandaka forest", "Rama, Sita and Lakshmana meet sages, kill Viradha, and settle at Panchavati on the Godavari."], ["Shurpanakha", "Lakshmana mutilates her; Khara and Dushana attack and are destroyed by Rama."], ["The golden deer", "Maricha takes the deer's shape; Rama chases it, and Lakshmana is drawn away by a false cry."], ["Sita abducted", "Ravana carries Sita off; Jatayu fights him and falls."]]], ["Kishkindha Kanda — the alliance", [["Kabandha and Sabari", "Rama frees Kabandha and eats Sabari's offering; both point him to Sugriva."], ["Hanuman and Sugriva", "Rama and Sugriva pledge friendship at the hill of Rishyamukha."], ["Vali's fall", "Rama shoots Vali from hiding; Sugriva regains Kishkindha."], ["The search", "Vanara parties are sent in all four directions; Sampati tells the southern party that Sita is in Lanka."]]], ["Sundara Kanda — the leap", [["Hanuman crosses the sea", "Hanuman leaps to Lanka and finds Sita under the ashoka tree."], ["Lanka burns", "Captured, Hanuman is set alight and sets fire to the city before he returns."]]], ["Yuddha Kanda — the war", [["The bridge", "The vanaras build a bridge across the sea under Nala and reach Lanka."], ["Vibhishana joins Rama", "Ravana's brother is exiled for urging Sita's return and is welcomed by Rama."], ["The war of Lanka", "Rama's army fights for many days; Lakshmana is wounded and revived by the sanjivani herb Hanuman brings."], ["Fall of Ravana's house", "Kumbhakarna, Indrajit and finally Ravana are killed."], ["Sita's ordeal and return", "Sita undergoes the fire ordeal. Rama's exile ends and he flies home in the Pushpaka chariot; he is crowned in Ayodhya."]]], ["Uttara Kanda — the later years", [["Sita's second exile", "Doubts among his subjects lead Rama to send Sita away; she shelters at Valmiki's hermitage, where Lava and Kusha are born."], ["Lava and Kusha", "The twins sing the Ramayana before Rama and are acknowledged as his sons."], ["The end of the story", "Sita returns to the earth. Rama eventually departs from the world."]]]], "mahabharata": [["Adi Parva — the beginnings", [["Shantanu and Ganga", "Ganga marries Shantanu; their eighth son is Devavrata, later Bhishma."], ["Bhishma's vow", "To let his father marry Satyavati, Devavrata renounces the throne and marriage for life."], ["The succession crisis", "Vichitravirya dies childless; Vyasa fathers Dhritarashtra and Pandu on the widowed queens, and Vidura on a maid."], ["Pandu's death and the Pandavas' return", "Pandu dies under a curse; Kunti brings his five sons to Hastinapura, where they grow up beside their hundred Kaurava cousins."], ["Drona's school", "Drona teaches all the princes; a public tournament shows Arjuna's skill, and Karna challenges him."], ["The house of lac", "Duryodhana's plot to burn the Pandavas at Varanavata fails; they escape and hide as brahmins."], ["Draupadi's swayamvara", "Arjuna wins her at the Panchala court; the five brothers share her as their wife."], ["Indraprastha", "The kingdom is divided; the Pandavas build Indraprastha at the Khandava forest."]]], ["Sabha Parva — the dice game", [["Rajasuya", "Yudhishthira is acknowledged emperor. Krishna has Shishupala killed after a hundred insults."], ["The dice game", "Shakuni plays for Duryodhana; Yudhishthira loses his kingdom, his brothers, himself and Draupadi."], ["Draupadi's humiliation", "Dushasana drags her into the assembly; her disrobing is halted as her cloth is miraculously extended. Dhritarashtra restores their freedom, then a second game sends them into exile."]]], ["Vana and Virata Parvas — twelve years and one", [["Twelve years in the forest", "The Pandavas wander through the forests and pilgrimage sites; Arjuna wins divine weapons and Bhima meets Hanuman."], ["The Yaksha's questions", "Yudhishthira answers a yaksha's riddles and revives his brothers."], ["The year in hiding", "Disguised at Virata's court, they endure Kichaka's insult to Draupadi and defeat the Kauravas in a cattle raid."]]], ["Udyoga Parva — the failed peace", [["The embassy", "Krishna goes to Hastinapura to ask for five villages. Duryodhana refuses even a needle's point of land."], ["Armies gather", "Krishna gives Duryodhana his army and Arjuna himself as an unarmed charioteer. Karna refuses Kunti's plea to change sides."]]], ["Bhishma Parva — the war begins", [["The Bhagavad Gita", "On the field at Kurukshetra, Arjuna falters and Krishna gives him the Gita."], ["Days 1–10", "Bhishma commands the Kaurava army. Shikhandi's presence stops him from fighting, and on the tenth day he falls on a bed of arrows."]]], ["Drona Parva — the middle days", [["Days 11–15", "Drona is commander. On day 13 Abhimanyu enters the chakravyuha and is killed. Arjuna kills Jayadratha the next day."], ["The night battle", "Ghatotkacha is killed by Karna's divine spear."], ["Drona's death", "On day 15 Drona lays down his arms on hearing a false report of Ashwatthama's death and is killed by Dhrishtadyumna."]]], ["Karna, Shalya and Sauptika — the end of the war", [["Karna's death", "Karna, commander for two days, dies when his chariot wheel sinks and Arjuna's arrow strikes."], ["The last day", "Shalya falls, and Bhima breaks Duryodhana's thigh in a mace duel."], ["The night massacre", "Ashwatthama, Kripa and Kritavarma kill the Pandava camp in their sleep, including Draupadi's five sons."]]], ["Stri to Anushasana Parvas — after the war", [["Gandhari's grief", "Gandhari curses Krishna that his clan will perish."], ["Yudhishthira crowned", "Yudhishthira becomes king of Hastinapura, reluctantly, and receives Bhishma's teaching on kingship and dharma."], ["Bhishma's death", "Bhishma chooses his moment and dies at the winter solstice."]]], ["Mausala to Svargarohana — the end of the age", [["The Yadavas destroyed", "Thirty-six years after the war, the Yadavas kill one another at Prabhasa; Krishna is struck by a hunter's arrow and departs. Dwarka is swallowed by the sea."], ["The great journey", "The Pandavas hand the throne to Parikshit and walk north with a dog. One by one the brothers and Draupadi fall; Yudhishthira alone reaches heaven."], ["Kali Yuga", "Tradition reckons the end of Krishna's life as the close of Dvapara Yuga and the start of Kali Yuga, the present age."]]]]}, body = document.getElementById("tl-body");
+  function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function draw(epic){
+    body.innerHTML = TL[epic].map(function(b){
+      return '<div class="tl-book">' + esc(b[0]) + '</div><ul class="tl-list">' + b[1].map(function(e){
+        return '<li><h4>' + esc(e[0]) + '</h4><p>' + esc(e[1]) + '</p></li>';
+      }).join("") + '</ul>';
+    }).join("");
+  }
+  ["ramayana","mahabharata"].forEach(function(name){
+    document.getElementById("tl-" + name).addEventListener("click", function(){
+      ["ramayana","mahabharata"].forEach(function(o){
+        var b = document.getElementById("tl-" + o); b.classList.toggle("active", o === name); b.setAttribute("aria-selected", o === name ? "true" : "false");
+      });
+      draw(name);
+    });
+  });
+  draw("ramayana");
 })();
 </script>
 </body>
