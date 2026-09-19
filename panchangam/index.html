@@ -378,6 +378,12 @@ footer a{ color:var(--ink-faint); }
 .view-tabs{ display:flex; justify-content:center; gap:0.4rem; margin-bottom:1rem; }
 .view-tab{ font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft); background:none; border:1px solid var(--line); border-radius:6px; padding:0.4rem 0.9rem; cursor:pointer; }
 .view-tab[aria-selected="true"]{ color:var(--accent); border-color:var(--accent); background:var(--accent-soft); }
+.cal-fest{ font-size:0.68rem; font-weight:600; color:var(--gold); line-height:1.2; }
+.cal-cell.has-fest{ border-color:var(--gold); }
+.fest-banner{ background:var(--accent-soft); border:1px solid var(--gold); border-radius:10px; padding:0.8rem 1rem; margin-bottom:1rem; font-family:var(--font-display,inherit); font-size:1.15rem; text-align:center; }
+.fest-list{ list-style:none; margin:1.2rem 0 0; padding:0; display:flex; flex-direction:column; gap:0.35rem; }
+.fest-list li{ display:flex; gap:0.8rem; font-size:0.9rem; padding:0.4rem 0; border-bottom:1px solid var(--line); }
+.fest-list .fd{ font-family:var(--font-mono); font-size:0.78rem; color:var(--ink-faint); min-width:5.5rem; }
 [hidden]{ display:none !important; }
 .month-head{ display:flex; align-items:center; justify-content:center; gap:0.8rem; margin-bottom:0.9rem; }
 .month-title{ font-family:var(--font-display,inherit); font-size:1.3rem; min-width:11rem; text-align:center; }
@@ -400,6 +406,7 @@ footer a{ color:var(--ink-faint); }
 .cal-legend{ display:flex; flex-wrap:wrap; gap:0.5rem 0.9rem; justify-content:center; margin-top:1rem; font-size:0.78rem; color:var(--ink-soft); }
 @media (max-width:520px){
   .cal-cell{ min-height:4rem; padding:0.3rem; }
+  .cal-fest{ font-size:0.55rem; }
   .cal-nak{ display:none; }
   .cal-tithi{ font-size:0.62rem; }
   .cal-tag{ font-size:0.5rem; padding:0.05rem 0.25rem; }
@@ -445,11 +452,14 @@ footer a{ color:var(--ink-faint); }
       <span><span class="cal-tag tag-amavasya">Amavasya</span></span>
       <span><span class="cal-tag tag-other">Sankashti / Pradosham / Shivaratri</span></span>
     </div>
-    <p class="block-sub" style="text-align:center;margin-top:0.8rem;">Each day shows the Tithi (and Nakshatra) in effect at sunrise, the traditional way of naming a day. S = Shukla (waxing), K = Krishna (waning). Tap a day for its full timings.</p>
+    <ul class="fest-list" id="festList"></ul>
+    <p class="block-sub" style="text-align:center;margin-top:0.8rem;">Festival dates follow the Telugu (Amanta) lunar calendar and are computed, not looked up, so a festival whose tithi begins or ends close to the deciding time may differ by a day from your local Panchangam. Each day shows the Tithi (and Nakshatra) in effect at sunrise, the traditional way of naming a day. S = Shukla (waxing), K = Krishna (waning). Tap a day for its full timings.</p>
   </section>
 
   <div id="dayView">
   <div class="snapshot" id="snapshot"></div>
+
+  <div id="festivalSlot"></div>
 
   <div id="rightNowSlot"></div>
 
@@ -719,6 +729,129 @@ function istYMD(date){
   return shifted.getUTCFullYear() * 10000 + (shifted.getUTCMonth() + 1) * 100 + shifted.getUTCDate();
 }
 
+// ---- Lunar months & festivals (Amanta / Telugu calendar) ----
+const MASA_NAMES = ["Chaitra","Vaishakha","Jyeshtha","Ashadha","Shravana","Bhadrapada","Ashwayuja","Karthika","Margashira","Pushya","Magha","Phalguna"];
+const LUNAR_MONTH_MS = 29.530588 * 86400000;
+function sunSiderealLongitude(date){
+  const t = julianCenturiesSinceJ2000(date);
+  return normalizeDegrees(sunEclipticLongitude(t) - lahiriAyanamsa(t));
+}
+function newMoonNear(date){
+  let t = date.getTime();
+  for (let i = 0; i < 8; i++){
+    const e = elongationAt(new Date(t));
+    t -= (((e + 180) % 360) - 180) / 12.19075 * 86400000;
+  }
+  return new Date(t);
+}
+function ymdFromIST(date){
+  const s = new Date(date.getTime() + IST_OFFSET_MS);
+  return [s.getUTCFullYear(), s.getUTCMonth() + 1, s.getUTCDate()];
+}
+function addDaysYMD(y, m, d, n){
+  const u = new Date(Date.UTC(y, m - 1, d) + n * 86400000);
+  return [u.getUTCFullYear(), u.getUTCMonth() + 1, u.getUTCDate()];
+}
+// [name, lunar month index (0 = Chaitra), paksha, tithi number, time of day the tithi must prevail]
+const FESTIVALS = [
+  ["Ugadi (Telugu New Year)", 0, "S", 1, "sunrise"],
+  ["Sri Rama Navami", 0, "S", 9, "noon"],
+  ["Akshaya Tritiya", 1, "S", 3, "sunrise"],
+  ["Buddha Purnima", 1, "S", 15, "sunrise"],
+  ["Guru Purnima", 3, "S", 15, "sunrise"],
+  ["Nag Panchami", 4, "S", 5, "sunrise"],
+  ["Raksha Bandhan", 4, "S", 15, "aparahna"],
+  ["Krishna Janmashtami", 4, "K", 8, "nishita"],
+  ["Vinayaka Chavithi", 5, "S", 4, "noon"],
+  ["Mahalaya Amavasya", 5, "K", 15, "sunrise"],
+  ["Devi Navaratri begins", 6, "S", 1, "sunrise"],
+  ["Durgashtami", 6, "S", 8, "sunrise"],
+  ["Maha Navami", 6, "S", 9, "sunrise"],
+  ["Vijayadashami (Dasara)", 6, "S", 10, "aparahna"],
+  ["Naraka Chaturdashi", 6, "K", 14, "sunrise"],
+  ["Deepavali", 6, "K", 15, "pradosha"],
+  ["Bhagini Hastha Bhojanam", 7, "S", 2, "sunrise"],
+  ["Karthika Purnima", 7, "S", 15, "pradosha"],
+  ["Vaikuntha Ekadashi", 9, "S", 11, "sunrise"],
+  ["Sri Panchami", 10, "S", 5, "sunrise"],
+  ["Ratha Saptami", 10, "S", 7, "sunrise"],
+  ["Maha Shivaratri", 10, "K", 14, "nishita"],
+  ["Kamadahanam (Holi eve)", 11, "S", 15, "pradosha"],
+];
+function festivalRefTime(sun, kind){
+  const h = 3600000;
+  if (kind === "noon") return sun.solarNoon;
+  if (kind === "aparahna") return new Date(sun.solarNoon.getTime() + 3 * h);
+  if (kind === "pradosha") return new Date(sun.sunset.getTime() + 0.7 * h);
+  if (kind === "nishita") return new Date(sun.solarNoon.getTime() + 12 * h);
+  return sun.sunrise;
+}
+const festivalCache = {};
+function festivalsForYear(year, loc){
+  const key = year + "|" + loc.name;
+  if (festivalCache[key]) return festivalCache[key];
+  const out = {};
+  const add = (ymd, name) => { if (ymd[0] === year) { const k = ymd[0] * 10000 + ymd[1] * 100 + ymd[2]; (out[k] = out[k] || []).push(name); } };
+
+  let nm = newMoonNear(new Date(Date.UTC(year, 0, 1)));
+  while (nm.getTime() > Date.UTC(year, 0, 1)) nm = newMoonNear(new Date(nm.getTime() - LUNAR_MONTH_MS));
+  const months = [];
+  for (let cur = nm; cur.getTime() < Date.UTC(year + 1, 0, 1) + 40 * 86400000; ){
+    const nxt = newMoonNear(new Date(cur.getTime() + LUNAR_MONTH_MS));
+    months.push({ start: cur, end: nxt, sign: Math.floor(sunSiderealLongitude(cur) / 30), signEnd: Math.floor(sunSiderealLongitude(nxt) / 30) });
+    cur = nxt;
+  }
+  for (const mo of months){
+    if (mo.sign === mo.signEnd) continue;
+    const masa = (mo.sign + 1) % 12;
+    const list = FESTIVALS.filter(f => f[1] === masa);
+    if (!list.length && masa !== 4) continue;
+    const s = ymdFromIST(mo.start), e = ymdFromIST(mo.end);
+    const nDays = Math.round((Date.UTC(e[0], e[1] - 1, e[2]) - Date.UTC(s[0], s[1] - 1, s[2])) / 86400000) + 1;
+    const days = [];
+    for (let i = 0; i <= nDays; i++){
+      const ymd = addDaysYMD(s[0], s[1], s[2], i);
+      const sun = sunTimes(ymd[0], ymd[1], ymd[2], loc.latitude, loc.longitude);
+      if (sun) days.push({ ymd, sun, sunriseIdx: tithiRawIndex(sun.sunrise) });
+    }
+    const findDay = (target, kind) => {
+      for (let i = target > 15 ? 12 : 0; i < days.length - 1; i++) if (tithiRawIndex(festivalRefTime(days[i].sun, kind)) === target) return days[i];
+      for (let i = target > 15 ? 12 : 0; i < days.length - 1; i++){
+        const a = days[i].sunriseIdx; let b = days[i + 1].sunriseIdx; if (b < a) b += 30;
+        const t = target < a ? target + 30 : target;
+        if (a === t || (a < t && b > t)) return days[i];
+      }
+      return null;
+    };
+    for (const f of list){
+      const d = findDay(f[2] === "S" ? f[3] : 15 + f[3], f[4]);
+      if (!d) continue;
+      add(d.ymd, f[0]);
+      if (f[0].startsWith("Kamadahanam")) add(addDaysYMD(d.ymd[0], d.ymd[1], d.ymd[2], 1), "Holi");
+    }
+    if (masa === 4){
+      const p = findDay(15, "sunrise");
+      if (p){
+        const wd = new Date(Date.UTC(p.ymd[0], p.ymd[1] - 1, p.ymd[2])).getUTCDay();
+        add(addDaysYMD(p.ymd[0], p.ymd[1], p.ymd[2], -((wd - 5 + 7) % 7)), "Varalakshmi Vratam");
+      }
+    }
+  }
+  // Makara Sankranti: Sun enters sidereal Capricorn (270 degrees)
+  let lo = Date.UTC(year, 0, 10), hi = Date.UTC(year, 0, 20);
+  for (let i = 0; i < 40; i++){ const mid = (lo + hi) / 2; if (sunSiderealLongitude(new Date(mid)) >= 270) hi = mid; else lo = mid; }
+  const cross = new Date(hi), cy = ymdFromIST(cross);
+  const csun = sunTimes(cy[0], cy[1], cy[2], loc.latitude, loc.longitude);
+  const sk = csun && cross > csun.sunset ? addDaysYMD(cy[0], cy[1], cy[2], 1) : cy;
+  add(addDaysYMD(sk[0], sk[1], sk[2], -1), "Bhogi");
+  add(sk, "Makara Sankranti");
+  add(addDaysYMD(sk[0], sk[1], sk[2], 1), "Kanuma");
+  return (festivalCache[key] = out);
+}
+function festivalsOn(year, month, day, loc){
+  return festivalsForYear(year, loc)[year * 10000 + month * 100 + day] || [];
+}
+
 let state = (() => { const t = istPartsNow(); return { year: t.year, month: t.month, day: t.day, locationIndex: 0, view: "day", calYear: t.year, calMonth: t.month }; })();
 
 const citySelect = document.getElementById("citySelect");
@@ -785,10 +918,15 @@ function renderMonth(){
     const at = sun ? sun.sunrise : dayBoundsIST(y, m, d).dayStart;
     const tithi = tithiAt(at), nak = nakshatraAt(at), tag = keyTithiTag(tithi);
     const dow = (first + d - 1) % 7;
-    const cls = "cal-cell" + (y === t.year && m === t.month && d === t.day ? " today" : "") + (dow === 0 ? " sun" : "");
-    html += `<button class="${cls}" data-d="${d}" aria-label="${d} ${tithi.name}"><span class="cal-date">${d}</span><span class="cal-tithi">${tithi.name} <i>${tithi.paksha === "shukla" ? "S" : "K"}</i></span><span class="cal-nak">${nak.name}</span>${tag ? `<span class="cal-tag tag-${tag[1]}">${tag[0]}</span>` : ""}</button>`;
+    const fests = festivalsOn(y, m, d, loc);
+    const cls = "cal-cell" + (fests.length ? " has-fest" : "") + (y === t.year && m === t.month && d === t.day ? " today" : "") + (dow === 0 ? " sun" : "");
+    html += `<button class="${cls}" data-d="${d}" aria-label="${d} ${tithi.name}"><span class="cal-date">${d}</span><span class="cal-tithi">${tithi.name} <i>${tithi.paksha === "shukla" ? "S" : "K"}</i></span><span class="cal-nak">${nak.name}</span>${fests.map(n => `<span class="cal-fest">${n}</span>`).join("")}${tag ? `<span class="cal-tag tag-${tag[1]}">${tag[0]}</span>` : ""}</button>`;
   }
   document.getElementById("calGrid").innerHTML = html;
+  const monthName = new Intl.DateTimeFormat("en-IN", { month: "short", timeZone: "UTC" }).format(new Date(Date.UTC(y, m - 1, 1)));
+  let items = "";
+  for (let d = 1; d <= days; d++) festivalsOn(y, m, d, loc).forEach(n => { items += `<li><span class="fd">${monthName} ${d}</span><span>${n}</span></li>`; });
+  document.getElementById("festList").innerHTML = items;
 }
 function shiftDay(delta){
   const utc = new Date(Date.UTC(state.year, state.month - 1, state.day) + delta * 86400000);
@@ -820,6 +958,8 @@ function render(){
 
   const sun = sunTimes(year, month, day, loc.latitude, loc.longitude);
 
+  const fests = festivalsOn(year, month, day, loc);
+  document.getElementById("festivalSlot").innerHTML = fests.length ? `<div class="fest-banner">${fests.join(" &middot; ")}</div>` : "";
   const snapshotEl = document.getElementById("snapshot");
   const rightNowSlot = document.getElementById("rightNowSlot");
   const windowListEl = document.getElementById("windowList");
