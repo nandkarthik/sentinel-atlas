@@ -835,7 +835,7 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
     GB:["sibling of","sibling of"],VAH:["rides","is the vahana of"],BEAR:["bears","is borne by"],BEL:["beloved of","beloved of"],WPN:["wields","is wielded by"],GIFT:["gave","received from"]
   };
   var GROUPS = {g:{name:"Gods",color:"#d4a017"},a:{name:"Avatars",color:"#e0673a"},v:{name:"Vehicles",color:"#3aa6c4"},w:{name:"Weapons",color:"#a3a3b5"},r:{name:"Ramayana",color:"#2f9e8f"},m:{name:"Mahabharata",color:"#6a86d8"}};
-  var layers = {r:false,m:false,v:false,w:false};
+  var layers = {r:false,m:false};
   var byId = {}, adj = {}, edges = [];
   D.nodes.forEach(function(n){ byId[n.id]=n; adj[n.id]=[]; n.deg=0; });
   D.edges.forEach(function(e){
@@ -860,7 +860,7 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
     var A=byId[e.a],B=byId[e.b];
     return layerOn(A)&&layerOn(B);
   }
-  function layerOn(n){ return n.g in layers?layers[n.g]:true; }
+  function layerOn(n){ return n.g==="v"||n.g==="w"?false:(n.g in layers?layers[n.g]:true); }
   function rebuild(){
     gE.textContent=""; gN.textContent="";
     var use={}; draw=[];
@@ -940,6 +940,7 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
   }
   function select(id){
     var n=byId[id]; if(!n) return;
+    if(n.g==="v"||n.g==="w"){ showDetail(n); return; }
     if(!vis[id]){ if(n.g in layers) layers[n.g]=true;
       if(!adj[id].some(function(e){ return edgeOn(e); })) adj[id].forEach(function(e){ TYPES[e.t].on=true; });
       buildChips(); }
@@ -993,14 +994,12 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
   }
   function buildChips(){ 
     var L=document.getElementById("gx-layers"), T=document.getElementById("gx-types"); L.textContent=""; T.textContent="";
-    L.appendChild(chip("Vehicles",GROUPS.v.color,layers.v,function(){ layers.v=!layers.v; autoFit=true; buildChips(); rebuild(); }));
-    L.appendChild(chip("Weapons",GROUPS.w.color,layers.w,function(){ layers.w=!layers.w; autoFit=true; buildChips(); rebuild(); }));
     L.appendChild(chip("Ramayana characters",GROUPS.r.color,layers.r,function(){ layers.r=!layers.r; autoFit=true; buildChips(); rebuild(); }));
     L.appendChild(chip("Mahabharata characters",GROUPS.m.color,layers.m,function(){ layers.m=!layers.m; autoFit=true; buildChips(); rebuild(); }));
     Object.keys(TYPES).forEach(function(k){ if(k==="vh"||k==="wp") return; T.appendChild(chip(TYPES[k].name,TYPES[k].color,TYPES[k].on,function(){ TYPES[k].on=!TYPES[k].on; autoFit=true; buildChips(); rebuild(); })); });
   }
   var leg=document.getElementById("gx-legend");
-  Object.keys(GROUPS).forEach(function(k){ leg.innerHTML+="<span><i style=\"background:"+GROUPS[k].color+"\"></i>"+GROUPS[k].name+"</span>"; });
+  Object.keys(GROUPS).forEach(function(k){ if(k==="v"||k==="w") return; leg.innerHTML+="<span><i style=\"background:"+GROUPS[k].color+"\"></i>"+GROUPS[k].name+"</span>"; });
   var dl=document.getElementById("gx-names");
   D.nodes.slice().sort(function(a,b){ return a.id<b.id?-1:1; }).forEach(function(n){ var o=document.createElement("option"); o.value=n.id; dl.appendChild(o); });
   var q=document.getElementById("gx-q");
@@ -1008,7 +1007,7 @@ footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-
     var m=D.nodes.filter(function(n){ return n.id.toLowerCase()===v; })[0]||D.nodes.filter(function(n){ return n.id.toLowerCase().indexOf(v)===0; })[0]||D.nodes.filter(function(n){ return n.id.toLowerCase().indexOf(v)>=0; })[0];
     if(m) select(m.id); });
   function detailDefault(){
-    detail.innerHTML="<div class=\"gx-tag\">Start here</div><h4>Pick any deity</h4><p><strong>Where does it all begin?</strong> Traditions answer differently. Vedanta says <em>Brahman</em>, the formless Absolute. Vaishnavas say Vishnu, Shaivas say Shiva, and Shaktas say the Goddess, <em>Adi Shakti</em>, the primordial power. Both Brahman and Adi Shakti sit at the root of this graph.</p><p>Each node is a deity, character, vehicle or weapon. Arrows read from parent to child, or from a god to the form or vehicle they take. Drag a node to move it, drag the background to pan, and scroll to zoom.</p><p><strong>Two things that trip people up.</strong> <em>Kali</em> the goddess is the Goddess in her fierce form; <em>Bhairava</em> is Shiva in his fierce form; and <em>Kali</em> the age (Kali Yuga) is a different being altogether. Also, Karna is Surya's son, born to Kunti.</p><div class=\"gx-rel\"><h5>Try</h5><div>"+["Brahman","Adi Shakti","Shiva","Vishnu","Venkateshwara","Surya","Agni","Bhairava"].map(function(o){ return "<button class=\"gx-link\" data-id=\""+o+"\">"+o+"</button>"; }).join("")+"</div></div>";
+    detail.innerHTML="<div class=\"gx-tag\">Start here</div><h4>Pick any deity</h4><p><strong>Where does it all begin?</strong> Traditions answer differently. Vedanta says <em>Brahman</em>, the formless Absolute. Vaishnavas say Vishnu, Shaivas say Shiva, and Shaktas say the Goddess, <em>Adi Shakti</em>, the primordial power. Both Brahman and Adi Shakti sit at the root of this graph.</p><p>Each node is a deity or character. Vehicles and weapons appear in the panel: click a deity to see what they ride and wield, then click the item to see who else has it. Arrows read from parent to child, or from a god to the form or vehicle they take. Drag a node to move it, drag the background to pan, and scroll to zoom.</p><p><strong>Two things that trip people up.</strong> <em>Kali</em> the goddess is the Goddess in her fierce form; <em>Bhairava</em> is Shiva in his fierce form; and <em>Kali</em> the age (Kali Yuga) is a different being altogether. Also, Karna is Surya's son, born to Kunti.</p><div class=\"gx-rel\"><h5>Try</h5><div>"+["Brahman","Adi Shakti","Shiva","Vishnu","Venkateshwara","Surya","Agni","Bhairava"].map(function(o){ return "<button class=\"gx-link\" data-id=\""+o+"\">"+o+"</button>"; }).join("")+"</div></div>";
   }
   var tb=document.getElementById("gx-tbody");
   D.nodes.filter(function(n){ return n.v; }).forEach(function(n){
