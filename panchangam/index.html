@@ -375,7 +375,34 @@ footer{
 }
 footer a{ color:var(--ink-faint); }
 
+.view-tabs{ display:flex; justify-content:center; gap:0.4rem; margin-bottom:1rem; }
+.view-tab{ font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-soft); background:none; border:1px solid var(--line); border-radius:6px; padding:0.4rem 0.9rem; cursor:pointer; }
+.view-tab[aria-selected="true"]{ color:var(--accent); border-color:var(--accent); background:var(--accent-soft); }
+[hidden]{ display:none !important; }
+.month-head{ display:flex; align-items:center; justify-content:center; gap:0.8rem; margin-bottom:0.9rem; }
+.month-title{ font-family:var(--font-display,inherit); font-size:1.3rem; min-width:11rem; text-align:center; }
+.cal-grid{ display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; }
+.cal-dow{ font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-faint); text-align:center; padding:0.3rem 0; }
+.cal-cell{ text-align:left; font:inherit; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:0.4rem 0.45rem; min-height:5.2rem; cursor:pointer; display:flex; flex-direction:column; gap:0.15rem; overflow:hidden; }
+.cal-cell:hover{ border-color:var(--accent); }
+.cal-cell.blank{ background:none; border:none; cursor:default; }
+.cal-cell.today{ border-color:var(--accent); box-shadow:inset 0 0 0 1px var(--accent); }
+.cal-cell.sun .cal-date{ color:var(--maroon); }
+.cal-date{ font-family:var(--font-mono); font-size:0.85rem; font-weight:600; }
+.cal-tithi{ font-size:0.74rem; line-height:1.2; }
+.cal-tithi i{ font-style:normal; font-family:var(--font-mono); font-size:0.6rem; color:var(--ink-faint); }
+.cal-nak{ font-size:0.66rem; color:var(--ink-faint); line-height:1.2; }
+.cal-tag{ align-self:flex-start; font-family:var(--font-mono); font-size:0.58rem; letter-spacing:0.03em; text-transform:uppercase; padding:0.08rem 0.35rem; border-radius:4px; margin-top:auto; }
+.tag-ekadashi{ color:var(--green); background:var(--green-soft); }
+.tag-purnima{ color:var(--gold); background:var(--accent-soft); }
+.tag-amavasya{ color:var(--indigo); background:rgba(61,90,134,0.14); }
+.tag-other{ color:var(--brown); background:var(--surface-2); }
+.cal-legend{ display:flex; flex-wrap:wrap; gap:0.5rem 0.9rem; justify-content:center; margin-top:1rem; font-size:0.78rem; color:var(--ink-soft); }
 @media (max-width:520px){
+  .cal-cell{ min-height:4rem; padding:0.3rem; }
+  .cal-nak{ display:none; }
+  .cal-tithi{ font-size:0.62rem; }
+  .cal-tag{ font-size:0.5rem; padding:0.05rem 0.25rem; }
   .window-row, .timeline-row{ grid-template-columns:62px 3px 1fr; }
   .snapshot-top{ flex-direction:column; align-items:flex-start; }
 }
@@ -392,8 +419,10 @@ footer a{ color:var(--ink-faint); }
     <p class="tagline">Daily Tithi, Nakshatra, Yoga, Karana and Vara for Andhra Pradesh, computed live from sun and moon position — plus the day's Rahu Kalam, Yamagandam, Gulika Kalam, Abhijit Muhurta and Brahma Muhurtam.</p>
   </header>
 
+  <div class="view-tabs" role="tablist"><button class="view-tab" role="tab" id="tabDay" aria-selected="true">Day</button><button class="view-tab" role="tab" id="tabMonth" aria-selected="false">Month</button></div>
+
   <div class="controls">
-    <div class="date-nav">
+    <div class="date-nav" id="dayNav">
       <button class="icon-btn" id="prevDay" aria-label="Previous day">&larr;</button>
       <div class="date-display" id="dateDisplay">&nbsp;</div>
       <button class="icon-btn" id="nextDay" aria-label="Next day">&rarr;</button>
@@ -403,6 +432,23 @@ footer a{ color:var(--ink-faint); }
     <select class="city-select" id="citySelect"></select>
   </div>
 
+  <section id="monthView" hidden>
+    <div class="month-head">
+      <button class="icon-btn" id="prevMonth" aria-label="Previous month">&larr;</button>
+      <div class="month-title" id="monthTitle"></div>
+      <button class="icon-btn" id="nextMonth" aria-label="Next month">&rarr;</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-legend">
+      <span><span class="cal-tag tag-ekadashi">Ekadashi</span></span>
+      <span><span class="cal-tag tag-purnima">Purnima</span></span>
+      <span><span class="cal-tag tag-amavasya">Amavasya</span></span>
+      <span><span class="cal-tag tag-other">Sankashti / Pradosham / Shivaratri</span></span>
+    </div>
+    <p class="block-sub" style="text-align:center;margin-top:0.8rem;">Each day shows the Tithi (and Nakshatra) in effect at sunrise, the traditional way of naming a day. S = Shukla (waxing), K = Krishna (waning). Tap a day for its full timings.</p>
+  </section>
+
+  <div id="dayView">
   <div class="snapshot" id="snapshot"></div>
 
   <div id="rightNowSlot"></div>
@@ -418,6 +464,7 @@ footer a{ color:var(--ink-faint); }
     <p class="block-sub">Ordered by time of day. A day can show more than one Tithi, Nakshatra, Yoga or Karana, since each one's real length rarely lines up with the calendar day.</p>
     <ul class="timeline-list" id="timelineList"></ul>
   </section>
+  </div>
 
   <footer>
     Sun/moon positions use low-precision public-domain formulas (NOAA/Meeus sunrise equation; four-term lunar theory), accurate to roughly a minute for sunrise/sunset and 15&ndash;30 minutes for Tithi/Nakshatra/Yoga/Karana boundaries &mdash; not scientific-grade, but consistent with what most printed Panchangams target. Lahiri ayanamsa used for sidereal quantities.<br>
@@ -672,7 +719,7 @@ function istYMD(date){
   return shifted.getUTCFullYear() * 10000 + (shifted.getUTCMonth() + 1) * 100 + shifted.getUTCDate();
 }
 
-let state = (() => { const t = istPartsNow(); return { year: t.year, month: t.month, day: t.day, locationIndex: 0 }; })();
+let state = (() => { const t = istPartsNow(); return { year: t.year, month: t.month, day: t.day, locationIndex: 0, view: "day", calYear: t.year, calMonth: t.month }; })();
 
 const citySelect = document.getElementById("citySelect");
 LOCATIONS.forEach((loc, i) => {
@@ -691,8 +738,58 @@ dateInput.addEventListener("change", () => {
 document.getElementById("prevDay").addEventListener("click", () => shiftDay(-1));
 document.getElementById("nextDay").addEventListener("click", () => shiftDay(1));
 document.getElementById("todayBtn").addEventListener("click", () => {
-  const t = istPartsNow(); state.year = t.year; state.month = t.month; state.day = t.day; render();
+  const t = istPartsNow(); state.year = t.year; state.month = t.month; state.day = t.day; state.calYear = t.year; state.calMonth = t.month; render();
 });
+function setView(v){
+  state.view = v;
+  if (v === "month") { state.calYear = state.year; state.calMonth = state.month; }
+  render();
+}
+document.getElementById("tabDay").addEventListener("click", () => setView("day"));
+document.getElementById("tabMonth").addEventListener("click", () => setView("month"));
+function shiftMonth(delta){
+  const d = new Date(Date.UTC(state.calYear, state.calMonth - 1 + delta, 1));
+  state.calYear = d.getUTCFullYear(); state.calMonth = d.getUTCMonth() + 1;
+  render();
+}
+document.getElementById("prevMonth").addEventListener("click", () => shiftMonth(-1));
+document.getElementById("nextMonth").addEventListener("click", () => shiftMonth(1));
+document.getElementById("calGrid").addEventListener("click", e => {
+  const c = e.target.closest("[data-d]");
+  if (!c) return;
+  state.year = state.calYear; state.month = state.calMonth; state.day = Number(c.dataset.d);
+  state.view = "day";
+  render();
+  window.scrollTo({ top: 0 });
+});
+
+function keyTithiTag(t){
+  if (t.index === 11) return ["Ekadashi", "ekadashi"];
+  if (t.index === 15) return t.paksha === "shukla" ? ["Purnima", "purnima"] : ["Amavasya", "amavasya"];
+  if (t.index === 13) return ["Pradosham", "other"];
+  if (t.index === 4 && t.paksha === "krishna") return ["Sankashti", "other"];
+  if (t.index === 14 && t.paksha === "krishna") return ["Shivaratri", "other"];
+  return null;
+}
+function renderMonth(){
+  const loc = LOCATIONS[state.locationIndex];
+  const { calYear: y, calMonth: m } = state;
+  document.getElementById("monthTitle").textContent = new Intl.DateTimeFormat("en-IN", { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(Date.UTC(y, m - 1, 1)));
+  const first = new Date(Date.UTC(y, m - 1, 1)).getUTCDay();
+  const days = new Date(Date.UTC(y, m, 0)).getUTCDate();
+  const t = istPartsNow();
+  let html = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d => `<div class="cal-dow">${d}</div>`).join("");
+  for (let i = 0; i < first; i++) html += `<div class="cal-cell blank"></div>`;
+  for (let d = 1; d <= days; d++) {
+    const sun = sunTimes(y, m, d, loc.latitude, loc.longitude);
+    const at = sun ? sun.sunrise : dayBoundsIST(y, m, d).dayStart;
+    const tithi = tithiAt(at), nak = nakshatraAt(at), tag = keyTithiTag(tithi);
+    const dow = (first + d - 1) % 7;
+    const cls = "cal-cell" + (y === t.year && m === t.month && d === t.day ? " today" : "") + (dow === 0 ? " sun" : "");
+    html += `<button class="${cls}" data-d="${d}" aria-label="${d} ${tithi.name}"><span class="cal-date">${d}</span><span class="cal-tithi">${tithi.name} <i>${tithi.paksha === "shukla" ? "S" : "K"}</i></span><span class="cal-nak">${nak.name}</span>${tag ? `<span class="cal-tag tag-${tag[1]}">${tag[0]}</span>` : ""}</button>`;
+  }
+  document.getElementById("calGrid").innerHTML = html;
+}
 function shiftDay(delta){
   const utc = new Date(Date.UTC(state.year, state.month - 1, state.day) + delta * 86400000);
   state.year = utc.getUTCFullYear(); state.month = utc.getUTCMonth() + 1; state.day = utc.getUTCDate();
@@ -702,6 +799,14 @@ function shiftDay(delta){
 const CATEGORY_LABEL = { sun: "Sun", inauspicious: "Inauspicious", auspicious: "Auspicious", tithi: "Tithi", nakshatra: "Nakshatra", yoga: "Yoga", karana: "Karana" };
 
 function render(){
+  const monthMode = state.view === "month";
+  document.getElementById("monthView").hidden = !monthMode;
+  document.getElementById("dayView").hidden = monthMode;
+  document.getElementById("dayNav").hidden = monthMode;
+  dateInput.hidden = monthMode;
+  document.getElementById("tabDay").setAttribute("aria-selected", String(!monthMode));
+  document.getElementById("tabMonth").setAttribute("aria-selected", String(monthMode));
+  if (monthMode) { renderMonth(); return; }
   const loc = LOCATIONS[state.locationIndex];
   const { year, month, day } = state;
   const { dayStart, dayEnd } = dayBoundsIST(year, month, day);
