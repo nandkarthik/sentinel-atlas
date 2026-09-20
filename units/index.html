@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maap: Units and Conversions</title>
+<meta name="description" content="Convert land area, weight, volume, length and temperature between metric, US and traditional Indian units such as cent, guntha, bigha, tola and TMC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9e3cf; --surface:#ddd5b8; --card:#f2ecd9;
+  --ink:#231f15; --ink-soft:#5a5540; --ink-faint:#877f63;
+  --line:rgba(35,31,21,0.16);
+  --accent:#8a4b1f; --accent-soft:rgba(138,75,31,0.13);
+  --warn:#8f3a2a; --warn-soft:rgba(143,58,42,0.10);
+  --shadow:0 10px 30px rgba(35,31,21,0.12);
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+    --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+    --line:rgba(236,229,207,0.16);
+    --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16);
+    --warn:#e58c78; --warn-soft:rgba(229,140,120,0.12);
+    --shadow:0 10px 30px rgba(0,0,0,0.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+  --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+  --line:rgba(236,229,207,0.16);
+  --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16);
+  --warn:#e58c78; --warn-soft:rgba(229,140,120,0.12);
+  --shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding:1.4rem 16px 3rem}
+.crumbs{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 1.4rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+.crumbs a{color:var(--ink-faint);text-decoration:none}.crumbs a:hover{color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2rem,5vw,3.2rem);line-height:1.05;margin:0 0 .4rem;text-wrap:balance}
+.lede{color:var(--ink-soft);max-width:62ch;margin:0 0 1.3rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.chip{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:.4rem .8rem;border-radius:99px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent-soft);color:var(--ink);border-color:var(--accent)}
+.chip:focus-visible,input:focus-visible,select:focus-visible,.row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:.7rem;margin-bottom:1.1rem}
+@media(max-width:560px){.entry{grid-template-columns:1fr}}
+label{display:flex;flex-direction:column;gap:.25rem;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint)}
+input,select{font:inherit;font-size:1.15rem;padding:.55rem .7rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:4px;width:100%}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;background:var(--card);box-shadow:var(--shadow);overflow:hidden}
+.row{display:flex;flex-direction:column;gap:.1rem;text-align:left;font:inherit;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:.65rem .9rem;cursor:pointer;min-width:0}
+.row:hover{background:var(--accent-soft)}
+.row[aria-current="true"]{background:var(--accent-soft);box-shadow:inset 3px 0 var(--accent)}
+.row .v{font-family:var(--font-mono);font-size:1.02rem;font-weight:500;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.row .u{font-size:.95rem}
+.row .n{font-size:.78rem;color:var(--ink-faint);line-height:1.35}
+.tag{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);margin-left:.4rem}
+.note{margin-top:1.2rem;padding:.8rem 1rem;border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:4px;font-size:.92rem;color:var(--ink-soft)}
+.note b{color:var(--ink)}
+.quick{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft);margin:0 0 1rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="../">← Sentinel Atlas</a><a href="../rivers/">Nadi: Rivers →</a></div>
+  <h1>Maap: Units and Conversions</h1>
+  <p class="lede">Type a number, pick its unit, and see it in every other unit at once. Metric and US units sit beside the ones used in Indian land records, markets and water reports.</p>
+  <div class="chips" id="cats" role="group" aria-label="Kind of measure"></div>
+  <div class="entry">
+    <label>Value<input id="val" type="text" inputmode="decimal" autocomplete="off" value="1"></label>
+    <label>Unit<select id="from"></select></label>
+  </div>
+  <p class="quick" id="quick"></p>
+  <div class="grid" id="out" aria-live="polite"></div>
+  <p class="note" id="note"></p>
+</div>
+<script>
+(function(){
+// factor = size of one unit in the base unit (area m², weight kg, volume L, length m)
+var C={
+ area:{name:"Land & area",base:"m²",def:"acre",quick:"1 acre = 43,560 sq ft = 100 cents = 40 guntha = 4,840 sq yd",
+  note:"<b>Local units differ.</b> Cent, guntha, ground, kanal and marla are fixed everywhere they are used, but a <b>bigha</b> is a different size in almost every state (and sometimes district). Check the figure in your own land record before you rely on it.",
+  u:[["Square foot","sq ft",0.09290304,""],["Square yard","sq yd",0.83612736,"Also called gaj in north India."],["Square metre","m²",1,""],["Are","are",100,"100 m²."],["Guntha","guntha",101.17141056,"Maharashtra, Karnataka, Gujarat. 1/40 acre = 1,089 sq ft."],["Cent","cent",40.468564224,"Kerala, Tamil Nadu, Andhra. 1/100 acre = 435.6 sq ft. Called decimal (dismil) in Bengal and Bihar."],["Ground","ground",222.967296,"Chennai. 2,400 sq ft."],["Marla","marla",25.29285264,"Punjab, Haryana, Pakistan. 272.25 sq ft (1/9 sq rod)."],["Kanal","kanal",505.8570528,"Punjab, Haryana, J&K. 20 marla = 605 sq yd."],["Bigha (West Bengal)","bigha WB",1337.803776,"About 1/3 acre = 14,400 sq ft. Other states differ."],["Bigha (Uttar Pradesh, pucca)","bigha UP",2529.285264,"About 3,025 sq yd. Kutcha bighas are smaller."],["Acre","acre",4046.8564224,"Called killa in Punjab."],["Hectare","ha",10000,"100 m × 100 m."],["Square kilometre","km²",1000000,""],["Square mile","sq mi",2589988.110336,"640 acres."]]},
+ weight:{name:"Weight",base:"kg",def:"kg",quick:"1 quintal = 100 kg · 1 tonne = 10 quintals · 1 maund = 40 seer · 1 seer = 80 tola",
+  note:"<b>Old Indian units are approximate.</b> Tola, seer and maund here are the standard British-Indian values (tola = 11.6638 g). Local seers and maunds in the past varied by region and by the goods weighed.",
+  u:[["Milligram","mg",0.000001,""],["Gram","g",0.001,""],["Carat","ct",0.0002,"Gemstones. 200 mg."],["Ounce","oz",0.028349523125,"Avoirdupois."],["Troy ounce","oz t",0.0311034768,"Gold and silver."],["Tola","tola",0.0116638038,"11.66 g. Gold in India is still quoted per 10 g or per tola."],["Pound","lb",0.45359237,""],["Kilogram","kg",1,""],["Seer","seer",0.93310,"80 tola. Old grain and sugar measure."],["Stone","st",6.35029318,"14 lb."],["Maund","maund",37.3242,"40 seer. Old unit for grain."],["Quintal","q",100,"100 kg. Still used for crop prices and procurement."],["Tonne (metric)","t",1000,""],["Short ton (US)","US ton",907.18474,"2,000 lb."],["Long ton (UK)","UK ton",1016.0469088,"2,240 lb."]]},
+ volume:{name:"Volume",base:"L",def:"L",quick:"1 TMC = 1,000 million cubic feet = 28.3 million m³ · 1 acre-foot = 1,233 m³",
+  note:"Reservoirs in India are reported in <b>TMC</b> (thousand million cubic feet, mostly in the south) or <b>MCM</b> (million cubic metres, mostly in the north and centre). Cups and spoons here are the US kinds; Indian recipes often use a 240 or 250 ml cup.",
+  u:[["Teaspoon (US)","tsp",0.00492892159375,""],["Tablespoon (US)","tbsp",0.01478676478125,""],["Fluid ounce (US)","fl oz",0.0295735295625,""],["Millilitre","mL",0.001,""],["Cup (US)","cup",0.2365882365,"236.6 mL."],["Pint (US)","pt",0.473176473,""],["Quart (US)","qt",0.946352946,""],["Litre","L",1,""],["Gallon (US)","gal",3.785411784,""],["Gallon (UK)","imp gal",4.54609,"Imperial gallon."],["Cubic foot","ft³",28.316846592,""],["Barrel of oil","bbl",158.987294928,"42 US gallons."],["Cubic metre","m³",1000,"1,000 L."],["Cubic yard","yd³",764.554857984,""],["Acre-foot","acre-ft",1233481.837548,"Water to cover one acre one foot deep."],["Million cubic metres","MCM",1000000000,"Reservoir capacity, north India."],["TMC (thousand million cubic feet)","TMC",28316846592,"Reservoir capacity, south India. Nagarjuna Sagar holds about 312 TMC gross."]]},
+ length:{name:"Length",base:"m",def:"m",quick:"1 mile = 1.609 km · 1 gaj = 1 yard = 0.9144 m · 1 kos ≈ 3.2 km",
+  note:"<b>Kos</b> varied across India and through history, from about 3 to 4 km. The value here is the two-mile figure often quoted.",
+  u:[["Millimetre","mm",0.001,""],["Centimetre","cm",0.01,""],["Inch","in",0.0254,"2.54 cm."],["Foot","ft",0.3048,""],["Yard / gaj","yd",0.9144,"Gaj is the Indian name for the yard."],["Metre","m",1,""],["Chain","ch",20.1168,"66 ft. Old land-survey unit in India."],["Furlong","fur",201.168,"Eighth of a mile."],["Kilometre","km",1000,""],["Mile","mi",1609.344,""],["Kos","kos",3218.688,"About 2 miles. Old road distance."],["Nautical mile","nmi",1852,"Sea and air."]]},
+ temp:{name:"Temperature",base:"",def:"C",quick:"Water freezes at 0 °C = 32 °F = 273.15 K and boils at 100 °C = 212 °F.",
+  note:"",u:[["Celsius","°C","C",""],["Fahrenheit","°F","F",""],["Kelvin","K","K",""]]}
+};
+var cur="area",fromKey=null;
+var $=function(i){return document.getElementById(i)};
+function fmt(v){
+  if(!isFinite(v))return "–";
+  if(v===0)return "0";
+  var a=Math.abs(v);
+  if(a>=1e12||a<1e-5)return v.toExponential(4).replace("e+","e");
+  var s=Number(v.toPrecision(7));
+  return s.toLocaleString("en-IN",{maximumFractionDigits:8});
+}
+function toBase(v,u){
+  if(cur!=="temp")return v*u[2];
+  return u[2]==="C"?v:u[2]==="F"?(v-32)*5/9:v-273.15; // base = °C
+}
+function fromBase(b,u){
+  if(cur!=="temp")return b/u[2];
+  return u[2]==="C"?b:u[2]==="F"?b*9/5+32:b+273.15;
+}
+function key(u){return u[1]}
+function buildCats(){
+  var el=$("cats");el.innerHTML="";
+  Object.keys(C).forEach(function(k){
+    var b=document.createElement("button");b.className="chip";b.type="button";b.textContent=C[k].name;
+    b.setAttribute("aria-pressed",k===cur);
+    b.onclick=function(){cur=k;fromKey=null;$("val").value="1";render(true)};
+    el.appendChild(b);
+  });
+}
+function render(reset){
+  var c=C[cur],sel=$("from");
+  if(reset||!fromKey){
+    fromKey=(c.u.filter(function(u){return u[2]===c.def||u[1]===c.def||u[0]===c.def||u[1]===c.def})[0]||c.u[0])[1];
+    if(cur==="area")fromKey="acre"; if(cur==="temp")fromKey="°C";
+    sel.innerHTML="";
+    c.u.forEach(function(u){var o=document.createElement("option");o.value=key(u);o.textContent=u[0]+" ("+u[1]+")";sel.appendChild(o)});
+    sel.value=fromKey;
+  }
+  buildCats();
+  $("quick").textContent=c.quick;
+  var n=$("note");n.innerHTML=c.note;n.hidden=!c.note;
+  var raw=$("val").value.replace(/,/g,"").trim(),v=parseFloat(raw);
+  var out=$("out");out.innerHTML="";
+  if(isNaN(v)){out.innerHTML='<div class="row"><span class="n">Enter a number to convert.</span></div>';return}
+  var fu=c.u.filter(function(u){return key(u)===fromKey})[0];
+  var b=toBase(v,fu);
+  c.u.forEach(function(u){
+    var r=document.createElement("button");r.type="button";r.className="row";
+    if(key(u)===fromKey)r.setAttribute("aria-current","true");
+    var val=fromBase(b,u);
+    r.innerHTML='<span class="v"></span><span class="u"></span>'+(u[3]?'<span class="n"></span>':"");
+    r.children[0].textContent=fmt(val);
+    r.children[1].textContent=u[0]+" ("+u[1]+")";
+    if(u[3])r.children[2].textContent=u[3];
+    r.title="Use this as the unit to convert from";
+    r.onclick=function(){$("val").value=fmt(val).replace(/,/g,"");fromKey=key(u);$("from").value=fromKey;render()};
+    out.appendChild(r);
+  });
+}
+$("val").addEventListener("input",function(){render()});
+$("from").addEventListener("change",function(){fromKey=this.value;render()});
+render(true);
+})();
+</script>
+</body>
+</html>
