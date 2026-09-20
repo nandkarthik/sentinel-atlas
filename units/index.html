@@ -145,7 +145,7 @@ function fmt(v){
   var a=Math.abs(v);
   if(a>=1e12||a<1e-5)return v.toExponential(4).replace("e+","e");
   var s=Number(v.toPrecision(7));
-  return s.toLocaleString("en-IN",{maximumFractionDigits:8});
+  return s.toLocaleString("en-US",{maximumFractionDigits:8});
 }
 function toBase(v,u){
   if(cur!=="temp")return v*u[2];
