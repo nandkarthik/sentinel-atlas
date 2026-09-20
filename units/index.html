@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maap: Units and Conversions</title>
-<meta name="description" content="Convert land area, weight, volume, length and temperature between metric, US and traditional Indian units such as cent, guntha, bigha, tola and TMC.">
+<meta name="description" content="Convert land, weight, volume, distance, time, speed, energy, data, pressure, power, cooking measures and temperature between metric, US and Indian units, and read big numbers as crore, lakh, million and billion.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -64,6 +64,16 @@ input,select{font:inherit;font-size:1.15rem;padding:.55rem .7rem;border:1px soli
 .note{margin-top:1.2rem;padding:.8rem 1rem;border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:4px;font-size:.92rem;color:var(--ink-soft)}
 .note b{color:var(--ink)}
 .quick{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft);margin:0 0 1rem}
+.numtool{margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+.numtool h2{font-family:var(--font-display);font-weight:400;font-size:1.7rem;margin:0 0 .3rem}
+.numtool p.sub{color:var(--ink-soft);margin:0 0 1rem;max-width:62ch}
+.nrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:.8rem;margin-top:.9rem}
+.ncard{border:1px solid var(--line);border-radius:6px;background:var(--card);padding:.8rem 1rem;box-shadow:var(--shadow);min-width:0}
+.ncard h3{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 .35rem;font-weight:500}
+.ncard .big{font-family:var(--font-display);font-size:1.6rem;line-height:1.2;overflow-wrap:anywhere}
+.ncard .mono{font-family:var(--font-mono);font-size:.95rem;margin-top:.3rem;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.ncard .words{font-size:.9rem;color:var(--ink-soft);margin-top:.3rem}
+.egs{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
 </style>
 </head>
 <body>
@@ -79,6 +89,13 @@ input,select{font:inherit;font-size:1.15rem;padding:.55rem .7rem;border:1px soli
   <p class="quick" id="quick"></p>
   <div class="grid" id="out" aria-live="polite"></div>
   <p class="note" id="note"></p>
+  <section class="numtool" aria-labelledby="nt">
+    <h2 id="nt">Big numbers, read aloud</h2>
+    <p class="sub">Type a number such as 135000000, or a phrase such as “13 crore 50 lakh” or “2.5 billion”. See it the Indian way and the US way.</p>
+    <label>Number or phrase<input id="nin" type="text" autocomplete="off" value="135000000"></label>
+    <div class="egs" id="egs"></div>
+    <div class="nrow" id="nout" aria-live="polite"></div>
+  </section>
 </div>
 <script>
 (function(){
@@ -93,9 +110,9 @@ var C={
  volume:{name:"Volume",base:"L",def:"L",quick:"1 TMC = 1,000 million cubic feet = 28.3 million m³ · 1 acre-foot = 1,233 m³",
   note:"Reservoirs in India are reported in <b>TMC</b> (thousand million cubic feet, mostly in the south) or <b>MCM</b> (million cubic metres, mostly in the north and centre). Cups and spoons here are the US kinds; Indian recipes often use a 240 or 250 ml cup.",
   u:[["Teaspoon (US)","tsp",0.00492892159375,""],["Tablespoon (US)","tbsp",0.01478676478125,""],["Fluid ounce (US)","fl oz",0.0295735295625,""],["Millilitre","mL",0.001,""],["Cup (US)","cup",0.2365882365,"236.6 mL."],["Pint (US)","pt",0.473176473,""],["Quart (US)","qt",0.946352946,""],["Litre","L",1,""],["Gallon (US)","gal",3.785411784,""],["Gallon (UK)","imp gal",4.54609,"Imperial gallon."],["Cubic foot","ft³",28.316846592,""],["Barrel of oil","bbl",158.987294928,"42 US gallons."],["Cubic metre","m³",1000,"1,000 L."],["Cubic yard","yd³",764.554857984,""],["Acre-foot","acre-ft",1233481.837548,"Water to cover one acre one foot deep."],["Million cubic metres","MCM",1000000000,"Reservoir capacity, north India."],["TMC (thousand million cubic feet)","TMC",28316846592,"Reservoir capacity, south India. Nagarjuna Sagar holds about 312 TMC gross."]]},
- length:{name:"Length",base:"m",def:"m",quick:"1 mile = 1.609 km · 1 gaj = 1 yard = 0.9144 m · 1 kos ≈ 3.2 km",
+ length:{name:"Distance & length",base:"m",def:"m",quick:"1 mile = 1.609 km · 1 gaj = 1 yard = 0.9144 m · 1 kos ≈ 3.2 km",
   note:"<b>Kos</b> varied across India and through history, from about 3 to 4 km. The value here is the two-mile figure often quoted.",
-  u:[["Millimetre","mm",0.001,""],["Centimetre","cm",0.01,""],["Inch","in",0.0254,"2.54 cm."],["Foot","ft",0.3048,""],["Yard / gaj","yd",0.9144,"Gaj is the Indian name for the yard."],["Metre","m",1,""],["Chain","ch",20.1168,"66 ft. Old land-survey unit in India."],["Furlong","fur",201.168,"Eighth of a mile."],["Kilometre","km",1000,""],["Mile","mi",1609.344,""],["Kos","kos",3218.688,"About 2 miles. Old road distance."],["Nautical mile","nmi",1852,"Sea and air."]]},
+  u:[["Micrometre","µm",0.000001,"A millionth of a metre."],["Millimetre","mm",0.001,""],["Span","span",0.2286,"9 in. Hand-width measure."],["Hand (horse)","hand",0.1016,"4 in. Horse height."],["Cubit / hath","hath",0.4572,"18 in. Hath is the Hindi word for hand or cubit; sizes varied."],["Fathom","fathom",1.8288,"6 ft. Water depth."],["Centimetre","cm",0.01,""],["Inch","in",0.0254,"2.54 cm."],["Foot","ft",0.3048,""],["Yard / gaj","yd",0.9144,"Gaj is the Indian name for the yard."],["Metre","m",1,""],["Chain","ch",20.1168,"66 ft. Old land-survey unit in India."],["Furlong","fur",201.168,"Eighth of a mile."],["Kilometre","km",1000,""],["Mile","mi",1609.344,""],["Kos","kos",3218.688,"About 2 miles. Old road distance."],["Nautical mile","nmi",1852,"Sea and air."],["League","league",4828.032,"3 miles."],["Astronomical unit","AU",149597870700,"Earth to Sun."],["Light-year","ly",9460730472580800,"Distance light travels in a year."],["Parsec","pc",30856775814913673,"3.26 light-years."]]},
  speed:{name:"Speed",base:"m/s",def:"km/h",quick:"100 km/h ≈ 62.1 mph ≈ 54 knots · 1 knot = 1 nautical mile per hour",
   note:"Mach depends on temperature and height. The value here is at sea level and 15 °C.",
   u:[["Metre per second","m/s",1,""],["Kilometre per hour","km/h",0.2777777778,"Road speed limits in India."],["Mile per hour","mph",0.44704,""],["Foot per second","ft/s",0.3048,""],["Knot","kn",0.5144444444,"Ships and aircraft."],["Mach","Mach",340.29,"Speed of sound at sea level, 15 °C."],["Speed of light","c",299792458,""]]},
@@ -105,6 +122,18 @@ var C={
  cooking:{name:"Cooking",base:"mL",def:"cup",quick:"1 US cup = 16 tbsp = 48 tsp = 8 fl oz ≈ 237 mL",
   note:"<b>Cups differ.</b> The US cup is 236.6 mL, the metric cup 250 mL. Katori and glass are household sizes that change from kitchen to kitchen, so the values are typical, not standard.",
   u:[["Teaspoon (US)","tsp",4.92892159375,"Same everywhere in a recipe, about 5 mL."],["Tablespoon (US)","tbsp",14.78676478125,"3 tsp."],["Tablespoon (Australian)","AU tbsp",20,"4 tsp."],["Fluid ounce (US)","fl oz",29.5735295625,""],["Katori (typical)","katori",150,"Small Indian serving bowl. Typical size only."],["Glass (typical)","glass",200,"Indian tumbler. Typical size only."],["Cup (US)","cup",236.5882365,"16 tbsp."],["Cup (metric)","metric cup",250,"Australia, UK, India recipes."],["Millilitre","mL",1,""],["Pint (US)","pt",473.176473,"2 cups."],["Quart (US)","qt",946.352946,"2 pints."],["Litre","L",1000,""],["Gallon (US)","gal",3785.411784,"4 quarts."]]},
+ time:{name:"Time",base:"s",def:"h",quick:"1 day = 24 h = 60 ghati = 8 prahar · 1 ghati = 24 min = 60 pala",
+  note:"Ghati, pala, muhurta and prahar are the traditional Indian divisions of the day, as used in the Panchangam. Month and year use the average calendar values (30.4375 and 365.25 days).",
+  u:[["Millisecond","ms",0.001,""],["Second","s",1,""],["Pala","pala",24,"1/60 ghati. Traditional."],["Minute","min",60,""],["Ghati (ghatika)","ghati",1440,"24 min. Traditional, 60 per day."],["Muhurta","muhurta",2880,"48 min. Traditional, 30 per day."],["Hour","h",3600,""],["Prahar","prahar",10800,"3 hours. Eight per day and night."],["Day","d",86400,""],["Week","wk",604800,""],["Fortnight / paksha","paksha",1209600,"14 days here. A lunar paksha is about 14.8 days."],["Month (average)","mo",2629800,"30.4375 days."],["Year (average)","yr",31557600,"365.25 days."],["Decade","decade",315576000,""],["Century","century",3155760000,""]]},
+ data:{name:"Data",base:"B",def:"GB",quick:"1 GB = 1,000 MB (drives, phone plans) · 1 GiB = 1,024 MiB (operating systems)",
+  note:"Storage makers use <b>decimal</b> units (GB = 10⁹ bytes). Operating systems often show <b>binary</b> units (GiB = 2³⁰ bytes), which is why a 500 GB drive reads about 465 GiB.",
+  u:[["Bit","bit",0.125,""],["Byte","B",1,""],["Kilobyte","KB",1000,""],["Kibibyte","KiB",1024,""],["Megabyte","MB",1000000,""],["Mebibyte","MiB",1048576,""],["Gigabyte","GB",1000000000,""],["Gibibyte","GiB",1073741824,""],["Terabyte","TB",1000000000000,""],["Tebibyte","TiB",1099511627776,""],["Petabyte","PB",1000000000000000,""]]},
+ pressure:{name:"Pressure",base:"Pa",def:"bar",quick:"1 atm = 1.01325 bar = 14.7 psi = 760 mmHg = 1.033 kg/cm²",
+  note:"Tyre and boiler gauges in India often read in <b>kg/cm²</b> as well as psi and bar. Blood pressure is in mmHg.",
+  u:[["Pascal","Pa",1,""],["Hectopascal / millibar","hPa",100,"Weather maps."],["Kilopascal","kPa",1000,""],["Millimetre of mercury","mmHg",133.322387415,"Blood pressure."],["Inch of mercury","inHg",3386.389,"Barometers."],["Pound per sq inch","psi",6894.757293168,"Tyres."],["Bar","bar",100000,""],["Kilogram-force per cm²","kgf/cm²",98066.5,"Old gauge unit still common in India."],["Standard atmosphere","atm",101325,""]]},
+ power:{name:"Power",base:"W",def:"kW",quick:"1 hp = 746 W · 1 tonne of refrigeration (a “1-ton” AC) = 3.517 kW",
+  note:"A “1-ton” air conditioner removes about 3.5 kW of heat; it does not weigh a ton.",
+  u:[["Watt","W",1,""],["BTU per hour","BTU/h",0.29307107,"Air-conditioner ratings."],["Kilowatt","kW",1000,""],["Horsepower (mechanical)","hp",745.69987158,"Pumps and motors in India."],["Metric horsepower","PS",735.49875,"Cars in Europe and India."],["Tonne of refrigeration","TR",3516.85284,"Air conditioners."],["Megawatt","MW",1000000,"Power stations."],["Gigawatt","GW",1000000000,""]]},
  temp:{name:"Temperature",base:"",def:"C",quick:"Water freezes at 0 °C = 32 °F = 273.15 K and boils at 100 °C = 212 °F.",
   note:"",u:[["Celsius","°C","C",""],["Fahrenheit","°F","F",""],["Kelvin","K","K",""]]}
 };
@@ -169,6 +198,48 @@ function render(reset){
 $("val").addEventListener("input",function(){render()});
 $("from").addEventListener("change",function(){fromKey=this.value;render()});
 render(true);
+// ---- big numbers: Indian and US naming
+var ON=["","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"],
+    TN=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+function w3(n){var o=[];if(n>=100){o.push(ON[Math.floor(n/100)]+" hundred");n%=100}
+  if(n>=20){o.push(TN[Math.floor(n/10)]+(n%10?"-"+ON[n%10]:""))}else if(n>0)o.push(ON[n]);return o.join(" ")}
+function bigWords(c){ // count up to 10^15 in US style words
+  var u=[["trillion",10n**12n],["billion",10n**9n],["million",10n**6n],["thousand",1000n]],o=[];
+  u.forEach(function(x){var q=c/x[1];c%=x[1];if(q>0n)o.push(w3(Number(q))+" "+x[0])});
+  if(c>0n)o.push(w3(Number(c)));return o.join(" ")}
+function grpIN(d){if(d.length<=3)return d;var l=d.slice(-3),r=d.slice(0,-3);return r.replace(/\B(?=(\d{2})+(?!\d))/g,",")+","+l}
+function grpUS(d){return d.replace(/\B(?=(\d{3})+(?!\d))/g,",")}
+function split(n,units){var o=[];units.forEach(function(u){var q=n/u[1];n%=u[1];if(q>0n)o.push([q,u[0]])});if(n>0n)o.push([n,""]);return o}
+function parseNum(t){
+  t=t.trim().toLowerCase().replace(/,/g,"");
+  if(/^-?\d+(\.\d+)?$/.test(t)){var neg=t[0]==="-";t=t.replace("-","");var p=t.split(".");return {neg:neg,int:BigInt(p[0]),frac:p[1]||""}}
+  var re=/(\d+(?:\.\d+)?)\s*(kharab|arab|crores?|cr|lakhs?|lacs?|lac|l|thousand|k|million|mn|m|billion|bn|b|trillion|tn|t)\b/g,
+      M={kharab:1e11,arab:1e9,crore:1e7,crores:1e7,cr:1e7,lakh:1e5,lakhs:1e5,lac:1e5,lacs:1e5,l:1e5,thousand:1e3,k:1e3,million:1e6,mn:1e6,m:1e6,billion:1e9,bn:1e9,b:1e9,trillion:1e12,tn:1e12,t:1e12},
+      sum=0,m,any=false,rest=t;
+  while((m=re.exec(t))){sum+=parseFloat(m[1])*M[m[2]];any=true;rest=rest.replace(m[0],"")}
+  rest=rest.replace(/\b(and|only)\b/g,"").trim();
+  var tail=rest.match(/^\d+(\.\d+)?$/);if(any&&tail)sum+=parseFloat(tail[0]);else if(any&&rest)return null;
+  if(!any||!isFinite(sum))return null;
+  return {neg:false,int:BigInt(Math.round(sum)),frac:""}}
+function nrender(){
+  var out=$("nout"),n=parseNum($("nin").value);out.innerHTML="";
+  if(!n||n.int>=10n**15n){out.innerHTML='<div class="ncard"><div class="words">'+(n?"That is above 999 trillion. Try a smaller number.":"Enter digits like 135000000, or a phrase like 13 crore 50 lakh.")+'</div></div>';return}
+  var d=n.int.toString(),f=n.frac,sg=n.neg?"minus ":"",dot=f?" point "+f.split("").map(function(x){return ON[+x]||"zero"}).join(" "):"";
+  var IN=split(n.int,[["crore",10n**7n],["lakh",10n**5n],["thousand",1000n]]),
+      US=split(n.int,[["trillion",10n**12n],["billion",10n**9n],["million",10n**6n],["thousand",1000n]]);
+  function compact(p,grp){return p.length?p.map(function(x){return grp(x[0].toString())+(x[1]?" "+x[1]:"")}).join(" "):"zero"}
+  function spelled(p){return p.length?p.map(function(x){var c=x[0];var s=c<1000n?w3(Number(c)):bigWords(c);return s+(x[1]?" "+x[1]:"")}).join(" "):"zero"}
+  function card(h,big,mono,wd){return '<div class="ncard"><h3>'+h+'</h3><div class="big"></div><div class="mono"></div><div class="words"></div></div>'}
+  var c=[["Indian system",compact(IN,grpIN),grpIN(d)+(f?"."+f:""),spelled(IN)],["US system",compact(US,grpUS),grpUS(d)+(f?"."+f:""),spelled(US)]];
+  c.forEach(function(x){var e=document.createElement("div");e.innerHTML=card();e=e.firstChild;e.children[0].textContent=x[0];
+    e.children[1].textContent=(n.neg?"−":"")+x[1]+(f?" point "+f:"");
+    e.children[2].textContent=(n.neg?"−":"")+x[2];
+    e.children[3].textContent=sg+x[3]+dot;out.appendChild(e)});
+  var IN10=n.int>=10n**7n?"1 crore = 10 million · 1 lakh = 100 thousand · 100 crore = 1 billion":"1 lakh = 100 thousand · 10 lakh = 1 million · 1 crore = 10 million";
+  var e=document.createElement("div");e.className="ncard";e.innerHTML='<h3>Rule of thumb</h3><div class="words"></div>';e.lastChild.textContent=IN10;out.appendChild(e)}
+["135000000","13 crore 50 lakh","2.5 billion","7500000","1,20,000"].forEach(function(t){
+  var b=document.createElement("button");b.type="button";b.className="chip";b.textContent=t;b.onclick=function(){$("nin").value=t;nrender()};$("egs").appendChild(b)});
+$("nin").addEventListener("input",nrender);nrender();
 })();
 </script>
 </body>
