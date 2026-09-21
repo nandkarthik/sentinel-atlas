@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tirtha: Sacred Places of India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{
+  --bg:#e7dfc7; --surface:#dcd2b1; --surface-2:#d2c69f;
+  --ink:#231e14; --ink-soft:#5b5540; --ink-faint:#8a8266;
+  --line:rgba(35,30,20,0.16);
+  --accent:#33477a; --accent-soft:rgba(51,71,122,0.14);
+  --card:#f0e9d3;
+  --shadow:0 10px 30px rgba(35,30,20,0.14);
+  --c-indus:#1f6fa8; --c-ganga:#2f4fb5; --c-brahma:#7a4fb0; --c-east:#12857f; --c-west:#2b9a5f; --c-inland:#b07a1f;
+  --p-dam:#a3392b; --p-barrage:#c26a1a; --p-canal:#2d7d8a; --p-link:#7a4fb0; --p-lift:#4a6b2a; --p-weir:#8a6a3a; --p-lake:#1f7fb0; --p-fall:#5b6fd6; --p-conf:#b8398a;
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --tile-filter:saturate(.55) sepia(.3) brightness(1.02);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14110b; --surface:#1d1810; --surface-2:#251f14;
+    --ink:#ece4cd; --ink-soft:#b3ab92; --ink-faint:#7d765f;
+    --line:rgba(236,228,205,0.16);
+    --accent:#8fa6e6; --accent-soft:rgba(143,166,230,0.16);
+    --card:#221c12; --shadow:0 10px 30px rgba(0,0,0,0.5);
+    --c-indus:#5eb0ea; --c-ganga:#7f9bf0; --c-brahma:#b48ae6; --c-east:#4cc7c0; --c-west:#5cd48f; --c-inland:#e0a94a;
+    --p-dam:#ef7a68; --p-barrage:#f0a25a; --p-canal:#6cc3d0; --p-link:#b48ae6; --p-lift:#9cc46a; --p-weir:#d3b078; --p-lake:#5cc0f0; --p-fall:#9aa8f5; --p-conf:#ee88c6;
+    --tile-filter:invert(1) hue-rotate(180deg) saturate(.4) brightness(.8);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14110b; --surface:#1d1810; --surface-2:#251f14;
+  --ink:#ece4cd; --ink-soft:#b3ab92; --ink-faint:#7d765f;
+  --line:rgba(236,228,205,0.16);
+  --accent:#8fa6e6; --accent-soft:rgba(143,166,230,0.16);
+  --card:#221c12; --shadow:0 10px 30px rgba(0,0,0,0.5);
+  --c-indus:#5eb0ea; --c-ganga:#7f9bf0; --c-brahma:#b48ae6; --c-east:#4cc7c0; --c-west:#5cd48f; --c-inland:#e0a94a;
+  --p-dam:#ef7a68; --p-barrage:#f0a25a; --p-canal:#6cc3d0; --p-link:#b48ae6; --p-lift:#9cc46a; --p-weir:#d3b078; --p-lake:#5cc0f0; --p-fall:#9aa8f5; --p-conf:#ee88c6;
+  --tile-filter:invert(1) hue-rotate(180deg) saturate(.4) brightness(.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.55}
+.wrap{max-width:1240px;margin:0 auto;padding:1.4rem 16px 3rem}
+.crumbs{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 1.4rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+.crumbs a{color:var(--ink-faint);text-decoration:none}.crumbs a:hover{color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2rem,5vw,3.2rem);line-height:1.05;margin:0 0 .4rem;text-wrap:balance}
+.lede{color:var(--ink-soft);max-width:62ch;margin:0 0 1.2rem}
+.tools{display:flex;flex-wrap:wrap;gap:.5rem .6rem;align-items:center;margin-bottom:.8rem}
+.chip{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:.3rem .65rem;border-radius:999px;cursor:pointer;display:inline-flex;gap:.4rem;align-items:center}
+.chip i{width:.7rem;height:.7rem;border-radius:50%;display:inline-block}
+.chip[aria-pressed="true"]{background:var(--accent-soft);color:var(--ink);border-color:var(--accent)}
+.chip:focus-visible,button:focus-visible,input:focus-visible,.item:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sep{width:1px;height:1.4rem;background:var(--line);margin:0 .2rem}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:1rem}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+#map{height:min(78vh,720px);min-height:420px;border:1px solid var(--line);border-radius:6px;background:var(--surface);box-shadow:var(--shadow)}
+.leaflet-tile-pane{filter:var(--tile-filter)}
+.leaflet-container{font-family:var(--font-body)}
+.side{display:flex;flex-direction:column;gap:.7rem;min-width:0;max-height:min(78vh,720px)}
+@media(max-width:900px){.side{max-height:none}}
+.tabs{display:flex;gap:.4rem}
+.tabs .chip{flex:1;justify-content:center}
+input[type=search]{width:100%;font:inherit;font-size:.95rem;padding:.5rem .7rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:4px}
+.list{overflow:auto;border:1px solid var(--line);border-radius:6px;background:var(--card);min-height:160px;flex:1}
+.item{display:flex;gap:.6rem;align-items:baseline;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;color:var(--ink);font:inherit;font-size:.95rem;padding:.45rem .7rem;cursor:pointer}
+.item:hover{background:var(--accent-soft)}
+.item .sw{width:.7rem;height:.7rem;border-radius:2px;flex:none;align-self:center}
+.item .nm{flex:1}
+.item small{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-faint);white-space:nowrap}
+.detail{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:.9rem 1rem;overflow:auto;max-height:340px}
+.detail h2{font-family:var(--font-display);font-weight:400;font-size:1.5rem;margin:0}
+.detail .alt{font-style:italic;color:var(--ink-soft);margin:0 0 .5rem;font-size:.95rem}
+.detail dl{margin:.5rem 0;display:grid;grid-template-columns:auto 1fr;gap:.2rem .8rem;font-size:.9rem}
+.detail dt{font-family:var(--font-mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);padding-top:.2rem}
+.detail dd{margin:0}
+.detail p{margin:.5rem 0;font-size:.95rem}
+.hint{color:var(--ink-soft);font-size:.92rem;margin:0}
+.btn{font-family:var(--font-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--accent);background:transparent;color:var(--accent);padding:.3rem .7rem;border-radius:4px;cursor:pointer;margin:.2rem .3rem .2rem 0}
+.btn:hover{background:var(--accent-soft)}
+.plink{display:block;background:none;border:0;padding:.15rem 0;font:inherit;font-size:.9rem;color:var(--accent);cursor:pointer;text-align:left}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1rem;font-family:var(--font-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin:.8rem 0 0}
+.legend span{display:inline-flex;align-items:center;gap:.35rem}
+
+.mk{width:16px;height:16px;display:block;border:2px solid #fff;border-radius:50%;background:var(--accent);box-shadow:0 0 0 1px rgba(0,0,0,.45)}
+.mk.jyo{background:#b8398a}.mk.char{background:#c26a1a;border-radius:3px;transform:rotate(45deg) scale(.85)}.mk.chota{background:#2d7d8a;border-radius:3px}
+.mk.sapta{background:#4a6b2a}.mk.bhuta{background:#5b6fd6}.mk.aru{background:#a3392b}
+.leaflet-div-icon.pm{background:none;border:0}
+.leg{display:flex;flex-wrap:wrap;gap:.9rem;margin:.6rem 0 1rem;font-family:var(--font-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft)}
+.leg span{display:inline-flex;align-items:center;gap:.4rem}
+.leg .mk{width:12px;height:12px}
+.det{border:1px solid var(--line);border-radius:6px;background:var(--card);padding:1rem;box-shadow:var(--shadow);max-height:78vh;overflow:auto}
+.det h2{font-family:var(--font-display);font-weight:400;font-size:1.5rem;margin:0 0 .2rem}
+.det .alt{font-family:var(--font-mono);font-size:.7rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em;margin:0 0 .6rem}
+.det dl{display:grid;grid-template-columns:auto 1fr;gap:.25rem .8rem;margin:.6rem 0}
+.det dt{font-family:var(--font-mono);font-size:.68rem;text-transform:uppercase;color:var(--ink-faint);padding-top:.15rem}
+.det dd{margin:0}
+.list{display:flex;flex-direction:column}
+.item{font:inherit;text-align:left;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--line);padding:.45rem .2rem;cursor:pointer;display:flex;flex-direction:column}
+.item:hover{background:var(--accent-soft)}
+.item small{font-family:var(--font-mono);font-size:.66rem;color:var(--ink-faint);text-transform:uppercase}
+.item:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input.s{font:inherit;padding:.5rem .7rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:4px;width:100%;margin-bottom:.5rem}
+.tagl{display:inline-block;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);border-radius:99px;padding:.1rem .5rem;margin:0 .3rem .3rem 0;color:var(--ink-soft)}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="../">← Sentinel Atlas</a><a href="../rivers/">Nadi: Rivers →</a></div>
+  <h1>Tirtha: Sacred Places of India</h1>
+  <p class="lede">The traditional circuits of pilgrimage, on a map: the twelve Jyotirlingas, the Char Dham, the Chota Char Dham in the Himalaya, the seven Saptapuri cities, the five Pancha Bhoota Sthalams and the six abodes of Murugan. Tap a marker for the deity, the place and the river beside it.</p>
+  <div class="chips" id="chips" role="group" aria-label="Circuit"></div>
+  <div class="layout">
+    <div id="map" role="region" aria-label="Map of sacred places"></div>
+    <div>
+      <input class="s" id="q" type="search" placeholder="Search a place, deity or state" aria-label="Search" autocomplete="off">
+      <div class="det" id="det"></div>
+    </div>
+  </div>
+  <p class="foot">Circuits follow the widely used traditional lists. Some lists are disputed: three Jyotirlinga sites (Baidyanath, Nageshwar and, in some accounts, Bhimashankar) are claimed by more than one place, and this page shows one and says so. Coordinates come from Wikipedia and OpenStreetMap and place the marker at the temple or town, not surveyed to the metre. The Shakti Peethas and the 108 Divya Desams are not here yet because the lists differ between sources and are to be added from a single cited one. Map tiles © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.</p>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+
+var TAGS={jyo:"Jyotirlinga",char:"Char Dham",chota:"Chota Char Dham",sapta:"Saptapuri",bhuta:"Pancha Bhoota",aru:"Arupadai Veedu"};
+var ORDER=["jyo","char","chota","sapta","bhuta","aru"];
+// name, deity, place, state, lat, lon, tags, river, note
+var S=[
+["Somnath","Shiva","Prabhas Patan, Veraval","Gujarat",20.88803,70.40139,["jyo"],"Arabian Sea coast","First of the twelve Jyotirlingas in the usual listing. The present temple was rebuilt after 1947."],
+["Mallikarjuna","Shiva and Bhramaramba","Srisailam","Andhra Pradesh",16.07417,78.86806,["jyo"],"Krishna","On the Nallamala hills above the Krishna. Also counted among the Shakti Peethas."],
+["Mahakaleshwar","Shiva","Ujjain","Madhya Pradesh",23.18278,75.76833,["jyo","sapta"],"Kshipra","The only south-facing Jyotirlinga. Ujjain is also one of the four Kumbh Mela cities."],
+["Omkareshwar","Shiva","Mandhata island, Khandwa","Madhya Pradesh",22.24558,76.15105,["jyo"],"Narmada","On an island in the Narmada shaped like the sign Om."],
+["Kedarnath","Shiva","Kedarnath, Rudraprayag","Uttarakhand",30.7352,79.0669,["jyo","chota"],"Mandakini","The highest Jyotirlinga, in the Himalaya. Open only in the warmer months."],
+["Bhimashankar","Shiva","Khed, Pune district","Maharashtra",19.072,73.536,["jyo"],"Source of the Bhima","In the Sahyadri hills, where the Bhima rises."],
+["Kashi Vishwanath","Shiva","Varanasi","Uttar Pradesh",25.31078,83.01061,["jyo","sapta"],"Ganga","In Kashi, the oldest of the Saptapuri cities, on the bank of the Ganga."],
+["Trimbakeshwar","Shiva","Trimbak, Nashik","Maharashtra",19.93222,73.53083,["jyo"],"Source of the Godavari","Near the source of the Godavari. Nashik hosts a Kumbh Mela."],
+["Baidyanath","Shiva","Deoghar","Jharkhand",24.4925,86.7,["jyo"],"","The traditional listing places it at Deoghar. Parli in Maharashtra and Baijnath in Himachal also claim to be this Jyotirlinga."],
+["Nageshwar","Shiva","near Dwarka","Gujarat",22.3359,69.0869,["jyo"],"","The listing here follows the Dwarka site. Aundha in Maharashtra and Jageshwar in Uttarakhand also claim the name."],
+["Rameshwaram","Shiva (Ramanathaswamy)","Rameswaram island","Tamil Nadu",9.28811,79.31728,["jyo","char"],"Bay of Bengal, Palk Strait","Also the southern Char Dham, where Rama is said to have worshipped Shiva before crossing to Lanka."],
+["Grishneshwar","Shiva","near Ellora","Maharashtra",20.02497,75.16992,["jyo"],"","Usually named as the last of the twelve, a short walk from the Ellora caves."],
+["Badrinath","Vishnu","Badrinath, Chamoli","Uttarakhand",30.7447,79.49118,["char","chota"],"Alaknanda","The northern Char Dham and one of the four Chota Char Dham, on the bank of the Alaknanda."],
+["Dwarka","Krishna (Dwarkadhish)","Dwarka","Gujarat",22.23789,68.96756,["char","sapta"],"Gomti creek, Arabian Sea","The western Char Dham and one of the seven Saptapuri."],
+["Jagannath Puri","Vishnu as Jagannath","Puri","Odisha",19.80472,85.81833,["char"],"Bay of Bengal","The eastern Char Dham, known for the annual Rath Yatra."],
+["Yamunotri","Yamuna","Yamunotri, Uttarkashi","Uttarakhand",31.0167,78.45,["chota"],"Source region of the Yamuna","The first of the Chota Char Dham pilgrimage, near the Yamuna's glacier source."],
+["Gangotri","Ganga","Gangotri, Uttarkashi","Uttarakhand",30.994,78.941,["chota"],"Bhagirathi","On the Bhagirathi. The river's glacier source, Gaumukh, is a further walk upstream."],
+["Ayodhya","Rama","Ayodhya","Uttar Pradesh",26.79917,82.20444,["sapta"],"Ghaghara (Sarayu)","One of the Saptapuri, the traditional birthplace of Rama."],
+["Mathura","Krishna","Mathura","Uttar Pradesh",27.4925,77.67361,["sapta"],"Yamuna","One of the Saptapuri, the traditional birthplace of Krishna."],
+["Haridwar","Vishnu and Shiva","Haridwar","Uttarakhand",29.945,78.163,["sapta"],"Ganga","One of the Saptapuri, where the Ganga leaves the mountains. Also a Kumbh Mela city."],
+["Kanchipuram","Shiva, Vishnu, Kamakshi","Kanchipuram","Tamil Nadu",12.83201,79.70366,["sapta"],"Vegavathi, near the Palar","One of the Saptapuri, and the only one in the south."],
+["Ekambareswarar","Shiva (earth)","Kanchipuram","Tamil Nadu",12.84729,79.69979,["bhuta"],"","The Prithvi (earth) Sthalam of the five Pancha Bhoota temples."],
+["Jambukeswarar","Shiva (water)","Thiruvanaikaval, Tiruchirappalli","Tamil Nadu",10.85333,78.70556,["bhuta"],"Kaveri","The Appu (water) Sthalam, on the Kaveri."],
+["Annamalaiyar","Shiva (fire)","Tiruvannamalai","Tamil Nadu",12.2316,79.0672,["bhuta"],"","The Agni (fire) Sthalam, at the foot of Arunachala hill."],
+["Srikalahasti","Shiva (air)","Srikalahasti","Andhra Pradesh",13.74944,79.69833,["bhuta"],"Swarnamukhi","The Vayu (air) Sthalam, on the Swarnamukhi river."],
+["Thillai Nataraja","Shiva (space)","Chidambaram","Tamil Nadu",11.39944,79.69333,["bhuta"],"","The Akasha (space) Sthalam, where Shiva is worshipped as Nataraja."],
+["Thiruparankundram","Murugan","near Madurai","Tamil Nadu",9.8823,78.072,["aru"],"Vaigai region","The first of the six abodes (Arupadai Veedu) of Murugan in the usual order. Coordinates are for the town."],
+["Tiruchendur","Murugan","Tiruchendur","Tamil Nadu",8.49602,78.1292,["aru"],"Bay of Bengal, seashore","The second abode, on the seashore."],
+["Palani","Murugan","Palani","Tamil Nadu",10.43881,77.52026,["aru"],"","The third abode, on a hill."],
+["Swamimalai","Murugan","near Kumbakonam","Tamil Nadu",10.95684,79.32578,["aru"],"Kaveri delta","The fourth abode, where Murugan is said to have taught his father the meaning of Om."],
+["Thiruthani","Murugan","Tiruttani","Tamil Nadu",13.17183,79.60377,["aru"],"","The fifth abode, on a hill near the Andhra border."],
+["Pazhamudircholai","Murugan","near Madurai","Tamil Nadu",10.09407,78.22345,["aru"],"","The sixth abode, in a forested hill."]
+];
+
+var map=L.map("map",{zoomSnap:.25,minZoom:4,maxZoom:12}).setView([22.5,80],5);
+map.attributionControl.setPrefix(false);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:12,attribution:"© OpenStreetMap contributors"}).addTo(map);
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+var filt="all",query="",sel=-1;
+S.forEach(function(s,i){s.i=i;s.m=L.marker([s[4],s[5]],{icon:L.divIcon({className:"leaflet-div-icon pm",html:'<b class="mk '+s[6][0]+'"></b>',iconSize:[16,16],iconAnchor:[8,8]}),title:s[0],keyboard:true}).addTo(map);s.m.on("click",function(){show(i)})});
+function vis(s){return (filt==="all"||s[6].indexOf(filt)>=0)&&(!query||(s.slice(0,4).concat(s[7],s[8]).join(" ").toLowerCase().indexOf(query)>=0))}
+function chips(){var c=document.getElementById("chips");c.innerHTML="";[["all","All"]].concat(ORDER.map(function(k){return[k,TAGS[k]]})).forEach(function(x){var b=document.createElement("button");b.className="chip";b.textContent=x[1];b.setAttribute("aria-pressed",filt===x[0]);b.onclick=function(){filt=x[0];chips();refresh()};c.appendChild(b)})}
+function refresh(){var vs=S.filter(vis);S.forEach(function(s){if(vis(s)){if(!map.hasLayer(s.m))s.m.addTo(map)}else map.removeLayer(s.m)});if(sel<0||!vis(S[sel]))list(vs);else show(sel,true)}
+function list(vs){var d=document.getElementById("det");sel=-1;d.innerHTML='<h2>'+(filt==="all"?"All places":TAGS[filt])+'</h2><p class="alt">'+vs.length+' places</p><div class="list">'+vs.map(function(s){return'<button class="item" data-i="'+s.i+'">'+esc(s[0])+'<small>'+esc(s[2])+' · '+esc(s[3])+'</small></button>'}).join("")+'</div>'}
+function show(i,keep){var s=S[i];sel=i;var d=document.getElementById("det");
+  d.innerHTML='<h2>'+esc(s[0])+'</h2><p class="alt">'+esc(s[2])+' · '+esc(s[3])+'</p><div>'+s[6].map(function(t){return'<span class="tagl">'+TAGS[t]+'</span>'}).join("")+'</div><dl><dt>Deity</dt><dd>'+esc(s[1])+'</dd>'+(s[7]?'<dt>Water</dt><dd>'+esc(s[7])+'</dd>':'')+'</dl><p>'+esc(s[8])+'</p><button class="chip" id="back">All places</button>';
+  if(!keep)map.setView([s[4],s[5]],Math.max(map.getZoom(),8),{animate:true});
+  document.getElementById("back").onclick=function(){refresh();list(S.filter(vis))}}
+document.getElementById("det").addEventListener("click",function(e){var b=e.target.closest(".item");if(b)show(+b.dataset.i)});
+document.getElementById("q").addEventListener("input",function(e){query=e.target.value.toLowerCase().trim();sel=-1;refresh()});
+chips();list(S);
+var lg=document.createElement("div");lg.className="leg";lg.innerHTML=ORDER.map(function(k){return'<span><b class="mk '+k+'"></b>'+TAGS[k]+'</span>'}).join("");document.querySelector(".layout").before(lg);
+</script>
+</body>
+</html>
