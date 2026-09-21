@@ -96,7 +96,8 @@ input.s{margin-bottom:.4rem}
   <div class="chips cty" id="cty" role="group" aria-label="Country"></div>
   <input class="s" id="q" type="search" placeholder="Search: fire, poison, women, gas…" aria-label="Search helplines" autocomplete="off">
   <div id="out"></div>
-  <div class="note"><b>Check before relying on it.</b> These are national numbers, listed from memory of public sources and not re-checked against official sites. Electricity, water and city services are run by each state, city or utility, so their numbers are not here. Look them up on your bill or the utility's website.</div>
+  <p class="quick" id="reg" hidden>State pages list local numbers only. The national numbers (112, 100, 1091, 1098, 1930 and the rest) work in every state and are under India.</p>
+  <div class="note"><b>Check before relying on it.</b> These numbers are listed from memory of public sources and are not re-checked against official sites. The state numbers are the most likely to change, so confirm on your bill or the official site before depending on one. Other states, and other cities in these three, are not listed yet.</div>
   <p class="quick" style="margin-top:1rem">Sentinel Atlas · Plate VII</p>
 </div>
 <script>
@@ -121,6 +122,33 @@ in:{n:"India",lang:"",items:[
 ["Money and consumer","Cyber crime","1930","1930","Report online fraud quickly; also cybercrime.gov.in.",0],
 ["Money and consumer","Consumer helpline","1915","1915","National consumer helpline. Also 1800-11-4000.",0],
 ["Money and consumer","Kisan call centre","1800-180-1551","18001801551","Free advice for farmers.",0]
+]},
+tg:{n:"Telangana",items:[
+["Emergency","Ambulance","108","108","State emergency ambulance.",1],
+["Emergency","Fire","101","101","",1],
+["Women and children","She Teams (Telangana Police)","94906 16555","+919490616555","WhatsApp and calls, for harassment of women and girls.",0],
+["Health and mind","Health advice line","104","104","",0],
+["City and utilities","Electricity complaints","1912","1912","Power supply complaints for the state power companies.",0],
+["City and utilities","Hyderabad Water Board (HMWSSB)","155313","155313","Water supply and sewer complaints, Hyderabad.",0],
+["City and utilities","GHMC helpline","040-21111111","04021111111","Greater Hyderabad municipal complaints.",0],
+["Money and government","Anti-Corruption Bureau","1064","1064","Report bribe demands.",0]
+]},
+ap:{n:"Andhra Pradesh",items:[
+["Emergency","Ambulance","108","108","State emergency ambulance.",1],
+["Emergency","Fire","101","101","",1],
+["Health and mind","Health advice line","104","104","",0],
+["City and utilities","Electricity complaints","1912","1912","Power supply complaints for the state power companies.",0],
+["Money and government","Spandana grievance line","1902","1902","Complaints to the state government.",0],
+["Money and government","Anti-Corruption Bureau","14400","14400","Report bribe demands.",0]
+]},
+ka:{n:"Karnataka",items:[
+["Emergency","Ambulance","108","108","State emergency ambulance.",1],
+["Emergency","Fire","101","101","",1],
+["Health and mind","Health advice line","104","104","Arogya Sahayavani.",0],
+["Travel and road","Bengaluru traffic helpline","103","103","",0],
+["City and utilities","Electricity complaints (BESCOM)","1912","1912","Power supply complaints, Bengaluru and nearby districts. Other regions have their own company.",0],
+["City and utilities","Bengaluru Water Board (BWSSB)","1916","1916","Water supply and sewer complaints, Bengaluru.",0],
+["City and utilities","Bengaluru civic complaints","1533","1533","Sahaya line of the city corporation.",0]
 ]},
 us:{n:"United States",items:[
 ["Emergency","Police, fire, ambulance","911","911","In many areas you can also text 911. Call if you can; text if you cannot speak.",1],
@@ -160,6 +188,7 @@ function render(){
     h+='<a class="h'+(x[5]?' em':'')+'" href="'+href+'"><span class="num">'+esc(x[2])+'</span><span class="nm">'+esc(x[1])+'</span>'+(x[4]?'<span class="nt">'+esc(x[4])+'</span>':'')+'</a>';
   });
   if(last)h+='</div>';
+  document.getElementById("reg").hidden=!(cur==="tg"||cur==="ap"||cur==="ka");
   document.getElementById("out").innerHTML=h||'<p class="quick">Nothing matches. Try another word.</p>';
 }
 document.getElementById("q").addEventListener("input",render);
