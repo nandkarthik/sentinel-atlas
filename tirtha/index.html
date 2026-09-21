@@ -90,7 +90,7 @@ input[type=search]{width:100%;font:inherit;font-size:.95rem;padding:.5rem .7rem;
 
 .mk{width:16px;height:16px;display:block;border:2px solid #fff;border-radius:50%;background:var(--accent);box-shadow:0 0 0 1px rgba(0,0,0,.45)}
 .mk.jyo{background:#b8398a}.mk.char{background:#c26a1a;border-radius:3px;transform:rotate(45deg) scale(.85)}.mk.chota{background:#2d7d8a;border-radius:3px}
-.mk.sapta{background:#4a6b2a}.mk.bhuta{background:#5b6fd6}.mk.aru{background:#a3392b}.mk.shakti{background:#d49a00}.mk.divya{background:#1f7fb0;width:12px;height:12px}.mk.telu{background:#7a4a9e;width:12px;height:12px}
+.mk.sapta{background:#4a6b2a}.mk.bhuta{background:#5b6fd6}.mk.aru{background:#a3392b}.mk.shakti{background:#d49a00}.mk.divya{background:#1f7fb0;width:12px;height:12px}.mk.telu{background:#7a4a9e;width:12px;height:12px}.mk.kar{background:#c2410c;width:12px;height:12px}.mk.tn{background:#0f766e;width:12px;height:12px}
 .leaflet-div-icon.pm{background:none;border:0}
 .leg{display:flex;flex-wrap:wrap;gap:.9rem;margin:.6rem 0 1rem;font-family:var(--font-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft)}
 .leg span{display:inline-flex;align-items:center;gap:.4rem}
@@ -124,13 +124,13 @@ input.s{font:inherit;padding:.5rem .7rem;border:1px solid var(--line);background
       <div class="det" id="det"></div>
     </div>
   </div>
-  <p class="foot">The Telugu States list (Telangana and Andhra Pradesh) follows Wikipedia's "List of Hindu temples in India" for those two states, plus the five Pancharama Kshetras; it is a selection, not every temple. Where a marker says "from OpenStreetMap", the position is approximate. Circuits follow the widely used traditional lists. Some lists are disputed: three Jyotirlinga sites (Baidyanath, Nageshwar and, in some accounts, Bhimashankar) are claimed by more than one place, and this page shows one and says so. Coordinates come from Wikipedia and OpenStreetMap and place the marker at the temple or town, not surveyed to the metre. The 18 Maha Shakti Peethas and the 108 Divya Desams are taken from Wikipedia's articles "Shakta pithas" and "Divya Desam". Other traditions list 51, 64 or 108 Shakti Peethas, so this is one list of several. Divya Desam no. 107 (Thiruparkadal) and no. 108 (Vaikuntha) are in heaven and cannot be mapped. Where Wikipedia gave a wrong or missing location for a Divya Desam I placed it at the town from OpenStreetMap or Wikipedia, and shrines marked approximate are only at town or district level. Numbers 20 and 34 each cover more than one shrine, so the map has 109 Divya Desam markers. Map tiles © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.</p>
+  <p class="foot">The Telugu States list (Telangana and Andhra Pradesh) follows Wikipedia's "List of Hindu temples in India" for those two states, plus the five Pancharama Kshetras. Karnataka and Tamil Nadu follow the same Wikipedia list, leaving out temples already shown under another circuit; it is a selection, not every temple. Where a marker says "from OpenStreetMap", the position is approximate. Circuits follow the widely used traditional lists. Some lists are disputed: three Jyotirlinga sites (Baidyanath, Nageshwar and, in some accounts, Bhimashankar) are claimed by more than one place, and this page shows one and says so. Coordinates come from Wikipedia and OpenStreetMap and place the marker at the temple or town, not surveyed to the metre. The 18 Maha Shakti Peethas and the 108 Divya Desams are taken from Wikipedia's articles "Shakta pithas" and "Divya Desam". Other traditions list 51, 64 or 108 Shakti Peethas, so this is one list of several. Divya Desam no. 107 (Thiruparkadal) and no. 108 (Vaikuntha) are in heaven and cannot be mapped. Where Wikipedia gave a wrong or missing location for a Divya Desam I placed it at the town from OpenStreetMap or Wikipedia, and shrines marked approximate are only at town or district level. Numbers 20 and 34 each cover more than one shrine, so the map has 109 Divya Desam markers. Map tiles © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.</p>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 
-var TAGS={jyo:"Jyotirlinga",char:"Char Dham",chota:"Chota Char Dham",sapta:"Saptapuri",bhuta:"Pancha Bhoota",aru:"Arupadai Veedu",shakti:"Shakti Peetha",divya:"Divya Desam",telu:"Telugu States"};
-var ORDER=["jyo","char","chota","sapta","bhuta","aru","shakti","divya","telu"];
+var TAGS={jyo:"Jyotirlinga",char:"Char Dham",chota:"Chota Char Dham",sapta:"Saptapuri",bhuta:"Pancha Bhoota",aru:"Arupadai Veedu",shakti:"Shakti Peetha",divya:"Divya Desam",telu:"Telugu States",kar:"Karnataka",tn:"Tamil Nadu"};
+var ORDER=["jyo","char","chota","sapta","bhuta","aru","shakti","divya","telu","kar","tn"];
 // name, deity, place, state, lat, lon, tags, river, note
 var S=[
 ["Somnath","Shiva","Prabhas Patan, Veraval","Gujarat",20.88803,70.40139,["jyo"],"Arabian Sea coast","First of the twelve Jyotirlingas in the usual listing. The present temple was rebuilt after 1947."],
@@ -203,7 +203,62 @@ S=S.concat([["Kamakshi Amman Temple", "Kamakshi (Shakti)", "Kanchipuram", "Tamil
 ["Yaganti Temple", "Shiva (Uma Maheswara)", "Yaganti", "Andhra Pradesh", 15.35083333, 78.13944444, ["telu"], "", "Listed on Wikipedia."],
 ["Padmavati Temple", "Padmavati", "Tiruchanur, Tirupati", "Andhra Pradesh", 13.60780556, 79.45011111, ["telu"], "", "Listed on Wikipedia."],
 ["Mantralayam", "Raghavendra Swami (Brindavana)", "Mantralayam", "Andhra Pradesh", 15.94166667, 77.42805556, ["telu"], "Tungabhadra", "Listed on Wikipedia."],
-["Bugga Ramalingeswara Swamy Temple", "Shiva (Ramalingeswara)", "Tadipatri", "Andhra Pradesh", 14.9184, 78.0101, ["telu"], "Pennar", "Listed on Wikipedia."]]);
+["Bugga Ramalingeswara Swamy Temple", "Shiva (Ramalingeswara)", "Tadipatri", "Andhra Pradesh", 14.9184, 78.0101, ["telu"], "Pennar", "Listed on Wikipedia."],
+["Virupaksha Temple", "Shiva (Virupaksha)", "Hampi", "Karnataka", 15.335167, 76.458722, ["kar"], "Tungabhadra", "Listed on Wikipedia's Karnataka temples list."],
+["Badami Cave Temples", "Vishnu, Shiva and Jain images", "Badami", "Karnataka", 15.91833333, 75.68416667, ["kar"], "", "Listed on Wikipedia's Karnataka temples list."],
+["Aihole", "Temple group", "Aihole", "Karnataka", 16.01888889, 75.88194444, ["kar"], "Malaprabha", "Listed on Wikipedia's Karnataka temples list."],
+["Pattadakal", "Temple group", "Pattadakal", "Karnataka", 15.95138889, 75.81472222, ["kar"], "Malaprabha", "Listed on Wikipedia's Karnataka temples list."],
+["Chennakeshava Temple, Belur", "Vishnu (Chennakeshava)", "Belur", "Karnataka", 13.1629, 75.8571, ["kar"], "", "Listed on Wikipedia's Karnataka temples list. Position is the town's, from Wikipedia; approximate."],
+["Hoysaleswara Temple", "Shiva (Hoysaleswara)", "Halebidu", "Karnataka", 13.2157, 75.9914, ["kar"], "", "Listed on Wikipedia's Karnataka temples list. Position is the town's."],
+["Chennakeshava Temple, Somanathapura", "Vishnu (Chennakeshava)", "Somanathapura", "Karnataka", 12.27569167, 76.88165278, ["kar"], "Kaveri", "Listed on Wikipedia's Karnataka temples list."],
+["Sharadamba Temple", "Sharada", "Sringeri", "Karnataka", 13.416519, 75.251972, ["kar"], "Tunga", "Listed on Wikipedia's Karnataka temples list."],
+["Udupi Sri Krishna Matha", "Krishna", "Udupi", "Karnataka", 13.3389, 74.7451, ["kar"], "", "Listed on Wikipedia's Karnataka temples list. Position is the town's, from Wikipedia; approximate."],
+["Dharmasthala Temple", "Shiva (Manjunatha)", "Dharmasthala", "Karnataka", 12.9503656, 75.3808212, ["kar"], "Netravati", "Position from OpenStreetMap."],
+["Kukke Subramanya Temple", "Subramanya (Murugan)", "Kukke Subramanya", "Karnataka", 12.66, 75.61, ["kar"], "Kumaradhara", "Listed on Wikipedia's Karnataka temples list."],
+["Mookambika Temple", "Mookambika", "Kollur", "Karnataka", 13.8638, 74.8145, ["kar"], "Souparnika", "Listed on Wikipedia's Karnataka temples list."],
+["Gokarna", "Shiva (Mahabaleshwara)", "Gokarna", "Karnataka", 14.55, 74.31667, ["kar"], "", "Listed on Wikipedia's Karnataka temples list."],
+["Annapoorneshwari Temple", "Annapoorneshwari", "Horanadu", "Karnataka", 13.2705, 75.3414, ["kar"], "Bhadra", "Listed on Wikipedia's Karnataka temples list."],
+["Ranganathaswamy Temple, Srirangapatna", "Ranganatha", "Srirangapatna", "Karnataka", 12.4247524, 76.6797229, ["kar"], "Kaveri", "Listed on Wikipedia's Karnataka temples list."],
+["Srikanteshwara Temple", "Shiva (Srikanteshwara)", "Nanjangud", "Karnataka", 12.12, 76.68, ["kar"], "Kapila", "Listed on Wikipedia's Karnataka temples list. Position is the town's, from Wikipedia; approximate."],
+["Kadri Manjunath Temple", "Shiva (Manjunatha)", "Mangaluru", "Karnataka", 12.88577778, 74.85558333, ["kar"], "", "Listed on Wikipedia's Karnataka temples list."],
+["Sirsi Marikamba Temple", "Marikamba", "Sirsi", "Karnataka", 14.612194, 74.8395315, ["kar"], "", "Listed on Wikipedia's Karnataka temples list. Position from OpenStreetMap."],
+["Amrutesvara Temple", "Shiva (Amrutesvara)", "Amruthapura", "Karnataka", 13.741, 75.854, ["kar"], "", "Listed on Wikipedia's Karnataka temples list."],
+["Dodda Basavana Gudi", "Nandi", "Basavanagudi, Bengaluru", "Karnataka", 12.94289444, 77.56820833, ["kar"], "", "Listed on Wikipedia's Karnataka temples list."],
+["Gavi Gangadhareshwara Temple", "Shiva (Gangadhareshwara)", "Bengaluru", "Karnataka", 12.94819444, 77.563, ["kar"], "", "Listed on Wikipedia's Karnataka temples list."],
+["Polali Rajarajeshwari Temple", "Rajarajeshwari", "Polali", "Karnataka", 12.933954, 74.955291, ["kar"], "", "Listed on Wikipedia's Karnataka temples list."],
+["Doddabasappa Temple", "Shiva", "Dambal", "Karnataka", 15.32805556, 75.81027778, ["kar"], "", "Listed on Wikipedia's Karnataka temples list."],
+["Brihadeeswarar Temple", "Shiva (Brihadeeswarar)", "Thanjavur", "Tamil Nadu", 10.78258, 79.1313819, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list. Position from OpenStreetMap."],
+["Gangaikonda Cholapuram Temple", "Shiva", "Gangaikonda Cholapuram", "Tamil Nadu", 11.20644444, 79.44833333, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Airavatesvara Temple", "Shiva (Airavatesvara)", "Darasuram", "Tamil Nadu", 10.951483, 79.356222, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list. Position is the town's, from Wikipedia; approximate."],
+["Meenakshi Amman Temple", "Meenakshi and Sundareswarar", "Madurai", "Tamil Nadu", 9.9197, 78.1194, ["tn"], "Vaigai", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Kapaleeshwarar Temple", "Shiva (Kapaleeshwarar)", "Mylapore, Chennai", "Tamil Nadu", 13.0337, 80.2699, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Parthasarathy Temple", "Vishnu (Parthasarathy)", "Triplicane, Chennai", "Tamil Nadu", 13.05395, 80.27675, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Shore Temple", "Shiva and Vishnu", "Mahabalipuram", "Tamil Nadu", 12.6166214, 80.199159, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list. Position from OpenStreetMap."],
+["Thillai Nataraja Temple", "Shiva (Nataraja)", "Chidambaram", "Tamil Nadu", 11.39944444, 79.69333333, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Thyagaraja Temple", "Shiva (Thyagaraja)", "Tiruvarur", "Tamil Nadu", 10.773, 79.637, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list. Position is the town's, from Wikipedia; approximate."],
+["Vaitheeswaran Koil", "Shiva (Vaidyanatha)", "Vaitheeswaran Koil", "Tamil Nadu", 11.195, 79.71416667, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Samayapuram Mariamman Temple", "Mariamman", "Samayapuram", "Tamil Nadu", 10.9185, 78.7389, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Nellaiappar Temple", "Shiva (Nellaiappar)", "Tirunelveli", "Tamil Nadu", 8.72844444, 77.68872222, ["tn"], "Thamirabarani", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Tirunallar Dharbaranyeswarar Temple", "Shiva (Dharbaranyeswarar)", "Tirunallar", "Tamil Nadu", 10.9264, 79.792, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list. Position is the town's, from Wikipedia; approximate."],
+["Karpaka Vinayakar Temple", "Ganesha (Karpaka Vinayakar)", "Pillayarpatti", "Tamil Nadu", 10.1193, 78.6678, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Ucchi Pillayar Temple", "Ganesha (Ucchi Pillayar)", "Tiruchirappalli", "Tamil Nadu", 10.82852778, 78.69705556, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Namakkal Anjaneyar Temple", "Hanuman (Anjaneyar)", "Namakkal", "Tamil Nadu", 11.2222492, 78.1626152, ["tn"], "", "Position from OpenStreetMap."],
+["Narasimhaswamy Temple, Namakkal", "Narasimha", "Namakkal", "Tamil Nadu", 11.22222222, 78.16416667, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Perur Pateeswarar Temple", "Shiva (Pateeswarar)", "Perur, Coimbatore", "Tamil Nadu", 10.97583333, 76.91472222, ["tn"], "Noyyal", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Marudhamalai Murugan Temple", "Murugan", "Coimbatore", "Tamil Nadu", 11.04611111, 76.85194444, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Sikkal Singaravelan Temple", "Murugan (Singaravelan)", "Sikkal", "Tamil Nadu", 10.7567, 79.7987, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Mayuranathaswami Temple", "Shiva (Mayuranathar)", "Mayiladuthurai", "Tamil Nadu", 11.09555556, 79.65611111, ["tn"], "Kaveri", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Ardhanareeswarar Temple", "Shiva (Ardhanareeswarar)", "Tiruchengode", "Tamil Nadu", 11.379, 77.8949, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list. Position is the town's, from Wikipedia; approximate."],
+["Manakula Vinayagar Temple", "Ganesha (Manakula Vinayagar)", "Puducherry", "Tamil Nadu", 11.93583333, 79.83361111, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list. Puducherry is a Union Territory."],
+["Nageswaraswamy Temple", "Shiva (Nageswaraswamy)", "Kumbakonam", "Tamil Nadu", 10.9587475, 79.37865917, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Vandiyur Mariamman Temple", "Mariamman", "Madurai", "Tamil Nadu", 9.9104, 78.148, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Koniamman Temple", "Koniamman", "Coimbatore", "Tamil Nadu", 10.9936861, 76.9637249, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list. Position from OpenStreetMap."],
+["Jalakandeswarar Temple", "Shiva (Jalakandeswarar)", "Vellore", "Tamil Nadu", 12.9224378, 79.1292189, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list. Position from OpenStreetMap."],
+["Adikesava Perumal Temple, Mylapore", "Vishnu (Adikesava)", "Mylapore, Chennai", "Tamil Nadu", 13.03055556, 80.27055556, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Vedapureeswarar Temple", "Shiva (Vedapureeswarar)", "Puducherry", "Tamil Nadu", 11.93985611, 79.82978139, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list. Puducherry is a Union Territory."],
+["Amritaghateswarar-Abirami Temple", "Shiva and Abirami", "Thirukkadaiyur", "Tamil Nadu", 11.0775, 79.81833333, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Thindal Murugan Temple", "Murugan", "Erode", "Tamil Nadu", 11.3189799, 77.6751482, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."],
+["Pachaimalai Subramanya Swamy Temple", "Murugan", "Gobichettipalayam", "Tamil Nadu", 11.44888889, 77.44555556, ["tn"], "", "Listed on Wikipedia's Tamil Nadu temples list."]]);
 
 var map=L.map("map",{zoomSnap:.25,minZoom:4,maxZoom:12}).setView([22.5,80],5);
 map.attributionControl.setPrefix(false);
