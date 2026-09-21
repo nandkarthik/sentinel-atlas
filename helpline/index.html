@@ -97,7 +97,7 @@ input.s{margin-bottom:.4rem}
   <input class="s" id="q" type="search" placeholder="Search: fire, poison, women, gas…" aria-label="Search helplines" autocomplete="off">
   <div id="out"></div>
   <p class="quick" id="reg" hidden>State pages list local numbers only. The national numbers (112, 100, 1091, 1098, 1930 and the rest) work in every state and are under India.</p>
-  <div class="note"><b>Check before relying on it.</b> These numbers are listed from memory of public sources and are not re-checked against official sites. The state numbers are the most likely to change, so confirm on your bill or the official site before depending on one. Other states, and other cities in these five, are not listed yet.</div>
+  <div class="note"><b>Check before relying on it.</b> These numbers are listed from memory of public sources and are not re-checked against official sites. The state numbers are the most likely to change, so confirm on your bill or the official site before depending on one. Other states, and other cities in these six, are not listed yet.</div>
   <p class="quick" style="margin-top:1rem">Sentinel Atlas · Plate VII</p>
 </div>
 <script>
@@ -172,6 +172,16 @@ kl:{n:"Kerala",items:[
 ["City and utilities","Water supply (Kerala Water Authority)","1916","1916","",0],
 ["Money and government","Chief Minister's grievance line","1076","1076","",0]
 ]},
+mh:{n:"Maharashtra",items:[
+["Emergency","Ambulance","108","108","State emergency ambulance.",1],
+["Emergency","Fire","101","101","",1],
+["Emergency","State disaster control room","022-22027990","02222027990","Mantralaya control room, Mumbai.",0],
+["Health and mind","Health helpline","104","104","",0],
+["Travel and road","Mumbai railway police","1512","1512","Mumbai suburban railway helpline.",0],
+["City and utilities","Electricity complaints (MSEDCL)","1912","1912","Power supply complaints outside Mumbai city. Also 1800-233-3435.",0],
+["City and utilities","Mumbai municipal helpline (BMC)","1916","1916","Water, roads, drains and civic complaints, Mumbai.",0],
+["Money and government","Anti-Corruption Bureau","1064","1064","Report bribe demands.",0]
+]},
 us:{n:"United States",items:[
 ["Emergency","Police, fire, ambulance","911","911","In many areas you can also text 911. Call if you can; text if you cannot speak.",1],
 ["Emergency","Poison Control","1-800-222-1222","18002221222","Free, all day, for swallowing or touching something harmful.",1],
@@ -210,7 +220,7 @@ function render(){
     h+='<a class="h'+(x[5]?' em':'')+'" href="'+href+'"><span class="num">'+esc(x[2])+'</span><span class="nm">'+esc(x[1])+'</span>'+(x[4]?'<span class="nt">'+esc(x[4])+'</span>':'')+'</a>';
   });
   if(last)h+='</div>';
-  document.getElementById("reg").hidden=!(cur==="tg"||cur==="ap"||cur==="ka"||cur==="tn"||cur==="kl");
+  document.getElementById("reg").hidden=!(cur==="tg"||cur==="ap"||cur==="ka"||cur==="tn"||cur==="kl"||cur==="mh");
   document.getElementById("out").innerHTML=h||'<p class="quick">Nothing matches. Try another word.</p>';
 }
 document.getElementById("q").addEventListener("input",render);
