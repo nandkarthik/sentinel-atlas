@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahaya: Helpline Numbers</title>
+<meta name="description" content="Emergency and helpline numbers for India and the United States: police, fire, ambulance, poison, crisis, women and children, road and consumer help.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9e3cf; --surface:#ddd5b8; --card:#f2ecd9;
+  --ink:#231f15; --ink-soft:#5a5540; --ink-faint:#877f63;
+  --line:rgba(35,31,21,0.16);
+  --accent:#8a4b1f; --accent-soft:rgba(138,75,31,0.13);
+  --warn:#8f3a2a; --warn-soft:rgba(143,58,42,0.10);
+  --shadow:0 10px 30px rgba(35,31,21,0.12);
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+    --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+    --line:rgba(236,229,207,0.16);
+    --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16);
+    --warn:#e58c78; --warn-soft:rgba(229,140,120,0.12);
+    --shadow:0 10px 30px rgba(0,0,0,0.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+  --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+  --line:rgba(236,229,207,0.16);
+  --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16);
+  --warn:#e58c78; --warn-soft:rgba(229,140,120,0.12);
+  --shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding:1.4rem 16px 3rem}
+.crumbs{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 1.4rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+.crumbs a{color:var(--ink-faint);text-decoration:none}.crumbs a:hover{color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2rem,5vw,3.2rem);line-height:1.05;margin:0 0 .4rem;text-wrap:balance}
+.lede{color:var(--ink-soft);max-width:62ch;margin:0 0 1.3rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.chip{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:.4rem .8rem;border-radius:99px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent-soft);color:var(--ink);border-color:var(--accent)}
+.chip:focus-visible,input:focus-visible,select:focus-visible,.row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:.7rem;margin-bottom:1.1rem}
+@media(max-width:560px){.entry{grid-template-columns:1fr}}
+label{display:flex;flex-direction:column;gap:.25rem;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint)}
+input,select{font:inherit;font-size:1.15rem;padding:.55rem .7rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:4px;width:100%}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;background:var(--card);box-shadow:var(--shadow);overflow:hidden}
+.row{display:flex;flex-direction:column;gap:.1rem;text-align:left;font:inherit;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:.65rem .9rem;cursor:pointer;min-width:0}
+.row:hover{background:var(--accent-soft)}
+.row[aria-current="true"]{background:var(--accent-soft);box-shadow:inset 3px 0 var(--accent)}
+.row .v{font-family:var(--font-mono);font-size:1.02rem;font-weight:500;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.row .u{font-size:.95rem}
+.row .n{font-size:.78rem;color:var(--ink-faint);line-height:1.35}
+.tag{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);margin-left:.4rem}
+.note{margin-top:1.2rem;padding:.8rem 1rem;border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:4px;font-size:.92rem;color:var(--ink-soft)}
+.note b{color:var(--ink)}
+.quick{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft);margin:0 0 1rem}
+.numtool{margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+.numtool h2{font-family:var(--font-display);font-weight:400;font-size:1.7rem;margin:0 0 .3rem}
+.numtool p.sub{color:var(--ink-soft);margin:0 0 1rem;max-width:62ch}
+.nrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:.8rem;margin-top:.9rem}
+.ncard{border:1px solid var(--line);border-radius:6px;background:var(--card);padding:.8rem 1rem;box-shadow:var(--shadow);min-width:0}
+.ncard h3{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 .35rem;font-weight:500}
+.ncard .big{font-family:var(--font-display);font-size:1.6rem;line-height:1.2;overflow-wrap:anywhere}
+.ncard .mono{font-family:var(--font-mono);font-size:.95rem;margin-top:.3rem;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.ncard .words{font-size:.9rem;color:var(--ink-soft);margin-top:.3rem}
+.egs{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.cty{margin-bottom:.9rem}
+.grp{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:1.4rem 0 .5rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.7rem}
+.h{display:flex;flex-direction:column;gap:.15rem;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:.7rem .9rem;color:var(--ink);text-decoration:none;box-shadow:var(--shadow);min-width:0}
+.h:hover{border-color:var(--accent)}
+.h:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.h .num{font-family:var(--font-mono);font-size:1.45rem;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.h .nm{font-size:1rem}
+.h .nt{font-size:.8rem;color:var(--ink-faint);line-height:1.35}
+.h.em{border-color:var(--warn);background:var(--warn-soft)}
+.h.em .num{color:var(--warn)}
+input.s{margin-bottom:.4rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="../">← Sentinel Atlas</a><a href="../units/">Maap: Units →</a></div>
+  <h1>Sahaya: Helpline Numbers</h1>
+  <p class="lede">The numbers worth having ready, for India and the United States. On a phone, tap a number to call it. Emergency numbers are shaded.</p>
+  <div class="chips cty" id="cty" role="group" aria-label="Country"></div>
+  <input class="s" id="q" type="search" placeholder="Search: fire, poison, women, gas…" aria-label="Search helplines" autocomplete="off">
+  <div id="out"></div>
+  <div class="note"><b>Check before relying on it.</b> These are national numbers, listed from memory of public sources and not re-checked against official sites. Electricity, water and city services are run by each state, city or utility, so their numbers are not here. Look them up on your bill or the utility's website.</div>
+  <p class="quick" style="margin-top:1rem">Sentinel Atlas · Plate VII</p>
+</div>
+<script>
+// [group, name, number, dial, note, emergency?]
+var D={
+in:{n:"India",lang:"",items:[
+["Emergency","All emergencies","112","112","One number for police, fire and ambulance, in any state.",1],
+["Emergency","Police","100","100","Older number, still works in most places.",1],
+["Emergency","Fire","101","101","",1],
+["Emergency","Ambulance","102 / 108","108","102 is the national number for mother-and-child transport; 108 is the emergency ambulance in most states.",1],
+["Emergency","Disaster management","1078 / 1070","1078","NDMA 1078; many states use 1070.",0],
+["Emergency","Anti-poison","1066","1066","",0],
+["Emergency","LPG gas leak","1906","1906","",1],
+["Women and children","Women helpline","1091","1091","Some states also run 181.",0],
+["Women and children","Child helpline","1098","1098","CHILDLINE, free, all day.",0],
+["Women and children","Senior citizens","14567","14567","Elderline.",0],
+["Health and mind","Tele-MANAS mental health","14416","14416","Free counselling, many languages.",0],
+["Travel and road","Highway and accident help","1033","1033","National highway helpline. 1073 is the older road-accident number.",0],
+["Travel and road","Railway enquiry","139","139","",0],
+["Travel and road","Railway security","182","182","",0],
+["Travel and road","Tourist helpline","1363","1363","",0],
+["Money and consumer","Cyber crime","1930","1930","Report online fraud quickly; also cybercrime.gov.in.",0],
+["Money and consumer","Consumer helpline","1915","1915","National consumer helpline. Also 1800-11-4000.",0],
+["Money and consumer","Kisan call centre","1800-180-1551","18001801551","Free advice for farmers.",0]
+]},
+us:{n:"United States",items:[
+["Emergency","Police, fire, ambulance","911","911","In many areas you can also text 911. Call if you can; text if you cannot speak.",1],
+["Emergency","Poison Control","1-800-222-1222","18002221222","Free, all day, for swallowing or touching something harmful.",1],
+["Emergency","Gas leak","911","911","Leave the building first, then call 911 and the gas company.",1],
+["Emergency","Disaster help (FEMA)","1-800-621-3362","18006213362","Also disasterassistance.gov.",0],
+["Women and children","National Domestic Violence Hotline","1-800-799-7233","18007997233","Or text START to 88788.",0],
+["Women and children","Childhelp abuse hotline","1-800-422-4453","18004224453","",0],
+["Women and children","RAINN sexual assault hotline","1-800-656-4673","18006564673","",0],
+["Women and children","Human trafficking hotline","1-888-373-7888","18883737888","Or text 233733.",0],
+["Health and mind","Suicide and crisis lifeline","988","988","Call or text. Veterans press 1.",1],
+["Health and mind","Crisis Text Line","Text 741741","sms:741741","Text HOME.",0],
+["Health and mind","SAMHSA substance use helpline","1-800-662-4357","18006624357","Treatment referrals, free.",0],
+["Health and mind","CDC information","1-800-232-4636","18002324636","",0],
+["Everyday services","Community services","211","211","Food, housing, utilities help, local.",0],
+["Everyday services","City non-emergency","311","311","Potholes, noise, city services. Not every city has it.",0],
+["Everyday services","Call before you dig","811","811","Free marking of buried gas and power lines before any digging.",0],
+["Everyday services","Road conditions and traffic","511","511","State travel information.",0],
+["Everyday services","Relay for deaf and hard-of-hearing","711","711","",0],
+["Money and government","FTC fraud reports","1-877-382-4357","18773824357","Also reportfraud.ftc.gov.",0],
+["Money and government","IRS","1-800-829-1040","18008291040","",0],
+["Money and government","Social Security","1-800-772-1213","18007721213","",0],
+["Money and government","Medicare","1-800-633-4227","18006334227","",0],
+["Money and government","FBI tips","1-800-225-5324","18002255324","Also tips.fbi.gov.",0],
+["Money and government","Postal Service","1-800-275-8777","18002758777","",0]
+]}};
+var cur="in";try{cur=localStorage.getItem("hl")||"in"}catch(e){}
+if(!D[cur])cur="in";
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function chips(){var c=document.getElementById("cty");c.innerHTML="";Object.keys(D).forEach(function(k){var b=document.createElement("button");b.className="chip";b.textContent=D[k].n;b.setAttribute("aria-pressed",k===cur);b.onclick=function(){cur=k;try{localStorage.setItem("hl",k)}catch(e){}chips();render()};c.appendChild(b)})}
+function render(){
+  var q=document.getElementById("q").value.toLowerCase().trim(),h="",last="";
+  D[cur].items.forEach(function(x){
+    if(q&&(x.join(" ").toLowerCase().indexOf(q)<0))return;
+    if(x[0]!==last){if(last)h+='</div>';h+='<div class="grp">'+esc(x[0])+'</div><div class="cards">';last=x[0]}
+    var href=x[3].indexOf("sms:")===0?x[3]:"tel:"+x[3];
+    h+='<a class="h'+(x[5]?' em':'')+'" href="'+href+'"><span class="num">'+esc(x[2])+'</span><span class="nm">'+esc(x[1])+'</span>'+(x[4]?'<span class="nt">'+esc(x[4])+'</span>':'')+'</a>';
+  });
+  if(last)h+='</div>';
+  document.getElementById("out").innerHTML=h||'<p class="quick">Nothing matches. Try another word.</p>';
+}
+document.getElementById("q").addEventListener("input",render);
+chips();render();
+</script>
+</body>
+</html>
