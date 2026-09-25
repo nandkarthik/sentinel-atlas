@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rashtra: India at a Glance</title>
+<meta name="description" content="India's national symbols, anthem and song, flag rules, national holidays and days, the 2026 central holiday list, the Constitution's languages, rights and duties, states and Union Territories, and national honors, each with its source.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9e3cf; --surface:#ddd5b8; --card:#f2ecd9;
+  --ink:#231f15; --ink-soft:#5a5540; --ink-faint:#7c7458;
+  --line:rgba(35,31,21,0.16);
+  --accent:#a34a14; --accent-soft:rgba(163,74,20,0.13);
+  --warn:#8f3a2a; --warn-soft:rgba(143,58,42,0.10);
+  --good:#2f5d34;
+  --saffron:#e0842b; --white:#f8f5ea; --green:#2f7a3a; --navy:#1d2a6b;
+  --shadow:0 10px 30px rgba(35,31,21,0.12);
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+    --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#8c8569;
+    --line:rgba(236,229,207,0.16);
+    --accent:#e6a566; --accent-soft:rgba(230,165,102,0.16);
+    --warn:#e58c78; --warn-soft:rgba(229,140,120,0.12);
+    --good:#8fc794;
+    --saffron:#e89a4a; --white:#ece5cf; --green:#4a9a55; --navy:#6f7fd0;
+    --shadow:0 10px 30px rgba(0,0,0,0.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+  --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#8c8569;
+  --line:rgba(236,229,207,0.16);
+  --accent:#e6a566; --accent-soft:rgba(230,165,102,0.16);
+  --warn:#e58c78; --warn-soft:rgba(229,140,120,0.12);
+  --good:#8fc794;
+  --saffron:#e89a4a; --white:#ece5cf; --green:#4a9a55; --navy:#6f7fd0;
+  --shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding:1.4rem 16px 3rem}
+.crumbs{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 1.4rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+.crumbs a{color:var(--ink-faint);text-decoration:none}.crumbs a:hover{color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2rem,5vw,3.2rem);line-height:1.05;margin:0 0 .5rem;text-wrap:balance}
+.tri{display:flex;height:5px;width:120px;margin:0 0 1rem;border-radius:1px;overflow:hidden}
+.tri i{flex:1}.tri i:nth-child(1){background:var(--saffron)}.tri i:nth-child(2){background:var(--white);box-shadow:inset 0 0 0 1px var(--line)}.tri i:nth-child(3){background:var(--green)}
+.lede{color:var(--ink-soft);max-width:64ch;margin:0 0 1.3rem}
+.jump{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 .6rem}
+.jump a{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);color:var(--ink-soft);padding:.4rem .8rem;border-radius:99px;text-decoration:none}
+.jump a:hover{border-color:var(--accent);color:var(--ink);background:var(--accent-soft)}
+a:focus-visible,summary:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section{margin-top:2.6rem;padding-top:1.4rem;border-top:1px solid var(--line);scroll-margin-top:1rem}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.8rem;line-height:1.15;margin:0 0 .3rem;text-wrap:balance}
+h3{font-family:var(--font-mono);font-weight:500;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:1.6rem 0 .6rem}
+.sub{color:var(--ink-soft);max-width:66ch;margin:0 0 1.1rem}
+p{margin:0 0 .8rem}
+.src{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:.7rem}
+.c{display:flex;flex-direction:column;gap:.2rem;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:.8rem .95rem;min-width:0}
+.c .lab{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+.c .nm{font-family:var(--font-display);font-size:1.35rem;line-height:1.2;overflow-wrap:anywhere}
+.c .la{font-style:italic;color:var(--ink-soft);font-size:.92rem}
+.c .nt{font-size:.9rem;color:var(--ink-soft);line-height:1.4;margin-top:.15rem}
+.c .ad{font-family:var(--font-mono);font-size:.7rem;color:var(--ink-faint);margin-top:auto;padding-top:.5rem;display:flex;flex-wrap:wrap;gap:.2rem .6rem;justify-content:space-between}
+.c.big{background:var(--surface);box-shadow:var(--shadow)}
+.c.big .nm{font-size:1.6rem}
+.c.big .dt{font-family:var(--font-mono);font-size:1.5rem;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
+.note{margin-top:1.1rem;padding:.8rem 1rem;border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:4px;font-size:.92rem;color:var(--ink-soft)}
+.note b{color:var(--ink)}
+.note.ok{border-left-color:var(--good);background:var(--accent-soft)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.2rem;align-items:start}
+.text{border:1px solid var(--line);border-radius:6px;background:var(--card);padding:1rem 1.2rem;min-width:0}
+.text h4{font-family:var(--font-mono);font-weight:500;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 .6rem}
+.text pre{margin:0;font-family:var(--font-body);font-size:1rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.text pre.tr{font-style:italic;color:var(--ink-soft)}
+blockquote{margin:0 0 .8rem;padding:.2rem 0 .2rem 1rem;border-left:3px solid var(--accent);color:var(--ink-soft)}
+.flagbox{display:flex;flex-wrap:wrap;gap:1.4rem;align-items:flex-start}
+.flagbox svg{width:min(300px,100%);height:auto;border:1px solid var(--line);flex:none;box-shadow:var(--shadow)}
+.flagbox .txt{flex:1 1 300px;min-width:0}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);text-align:left;font-weight:500;padding:.4rem .6rem;border-bottom:1px solid var(--line)}
+td{padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+td.d{font-family:var(--font-mono);font-size:.85rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+td.n{font-size:.85rem;color:var(--ink-soft)}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+.tw table{min-width:520px}
+tr.past td{color:var(--ink-faint)}
+tr.next td{background:var(--accent-soft)}
+tr.natl td:nth-child(2){font-weight:600}
+.pill{display:inline-block;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--accent);color:var(--accent);border-radius:99px;padding:.05rem .45rem;margin-left:.4rem;vertical-align:.1em}
+.next-line{font-family:var(--font-mono);font-size:.85rem;color:var(--ink);margin:0 0 .8rem}
+.langs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.4rem .8rem;list-style:none;margin:0;padding:0}
+.langs li{font-size:.95rem;border-bottom:1px solid var(--line);padding:.25rem 0}
+.langs li span{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-faint);margin-right:.5rem}
+details{border:1px solid var(--line);border-radius:6px;background:var(--card);padding:.6rem 1rem;margin-top:.7rem}
+summary{cursor:pointer;font-family:var(--font-mono);font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)}
+details ol{margin:.8rem 0 .2rem;padding-left:0;list-style:none}
+details li{margin:0 0 .5rem;font-size:.95rem}
+.srcs{font-size:.9rem;color:var(--ink-soft);padding-left:1.1rem}
+.srcs li{margin-bottom:.35rem}
+.srcs a{color:var(--accent)}
+.quick{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="../">← Sentinel Atlas</a><a href="../bharat-chronicle/">Bharat Chronicle: the Constitution →</a></div>
+  <h1>Rashtra: India at a Glance</h1>
+  <div class="tri" aria-hidden="true"><i></i><i></i><i></i></div>
+  <p class="lede">The national symbols, the anthem and song, the flag's rules, the national holidays and days, and the basics of the Constitution and the states. Each fact carries a tag saying where it came from. Where sources disagree, or where a popular belief is not official, the page says so.</p>
+  <nav class="jump" aria-label="Sections">
+    <a href="#symbols">Symbols</a><a href="#anthem">Anthem and song</a><a href="#flag">Flag</a><a href="#days">Holidays and days</a><a href="#constitution">Constitution</a><a href="#states">States and UTs</a><a href="#honors">Honors</a><a href="#myths">Not official</a><a href="#sources">Sources</a>
+  </nav>
+
+  <section id="symbols">
+    <h2>National symbols</h2>
+    <p class="sub">The government's National Portal lists thirteen “national identity elements”. Those come first. The tag on each card shows the source; “Portal” is the government's own text.</p>
+    <div class="cards" id="sym"></div>
+    <h3>Also recognized, but not on the portal's list of thirteen</h3>
+    <div class="cards" id="sym2"></div>
+    <div class="note"><b>The portal text is a 2012 copy.</b> The live Know India site (knowindia.gov.in) would not load from here, so the descriptions come from the National Portal pages as archived on 14 December 2012. Dates marked “Wikipedia” are not on those pages.</div>
+  </section>
+
+  <section id="anthem">
+    <h2>National anthem and national song</h2>
+    <p class="sub">Both were settled in one statement on 24 January 1950, two days before the Constitution took effect. Rajendra Prasad, as President of the Constituent Assembly, made no formal resolution, only this declaration:</p>
+    <blockquote>“The composition consisting of the words and music known as Jana Gana Mana is the National Anthem of India, subject to such alterations in the words as the Government may authorise as occasion arises; and the song Vande Mataram, which has played a historic part in the struggle for Indian freedom, shall be honoured equally with Jana Gana Mana and shall have equal status with it.” <span class="src">Constituent Assembly Debates, 24 Jan 1950</span></blockquote>
+
+    <h3>Jana Gana Mana</h3>
+    <div class="two">
+      <div class="text"><h4>First stanza, as the government prints it</h4>
+<pre>Jana-gana-mana-adhinayaka, jaya he
+Bharata-bhagya-vidhata.
+Punjab-Sindh-Gujarat-Maratha
+Dravida-Utkala-Banga
+Vindhya-Himachala-Yamuna-Ganga
+Uchchala-Jaladhi-taranga.
+Tava shubha name jage,
+Tava shubha asisa mage,
+Gahe tava jaya gatha,
+Jana-gana-mangala-dayaka jaya he
+Bharata-bhagya-vidhata.
+Jaya he, jaya he, jaya he,
+Jaya jaya jaya, jaya he!</pre></div>
+      <div class="text"><h4>Tagore's own English rendering</h4>
+<pre class="tr">Thou art the ruler of the minds of all people,
+Dispenser of India's destiny.
+Thy name rouses the hearts of Punjab, Sind,
+Gujarat and Maratha,
+Of the Dravida and Odisha and Bengal;
+It echoes in the hills of the Vindhyas and Himalayas,
+mingles in the music of Jamuna and Ganges and is
+chanted by the waves of the Indian Sea.
+They pray for thy blessings and sing thy praise.
+The saving of all people waits in thy hand,
+Thou dispenser of India's destiny.
+Victory, victory, victory to thee.</pre></div>
+    </div>
+    <div class="cards" style="margin-top:.9rem">
+      <div class="c"><span class="lab">Full version</span><span class="nm">About 52 seconds</span><span class="nt">The short version, the first and last lines only, plays for about 20 seconds and is used when drinking toasts in messes.</span><span class="ad"><span class="src">Portal</span></span></div>
+      <div class="c"><span class="lab">Origin</span><span class="nm">“Bharoto Bhagyo Bidhata”</span><span class="nt">Written in Bengali by Rabindranath Tagore on 11 December 1911, first sung publicly on 27 December 1911 in Calcutta. Only the first of its stanzas is the anthem.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+      <div class="c"><span class="lab">The rule</span><span class="nm">Stand to attention</span><span class="nt">Whenever it is sung or played, except when it is part of a newsreel or documentary, where standing would disrupt the film. Schools may begin the day with community singing.</span><span class="ad"><span class="src">Portal</span></span></div>
+    </div>
+
+    <h3>Vande Mataram</h3>
+    <div class="two">
+      <div class="text"><h4>First stanza, as the government prints it</h4>
+<pre>Vande Mataram!
+Sujalam, suphalam, malayaja shitalam,
+Shasyashyamalam, Mataram!
+Vande Mataram!
+Shubhrajyotsna pulakitayaminim,
+Phullakusumita drumadala shobhinim,
+Suhasinim sumadhura bhashinim,
+Sukhadam varadam, Mataram!
+Vande Mataram, Vande Mataram!</pre></div>
+      <div class="text"><h4>Sri Aurobindo's prose translation</h4>
+<pre class="tr">I bow to thee, Mother,
+richly-watered, richly-fruited,
+cool with the winds of the south,
+dark with the crops of the harvests,
+The Mother!
+Her nights rejoicing in the glory of the moonlight,
+her lands clothed beautifully with her trees in flowering bloom,
+sweet of laughter, sweet of speech,
+The Mother, giver of boons, giver of bliss.</pre></div>
+    </div>
+    <p style="margin-top:.9rem">Composed in Sanskrit by Bankim Chandra Chatterji (Chattopadhyay); first published in 1882 in the novel <i>Anandamath</i>. It was first sung on a political occasion at the 1896 session of the Indian National Congress. <span class="src">Portal · Wikipedia</span></p>
+    <div class="note"><b>The rules for Vande Mataram changed in 2026.</b> News reports of a Ministry of Home Affairs order dated 28 January 2026 say the full six-stanza version, about 3 minutes 10 seconds, is now the official rendition at government events and in schools, that it is sung <i>before</i> Jana Gana Mana when both are performed, and that people must stand for it. Older material, including the government portal text above and the “first two verses” wording common on Wikipedia, describes the earlier practice. I could not open the order itself, so this rests on <a href="https://www.scconline.com/blog/post/2026/02/12/mha-issued-guidelines-on-singing-national-song-2026/" style="color:var(--accent)">SCC Online</a> and <a href="https://www.newsonair.gov.in/centre-issues-guidelines-for-rendition-of-national-song-vande-mataram" style="color:var(--accent)">All India Radio</a>, which agree with each other. The six stanzas are not reproduced here.</div>
+  </section>
+
+  <section id="flag">
+    <h2>The flag</h2>
+    <div class="flagbox">
+      <svg viewBox="0 0 300 200" role="img" aria-label="The Indian tricolour: saffron, white, green, with a navy 24-spoke wheel"><rect width="300" height="67" fill="var(--saffron)"/><rect y="67" width="300" height="66" fill="#f8f5ea"/><rect y="133" width="300" height="67" fill="var(--green)"/><g id="chakra" stroke="#1d2a6b" fill="none"></g></svg>
+      <div class="txt">
+        <p>A horizontal tricolour of deep saffron (<i>kesaria</i>) at the top, white in the middle and dark green at the bottom, in equal bands. Width to length is two to three. In the centre of the white band is a navy-blue wheel with 24 spokes, its diameter about the width of the white band. The design is that of the wheel on the abacus of the Sarnath Lion Capital of Ashoka. <span class="src">Portal</span></p>
+        <p>Saffron stands for strength and courage. White stands for peace and truth. Green stands for the fertility, growth and auspiciousness of the land. <span class="src">Portal</span></p>
+        <p>The Constituent Assembly adopted this design on <b>22 July 1947</b>. It is based on the Swaraj flag of the Indian National Congress, from a design by Pingali Venkayya, with the wheel replacing the charkha. <span class="src">Portal · Wikipedia</span></p>
+        <p style="font-size:.85rem;color:var(--ink-faint)">Drawn here in approximate screen colors, not the official specified shades.</p>
+      </div>
+    </div>
+    <h3>The Flag Code of India, 2002</h3>
+    <div class="cards">
+      <div class="c"><span class="lab">In force</span><span class="nm">26 January 2002</span><span class="nt">Three parts: a general description; display by the public, private organizations and schools; display by governments and their agencies.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+      <div class="c"><span class="lab">Amended</span><span class="nm">December 2021</span><span class="nt">Polyester and other machine-made fabric allowed. Before this the flag had to be khadi (cotton, silk or wool, hand-spun and hand-woven).</span><span class="ad"><span class="src">Wikipedia · news reports</span></span></div>
+      <div class="c"><span class="lab">Amended</span><span class="nm">19 July 2022</span><span class="nt">The flag may be flown day and night when displayed in the open or on a private house. Earlier it could be hoisted only between sunrise and sunset.</span><span class="ad"><span class="src">News reports</span></span></div>
+    </div>
+    <p style="margin-top:.9rem">One rule from the Code: as a mark of respect, the National Flag is never dipped to a person or thing. Regimental colors and organizational flags may be dipped. <span class="src">Wikipedia</span></p>
+    <p style="font-size:.9rem;color:var(--ink-soft)">Respecting the National Flag and the National Anthem is also the first of the Fundamental Duties, Article 51A(a).</p>
+  </section>
+
+  <section id="days">
+    <h2>National holidays and days</h2>
+    <p class="sub">India has exactly three national holidays, the same everywhere in the country: Republic Day, Independence Day and Gandhi Jayanti. Every other holiday is declared by the central government for its own offices, or by each state.</p>
+    <div class="cards">
+      <div class="c big"><span class="lab">National holiday</span><span class="dt">26 January</span><span class="nm">Republic Day</span><span class="nt">The Constitution came into effect in 1950 and India became a republic. The date was chosen because the Indian National Congress had proclaimed <i>Purna Swaraj</i>, complete independence, on that day in 1930.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+      <div class="c big"><span class="lab">National holiday</span><span class="dt">15 August</span><span class="nm">Independence Day</span><span class="nt">India became independent in 1947. The Prime Minister raises the flag at the Red Fort each year and addresses the nation.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+      <div class="c big"><span class="lab">National holiday</span><span class="dt">2 October</span><span class="nm">Gandhi Jayanti</span><span class="nt">The birthday of Mahatma Gandhi, called the Father of the Nation. The UN General Assembly made it the International Day of Non-Violence in 2007.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+    </div>
+
+    <h3>Other national days: observed nationwide, not holidays</h3>
+    <div class="tw"><table>
+      <thead><tr><th>Date</th><th>Day</th><th>What it marks</th></tr></thead>
+      <tbody id="obs"></tbody>
+    </table></div>
+
+    <h3>Central government holidays, 2026</h3>
+    <p class="next-line" id="nextline"></p>
+    <div class="tw"><table>
+      <thead><tr><th>Date</th><th>Holiday</th><th>Notes</th></tr></thead>
+      <tbody id="hol"></tbody>
+    </table></div>
+    <div class="note ok" id="holnote"><b>What this list is.</b> The 18 gazetted holidays for central government offices in 2026. It started as the Department of Personnel and Training's Office Memorandum of 3 July 2025 (F.No.12/2/2023-JCA), which lists 17; I read a government copy of it. Two later changes come from DoPT orders as reported on staff-news sites, because DoPT's own site would not load from here: Dr. B.R. Ambedkar Jayanti on 14 April was added (order of 9 April 2026), and Id-ul-Zuha moved from 27 to 28 May (O.M. of 22 May 2026). Dates of lunar-calendar festivals differ every year, and this list is for 2026 only. States add their own holidays, and banks follow their own calendar. Central employees may also take restricted holidays, which are optional.</div>
+  </section>
+
+  <section id="constitution">
+    <h2>The Constitution and the government</h2>
+    <p class="sub">Text quoted below is taken verbatim from the Constitution as printed on <a href="../bharat-chronicle/" style="color:var(--accent)">Bharat Chronicle</a>.</p>
+    <div class="cards">
+      <div class="c big"><span class="lab">Adopted</span><span class="dt">26 Nov 1949</span><span class="nm">Constitution Day</span><span class="nt">Adopted by the Constituent Assembly. The government declared 26 November Constitution Day (<i>Samvidhan Divas</i>) by gazette notification on 19 November 2015.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+      <div class="c big"><span class="lab">In effect</span><span class="dt">26 Jan 1950</span><span class="nm">Republic Day</span><span class="nt">The Dominion of India became the Republic of India. Article 395 repealed the earlier British Acts.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+      <div class="c big"><span class="lab">Article 1</span><span class="nm">“India, that is Bharat, shall be a Union of States.”</span><span class="nt">Both names are official.</span><span class="ad"><span class="src">Constitution</span></span></div>
+    </div>
+
+    <h3>Who does what</h3>
+    <div class="cards">
+      <div class="c"><span class="lab">Head of state</span><span class="nm">The President</span><span class="nt">“There shall be a President of India” (Art. 52). The Union's executive power is vested in the President, who also holds supreme command of the Defence Forces (Art. 53).</span><span class="ad"><span class="src">Constitution</span></span></div>
+      <div class="c"><span class="lab">Parliament</span><span class="nm">President and two Houses</span><span class="nt">The Council of States (Rajya Sabha) and the House of the People (Lok Sabha) (Art. 79). The Vice-President chairs the Rajya Sabha.</span><span class="ad"><span class="src">Constitution · Wikipedia</span></span></div>
+      <div class="c"><span class="lab">Lok Sabha</span><span class="nm">543 elected members</span><span class="nt">The Constitution allows up to 530 from the states and 20 from Union Territories (Art. 81). Members are directly elected for five years.</span><span class="ad"><span class="src">Constitution · Wikipedia</span></span></div>
+      <div class="c"><span class="lab">Rajya Sabha</span><span class="nm">245 members</span><span class="nt">233 elected by the state and UT legislatures plus 12 nominated by the President for literature, science, art and social service. Article 80 allows up to 250. It is never dissolved.</span><span class="ad"><span class="src">Constitution · Wikipedia</span></span></div>
+    </div>
+
+    <h3>Language: what the Constitution actually says</h3>
+    <div class="two">
+      <div>
+        <blockquote>“The official language of the Union shall be Hindi in Devanagari script. The form of numerals to be used for the official purposes of the Union shall be the international form of Indian numerals.” <span class="src">Article 343(1)</span></blockquote>
+        <p>English was to continue for fifteen years (Art. 343(2)). The Official Languages Act, 1963, which took effect on 26 January 1965, kept English as an official language alongside Hindi. Court proceedings and the authoritative texts of laws are in English unless Parliament provides otherwise (Art. 348). <span class="src">Constitution · Wikipedia</span></p>
+        <p>The Constitution names no “national language”.</p>
+      </div>
+      <div>
+        <p style="margin-bottom:.5rem">The Eighth Schedule lists the 22 languages the Constitution recognizes, verbatim in this order. It is a list of recognized languages, not of official or national ones. <span class="src">Constitution</span></p>
+        <ul class="langs" id="langs"></ul>
+      </div>
+    </div>
+
+    <h3>Rights and duties</h3>
+    <div class="cards">
+      <div class="c"><span class="lab">Part III · Articles 12–35</span><span class="nm">Fundamental Rights</span><span class="nt">Equality (14–18). Freedom, including speech, life and personal liberty (19–22, with 21A, the right to education for ages 6 to 14). Against exploitation (23–24). Freedom of religion (25–28). Cultural and educational rights of minorities (29–30). Constitutional remedies (32).</span><span class="ad"><span class="src">Constitution</span></span></div>
+      <div class="c"><span class="lab">Part IVA · Article 51A</span><span class="nm">Eleven Fundamental Duties</span><span class="nt">From abiding by the Constitution, the National Flag and the National Anthem, to protecting the environment and safeguarding public property. All eleven follow, verbatim.</span><span class="ad"><span class="src">Constitution</span></span></div>
+    </div>
+    <details><summary>Article 51A, the eleven duties, verbatim</summary>
+      <p style="margin:.8rem 0 0">It shall be the duty of every citizen of India—</p>
+      <ol>
+        <li>(a) to abide by the Constitution and respect its ideals and institutions, the National Flag and the National Anthem;</li>
+        <li>(b) to cherish and follow the noble ideals which inspired our national struggle for freedom;</li>
+        <li>(c) to uphold and protect the sovereignty, unity and integrity of India;</li>
+        <li>(d) to defend the country and render national service when called upon to do so;</li>
+        <li>(e) to promote harmony and the spirit of common brotherhood amongst all the people of India transcending religious, linguistic and regional or sectional diversities; to renounce practices derogatory to the dignity of women;</li>
+        <li>(f) to value and preserve the rich heritage of our composite culture;</li>
+        <li>(g) to protect and improve the natural environment including forests, lakes, rivers and wild life, and to have compassion for living creatures;</li>
+        <li>(h) to develop the scientific temper, humanism and the spirit of inquiry and reform;</li>
+        <li>(i) to safeguard public property and to abjure violence;</li>
+        <li>(j) to strive towards excellence in all spheres of individual and collective activity so that the nation constantly rises to higher levels of endeavour and achievement;</li>
+        <li>(k) who is a parent or guardian to provide opportunities for education to his child or, as the case may be, ward between the age of six and fourteen years.</li>
+      </ol>
+    </details>
+  </section>
+
+  <section id="states">
+    <h2>States and Union Territories</h2>
+    <p class="sub">28 states and 8 Union Territories, matching the First Schedule of the Constitution as printed on Bharat Chronicle. Capitals are from Wikipedia. States govern themselves; Union Territories are governed by the Union, although Delhi, Puducherry and Jammu and Kashmir have elected legislatures.</p>
+    <div class="two">
+      <div class="tw"><table><thead><tr><th>State</th><th>Capital</th></tr></thead><tbody id="st"></tbody></table></div>
+      <div>
+        <div class="tw"><table><thead><tr><th>Union Territory</th><th>Capital</th></tr></thead><tbody id="ut"></tbody></table></div>
+        <div class="note ok"><b>Recent changes.</b> Telangana was carved out of Andhra Pradesh on 2 June 2014. Jammu and Kashmir and Ladakh became separate Union Territories on 31 October 2019. Dadra and Nagar Haveli and Daman and Diu were merged into one Union Territory on 26 January 2020. <span class="src">Wikipedia</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="honors">
+    <h2>National honors</h2>
+    <p class="sub">Counts are as of the date shown and keep changing, so treat them as snapshots.</p>
+    <div class="cards">
+      <div class="c"><span class="lab">Highest civilian award</span><span class="nm">Bharat Ratna</span><span class="nt">Instituted 2 January 1954, for “exceptional service/performance of the highest order” in any field. The first recipients, in 1954, were C. Rajagopalachari, Sarvepalli Radhakrishnan and C. V. Raman.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+      <div class="c"><span class="lab">Civilian awards, ranks 2 to 4</span><span class="nm">Padma Vibhushan, Bhushan, Shri</span><span class="nt">All instituted 2 January 1954. Second, third and fourth in order after the Bharat Ratna. The Padma awards are announced around Republic Day.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+      <div class="c"><span class="lab">Highest wartime gallantry</span><span class="nm">Param Vir Chakra</span><span class="nt">For “most conspicuous bravery in the presence of the enemy”. Instituted 26 January 1950, effective from 15 August 1947. Awarded 21 times as of January 2018; the first recipient was Major Somnath Sharma.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+      <div class="c"><span class="lab">Highest peacetime gallantry</span><span class="nm">Ashoka Chakra</span><span class="nt">Open to military personnel and civilians. 87 recipients as of 2026; the first, in 1952, was Havildar Bachittar Singh.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+    </div>
+  </section>
+
+  <section id="myths">
+    <h2>Commonly said, but not official</h2>
+    <p class="sub">Four things most people believe, and what the government's own statements say.</p>
+    <div class="cards">
+      <div class="c"><span class="lab">“National language”</span><span class="nm">None</span><span class="nt">The Constitution designates an official language of the Union (Hindi in Devanagari) and English continues alongside it. It names no national language. Twenty-two languages are recognized in the Eighth Schedule.</span><span class="ad"><span class="src">Constitution · Wikipedia</span></span></div>
+      <div class="c"><span class="lab">“National sport”</span><span class="nm">None declared</span><span class="nt">Hockey is the usual answer and India's men's team has won eight Olympic golds, but replies to RTI queries from the Ministry of Youth Affairs and Sports say no sport has been declared the national game. One 2012 reply is cited on Wikipedia.</span><span class="ad"><span class="src">Wikipedia · news reports</span></span></div>
+      <div class="c"><span class="lab">“National flower”</span><span class="nm">Lotus, but never notified</span><span class="nt">The lotus appears on the government portal. Yet in a written Rajya Sabha reply on 10 July 2019, Minister of State for Home Nityananda Rai said no notification had been issued for a national flower by the Environment Ministry.</span><span class="ad"><span class="src">Press report · Portal</span></span></div>
+      <div class="c"><span class="lab">“National reptile”</span><span class="nm">King cobra: unconfirmed</span><span class="nt">It is listed as one on Wikipedia, with no adoption date. It is not among the portal's thirteen elements, and I found no official notification for it.</span><span class="ad"><span class="src">Wikipedia</span></span></div>
+    </div>
+  </section>
+
+  <section id="sources">
+    <h2>Sources and what is verified</h2>
+    <p class="sub"><b>Read from the primary text:</b> the Constitution's articles and Eighth Schedule (from Bharat Chronicle), the government portal's symbol descriptions, the anthem and song texts, the anthem rules, the Constituent Assembly statement of 24 January 1950, and the July 2025 DoPT holiday memorandum. <b>Rests on secondary sources:</b> the two 2026 holiday changes, the 2026 Vande Mataram order, the 2021 and 2022 Flag Code amendments, the 2019 Rajya Sabha reply (read only in press summaries), and every item tagged Wikipedia. Check anything you will rely on against the official source.</p>
+    <ol class="srcs">
+      <li>Know India, “National Identity Elements of India” (thirteen pages), National Portal, <a href="https://web.archive.org/web/20121214200656/http://knowindia.gov.in/knowindia/national_symbols.php">archived 14 Dec 2012</a>.</li>
+      <li><a href="https://www.constitutionofindia.net/debates/24-jan-1950/">Constituent Assembly Debates, 24 January 1950</a>: the statement on the anthem and song.</li>
+      <li>The Constitution of India, as printed on <a href="../bharat-chronicle/">Bharat Chronicle</a>.</li>
+      <li>Wikipedia: <a href="https://en.wikipedia.org/wiki/National_symbols_of_India">National symbols of India</a>, <a href="https://en.wikipedia.org/wiki/Flag_Code_of_India">Flag Code of India</a>, <a href="https://en.wikipedia.org/wiki/Public_holidays_in_India">Public holidays in India</a>, <a href="https://en.wikipedia.org/wiki/States_and_union_territories_of_India">States and union territories of India</a>, and the articles on each day and honour.</li>
+      <li>DoPT Office Memorandum F.No.12/2/2023-JCA, 3 July 2025, <a href="https://dfe.gov.in/uploads/documents/list-of-gazetted-holidays-2026.pdf">as reproduced by a central government office</a>.</li>
+      <li>Vande Mataram order, Ministry of Home Affairs, 28 January 2026: <a href="https://www.scconline.com/blog/post/2026/02/12/mha-issued-guidelines-on-singing-national-song-2026/">SCC Online</a>, <a href="https://www.newsonair.gov.in/centre-issues-guidelines-for-rendition-of-national-song-vande-mataram">All India Radio</a>.</li>
+      <li>Written Rajya Sabha reply on the national flower, 10 July 2019, as reported by <a href="https://theprint.in/india/governance/lotus-was-never-notified-as-the-national-flower-minister-tells-rajya-sabha/261246/">ThePrint</a>.</li>
+    </ol>
+  </section>
+
+  <p class="quick" style="margin-top:2rem">Sentinel Atlas · Plate IX</p>
+</div>
+<script>
+// [label, name, latin/sub, note, adopted, source]
+var SYM=[
+["National flag","The Tiranga","Tricolour","Deep saffron, white and dark green, with a navy 24-spoke wheel from the Sarnath capital.","Design adopted 22 Jul 1947; official 15 Aug 1947","Portal · Wikipedia"],
+["State emblem","Lion Capital of Ashoka","Adapted from Sarnath","Three of the four lions show, the wheel on the abacus with a bull to its right and a horse to its left. The motto Satyameva Jayate (“Truth alone triumphs”), from the Mundaka Upanishad, is below in Devanagari.","26 Jan 1950 (Portal). Wikipedia also gives 30 Dec 1947.","Portal · Wikipedia"],
+["National anthem","Jana Gana Mana","Rabindranath Tagore","The words and music of the first stanza of Tagore's song. About 52 seconds.","24 Jan 1950","Const. Assembly"],
+["National song","Vande Mataram","Bankim Chandra Chatterji","Composed in Sanskrit. Honored equally with the anthem and of equal status.","24 Jan 1950","Const. Assembly"],
+["National bird","Indian peafowl","Pavo cristatus","The male has a glistening blue neck and breast and a bronze-green train of about 200 elongated feathers, fanned in courtship.","1 Feb 1963 (Wikipedia)","Portal · Wikipedia"],
+["National animal","Tiger","Panthera tigris","The Indian race, the Royal Bengal Tiger, is found throughout the country except the north-west. Project Tiger began in April 1973.","April 1973 (Wikipedia)","Portal · Wikipedia"],
+["National flower","Lotus","Nelumbo nucifera","A sacred flower with a unique place in the art and mythology of ancient India. Never formally notified; see the last section.","No notification found","Portal"],
+["National tree","Indian banyan","Ficus benghalensis","Its branches root themselves like new trees. Considered immortal and part of India's myths; village councils traditionally meet in its shade.","Listed on the portal; no date given","Portal"],
+["National fruit","Mango","Mangifera indica","Over 100 varieties in India, grown from time immemorial. Akbar planted 100,000 mango trees at Lakhi Bagh in Darbhanga, Bihar.","Listed on the portal; no date given","Portal"],
+["National river","Ganga","The Ganges","India's longest river, about 2,510 km, rising as the Bhagirathi at the Gangotri Glacier in the Himalayas.","4 Nov 2008 (Wikipedia)","Portal · Wikipedia"],
+["National aquatic animal","Ganges river dolphin","Platanista gangetica","Locally called susu for the sound of its breathing. Said to represent the purity of the Ganga, since it survives only in pure fresh water; listed by the portal as endangered.","Notified 18 May 2010 by the Environment Ministry","Portal"],
+["National calendar","Saka calendar","Indian National Calendar","Saka Era, Chaitra the first month, 365 days. 1 Chaitra falls on 22 March, or 21 March in a leap year. Used in the Gazette of India and by All India Radio.","22 Mar 1957","Portal"],
+["Currency symbol","₹","The rupee sign","A blend of the Devanagari letter “Ra” and the Roman capital “R”, with two horizontal bars for the flag and the equals sign. Designed by Udaya Kumar of IIT Bombay.","15 Jul 2010","Portal"]
+];
+var SYM2=[
+["National heritage animal","Indian elephant","Elephas maximus indicus","Declared the national heritage animal in 2010, on Wikipedia's account. It does not appear on the portal's list.","22 Oct 2010 (Wikipedia)","Wikipedia"],
+["National pledge","“India is my country…”","Pydimarri Venkata Subba Rao","Written in Telugu in 1962. It is not part of the Constitution. Schools were directed to recite it from 26 January 1965.","26 Jan 1965 (Wikipedia)","Wikipedia"]
+];
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function cards(id,list){
+  document.getElementById(id).innerHTML=list.map(function(x){
+    return '<div class="c"><span class="lab">'+esc(x[0])+'</span><span class="nm">'+esc(x[1])+'</span><span class="la">'+esc(x[2])+'</span><span class="nt">'+esc(x[3])+'</span><span class="ad"><span>'+esc(x[4])+'</span><span class="src">'+esc(x[5])+'</span></span></div>';
+  }).join("");
+}
+cards("sym",SYM);cards("sym2",SYM2);
+
+// chakra: 24 spokes, radius = half the white band
+(function(){
+  var g=document.getElementById("chakra"),cx=150,cy=100,r=32,s='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" stroke-width="2.2"/><circle cx="'+cx+'" cy="'+cy+'" r="4" fill="#1d2a6b" stroke="none"/>';
+  for(var i=0;i<24;i++){var a=i*Math.PI/12;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+r*Math.cos(a)).toFixed(2)+'" y2="'+(cy+r*Math.sin(a)).toFixed(2)+'" stroke-width="1.2"/>';}
+  g.innerHTML=s;
+})();
+
+var OBS=[
+["12 Jan","National Youth Day","The birthday of Swami Vivekananda. Declared in 1984 and celebrated from 1985.","Wikipedia"],
+["23 Jan","Parakram Diwas","The birthday of Netaji Subhas Chandra Bose, “Day of Valour”.","Wikipedia"],
+["30 Jan","Martyrs' Day","Marks Gandhi's assassination in 1948. A two-minute silence is observed nationwide at 11 am.","Wikipedia"],
+["26 Jul","Kargil Vijay Diwas","Honors the soldiers of the 1999 Kargil War.","Wikipedia"],
+["5 Sep","Teachers' Day","The birthday of Sarvepalli Radhakrishnan, the second President, observed since 1962.","Wikipedia"],
+["14 Sep","Hindi Diwas","Commemorates the Constituent Assembly's 1949 decision to adopt Hindi as an official language.","Wikipedia"],
+["31 Oct","Rashtriya Ekta Diwas","National Unity Day, introduced in 2014 on the birthday of Vallabhbhai Patel.","Wikipedia"],
+["14 Nov","Children's Day","The birthday of Jawaharlal Nehru, the first Prime Minister.","Wikipedia"],
+["26 Nov","Constitution Day","Samvidhan Divas. Declared by gazette notification on 19 November 2015.","Wikipedia"],
+["16 Dec","Vijay Diwas","Marks the 1971 war that led to the creation of Bangladesh.","Wikipedia"]
+];
+document.getElementById("obs").innerHTML=OBS.map(function(x){return '<tr><td class="d">'+esc(x[0])+'</td><td>'+esc(x[1])+'</td><td class="n">'+esc(x[2])+'</td></tr>'}).join("");
+
+// [yyyy-mm-dd, name, note, national?]
+var HOL=[
+["2026-01-26","Republic Day","National holiday",1],
+["2026-03-04","Holi","",0],
+["2026-03-21","Id-ul-Fitr","",0],
+["2026-03-26","Ram Navami","",0],
+["2026-03-31","Mahavir Jayanti","",0],
+["2026-04-03","Good Friday","",0],
+["2026-04-14","Dr. B.R. Ambedkar Jayanti","Added by DoPT order of 9 Apr 2026",0],
+["2026-05-01","Buddha Purnima","",0],
+["2026-05-28","Id-ul-Zuha (Bakrid)","Moved from 27 May by O.M. of 22 May 2026",0],
+["2026-06-26","Muharram","",0],
+["2026-08-15","Independence Day","National holiday",1],
+["2026-08-26","Milad-un-Nabi","Birthday of the Prophet",0],
+["2026-09-04","Janmashtami (Vaishnava)","",0],
+["2026-10-02","Mahatma Gandhi's Birthday","National holiday",1],
+["2026-10-20","Dussehra (Vijaya Dashami)","",0],
+["2026-11-08","Diwali (Deepavali)","",0],
+["2026-11-24","Guru Nanak's Birthday","",0],
+["2026-12-25","Christmas Day","",0]
+];
+(function(){
+  var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],W=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var now=new Date(),t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  var nextI=-1,rows=HOL.map(function(h,i){
+    var p=h[0].split("-"),d=new Date(+p[0],+p[1]-1,+p[2]);
+    var past=d<t0;if(!past&&nextI<0&&now.getFullYear()===2026)nextI=i;
+    h.d=d;h.past=past;return h;
+  });
+  document.getElementById("hol").innerHTML=rows.map(function(h,i){
+    var cls=(h.past?"past ":"")+(i===nextI?"next ":"")+(h[3]?"natl":"");
+    var wk=h.d.getDay(),wkend=(wk===0||wk===6);
+    var note=h[2]+(wkend?(h[2]?". ":"")+"Falls on a "+(wk===0?"Sunday":"Saturday"):"");
+    return '<tr class="'+cls.trim()+'"><td class="d">'+h.d.getDate()+' '+M[h.d.getMonth()]+' · '+W[wk]+'</td><td>'+esc(h[1])+(h[3]?'<span class="pill">National</span>':'')+(i===nextI?'<span class="pill">Next</span>':'')+'</td><td class="n">'+esc(note)+'</td></tr>';
+  }).join("");
+  var nl=document.getElementById("nextline");
+  if(now.getFullYear()!==2026){
+    nl.textContent="This list is for 2026 only. The three national holidays are the same every year.";
+  }else if(nextI>=0){
+    var days=Math.round((HOL[nextI].d-t0)/86400000);
+    nl.textContent="Next: "+HOL[nextI][1]+", "+(days===0?"today":days===1?"tomorrow":"in "+days+" days")+".";
+  }else{nl.textContent="No more central holidays this year.";}
+})();
+
+var LANG=["Assamese","Bengali","Bodo","Dogri","Gujarati","Hindi","Kannada","Kashmiri","Konkani","Maithili","Malayalam","Manipuri","Marathi","Nepali","Odia","Punjabi","Sanskrit","Santhali","Sindhi","Tamil","Telugu","Urdu"];
+document.getElementById("langs").innerHTML=LANG.map(function(l,i){return '<li><span>'+(i+1)+'</span>'+l+'</li>'}).join("");
+
+var ST=[
+["Andhra Pradesh","Amaravati","Per the state's Dec 2024 affidavit. Hyderabad was the joint capital from 2014"],
+["Arunachal Pradesh","Itanagar",""],["Assam","Dispur",""],["Bihar","Patna",""],
+["Chhattisgarh","Raipur","Nava Raipur is planned to replace it"],
+["Goa","Panaji",""],["Gujarat","Gandhinagar",""],["Haryana","Chandigarh","Shared with Punjab"],
+["Himachal Pradesh","Shimla","Dharamshala in winter"],["Jharkhand","Ranchi",""],
+["Karnataka","Bengaluru","Belagavi in winter"],["Kerala","Thiruvananthapuram",""],
+["Madhya Pradesh","Bhopal",""],["Maharashtra","Mumbai","Nagpur in winter"],
+["Manipur","Imphal",""],["Meghalaya","Shillong",""],["Mizoram","Aizawl",""],["Nagaland","Kohima",""],
+["Odisha","Bhubaneswar",""],["Punjab","Chandigarh","Shared with Haryana"],["Rajasthan","Jaipur",""],
+["Sikkim","Gangtok",""],["Tamil Nadu","Chennai",""],["Telangana","Hyderabad",""],
+["Tripura","Agartala",""],["Uttar Pradesh","Lucknow",""],
+["Uttarakhand","Dehradun","Bhararisain (Gairsain) in summer"],["West Bengal","Kolkata",""]
+];
+var UT=[
+["Andaman and Nicobar Islands","Port Blair",""],["Chandigarh","Chandigarh","Also capital of Punjab and Haryana"],
+["Dadra and Nagar Haveli and Daman and Diu","Daman",""],["Delhi","New Delhi",""],
+["Jammu and Kashmir","Srinagar","Jammu in winter"],["Ladakh","Leh","Kargil in winter"],
+["Lakshadweep","Kavaratti",""],["Puducherry","Puducherry",""]
+];
+function tbl(id,list){document.getElementById(id).innerHTML=list.map(function(x){return '<tr><td>'+esc(x[0])+'</td><td>'+esc(x[1])+(x[2]?'<br><span class="n" style="font-size:.8rem;color:var(--ink-faint)">'+esc(x[2])+'</span>':'')+'</td></tr>'}).join("")}
+tbl("st",ST);tbl("ut",UT);
+</script>
+</body>
+</html>
