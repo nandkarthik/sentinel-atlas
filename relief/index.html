@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shikhara: Relief of India</title>
+<meta name="description" content="A contour map of India built from NOAA elevation data, with the main peaks and mountain passes, their heights and sources.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9e3cf; --surface:#ddd5b8; --card:#f2ecd9;
+  --ink:#231f15; --ink-soft:#5a5540; --ink-faint:#877f63;
+  --line:rgba(35,31,21,0.16);
+  --accent:#8a4b1f; --accent-soft:rgba(138,75,31,0.13);
+  --warn:#8f3a2a; --warn-soft:rgba(143,58,42,0.10);
+  --shadow:0 10px 30px rgba(35,31,21,0.12);
+  --sea:#bccac6;
+  --b0:#d6dbb0; --b100:#c4cf9c; --b250:#b0c18a; --b500:#c8c27f; --b1000:#cfb06f; --b1500:#c49a5f;
+  --b2000:#b58353; --b3000:#a06d4a; --b4000:#8f6a5c; --b5000:#a08f88; --b6000:#c9c0bb; --b7000:#ece8e4;
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+    --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+    --line:rgba(236,229,207,0.16);
+    --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16);
+    --warn:#e58c78; --warn-soft:rgba(229,140,120,0.12);
+    --shadow:0 10px 30px rgba(0,0,0,0.5);
+    --sea:#0f1a1c;
+    --b0:#2f3524; --b100:#38432a; --b250:#435130; --b500:#55552f; --b1000:#665a30; --b1500:#6f5a35;
+    --b2000:#7a5d3c; --b3000:#86664a; --b4000:#907563; --b5000:#a08f84; --b6000:#c0b4ab; --b7000:#e6dfd8;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+  --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+  --line:rgba(236,229,207,0.16);
+  --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16);
+  --warn:#e58c78; --warn-soft:rgba(229,140,120,0.12);
+  --shadow:0 10px 30px rgba(0,0,0,0.5);
+  --sea:#0f1a1c;
+  --b0:#2f3524; --b100:#38432a; --b250:#435130; --b500:#55552f; --b1000:#665a30; --b1500:#6f5a35;
+  --b2000:#7a5d3c; --b3000:#86664a; --b4000:#907563; --b5000:#a08f84; --b6000:#c0b4ab; --b7000:#e6dfd8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding:1.4rem 16px 3rem}
+.crumbs{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 1.4rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+.crumbs a{color:var(--ink-faint);text-decoration:none}.crumbs a:hover{color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2rem,5vw,3.2rem);line-height:1.05;margin:0 0 .4rem;text-wrap:balance}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.7rem;margin:0 0 .3rem}
+.lede{color:var(--ink-soft);max-width:62ch;margin:0 0 1.3rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
+.chip{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:.4rem .8rem;border-radius:99px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent-soft);color:var(--ink);border-color:var(--accent)}
+.chip:focus-visible,.mk:focus-visible,.item:focus-visible,.zb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mapbox{position:relative;border:1px solid var(--line);border-radius:6px;background:var(--sea);box-shadow:var(--shadow);overflow:hidden}
+svg#map{display:block;width:100%;height:auto;max-height:82vh;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+svg#map.drag{cursor:grabbing}
+.zoom{position:absolute;bottom:.6rem;left:.6rem;display:flex;flex-direction:column;gap:.3rem}
+.zb{font-family:var(--font-mono);font-size:1rem;line-height:1;width:2.2rem;height:2.2rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:4px;cursor:pointer}
+.zb:hover{border-color:var(--accent)}
+.loading{padding:4rem 1rem;text-align:center;font-family:var(--font-mono);font-size:.8rem;color:var(--ink-soft)}
+#terr path{vector-effect:non-scaling-stroke;fill-rule:evenodd;stroke:var(--ink);stroke-opacity:.24;stroke-width:.5;stroke-linejoin:round}
+#terr path.ix{stroke-opacity:.5;stroke-width:.9}
+svg.nobands #terr path{fill:none!important}
+svg.nolines #terr path{stroke:none}
+#border{fill:none;stroke:var(--ink);stroke-width:.9;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.mk{cursor:pointer}
+.mk .sh{fill:var(--card);stroke:var(--ink);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.mk.peak .sh{fill:var(--warn)}
+.mk.pass .sh{fill:var(--card)}
+.mk[aria-pressed="true"] .sh{stroke:var(--accent);stroke-width:2.4}
+.mk .lb{font-family:var(--font-mono);font-size:11px;fill:var(--ink);paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round;opacity:0;pointer-events:none}
+.mk[aria-pressed="true"] .lb,.mk:hover .lb{opacity:1}
+svg.nopeaks .mk.peak,svg.nopasses .mk.pass{display:none}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem .9rem;margin:.9rem 0 0;font-family:var(--font-mono);font-size:.68rem;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap}
+.legend i{width:1.1rem;height:.7rem;border:1px solid var(--line);display:inline-block}
+.sel{margin-top:1rem;padding:.8rem 1rem;border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--card);border-radius:4px;box-shadow:var(--shadow)}
+.sel .k{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+.sel .n{font-family:var(--font-display);font-size:1.5rem;line-height:1.2}
+.sel .h{font-family:var(--font-mono);font-size:1.05rem;font-variant-numeric:tabular-nums;color:var(--accent)}
+.sel .d{color:var(--ink-soft);font-size:.95rem}
+.sel .c{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-faint);margin-top:.2rem}
+.grp{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:1.6rem 0 .5rem}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:.6rem}
+.item{display:flex;flex-direction:column;gap:.1rem;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:.6rem .85rem;cursor:pointer;min-width:0}
+.item:hover,.item[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.item .nm{font-size:1rem}
+.item .ht{font-family:var(--font-mono);font-size:.95rem;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums}
+.item .ds{font-size:.8rem;color:var(--ink-faint);line-height:1.35}
+.note{margin-top:1.2rem;padding:.8rem 1rem;border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:4px;font-size:.92rem;color:var(--ink-soft)}
+.note b{color:var(--ink)}
+.src{margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--line);color:var(--ink-soft);font-size:.95rem}
+.src p{max-width:70ch;margin:.5rem 0}
+.src a{color:var(--accent)}
+.quick{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft);margin:1.2rem 0 0}
+@media (prefers-reduced-motion:no-preference){.mk .sh{transition:stroke-width .12s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="../">← Sentinel Atlas</a><a href="../rivers/">Nadi: Rivers →</a></div>
+  <h1>Shikhara: Relief of India</h1>
+  <p class="lede">Lines of equal height across the country, from the Deccan plateau to the Karakoram. Drag to pan, use the buttons to zoom, and tap a peak or pass for its height and where the figure comes from.</p>
+
+  <div class="chips" role="group" aria-label="Map layers" id="layers">
+    <button class="chip" data-l="bands" aria-pressed="true">Height bands</button>
+    <button class="chip" data-l="lines" aria-pressed="true">Contour lines</button>
+    <button class="chip" data-l="peaks" aria-pressed="true">Peaks</button>
+    <button class="chip" data-l="passes" aria-pressed="true">Passes</button>
+  </div>
+
+  <div class="mapbox">
+    <div class="loading" id="loading">Loading the map…</div>
+    <svg id="map" viewBox="0 0 1000 1144" role="img" aria-label="Contour map of India with peaks and passes" hidden></svg>
+    <div class="zoom" id="zoom" hidden>
+      <button class="zb" id="zi" aria-label="Zoom in">+</button>
+      <button class="zb" id="zo" aria-label="Zoom out">−</button>
+      <button class="zb" id="zr" aria-label="Reset view" style="font-size:.7rem">1×</button>
+    </div>
+  </div>
+  <div class="legend" id="legend" aria-label="Height bands"></div>
+
+  <div class="sel" id="sel" aria-live="polite"></div>
+
+  <div class="grp">Peaks, highest first</div>
+  <div class="list" id="peaks"></div>
+  <div class="grp">Passes, highest first</div>
+  <div class="list" id="passes"></div>
+
+  <div class="note"><b>A teaching map, not a survey document.</b> The outline follows the India-perspective version published by Natural Earth. It has not been checked by the Survey of India. For the official depiction of India's boundary, use Survey of India maps.</div>
+
+  <div class="src">
+    <h2>How this was made</h2>
+    <p><b>Heights.</b> The contours come from the NOAA NCEI <a href="https://www.ncei.noaa.gov/products/etopo-global-relief-model">ETOPO 2022</a> global relief model, the 60 arc-second grid (cells about 1.8 km wide). Land is banded at 100, 250, 500, 1,000, 1,500, 2,000, 3,000, 4,000, 5,000, 6,000 and 7,000 m, and the lines were traced and simplified for this page.</p>
+    <p><b>Why summits look lower on the grid.</b> A 1.8 km cell averages the ground under it, so narrow ridges and summits are flattened. In this grid, the cell nearest Kangchenjunga reads about 7,900 m, against its stated 8,586 m. That is why the peak and pass heights below are not read off the grid. They are the figures in each place's Wikipedia infobox as of September 2026, where sources can differ by a few metres (Nanda Devi is often given as 7,816 m, for example) and some passes have disputed heights (Khardung La is often quoted far higher than 5,359 m). Jelep La's source gives 14,390 ft, converted here.</p>
+    <p><b>Outline.</b> <a href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/">Natural Earth</a> 1:10m countries, India (ind) point-of-view version, public domain. Terrain outside the outline is drawn faded for context.</p>
+    <p><b>Left out.</b> Peaks and passes that sit on or beside disputed lines (Saltoro Kangri and Lipulekh, for example) are not marked. State borders are not drawn yet.</p>
+  </div>
+  <p class="quick">Sentinel Atlas · Plate X</p>
+</div>
+<script>
+(function(){
+var LV=[0,100,250,500,1000,1500,2000,3000,4000,5000,6000,7000];
+var IX={1000:1,2000:1,3000:1,4000:1,5000:1,6000:1,7000:1};
+function lab(i){var a=LV[i],b=LV[i+1];function f(n){return n.toLocaleString("en-US")}
+  return i===0?"Below 100 m":(b?f(a)+"–"+f(b):"Above "+f(a)+" m")}
+function ft(m){return Math.round(m*3.28084).toLocaleString("en-US")}
+function fmt(n){return n.toLocaleString("en-US")}
+var svg=document.getElementById("map"),NS="http://www.w3.org/2000/svg",D=null,VB=null,view=null,sel=null;
+function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+
+// legend
+var lg=document.getElementById("legend");
+LV.forEach(function(v,i){var s=document.createElement("span");s.innerHTML='<i style="background:var(--b'+v+')"></i>'+lab(i);lg.appendChild(s)});
+
+// layers
+var lay={bands:1,lines:1,peaks:1,passes:1};
+var saved=null;try{saved=JSON.parse(localStorage.getItem("relief-layers"))}catch(e){}
+if(saved)for(var k in lay)if(k in saved)lay[k]=saved[k]?1:0;
+function applyLayers(){
+  svg.classList.toggle("nobands",!lay.bands);svg.classList.toggle("nolines",!lay.lines);
+  svg.classList.toggle("nopeaks",!lay.peaks);svg.classList.toggle("nopasses",!lay.passes);
+  document.querySelectorAll("#layers .chip").forEach(function(b){b.setAttribute("aria-pressed",!!lay[b.dataset.l])});
+}
+document.querySelectorAll("#layers .chip").forEach(function(b){b.onclick=function(){
+  lay[b.dataset.l]=lay[b.dataset.l]?0:1;applyLayers();try{localStorage.setItem("relief-layers",JSON.stringify(lay))}catch(e){}}});
+
+// view / zoom
+function setView(v){view=v;svg.setAttribute("viewBox",v.x+" "+v.y+" "+v.w+" "+v.h);
+  var z=VB[2]/v.w;markScale();
+  document.getElementById("zr").textContent=(Math.round(z*10)/10)+"×"}
+function markScale(){var w=svg.getBoundingClientRect().width;if(!w||!view)return;var k=view.w/w;
+  svg.querySelectorAll(".mk .scale").forEach(function(g){g.setAttribute("transform","scale("+k+")")})}
+window.addEventListener("resize",markScale);
+function clamp(v){v.w=Math.min(VB[2],Math.max(VB[2]/12,v.w));v.h=v.w*VB[3]/VB[2];
+  v.x=Math.min(VB[0]+VB[2]-v.w,Math.max(VB[0],v.x));v.y=Math.min(VB[1]+VB[3]-v.h,Math.max(VB[1],v.y));return v}
+function zoomAt(f,cx,cy){var v=view;var nw=v.w/f;var nv={w:nw,h:0,x:cx-(cx-v.x)*nw/v.w,y:cy-(cy-v.y)*nw/v.w};setView(clamp(nv))}
+function centre(){return[view.x+view.w/2,view.y+view.h/2]}
+document.getElementById("zi").onclick=function(){var c=centre();zoomAt(1.6,c[0],c[1])};
+document.getElementById("zo").onclick=function(){var c=centre();zoomAt(1/1.6,c[0],c[1])};
+document.getElementById("zr").onclick=function(){setView({x:VB[0],y:VB[1],w:VB[2],h:VB[3]})};
+function toSvg(cx,cy){var r=svg.getBoundingClientRect();return[view.x+(cx-r.left)/r.width*view.w,view.y+(cy-r.top)/r.height*view.h]}
+svg.addEventListener("wheel",function(e){e.preventDefault();var p=toSvg(e.clientX,e.clientY);zoomAt(e.deltaY<0?1.25:0.8,p[0],p[1])},{passive:false});
+var ptr={},drag=null,pinch=null;
+svg.addEventListener("pointerdown",function(e){if(e.target.closest&&e.target.closest(".mk"))return;
+  ptr[e.pointerId]=[e.clientX,e.clientY];svg.setPointerCapture(e.pointerId);
+  var ids=Object.keys(ptr);
+  if(ids.length===1){drag={x:e.clientX,y:e.clientY,vx:view.x,vy:view.y};svg.classList.add("drag")}
+  else if(ids.length===2){var a=ptr[ids[0]],b=ptr[ids[1]];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),w:view.w};drag=null}});
+svg.addEventListener("pointermove",function(e){if(!(e.pointerId in ptr))return;ptr[e.pointerId]=[e.clientX,e.clientY];
+  var ids=Object.keys(ptr),r=svg.getBoundingClientRect();
+  if(ids.length===2&&pinch){var a=ptr[ids[0]],b=ptr[ids[1]],d=Math.hypot(a[0]-b[0],a[1]-b[1]);
+    var m=toSvg((a[0]+b[0])/2,(a[1]+b[1])/2),nw=pinch.w*pinch.d/d,f=view.w/nw;zoomAt(f,m[0],m[1])}
+  else if(drag){var s=view.w/r.width;setView(clamp({w:view.w,h:view.h,x:drag.vx-(e.clientX-drag.x)*s,y:drag.vy-(e.clientY-drag.y)*s}))}});
+function up(e){delete ptr[e.pointerId];if(Object.keys(ptr).length<2)pinch=null;if(!Object.keys(ptr).length){drag=null;svg.classList.remove("drag")}}
+svg.addEventListener("pointerup",up);svg.addEventListener("pointercancel",up);
+
+// selection
+function select(i,pan){sel=i;var p=D.pts[i];
+  document.querySelectorAll(".mk,.item").forEach(function(n){n.setAttribute("aria-pressed",+n.dataset.i===i)});
+  var isP=p.k==="peak";
+  document.getElementById("sel").innerHTML='<div class="k">'+(isP?"Peak":"Pass")+'</div><div class="n">'+p.n+'</div><div class="h">'+fmt(p.h)+' m · '+ft(p.h)+' ft</div><div class="d">'+p.d+'</div><div class="c">'+Math.abs(p.la).toFixed(3)+'° N, '+p.lo.toFixed(3)+'° E</div>';
+  if(pan&&view.w<VB[2]){setView(clamp({w:view.w,h:view.h,x:p.x-view.w/2,y:p.y-view.h/2}))}
+}
+
+function build(d){
+  D=d;VB=d.vb;var defs=el("defs",{},svg),g=el("g",{id:"terr"},defs);
+  d.levels.forEach(function(l){var c=IX[l.v]?"ix":"";el("path",{d:l.d,style:"fill:var(--b"+l.v+")","class":c},g)});
+  el("clipPath",{id:"inc"},defs);el("path",{d:d.border},svg.querySelector("#inc"));
+  el("rect",{x:VB[0],y:VB[1],width:VB[2],height:VB[3],fill:"var(--sea)"},svg);
+  var u1=el("use",{href:"#terr",opacity:".3"},svg);
+  var u2=el("use",{href:"#terr","clip-path":"url(#inc)"},svg);
+  el("path",{id:"border",d:d.border},svg);
+  var order=d.pts.map(function(p,i){return i}).sort(function(a,b){return d.pts[a].h-d.pts[b].h});
+  order.forEach(function(i){var p=d.pts[i],isP=p.k==="peak";
+    var m=el("g",{"class":"mk "+p.k,tabindex:0,role:"button","aria-label":p.n+", "+fmt(p.h)+" metres","aria-pressed":"false","data-i":i,transform:"translate("+p.x+" "+p.y+")"},svg);
+    var s=el("g",{"class":"scale"},m);
+    el("circle",{r:14,fill:"transparent"},s);
+    el("path",{"class":"sh",d:isP?"M0 -7L6.5 5H-6.5Z":"M0 -6L6 0L0 6L-6 0Z"},s);
+    var t=el("text",{"class":"lb",x:10,y:4},s);t.textContent=p.n+" "+fmt(p.h)+" m";
+    m.addEventListener("click",function(){select(i,false)});
+    m.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();select(i,false)}});
+  });
+  svg.setAttribute("viewBox",VB.join(" "));
+  document.getElementById("loading").hidden=true;svg.hidden=false;document.getElementById("zoom").hidden=false;
+  setView({x:VB[0],y:VB[1],w:VB[2],h:VB[3]});applyLayers();
+  ["peak","pass"].forEach(function(k){var box=document.getElementById(k==="peak"?"peaks":"passes");
+    d.pts.map(function(p,i){return i}).filter(function(i){return d.pts[i].k===k}).sort(function(a,b){return d.pts[b].h-d.pts[a].h}).forEach(function(i){
+      var p=d.pts[i],b=document.createElement("button");b.className="item";b.dataset.i=i;b.setAttribute("aria-pressed","false");
+      b.innerHTML='<span class="nm">'+p.n+'</span><span class="ht">'+fmt(p.h)+' m · '+ft(p.h)+' ft</span><span class="ds">'+p.d+'</span>';
+      b.onclick=function(){select(i,true);document.getElementById("sel").scrollIntoView({block:"nearest",behavior:"smooth"})};box.appendChild(b)})});
+  var start=d.pts.findIndex(function(p){return p.n==="Nanda Devi"});select(start<0?0:start,false);
+}
+fetch("terrain.json?v=3").then(function(r){if(!r.ok)throw 0;return r.json()}).then(build).catch(function(){
+  document.getElementById("loading").textContent="The map data could not be loaded. Check your connection and reload."});
+})();
+</script>
+</body>
+</html>
