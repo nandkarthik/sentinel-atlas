@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajya: States and Union Territories</title>
+<meta name="description" content="A map of India's 28 states and 8 Union Territories colored by population, density, sex ratio, literacy and urban share from the 2011 census, with a profile and ranking for each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9e3cf; --surface:#ddd5b8; --card:#f2ecd9;
+  --ink:#231f15; --ink-soft:#5a5540; --ink-faint:#877f63;
+  --line:rgba(35,31,21,0.16);
+  --accent:#8a4b1f; --accent-soft:rgba(138,75,31,0.13);
+  --warn:#8f3a2a; --warn-soft:rgba(143,58,42,0.10);
+  --shadow:0 10px 30px rgba(35,31,21,0.12);
+  --sea:#bccac6; --edge:#f2ecd9;
+  --c0:#cfc8ae;
+  --c1:#f0e4c4; --c2:#e3c68f; --c3:#d19b5c; --c4:#b06a35; --c5:#7b3e1c;
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+    --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+    --line:rgba(236,229,207,0.16);
+    --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16);
+    --warn:#e58c78; --warn-soft:rgba(229,140,120,0.12);
+    --shadow:0 10px 30px rgba(0,0,0,0.5);
+    --sea:#0f1a1c; --edge:#15120b;
+    --c0:#2b2718;
+    --c1:#2f2818; --c2:#4d3b22; --c3:#7b5830; --c4:#b5813f; --c5:#efb56b;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+  --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+  --line:rgba(236,229,207,0.16);
+  --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16);
+  --warn:#e58c78; --warn-soft:rgba(229,140,120,0.12);
+  --shadow:0 10px 30px rgba(0,0,0,0.5);
+  --sea:#0f1a1c; --edge:#15120b;
+  --c0:#2b2718;
+  --c1:#2f2818; --c2:#4d3b22; --c3:#7b5830; --c4:#b5813f; --c5:#efb56b;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding:1.4rem 16px 3rem}
+.crumbs{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 1.4rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+.crumbs a{color:var(--ink-faint);text-decoration:none}.crumbs a:hover{color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2rem,5vw,3.2rem);line-height:1.05;margin:0 0 .4rem;text-wrap:balance}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.7rem;margin:0 0 .3rem}
+.lede{color:var(--ink-soft);max-width:62ch;margin:0 0 1rem}
+.year{display:inline-block;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--warn);border:1px solid var(--warn);border-radius:99px;padding:.15rem .7rem;margin:0 0 1rem}
+.india{font-family:var(--font-mono);font-size:.76rem;color:var(--ink-soft);margin:0 0 1rem;display:flex;flex-wrap:wrap;gap:.2rem 1.2rem}
+.india b{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
+.chip{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:transparent;color:var(--ink-soft);padding:.4rem .8rem;border-radius:99px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent-soft);color:var(--ink);border-color:var(--accent)}
+.chip:focus-visible,.zb:focus-visible,.item:focus-visible,th button:focus-visible,tr.row:focus-visible,.u:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mapbox{position:relative;border:1px solid var(--line);border-radius:6px;background:var(--sea);box-shadow:var(--shadow);overflow:hidden}
+svg#map{display:block;width:100%;height:auto;max-height:82vh;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+svg#map.drag{cursor:grabbing}
+.zoom{position:absolute;top:.6rem;left:.6rem;display:flex;flex-direction:column;gap:.3rem}
+.zb{font-family:var(--font-mono);font-size:1rem;line-height:1;width:2.2rem;height:2.2rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:4px;cursor:pointer}
+.zb:hover{border-color:var(--accent)}
+.loading{padding:4rem 1rem;text-align:center;font-family:var(--font-mono);font-size:.8rem;color:var(--ink-soft)}
+#hatchline{stroke:var(--ink-faint);stroke-width:1;opacity:.55}
+#nodata{fill:url(#hatch);stroke:none}
+.u{cursor:pointer;stroke:var(--edge);stroke-width:.7;stroke-linejoin:round;vector-effect:non-scaling-stroke;fill-rule:evenodd}
+.u:hover{stroke:var(--ink);stroke-width:1.4}
+.u.on{stroke:var(--accent);stroke-width:2.6}
+.u.nv{fill:url(#hatch)}
+#border{fill:none;stroke:var(--ink);stroke-width:.9;vector-effect:non-scaling-stroke;stroke-linejoin:round;pointer-events:none}
+.dot{cursor:pointer}
+.dot .c{stroke:var(--ink);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.dot.on .c{stroke:var(--accent);stroke-width:2.6}
+.dot.nv .c{fill:url(#hatch)}
+.lbl{font-family:var(--font-mono);font-size:10px;fill:var(--ink);paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round;pointer-events:none;text-anchor:middle;opacity:.9}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .lbl{stroke:var(--bg)}}
+:root[data-theme="dark"] .lbl{stroke:var(--bg)}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem .9rem;margin:.9rem 0 0;font-family:var(--font-mono);font-size:.68rem;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap}
+.legend i{width:1.1rem;height:.7rem;border:1px solid var(--line);display:inline-block}
+.legend i.h{background:repeating-linear-gradient(45deg,var(--ink-faint) 0 1px,transparent 1px 4px)}
+.sel{margin-top:1rem;padding:1rem 1.1rem;border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--card);border-radius:4px;box-shadow:var(--shadow)}
+.sel .k{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+.sel .n{font-family:var(--font-display);font-size:1.8rem;line-height:1.15;margin-bottom:.5rem}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.5rem 1.4rem;margin:0 0 .9rem}
+.facts div{min-width:0}
+.facts dt{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+.facts dd{margin:0;font-size:.95rem;color:var(--ink)}
+.facts dd small{display:block;color:var(--ink-faint);font-size:.8rem;line-height:1.35}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:.6rem}
+.stat{border:1px solid var(--line);border-radius:4px;padding:.55rem .7rem;background:var(--bg)}
+.stat .l{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+.stat .v{font-family:var(--font-mono);font-size:1.15rem;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums}
+.stat .r{font-size:.78rem;color:var(--ink-soft);line-height:1.35}
+.sel .un{margin:.9rem 0 0;padding:.6rem .8rem;border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:4px;font-size:.88rem;color:var(--ink-soft)}
+.grp{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:1.8rem 0 .5rem}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.92rem}
+th,td{padding:.45rem .7rem;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;z-index:1;background:var(--card);white-space:normal;min-width:8.5rem;max-width:11rem}
+th:first-child{background:var(--surface)}
+th{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;background:var(--surface);position:sticky;top:0}
+th button{all:unset;cursor:pointer;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit}
+th button:hover{color:var(--accent)}
+th[aria-sort="ascending"] button::after{content:" ▲"}
+th[aria-sort="descending"] button::after{content:" ▼"}
+td{font-variant-numeric:tabular-nums}
+td.t{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-faint);text-align:left}
+tr.row{cursor:pointer}
+tr.row:hover td,tr.row.on td{background:var(--accent-soft)}
+tr.row:hover td:first-child,tr.row.on td:first-child{background:linear-gradient(var(--accent-soft),var(--accent-soft)),var(--card)}
+tr.row.on td:first-child{box-shadow:inset 3px 0 var(--accent)}
+td.hl{color:var(--accent);font-weight:600}
+.note{margin-top:1.2rem;padding:.8rem 1rem;border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:4px;font-size:.92rem;color:var(--ink-soft)}
+.note b{color:var(--ink)}
+.src{margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--line);color:var(--ink-soft);font-size:.95rem}
+.src p{max-width:70ch;margin:.5rem 0}
+.src a{color:var(--accent)}
+.quick{font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft);margin:1.2rem 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="../">← Sentinel Atlas</a><a href="../relief/">Shikhara: Relief →</a></div>
+  <h1>Rajya: States and Union Territories</h1>
+  <div class="year">Census 2011 figures</div>
+  <p class="lede">India's 28 states and 8 Union Territories, colored by what the 2011 census counted. Pick a measure, then tap a state or territory for its profile. Use the + and − buttons, or pinch, to zoom (Ctrl or ⌘ with the scroll wheel on a computer). The small ones, such as Delhi and Lakshadweep, get a dot so they are easy to hit.</p>
+  <p class="india" id="india" aria-label="India totals for 2011"></p>
+
+  <div class="chips" role="group" aria-label="Measure shown on the map" id="metrics"></div>
+
+  <div class="mapbox">
+    <div class="loading" id="loading">Loading the map…</div>
+    <svg id="map" viewBox="0 0 1000 1144" role="img" aria-label="Map of India's states and Union Territories" hidden></svg>
+    <div class="zoom" id="zoom" hidden>
+      <button class="zb" id="zi" aria-label="Zoom in">+</button>
+      <button class="zb" id="zo" aria-label="Zoom out">−</button>
+      <button class="zb" id="zr" aria-label="Reset view" style="font-size:.7rem">1×</button>
+    </div>
+  </div>
+  <div class="legend" id="legend" aria-label="Legend"></div>
+
+  <div class="sel" id="sel" aria-live="polite"></div>
+
+  <div class="grp">All 36, sortable</div>
+  <div class="tw"><table id="tbl"><thead></thead><tbody></tbody></table></div>
+
+  <div class="note"><b>These are 2011 counts.</b> They are the latest census figures published. Populations have grown since, and Census 2027 is under way: house-listing runs from 1 April to 30 September 2026 and the population count is scheduled for February 2027, with results not before late 2027. Those dates come from Wikipedia's article on the census, which cites the government's announcements; the government's own release would not open from here.</div>
+  <div class="note"><b>A teaching map, not a survey document.</b> State outlines are from Natural Earth. The country outline is its India-perspective version. Neither has been checked by the Survey of India. For the official depiction of India's boundary, use Survey of India maps.</div>
+
+  <div class="src">
+    <h2>Where the numbers come from</h2>
+    <p><b>Census figures.</b> Every population, sex-ratio, literacy, urban, caste and household number is worked out from the Office of the Registrar General and Census Commissioner's <a href="https://censusindia.gov.in/nada/index.php/catalog/6191">Primary Census Abstract for India, states and districts, 2011</a> (file DDW_PCA0000_2011_Indiastatedist.xlsx). In that file, the 36 units add up exactly to the India total of 1,210,854,977 people.</p>
+    <p><b>How each measure is defined.</b> Sex ratio is women per 1,000 men. Child sex ratio is the same for ages 0 to 6. Literacy is literates divided by the population aged 7 and over. Urban share is the urban population divided by the total. Scheduled Caste and Scheduled Tribe shares are of the total population. Density is population divided by area, using the areas below, so it can differ by a person or two from the census's own printed figure.</p>
+    <p><b>The literacy number for India.</b> The file gives 72.98% for the whole country. Wikipedia and many other pages quote 74.04%, which does not match this file. It is probably an earlier provisional figure, but I could not confirm that. The state figures here match the file.</p>
+    <p><b>Today's map, 2011's counts.</b> The census counted Andhra Pradesh and Telangana as one state, Jammu and Kashmir and Ladakh as one state, and Dadra and Nagar Haveli and Daman and Diu as two Union Territories. For those five units, this page adds up or subtracts the district rows in the same file. Each is marked in its profile.</p>
+    <p><b>Areas, dates, languages, capitals.</b> Areas, the dates each unit gained its present status, and official languages are from Wikipedia's <a href="https://en.wikipedia.org/wiki/States_and_union_territories_of_India">States and union territories of India</a> and each unit's own article. Language status differs between Union and state law and between Wikipedia's pages, so treat it as a guide. Capitals match the Rashtra plate.</p>
+    <p><b>Boundaries.</b> State and Union Territory outlines are Natural Earth's <a href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-1-states-provinces/">1:10m admin-1</a> layer, public domain. The country outline is the India-perspective version of <a href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/">admin-0</a>. The hatched area is inside that outline but is not part of any state in Natural Earth's state layer. It is the part of the region administered by Pakistan and China, which India claims. The 2011 census did not count it, so it has no figures.</p>
+    <p><b>Not here yet.</b> Districts, religion, mother tongues, the health survey (NFHS-6) and change since 2001.</p>
+  </div>
+  <p class="quick">Sentinel Atlas · Plate XI</p>
+</div>
+<script>
+(function(){
+var NS="http://www.w3.org/2000/svg",svg=document.getElementById("map");
+var D=null,VB=null,view=null,sel=null,metric="pop",sortKey="pop",sortDir=-1,PATH={},DOT={},CDOT={},LBL={};
+function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function fmt(n){return n.toLocaleString("en-US")}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function ord(n){var s=["th","st","nd","rd"],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0])}
+function mil(n){return n>=1e6?(n/1e6).toFixed(n>=1e7?1:2).replace(/\.?0+$/,"")+" million":fmt(n)}
+
+var M={
+ pop:{lab:"Population",k:"pop",br:[1e6,5e6,25e6,70e6],names:["Under 1 million","1–5 million","5–25 million","25–70 million","Over 70 million"],f:function(v){return fmt(v)}},
+ dens:{lab:"Density",k:"dens",br:[100,250,500,1000],names:["Under 100 per km²","100–250","250–500","500–1,000","Over 1,000"],f:function(v){return fmt(v)+" /km²"}},
+ sr:{lab:"Sex ratio",k:"sr",br:[900,930,960,1000],names:["Under 900 women per 1,000 men","900–930","930–960","960–1,000","Over 1,000"],f:function(v){return fmt(v)}},
+ csr:{lab:"Child sex ratio",k:"csr",br:[870,900,930,955],names:["Under 870 girls per 1,000 boys","870–900","900–930","930–955","Over 955"],f:function(v){return fmt(v)}},
+ lit:{lab:"Literacy",k:"lit",br:[70,75,80,90],names:["Under 70%","70–75%","75–80%","80–90%","Over 90%"],f:function(v){return v.toFixed(1)+"%"}},
+ urb:{lab:"Urban share",k:"urb",br:[15,25,35,50],names:["Under 15% urban","15–25%","25–35%","35–50%","Over 50%"],f:function(v){return v.toFixed(1)+"%"}}
+};
+function cls(u,m){var v=u[M[m].k];if(v==null)return -1;var b=M[m].br,i=0;while(i<b.length&&v>=b[i])i++;return i+1}
+
+// India totals (from the same file)
+document.getElementById("india").innerHTML='<span>India, 2011</span><span><b>1,210,854,977</b> people</span><span><b>943</b> women per 1,000 men</span><span><b>73.0%</b> literate (7+)</span><span><b>31.1%</b> urban</span>';
+
+// metric chips
+var mc=document.getElementById("metrics");
+Object.keys(M).forEach(function(k){var b=document.createElement("button");b.className="chip";b.textContent=M[k].lab;b.dataset.m=k;b.setAttribute("aria-pressed",k===metric);
+  b.onclick=function(){setMetric(k)};mc.appendChild(b)});
+try{var sm=localStorage.getItem("rajya-metric");if(sm&&M[sm])metric=sm}catch(e){}
+
+function paint(){
+  var m=metric;
+  D.units.forEach(function(u){var c=cls(u,m),p=PATH[u.id],d=DOT[u.id];
+    var f=c<0?"":"var(--c"+c+")";
+    p.classList.toggle("nv",c<0);p.style.fill=f;
+    if(d){d.classList.toggle("nv",c<0);CDOT[u.id].style.fill=f}});
+  var lg=document.getElementById("legend");lg.innerHTML="";
+  M[m].names.forEach(function(n,i){var s=document.createElement("span");s.innerHTML='<i style="background:var(--c'+(i+1)+')"></i>'+n;lg.appendChild(s)});
+  var s=document.createElement("span");s.innerHTML='<i class="h"></i>Outside Indian administration, not counted';lg.appendChild(s);
+  if(m==="dens"){var t=document.createElement("span");t.textContent="No density for Jammu and Kashmir or Ladakh (see profiles)";lg.appendChild(t)}
+  mc.querySelectorAll(".chip").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m===m)});
+  renderTable();
+}
+function setMetric(k){metric=k;try{localStorage.setItem("rajya-metric",k)}catch(e){}
+  if(M[k]&&sortKey!==M[k].k){sortKey=M[k].k;sortDir=-1}paint()}
+
+// view / zoom
+function setView(v){view=v;svg.setAttribute("viewBox",v.x+" "+v.y+" "+v.w+" "+v.h);
+  document.getElementById("zr").textContent=(Math.round(VB[2]/v.w*10)/10)+"×";markScale()}
+function markScale(){var w=svg.getBoundingClientRect().width;if(!w||!view)return;var k=view.w/w,z=VB[2]/view.w;
+  svg.querySelectorAll(".scale").forEach(function(g){g.setAttribute("transform","scale("+k+")")});
+  D.units.forEach(function(u){var l=LBL[u.id];if(!l)return;
+    var on=u.A*z*z*(w/1000)*(w/1000)>2600;l.style.display=on?"":"none"})}
+window.addEventListener("resize",markScale);
+function clamp(v){v.w=Math.min(VB[2],Math.max(VB[2]/12,v.w));v.h=v.w*VB[3]/VB[2];
+  v.x=Math.min(VB[0]+VB[2]-v.w,Math.max(VB[0],v.x));v.y=Math.min(VB[1]+VB[3]-v.h,Math.max(VB[1],v.y));return v}
+function zoomAt(f,cx,cy){var v=view,nw=v.w/f;setView(clamp({w:nw,h:0,x:cx-(cx-v.x)*nw/v.w,y:cy-(cy-v.y)*nw/v.w}))}
+function centre(){return[view.x+view.w/2,view.y+view.h/2]}
+document.getElementById("zi").onclick=function(){var c=centre();zoomAt(1.6,c[0],c[1])};
+document.getElementById("zo").onclick=function(){var c=centre();zoomAt(1/1.6,c[0],c[1])};
+document.getElementById("zr").onclick=function(){setView({x:VB[0],y:VB[1],w:VB[2],h:VB[3]})};
+function toSvg(cx,cy){var r=svg.getBoundingClientRect();return[view.x+(cx-r.left)/r.width*view.w,view.y+(cy-r.top)/r.height*view.h]}
+svg.addEventListener("wheel",function(e){if(!e.ctrlKey&&!e.metaKey)return;e.preventDefault();var p=toSvg(e.clientX,e.clientY);zoomAt(e.deltaY<0?1.25:0.8,p[0],p[1])},{passive:false});
+var ptr={},drag=null,pinch=null,moved=0;
+svg.addEventListener("pointerdown",function(e){
+  ptr[e.pointerId]=[e.clientX,e.clientY];moved=0;
+  var ids=Object.keys(ptr);
+  if(ids.length===1){drag={x:e.clientX,y:e.clientY,vx:view.x,vy:view.y}}
+  else if(ids.length===2){var a=ptr[ids[0]],b=ptr[ids[1]];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),w:view.w};drag=null}});
+svg.addEventListener("pointermove",function(e){if(!(e.pointerId in ptr))return;ptr[e.pointerId]=[e.clientX,e.clientY];
+  var ids=Object.keys(ptr),r=svg.getBoundingClientRect();
+  if(ids.length===2&&pinch){moved=9;var a=ptr[ids[0]],b=ptr[ids[1]],d=Math.hypot(a[0]-b[0],a[1]-b[1]);
+    var m=toSvg((a[0]+b[0])/2,(a[1]+b[1])/2),nw=pinch.w*pinch.d/d;zoomAt(view.w/nw,m[0],m[1])}
+  else if(drag){var dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+    if(!moved&&Math.hypot(dx,dy)<5)return;
+    if(!moved){moved=1;svg.classList.add("drag");try{svg.setPointerCapture(e.pointerId)}catch(_){}}
+    var s=view.w/r.width;setView(clamp({w:view.w,h:view.h,x:drag.vx-dx*s,y:drag.vy-dy*s}))}});
+function up(e){delete ptr[e.pointerId];if(Object.keys(ptr).length<2)pinch=null;
+  if(!Object.keys(ptr).length){drag=null;svg.classList.remove("drag")}}
+svg.addEventListener("pointerup",up);svg.addEventListener("pointercancel",up);
+function tap(id){return function(){if(moved)return;select(id,false)}}
+
+// selection
+function rank(key,u){var v=u[key],n=0,tot=0;D.units.forEach(function(x){if(x[key]==null)return;tot++;if(x[key]>v)n++});return[n+1,tot]}
+function stat(l,v,key,u,extra){var r=key?rank(key,u):null;
+  return '<div class="stat"><div class="l">'+l+'</div><div class="v">'+v+'</div><div class="r">'+(extra||"")+(extra&&r?" · ":"")+(r?ord(r[0])+" of "+r[1]:"")+'</div></div>'}
+function select(id,pan){sel=id;var u=D.units.filter(function(x){return x.id===id})[0];if(!u)return;
+  Object.keys(PATH).forEach(function(k){PATH[k].classList.toggle("on",k===id);if(DOT[k])DOT[k].classList.toggle("on",k===id)});
+  PATH[id].parentNode.appendChild(PATH[id]);
+  document.querySelectorAll("tr.row").forEach(function(r){r.classList.toggle("on",r.dataset.id===id)});
+  var share=(u.pop/1210854977*100);
+  var h='<div class="k">'+(u.ut?"Union Territory":"State")+'</div><div class="n">'+esc(u.n)+'</div>';
+  h+='<dl class="facts">'+
+    '<div><dt>Capital</dt><dd>'+esc(u.cap)+(u.cn?'<small>'+esc(u.cn)+'</small>':'')+'</dd></div>'+
+    '<div><dt>'+(u.ut?"Union Territory since":"Status since")+'</dt><dd>'+esc(u.formed)+'</dd></div>'+
+    '<div><dt>Area</dt><dd>'+fmt(u.area)+' km²</dd></div>'+
+    '<div><dt>Official languages</dt><dd>'+esc(u.ol)+(u.al?'<small>Also: '+esc(u.al)+'</small>':'')+'</dd></div></dl>';
+  h+='<div class="stats">'+
+    stat("Population, 2011",fmt(u.pop),"pop",u,share>=0.1?share.toFixed(1)+"% of India":"<0.1% of India")+
+    stat("Density",u.dens==null?"—":fmt(u.dens)+" /km²","dens",u,"")+
+    stat("Sex ratio",fmt(u.sr),"sr",u,"women per 1,000 men")+
+    stat("Child sex ratio",fmt(u.csr),"csr",u,"girls per 1,000 boys, 0–6")+
+    stat("Literacy",u.lit.toFixed(1)+"%","lit",u,"men "+u.litm.toFixed(1)+"% · women "+u.litf.toFixed(1)+"%")+
+    stat("Urban",u.urb.toFixed(1)+"%","urb",u,"")+
+    stat("Scheduled Castes",u.sc.toFixed(1)+"%","sc",u,"of population")+
+    stat("Scheduled Tribes",u.st.toFixed(1)+"%","st",u,"of population")+
+    stat("Households",fmt(u.hh),"hh",u,"")+'</div>';
+  if(u.note)h+='<div class="un">'+esc(u.note)+'</div>';
+  document.getElementById("sel").innerHTML=h;
+  if(pan&&view.w<VB[2]){setView(clamp({w:view.w,h:view.h,x:u.cx-view.w/2,y:u.cy-view.h/2}))}
+}
+
+// table
+var COLS=[["n","State / UT"],["t","Type"],["pop","Population"],["dens","Density /km²"],["sr","Sex ratio"],["lit","Literacy %"],["urb","Urban %"]];
+function renderTable(){
+  var th=document.querySelector("#tbl thead");
+  th.innerHTML="<tr>"+COLS.map(function(c){var s=sortKey===c[0]?(sortDir>0?"ascending":"descending"):"none";
+    return '<th aria-sort="'+s+'"><button data-k="'+c[0]+'">'+c[1]+'</button></th>'}).join("")+"</tr>";
+  th.querySelectorAll("button").forEach(function(b){b.onclick=function(){var k=b.dataset.k;
+    if(sortKey===k)sortDir=-sortDir;else{sortKey=k;sortDir=(k==="n"||k==="t")?1:-1}renderTable()}});
+  var us=D.units.slice().sort(function(a,b){var x,y;
+    if(sortKey==="t"){x=a.ut?1:0;y=b.ut?1:0}else{x=a[sortKey];y=b[sortKey]}
+    if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;
+    var r=typeof x==="string"?x.localeCompare(y):x-y;return r*sortDir||a.n.localeCompare(b.n)});
+  var hl={pop:"pop",dens:"dens",sr:"sr",lit:"lit",urb:"urb",csr:"sr"}[metric];
+  document.querySelector("#tbl tbody").innerHTML=us.map(function(u){
+    function c(k,v){return '<td'+(k===hl?' class="hl"':'')+'>'+v+'</td>'}
+    return '<tr class="row'+(u.id===sel?" on":"")+'" data-id="'+u.id+'" tabindex="0"><td>'+esc(u.n)+'</td><td class="t">'+(u.ut?"UT":"State")+'</td>'+
+      c("pop",fmt(u.pop))+c("dens",u.dens==null?"—":fmt(u.dens))+c("sr",fmt(u.sr))+c("lit",u.lit.toFixed(1))+c("urb",u.urb.toFixed(1))+'</tr>'}).join("");
+  document.querySelectorAll("tr.row").forEach(function(r){
+    r.onclick=function(){select(r.dataset.id,true);document.getElementById("sel").scrollIntoView({block:"nearest",behavior:"smooth"})};
+    r.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();r.onclick()}}});
+}
+
+function build(d){
+  D=d;VB=d.vb;
+  var defs=el("defs",{},svg);
+  var pat=el("pattern",{id:"hatch",width:5,height:5,patternUnits:"userSpaceOnUse",patternTransform:"rotate(45)"},defs);
+  el("rect",{width:5,height:5,fill:"var(--c0)"},pat);el("line",{x1:0,y1:0,x2:0,y2:5,id:"hatchline"},pat);
+  el("clipPath",{id:"inc"},defs);el("path",{d:d.border},svg.querySelector("#inc"));
+  el("rect",{x:VB[0],y:VB[1],width:VB[2],height:VB[3],fill:"var(--sea)"},svg);
+  el("path",{id:"nodata",d:d.border},svg);
+  var g=el("g",{"clip-path":"url(#inc)"},svg);
+  d.units.forEach(function(u){
+    var p=el("path",{"class":"u",d:u.d,tabindex:0,role:"button","aria-label":u.n},g);
+    p.addEventListener("click",tap(u.id));
+    p.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();select(u.id,false)}});
+    PATH[u.id]=p});
+  el("path",{id:"border",d:d.border},svg);
+  d.units.forEach(function(u){
+    if(u.A<900){
+      var m=el("g",{"class":"dot",transform:"translate("+u.cx+" "+u.cy+")",role:"button","aria-label":u.n},svg);
+      var s=el("g",{"class":"scale"},m);
+      el("circle",{r:13,fill:"transparent"},s);
+      CDOT[u.id]=el("circle",{"class":"c",r:5.5},s);
+      m.addEventListener("click",tap(u.id));DOT[u.id]=m;
+    }
+  });
+  // labels
+  d.units.forEach(function(u){
+    if(u.A>=900){var t=el("g",{transform:"translate("+u.cx+" "+u.cy+")","class":"lb-g"},svg);
+      var s=el("g",{"class":"scale"},t);var x=el("text",{"class":"lbl",y:3},s);x.textContent=u.n.replace("Jammu and Kashmir","J&K").replace("Andaman and Nicobar Islands","A&N");LBL[u.id]=t}});
+  svg.setAttribute("viewBox",VB.join(" "));
+  document.getElementById("loading").hidden=true;svg.hidden=false;document.getElementById("zoom").hidden=false;
+  setView({x:VB[0],y:VB[1],w:VB[2],h:VB[3]});
+  paint();select("telangana",false);
+}
+fetch("states.json?v=1").then(function(r){if(!r.ok)throw 0;return r.json()}).then(build).catch(function(e){
+  document.getElementById("loading").textContent="The map data could not be loaded. Check your connection and reload.";console.error(e)});
+})();
+</script>
+</body>
+</html>
