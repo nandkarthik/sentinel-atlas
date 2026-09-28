@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanrachana: Data Structures in Python, Java, Scala &amp; Go</title>
+<meta name="description" content="A one-page cheat sheet for coding interviews in Python, Java, Scala or Go: classes and inheritance, every data structure, string/sort/math/bit idioms, two pointers, sliding window and prefix sums, a null/None/nil gotchas table, and a Big-O table.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9e3cf; --surface:#ddd5b8; --card:#f2ecd9; --code-bg:#e4dcc2;
+  --ink:#231f15; --ink-soft:#5a5540; --ink-faint:#877f63;
+  --line:rgba(35,31,21,0.16);
+  --accent:#8a4b1f; --accent-soft:rgba(138,75,31,0.13); --accent-ink:#f2ecd9;
+  --shadow:0 6px 16px rgba(35,31,21,0.10);
+  --tok-kw:#8a4b1f; --tok-str:#3f6e4c; --tok-num:#7c4a90; --tok-bi:#2c5c78; --tok-com:#877f63;
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15120b; --surface:#1e1a10; --card:#241f13; --code-bg:#1b170e;
+    --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+    --line:rgba(236,229,207,0.16);
+    --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16); --accent-ink:#241f13;
+    --shadow:0 6px 16px rgba(0,0,0,0.45);
+    --tok-kw:#e0a56b; --tok-str:#8fbf9a; --tok-num:#c79bdc; --tok-bi:#83b3d6; --tok-com:#7f7860;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15120b; --surface:#1e1a10; --card:#241f13; --code-bg:#1b170e;
+  --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+  --line:rgba(236,229,207,0.16);
+  --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16); --accent-ink:#241f13;
+  --shadow:0 6px 16px rgba(0,0,0,0.45);
+  --tok-kw:#e0a56b; --tok-str:#8fbf9a; --tok-num:#c79bdc; --tok-bi:#83b3d6; --tok-com:#7f7860;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.5}
+.wrap{max-width:1480px;margin:0 auto;padding:1rem 16px 2.4rem}
+.crumbs{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 .9rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+.crumbs a{color:var(--ink-faint);text-decoration:none}.crumbs a:hover{color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1.08;margin:0 0 .3rem;text-wrap:balance}
+.lede{color:var(--ink-soft);max-width:80ch;margin:0 0 .9rem;font-size:.98rem}
+.controls{position:sticky;top:0;background:var(--bg);z-index:2;padding:.6rem 0 .65rem;margin:0 0 1rem;border-bottom:1px solid var(--line)}
+.langs{display:flex;flex-wrap:wrap;gap:.35rem;margin:0 0 .5rem}
+.langs button{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);padding:.32rem .9rem;border-radius:99px;cursor:pointer}
+.langs button:hover{border-color:var(--accent);color:var(--ink)}
+.langs button.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.jump{display:flex;flex-wrap:wrap;gap:.32rem}
+.jump a{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--line);color:var(--ink-soft);padding:.26rem .58rem;border-radius:99px;text-decoration:none;white-space:nowrap}
+.jump a:hover{border-color:var(--accent);color:var(--ink);background:var(--accent-soft)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:.65rem}
+.card{border:1px solid var(--line);border-radius:6px;background:var(--card);box-shadow:var(--shadow);padding:.7rem .8rem .8rem;min-width:0;scroll-margin-top:5.4rem}
+.card.wide{grid-column:1/-1}
+.card h2{font-family:var(--font-display);font-weight:400;font-size:1.08rem;line-height:1.15;margin:0}
+.card .tag{display:block;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-faint);margin:.1rem 0 .5rem}
+.lbl{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-faint);margin:.6rem 0 .25rem}
+.lbl:first-of-type{margin-top:0}
+.card pre{background:var(--code-bg);border:1px solid var(--line);border-radius:4px;margin:0 0 .5rem;padding:.5rem .65rem;overflow-x:auto}
+.card pre:last-child{margin-bottom:0}
+.card code{font-family:var(--font-mono);font-size:.75rem;line-height:1.55;white-space:pre;color:var(--ink)}
+.kw{color:var(--tok-kw);font-weight:600}
+.str{color:var(--tok-str)}
+.num{color:var(--tok-num)}
+.bi{color:var(--tok-bi)}
+.com{color:var(--tok-com);font-style:italic}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:4px}
+table{width:100%;border-collapse:collapse;font-size:.84rem}
+.tw table{min-width:640px}
+th{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);text-align:left;font-weight:500;padding:.4rem .55rem;border-bottom:1px solid var(--line);background:var(--surface)}
+td{padding:.42rem .55rem;border-bottom:1px solid var(--line);vertical-align:top}
+td code{font-family:var(--font-mono);font-size:.82em;background:var(--code-bg);padding:.05em .3em;border-radius:3px}
+footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;color:var(--ink-soft)}
+footer.foot a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="../">← Sentinel Atlas</a><a href="../rajya/">Rajya: States and UTs →</a></div>
+  <h1>Sanrachana: Data Structures in Python, Java, Scala &amp; Go</h1>
+  <p class="lede">A one-page reference for LeetCode: classes and inheritance, every data structure, the string/sort/math/bit idioms, and the two-pointer, sliding-window and prefix-sum patterns &mdash; pick a language below and every card switches with it.</p>
+
+  <div class="controls">
+    <div class="langs" id="langs" role="tablist" aria-label="Language"></div>
+    <nav class="jump" aria-label="Jump to a card" id="jump"></nav>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <footer class="foot">Sentinel Atlas · Plate XII · a personal quick-reference across four languages, not a substitute for each one's own docs.</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
+var KW=[
+  "def","class","return","if","elif","else","for","while","in","not","and","or","is","import","from","as",
+  "pass","break","continue","try","except","finally","raise","with","lambda","yield","global","nonlocal",
+  "assert","del","True","False","None","async","await",
+  "public","private","protected","static","final","void","new","extends","implements","interface","enum",
+  "this","super","null","true","false","instanceof","switch","case","default","abstract","synchronized",
+  "throw","throws","package","int","long","double","float","boolean","char","byte","short","var","record","catch",
+  "object","trait","val","match","override","sealed","implicit","lazy","given","using","then","do","Unit","Nil",
+  "func","go","defer","select","fallthrough","goto","range","struct","chan","type","const","nil","iota","map"
+];
+var BI=[
+  "self","len","range","print","enumerate","zip","min","max","sum","sorted","reversed","filter",
+  "isinstance","super","str","float","bool","list","dict","set","tuple","abs","all","any","input","open",
+  "type","id","hash","next","iter","repeat",
+  "System","out","println","printf","List","ArrayList","LinkedList","Map","HashMap","TreeMap","Set","HashSet",
+  "TreeSet","Deque","ArrayDeque","PriorityQueue","Arrays","Collections","Math","Integer","Character","Objects",
+  "Optional","Stream","IntStream","Comparator","Collectors","String","Object",
+  "Array","ArrayBuffer","mutable","Queue","Stack","Ordering","Option","Some","None",
+  "fmt","Println","Printf","Sprintf","cap","append","make","copy","delete","panic","recover","sort",
+  "strings","strconv","heap","bits","unicode","slices"
+];
+var KWS={},BIS={};KW.forEach(function(k){KWS[k]=1});BI.forEach(function(k){BIS[k]=1});
+
+function hl(code){
+  var re=/(#.*$|\/\/.*$)|(\/\*[\s\S]*?\*\/)|("""[\s\S]*?"""|'''[\s\S]*?'''|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`[^`]*`)|\b(\d+\.?\d*[a-zA-Z]?)\b|\b([A-Za-z_]\w*)\b/gm;
+  var out="",last=0,m;
+  while((m=re.exec(code))){
+    out+=esc(code.slice(last,m.index));
+    if(m[1]) out+='<span class="com">'+esc(m[1])+'</span>';
+    else if(m[2]) out+='<span class="com">'+esc(m[2])+'</span>';
+    else if(m[3]) out+='<span class="str">'+esc(m[3])+'</span>';
+    else if(m[4]) out+='<span class="num">'+esc(m[4])+'</span>';
+    else if(m[5]){
+      var w=m[5];
+      if(KWS[w]) out+='<span class="kw">'+w+'</span>';
+      else if(BIS[w]) out+='<span class="bi">'+w+'</span>';
+      else out+=w;
+    }
+    last=re.lastIndex;
+  }
+  out+=esc(code.slice(last));
+  return out;
+}
+function dedent(s){
+  var lines=s.replace(/^\n/,"").replace(/\s+$/,"").split("\n");
+  var min=Infinity;
+  lines.forEach(function(l){if(l.trim()){var n=l.match(/^ */)[0].length;if(n<min)min=n}});
+  if(min===Infinity)min=0;
+  return lines.map(function(l){return l.slice(min)}).join("\n");
+}
+function blocksHtml(blocks){
+  return blocks.map(function(b){
+    var label=b[0],src=b[1];
+    return (label?'<div class="lbl">'+esc(label)+'</div>':"")+'<pre><code>'+hl(dedent(src))+'</code></pre>';
+  }).join("");
+}
+function table(head,rows){
+  var th="<tr>"+head.map(function(h){return "<th>"+esc(h)+"</th>"}).join("")+"</tr>";
+  var tb=rows.map(function(r){return "<tr>"+r.map(function(c){return "<td>"+c+"</td>"}).join("")+"</tr>"}).join("");
+  return '<div class="tw"><table><thead>'+th+'</thead><tbody>'+tb+'</tbody></table></div>';
+}
+function card(id,title,tag,body,wide){
+  return '<div class="card'+(wide?" wide":"")+'" id="'+id+'"><h2>'+esc(title)+'</h2><span class="tag">'+tag+'</span>'+body+'</div>';
+}
+
+var CARDS=[
+["basics","Language basics","identity, empties, defaults",{
+  python:[
+    [null,`
+      x = None                  # no null/nil in Python
+      y = []                     # empty, but NOT None
+      not y                        # True -- falsy check: "is it empty?"
+      y is None                     # False -- use "is None" for "never assigned"
+      a, b = [1], [1]
+      a == b                          # True  (same values)
+      a is b                            # False (different objects)
+    `],
+    [null,`
+      n = 42
+      f"{n=}"                     # "n=42" -- quick debug print
+      f"{3.14159:.2f}"              # "3.14"
+
+      def add(item, bucket=None):     # never default to a mutable ([] / {}):
+          if bucket is None:            # it's created once and reused every call
+              bucket = []
+          bucket.append(item)
+          return bucket
+    `],
+  ],
+  java:[
+    [null,`
+      Object x = null;                 // no None/nil in Java -- null is the absence of a reference
+      List<Integer> y = new ArrayList<>();   // empty, but NOT null
+      y.isEmpty()                        // true -- use isEmpty(), not size() == 0
+      y == null                            // false -- null-check is a separate question
+      List<Integer> a = List.of(1), b = List.of(1);
+      a.equals(b)                            // true  (.equals() compares content)
+      a == b                                    // false (== compares references)
+    `],
+    [null,`
+      int n = 42;
+      System.out.printf("n=%d%n", n);        // quick debug print
+      String.format("%.2f", 3.14159);          // "3.14"
+
+      Integer a = 127, b = 127;
+      a == b                                      // true  -- small ints are cached, -128..127
+      Integer c = 200, d = 200;
+      c == d                                        // false -- NOT cached, use .equals()
+    `],
+  ],
+  scala:[
+    [null,`
+      val x: Option[Int] = None            // no null for value types; Option is the "maybe nothing"
+      val y: List[Int] = List()              // empty, but NOT None
+      y.isEmpty                                // true -- works on any collection
+      x.isEmpty                                  // true
+      val a = List(1); val b = List(1)
+      a == b                                        // true  -- collections compare by value
+      a eq b                                          // false -- eq compares reference identity
+    `],
+    [null,`
+      val n = 42
+      s"n=$n"                     // "n=42" -- string interpolation
+      f"\${3.14159}%.2f"              // "3.14"
+
+      def add(item: Int, bucket: List[Int] = Nil): List[Int] =
+        bucket :+ item                  // lists are immutable -- this returns a NEW list
+    `],
+  ],
+  go:[
+    [null,`
+      var x *int = nil                 // nil is the zero value for pointers, slices, maps...
+      y := []int{}                       // empty, but NOT nil
+      len(y) == 0                          // true -- always check with len(), not == nil
+      y == nil                               // false -- an empty slice literal is non-nil
+      var z []int                              // a nil slice: len(z)==0 AND z==nil are both true
+    `],
+    [null,`
+      n := 42
+      fmt.Printf("n=%d\\n", n)        // quick debug print
+      fmt.Sprintf("%.2f", 3.14159)      // "3.14"
+
+      var count int                       // zero value: 0 for numbers, "" for strings, nil for pointers
+      var m map[string]int                  // nil map -- reading is fine, writing PANICS
+      m = make(map[string]int)                // must make() before writing
+    `],
+  ],
+}],
+
+["classes","Classes &amp; objects","define, instantiate, inherit",{
+  python:[
+    [null,`
+      class Point:
+          def __init__(self, x, y):    # constructor; self = the new object
+              self.x, self.y = x, y     # instance attributes
+
+      p = Point(3, 4)                     # create ("instantiate") an object
+
+      class Animal:
+          def __init__(self, name): self.name = name
+          def speak(self): return f"{self.name} makes a sound"
+
+      class Dog(Animal):                    # inherit
+          def speak(self):                    # override
+              return f"{self.name} says Woof"
+
+      class Puppy(Dog):
+          def __init__(self, name, age):
+              super().__init__(name)            # call the parent's __init__
+              self.age = age
+
+      isinstance(Puppy("Fido", 1), Animal)         # True
+    `],
+    ["dunder methods",`
+      class Interval:
+          def __init__(self, s, e): self.s, self.e = s, e
+          def __repr__(self): return f"Interval({self.s},{self.e})"  # print()/debug
+          def __eq__(self, o): return (self.s, self.e) == (o.s, o.e)  # ==
+          def __lt__(self, o): return self.s < o.s                     # sorted()/heapq
+          def __hash__(self): return hash((self.s, self.e))              # set/dict key
+
+      sorted([Interval(2, 3), Interval(0, 1)])       # uses __lt__
+    `],
+  ],
+  java:[
+    [null,`
+      class Point {
+          int x, y;                        // fields
+          Point(int x, int y) { this.x = x; this.y = y; }  // constructor
+      }
+      Point p = new Point(3, 4);             // create ("instantiate") an object
+
+      class Animal {
+          String name;
+          Animal(String name) { this.name = name; }
+          String speak() { return name + " makes a sound"; }
+      }
+      class Dog extends Animal {              // inherit
+          Dog(String name) { super(name); }      // call the parent's constructor
+          @Override String speak() { return name + " says Woof"; }  // override
+      }
+      class Puppy extends Dog {
+          int age;
+          Puppy(String name, int age) { super(name); this.age = age; }
+      }
+      new Puppy("Fido", 1) instanceof Animal;    // true
+    `],
+    ["equals / hashCode / compareTo",`
+      class Interval implements Comparable<Interval> {
+          int s, e;
+          Interval(int s, int e) { this.s = s; this.e = e; }
+          @Override public String toString() { return "Interval(" + s + "," + e + ")"; }
+          @Override public boolean equals(Object o) {                     // ==
+              if (!(o instanceof Interval i)) return false;
+              return s == i.s && e == i.e;
+          }
+          @Override public int hashCode() { return Objects.hash(s, e); }   // set/map key
+          @Override public int compareTo(Interval o) { return Integer.compare(s, o.s); }  // sort()
+      }
+    `],
+  ],
+  scala:[
+    [null,`
+      class Point(val x: Int, val y: Int)      // constructor params live in the class header
+
+      val p = Point(3, 4)                        // create an object ("new" is optional in Scala 3)
+
+      class Animal(val name: String):
+        def speak(): String = s"$name makes a sound"
+
+      class Dog(name: String) extends Animal(name):    // inherit
+        override def speak(): String = s"$name says Woof"  // override
+
+      class Puppy(name: String, val age: Int) extends Dog(name)
+
+      Puppy("Fido", 1).isInstanceOf[Animal]        // true
+    `],
+    ["case class: equality for free",`
+      case class Interval(s: Int, e: Int)         // gives you equals/hashCode/toString/copy for free
+        extends Ordered[Interval]:
+        def compare(o: Interval): Int = s - o.s     // used by sorted
+
+      Interval(2, 3) == Interval(2, 3)               // true -- structural equality, no override needed
+      List(Interval(2, 3), Interval(0, 1)).sorted       // uses compare
+    `],
+  ],
+  go:[
+    [null,`
+      type Point struct{ X, Y int }         // a struct is Go's "class" -- data only, no methods yet
+
+      p := Point{X: 3, Y: 4}                  // create a value -- no "new" keyword needed
+
+      type Animal struct{ Name string }
+      func (a Animal) Speak() string { return a.Name + " makes a sound" }  // method on Animal
+
+      type Dog struct{ Animal }               // embedding = "inherits" Animal's fields & methods
+      func (d Dog) Speak() string { return d.Name + " says Woof" }           // "override" by redefining
+
+      type Speaker interface{ Speak() string }   // interfaces are satisfied implicitly
+      var s Speaker = Dog{Animal{"Fido"}}          // Dog satisfies Speaker automatically
+    `],
+    ["no operator overloading; String() for printing",`
+      type Interval struct{ S, E int }
+
+      func (i Interval) String() string {                  // fmt.Println uses this automatically
+          return fmt.Sprintf("Interval(%d,%d)", i.S, i.E)
+      }
+      func (i Interval) Less(o Interval) bool { return i.S < o.S }  // your own convention
+
+      a, b := Interval{2, 3}, Interval{2, 3}
+      a == b                                                   // true -- structs compare field-by-field
+    `],
+  ],
+}],
+
+["list","List / Array","index, add, remove",{
+  python:[
+    [null,`
+      nums = [1, 2, 3, 4, 5]
+      nums[0], nums[-1]           # first, last
+      nums[1:3]                     # [2, 3] -- slice, end excluded
+      nums[::-1]                      # reversed copy
+      nums.append(6)                    # add to end          O(1)
+      nums.insert(0, 0)                   # insert at index      O(n)
+      nums.pop()                            # remove & return last  O(1)
+      nums.pop(0)                             # remove & return first O(n)
+      nums.remove(3)                            # remove first value==3 O(n)
+      not nums                                    # is it empty?
+      [x*x for x in range(5)]                       # comprehension: [0,1,4,9,16]
+    `],
+    ["the 2D-list bug",`
+      grid = [[0]*3]*3                    # BUG: 3 references to the SAME row
+      grid = [[0]*3 for _ in range(3)]      # correct: a fresh row every time
+    `],
+  ],
+  java:[
+    [null,`
+      List<Integer> nums = new ArrayList<>(List.of(1, 2, 3, 4, 5));
+      nums.get(0); nums.get(nums.size() - 1);   // first, last -- no negative indices
+      nums.subList(1, 3);                          // [2, 3] -- view, end excluded
+      Collections.reverse(nums);                    // reverse in place
+
+      nums.add(6);                    // add to end             O(1) amortized
+      nums.add(0, 0);                    // insert at index         O(n)
+      nums.remove(nums.size() - 1);         // remove & return last    O(1)
+      nums.remove(0);                         // remove & return first   O(n)
+      nums.remove(Integer.valueOf(3));          // remove first value==3 (remove(int) is by index!)
+      nums.isEmpty();                              // is it empty?
+    `],
+    ["arrays &amp; 2D",`
+      int[] arr = new int[5];                 // fixed-size primitive array
+      int[][] grid = new int[3][3];             // correctly gives each row its own array
+      Arrays.fill(arr, -1);
+      List<Integer> squares = new ArrayList<>();
+      for (int x = 0; x < 5; x++) squares.add(x * x);   // no comprehensions -- build with a loop
+    `],
+  ],
+  scala:[
+    [null,`
+      val nums = mutable.ArrayBuffer(1, 2, 3, 4, 5)     // mutable, resizable
+      nums.head; nums.last                        // first, last
+      nums.slice(1, 3)                              // ArrayBuffer(2, 3) -- end excluded
+      nums.reverse                                    // reversed copy (returns new)
+
+      nums += 6                     // add to end             O(1) amortized
+      nums.insert(0, 0)                // insert at index         O(n)
+      nums.remove(nums.length - 1)        // remove & return last    O(1)
+      nums.remove(0)                        // remove & return first   O(n)
+      nums -= 3                               // remove first value==3   O(n)
+      nums.isEmpty                              // is it empty?
+      (0 until 5).map(x => x * x).toList          // comprehension: List(0,1,4,9,16)
+    `],
+    ["2D arrays",`
+      val grid = Array.fill(3, 3)(0)      // correctly gives each row its own array
+      val flat = grid.flatten                // flatten to 1D
+    `],
+  ],
+  go:[
+    [null,`
+      nums := []int{1, 2, 3, 4, 5}
+      nums[0]; nums[len(nums)-1]        // first, last -- no negative indices
+      nums[1:3]                            // [2 3] -- slice, end excluded
+      slices.Reverse(nums)                    // reverse in place (Go 1.21+, "slices" package)
+
+      nums = append(nums, 6)      // add to end                amortized O(1)
+      nums = append([]int{0}, nums...)    // insert at front -- no built-in insert
+      nums = nums[:len(nums)-1]      // remove last                       O(1)
+      nums = nums[1:]                  // remove first                      O(1) (re-slices)
+      len(nums) == 0                      // is it empty?
+    `],
+    ["2D slices",`
+      grid := make([][]int, 3)          // correctly gives each row its own slice
+      for i := range grid {
+          grid[i] = make([]int, 3)
+      }
+      squares := make([]int, 0, 5)          // len 0, capacity 5 -- avoids re-allocating
+      for x := 0; x < 5; x++ {
+          squares = append(squares, x*x)      // no comprehensions -- build with a loop
+      }
+    `],
+  ],
+}],
+
+["matrix","Matrix / 2D grid","build, transpose, rotate, scan",{
+  python:[
+    [null,`
+      rows, cols = 3, 4
+      grid = [[0]*cols for _ in range(rows)]
+      for r in range(rows):
+          for c in range(cols):
+              grid[r][c] = r*cols + c
+
+      transposed = [list(r) for r in zip(*grid)]         # swap rows/cols
+      rotate_cw   = [list(r) for r in zip(*grid[::-1])]    # rotate 90° clockwise
+      rotate_ccw  = [list(r) for r in zip(*grid)][::-1]     # rotate 90° counter-cw
+      flat = [x for row in grid for x in row]
+    `],
+    ["grid BFS/DFS template",`
+      DIRS = [(-1,0), (1,0), (0,-1), (0,1)]     # up, down, left, right
+
+      def neighbors(r, c, rows, cols):
+          for dr, dc in DIRS:
+              nr, nc = r+dr, c+dc
+              if 0 <= nr < rows and 0 <= nc < cols:
+                  yield nr, nc
+    `],
+  ],
+  java:[
+    [null,`
+      int rows = 3, cols = 4;
+      int[][] grid = new int[rows][cols];
+      for (int r = 0; r < rows; r++)
+          for (int c = 0; c < cols; c++)
+              grid[r][c] = r * cols + c;
+
+      int[][] transposed = new int[cols][rows];       // swap rows/cols
+      for (int r = 0; r < rows; r++)
+          for (int c = 0; c < cols; c++)
+              transposed[c][r] = grid[r][c];
+    `],
+    ["grid BFS/DFS template",`
+      int[][] DIRS = {{-1,0}, {1,0}, {0,-1}, {0,1}};   // up, down, left, right
+
+      List<int[]> neighbors(int r, int c, int rows, int cols) {
+          List<int[]> out = new ArrayList<>();
+          for (int[] d : DIRS) {
+              int nr = r + d[0], nc = c + d[1];
+              if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) out.add(new int[]{nr, nc});
+          }
+          return out;
+      }
+    `],
+  ],
+  scala:[
+    [null,`
+      val rows = 3; val cols = 4
+      val grid = Array.tabulate(rows, cols)((r, c) => r * cols + c)
+
+      val transposed = grid.transpose        // swap rows/cols -- built in
+      val flat = grid.flatten
+    `],
+    ["grid BFS/DFS template",`
+      val DIRS = List((-1,0), (1,0), (0,-1), (0,1))    // up, down, left, right
+
+      def neighbors(r: Int, c: Int, rows: Int, cols: Int): List[(Int, Int)] =
+        DIRS.map((dr, dc) => (r + dr, c + dc))
+            .filter((nr, nc) => nr >= 0 && nr < rows && nc >= 0 && nc < cols)
+    `],
+  ],
+  go:[
+    [null,`
+      rows, cols := 3, 4
+      grid := make([][]int, rows)
+      for r := range grid {
+          grid[r] = make([]int, cols)
+          for c := range grid[r] {
+              grid[r][c] = r*cols + c
+          }
+      }
+
+      transposed := make([][]int, cols)      // swap rows/cols
+      for c := range transposed {
+          transposed[c] = make([]int, rows)
+          for r := range grid {
+              transposed[c][r] = grid[r][c]
+          }
+      }
+    `],
+    ["grid BFS/DFS template",`
+      var dirs = [4][2]int{{-1,0}, {1,0}, {0,-1}, {0,1}}   // up, down, left, right
+
+      func neighbors(r, c, rows, cols int) [][2]int {
+          out := [][2]int{}
+          for _, d := range dirs {
+              nr, nc := r+d[0], c+d[1]
+              if nr >= 0 && nr < rows && nc >= 0 && nc < cols {
+                  out = append(out, [2]int{nr, nc})
+              }
+          }
+          return out
+      }
+    `],
+  ],
+}],
+
+["linkedlist","Linked list","nodes are references, not copies",{
+  python:[
+    [null,`
+      class ListNode:
+          def __init__(self, val, next=None):
+              self.val = val
+              self.next = next        # a "pointer": a variable holding a reference
+
+      a, b = ListNode(1), ListNode(2)
+      a.next = b                        # a "points to" b -- nothing is copied
+
+      def build(values):
+          head = cur = ListNode(values[0])
+          for v in values[1:]:
+              cur.next = ListNode(v); cur = cur.next
+          return head
+
+      def to_list(head):
+          out = []
+          while head:                  # None is falsy -- stops at the end
+              out.append(head.val); head = head.next
+          return out
+    `],
+    ["insert / delete / doubly linked",`
+      def insert_after(node, val): node.next = ListNode(val, node.next)
+      def delete_after(node):
+          if node.next: node.next = node.next.next   # old node is garbage-collected
+
+      class DListNode:                    # doubly linked
+          def __init__(self, val, prev=None, next=None):
+              self.val, self.prev, self.next = val, prev, next
+    `],
+  ],
+  java:[
+    [null,`
+      class ListNode {
+          int val;
+          ListNode next;                    // a "pointer": a field holding a reference
+          ListNode(int val) { this.val = val; }
+          ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+      }
+
+      ListNode a = new ListNode(1), b = new ListNode(2);
+      a.next = b;                             // a "points to" b -- nothing is copied
+
+      ListNode build(int[] values) {
+          ListNode head = new ListNode(values[0]), cur = head;
+          for (int i = 1; i < values.length; i++) { cur.next = new ListNode(values[i]); cur = cur.next; }
+          return head;
+      }
+      List<Integer> toList(ListNode head) {
+          List<Integer> out = new ArrayList<>();
+          while (head != null) { out.add(head.val); head = head.next; }   // null is the end
+          return out;
+      }
+    `],
+    ["insert / delete / doubly linked",`
+      void insertAfter(ListNode node, int val) { node.next = new ListNode(val, node.next); }
+      void deleteAfter(ListNode node) {
+          if (node.next != null) node.next = node.next.next;    // old node becomes garbage
+      }
+      class DListNode {                       // doubly linked
+          int val; DListNode prev, next;
+          DListNode(int val) { this.val = val; }
+      }
+    `],
+  ],
+  scala:[
+    [null,`
+      class ListNode(var value: Int, var next: ListNode = null)   // a "pointer" field
+
+      val a = ListNode(1); val b = ListNode(2)
+      a.next = b                                  // a "points to" b -- nothing is copied
+
+      def build(values: List[Int]): ListNode =
+        val head = ListNode(values.head); var cur = head
+        for v <- values.tail do { cur.next = ListNode(v); cur = cur.next }
+        head
+
+      def toList(head: ListNode): List[Int] =
+        var out = List.empty[Int]; var node = head
+        while node != null do { out :+= node.value; node = node.next }   // null still used for links
+        out
+    `],
+    ["insert / delete / doubly linked",`
+      def insertAfter(node: ListNode, v: Int): Unit = node.next = ListNode(v, node.next)
+      def deleteAfter(node: ListNode): Unit =
+        if node.next != null then node.next = node.next.next
+
+      class DListNode(var value: Int, var prev: DListNode = null, var next: DListNode = null)
+    `],
+  ],
+  go:[
+    [null,`
+      type ListNode struct {
+          Val  int
+          Next *ListNode      // a pointer: an address, or nil
+      }
+
+      a, b := &ListNode{Val: 1}, &ListNode{Val: 2}
+      a.Next = b                     // a "points to" b -- nothing is copied
+
+      func build(values []int) *ListNode {
+          head := &ListNode{Val: values[0]}
+          cur := head
+          for _, v := range values[1:] {
+              cur.Next = &ListNode{Val: v}
+              cur = cur.Next
+          }
+          return head
+      }
+      func toList(head *ListNode) []int {
+          out := []int{}
+          for head != nil {                 // nil is the end
+              out = append(out, head.Val)
+              head = head.Next
+          }
+          return out
+      }
+    `],
+    ["insert / delete / doubly linked",`
+      func insertAfter(node *ListNode, v int) { node.Next = &ListNode{Val: v, Next: node.Next} }
+      func deleteAfter(node *ListNode) {
+          if node.Next != nil { node.Next = node.Next.Next }   // old node is garbage-collected
+      }
+      type DListNode struct {
+          Val        int
+          Prev, Next *DListNode
+      }
+    `],
+  ],
+}],
+
+["stack","Stack","LIFO: push/pop one end",{
+  python:[[null,`
+    stack = []
+    stack.append(1); stack.append(2)     # push                O(1)
+    stack.pop()                            # pop -- LIFO           O(1)
+    stack[-1]                                # peek
+    not stack                                  # empty?
+    # don't stack.pop(0) or insert(0, x) here -- O(n), that's a queue op
+  `]],
+  java:[[null,`
+    Deque<Integer> stack = new ArrayDeque<>();   // ArrayDeque -- faster than java.util.Stack
+    stack.push(1); stack.push(2);      // push                O(1)
+    stack.pop();                          // pop -- LIFO           O(1)
+    stack.peek();                            // peek
+    stack.isEmpty();                            // empty?
+  `]],
+  scala:[[null,`
+    val stack = mutable.Stack[Int]()
+    stack.push(1); stack.push(2)      // push                O(1)
+    stack.pop()                          // pop -- LIFO           O(1)
+    stack.top                               // peek
+    stack.isEmpty                             // empty?
+  `]],
+  go:[[null,`
+    stack := []int{}
+    stack = append(stack, 1, 2)      // push                       O(1) amortized
+    top := stack[len(stack)-1]          // peek
+    stack = stack[:len(stack)-1]           // pop -- LIFO               O(1)
+    len(stack) == 0                          // empty?
+  `]],
+}],
+
+["queue","Queue &amp; deque","FIFO: add/remove opposite ends",{
+  python:[[null,`
+    from collections import deque
+    q = deque()
+    q.append(1); q.append(2)     # add right                O(1)
+    q.popleft()                    # remove left -- FIFO       O(1)
+    q.appendleft(0); q.pop()          # deque works from either end
+    not q                               # empty?
+    # a plain list.pop(0) also works but is O(n) -- avoid it for a queue
+  `]],
+  java:[[null,`
+    Deque<Integer> q = new ArrayDeque<>();
+    q.addLast(1); q.addLast(2);      // add right                O(1)
+    q.pollFirst();                     // remove left -- FIFO       O(1)
+    q.addFirst(0); q.pollLast();          // works from either end
+    q.isEmpty();                              // empty?
+  `]],
+  scala:[[null,`
+    val q = mutable.Queue[Int]()
+    q.enqueue(1, 2)              // add right                O(1)
+    q.dequeue()                     // remove left -- FIFO       O(1)
+    q.isEmpty                          // empty?
+    // for both-ends O(1), use mutable.ArrayDeque instead
+  `]],
+  go:[[null,`
+    import "container/list"
+    q := list.New()
+    q.PushBack(1); q.PushBack(2)      // add right                O(1)
+    front := q.Front(); q.Remove(front)  // remove left -- FIFO       O(1)
+    q.Len() == 0                            // empty?
+    // a slice works too: append(q, x) to enqueue, q[1:] to dequeue
+  `]],
+}],
+
+["heap","Priority queue &amp; heap","min-heap by default; negate for max",{
+  python:[
+    [null,`
+      import heapq
+      h = []
+      heapq.heappush(h, 5); heapq.heappush(h, 1); heapq.heappush(h, 3)
+      heapq.heappop(h)             # 1 -- smallest first       O(log n)
+      h[0]                            # peek smallest
+      heapq.heapify(existing_list)      # list -> heap in place    O(n)
+    `],
+    ["max-heap, tuples, custom objects",`
+      for x in [5, 1, 3]: heapq.heappush(h2, -x)   # max-heap: negate in...
+      -heapq.heappop(h2)                              # ...and out
+
+      heapq.heappush(h3, (2, "task B"))    # (priority, item) tuples compare
+      heapq.heappush(h3, (1, "task A"))      # left-to-right
+      heapq.heappush(h4, Interval(5, 9))       # custom objects need __lt__
+    `],
+  ],
+  java:[
+    [null,`
+      PriorityQueue<Integer> h = new PriorityQueue<>();   // min-heap by default
+      h.offer(5); h.offer(1); h.offer(3);
+      h.poll();             // 1 -- smallest first       O(log n)
+      h.peek();                // peek smallest
+    `],
+    ["max-heap &amp; custom comparators",`
+      PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+      maxHeap.addAll(List.of(5, 1, 3));
+      maxHeap.poll();                          // 5 -- largest first
+
+      PriorityQueue<int[]> byFirst =
+          new PriorityQueue<>((a, b) -> a[0] - b[0]);    // custom comparator, e.g. (priority, item)
+      byFirst.offer(new int[]{2, 99});
+    `],
+  ],
+  scala:[
+    [null,`
+      val h = mutable.PriorityQueue[Int]()(Ordering.Int.reverse)   // reverse the default max-heap
+      h.enqueue(5, 1, 3)
+      h.dequeue()             // 1 -- smallest first       O(log n)
+      h.head                     // peek smallest
+    `],
+    ["max-heap &amp; custom ordering",`
+      val maxHeap = mutable.PriorityQueue[Int](5, 1, 3)   // max-heap is Scala's default ordering
+      maxHeap.dequeue()                                        // 5 -- largest first
+
+      case class Task(priority: Int, name: String)
+      val byPriority = mutable.PriorityQueue[Task]()(Ordering.by(t => -t.priority))
+    `],
+  ],
+  go:[
+    [null,`
+      import "container/heap"
+
+      type IntHeap []int                       // implement heap.Interface
+      func (h IntHeap) Len() int            { return len(h) }
+      func (h IntHeap) Less(i, j int) bool  { return h[i] < h[j] }    // "<" = min-heap
+      func (h IntHeap) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
+      func (h *IntHeap) Push(x any)          { *h = append(*h, x.(int)) }
+      func (h *IntHeap) Pop() any {
+          old := *h; n := len(old); x := old[n-1]; *h = old[:n-1]; return x
+      }
+    `],
+    ["using it: init, push, pop",`
+      h := &IntHeap{5, 1, 3}
+      heap.Init(h)
+      heap.Push(h, 2)
+      heap.Pop(h)              // 1 -- smallest first       O(log n)
+      (*h)[0]                     // peek smallest
+      // for a max-heap, flip Less to "h[i] > h[j]"
+    `],
+  ],
+}],
+
+["map","Hash map","create, add, remove, iterate",{
+  python:[
+    [null,`
+      d = {"a": 1, "b": 2}
+      d["c"] = 3                    # add / update
+      d.get("z")                      # None -- no KeyError
+      d.get("z", 0)                     # 0 -- with a default
+      del d["a"]; d.pop("b")               # remove (KeyError if missing)
+      d.pop("z", None)                       # remove safely
+      "c" in d                                  # key check           O(1) avg
+      not d                                       # empty?
+      for k, v in d.items(): ...                    # iterate pairs
+    `],
+    ["defaultdict &amp; Counter",`
+      from collections import defaultdict, Counter
+      g = defaultdict(list); g["x"].append(1)     # auto-creates missing keys
+      Counter("mississippi").most_common(2)         # [('i',4), ('s',4)]
+    `],
+  ],
+  java:[
+    [null,`
+      Map<String, Integer> d = new HashMap<>();
+      d.put("a", 1); d.put("b", 2);
+      d.put("c", 3);                    // add / update
+      d.get("z");                          // null -- no exception
+      d.getOrDefault("z", 0);                 // 0 -- with a default
+      d.remove("a");                            // remove (returns null if missing)
+      d.containsKey("c");                          // key check          O(1) avg
+      d.isEmpty();                                    // empty?
+      for (var e : d.entrySet()) { ... }                 // iterate pairs
+    `],
+    ["computeIfAbsent &amp; merge",`
+      Map<String, List<Integer>> g = new HashMap<>();
+      g.computeIfAbsent("x", k -> new ArrayList<>()).add(1);   // auto-creates missing keys
+
+      Map<Character, Integer> freq = new HashMap<>();
+      for (char c : "mississippi".toCharArray())
+          freq.merge(c, 1, Integer::sum);                        // counting pattern
+    `],
+  ],
+  scala:[
+    [null,`
+      val d = mutable.Map("a" -> 1, "b" -> 2)
+      d("c") = 3                       // add / update
+      d.get("z")                          // None -- no exception
+      d.getOrElse("z", 0)                    // 0 -- with a default
+      d -= "a"                                  // remove
+      d.contains("c")                              // key check          O(1) avg
+      d.isEmpty                                       // empty?
+      for (k, v) <- d do { ... }                        // iterate pairs
+    `],
+    ["getOrElseUpdate &amp; groupBy",`
+      val g = mutable.Map[String, mutable.Buffer[Int]]()
+      g.getOrElseUpdate("x", mutable.Buffer()) += 1     // auto-creates missing keys
+
+      "mississippi".groupBy(identity).view.mapValues(_.length).toMap   // counting pattern
+    `],
+  ],
+  go:[
+    [null,`
+      d := map[string]int{"a": 1, "b": 2}
+      d["c"] = 3                    // add / update
+      v, ok := d["z"]                  // 0, false -- no error, just a zero value + ok flag
+      delete(d, "a")                      // remove -- no error even if missing
+      _, exists := d["c"]                    // key check          O(1) avg
+      len(d) == 0                               // empty?
+      for k, v := range d { ... }                  // iterate pairs
+    `],
+    ["counting pattern",`
+      freq := map[rune]int{}
+      for _, c := range "mississippi" {
+          freq[c]++                       // zero value (0) lets you increment directly
+      }
+    `],
+  ],
+}],
+
+["set","Set","unique values, O(1) membership",{
+  python:[[null,`
+    s = {1, 2, 3}
+    s.add(4)
+    s.remove(2)          # KeyError if missing
+    s.discard(9)            # no error either way
+    2 in s                     # O(1) avg
+    not s                        # empty?
+    {1,2,3} & {2,3,4}               # intersection {2, 3}
+    {1,2,3} | {2,3,4}               # union        {1, 2, 3, 4}
+    {1,2,3} - {2,3,4}               # difference   {1}
+  `]],
+  java:[[null,`
+    Set<Integer> s = new HashSet<>(Set.of(1, 2, 3));
+    s.add(4);
+    s.remove(2);          // no error either way, returns boolean
+    s.contains(2);            // O(1) avg
+    s.isEmpty();                 // empty?
+    Set<Integer> a = new HashSet<>(Set.of(1,2,3)), b = Set.of(2,3,4);
+    a.retainAll(b);                 // intersection -> a becomes {2, 3}
+  `]],
+  scala:[[null,`
+    var s = mutable.Set(1, 2, 3)
+    s += 4
+    s -= 2               // no error either way
+    s.contains(2)            // O(1) avg
+    s.isEmpty                   // empty?
+    Set(1,2,3) & Set(2,3,4)       // intersection Set(2, 3)
+    Set(1,2,3) | Set(2,3,4)         // union        Set(1, 2, 3, 4)
+    Set(1,2,3) -- Set(2,3,4)          // difference   Set(1)
+  `]],
+  go:[[null,`
+    s := map[int]struct{}{1: {}, 2: {}, 3: {}}    // struct{} costs zero bytes per value
+    s[4] = struct{}{}
+    delete(s, 2)
+    _, ok := s[2]              // membership check   O(1) avg
+    len(s) == 0                   // empty? -- no builtin set type in Go
+  `]],
+}],
+
+["tree","Tree","node, BST, traversals",{
+  python:[
+    [null,`
+      class TreeNode:
+          def __init__(self, val, left=None, right=None):
+              self.val, self.left, self.right = val, left, right
+
+      def insert(root, val):
+          if root is None: return TreeNode(val)
+          if val < root.val: root.left = insert(root.left, val)
+          else: root.right = insert(root.right, val)
+          return root
+    `],
+    ["traversals (in-order + level order)",`
+      def inorder(root):                  # left, node, right -- sorted for a BST
+          if root:
+              yield from inorder(root.left); yield root.val
+              yield from inorder(root.right)
+
+      from collections import deque
+      def level_order(root):              # breadth-first
+          if not root: return []
+          q, out = deque([root]), []
+          while q:
+              node = q.popleft(); out.append(node.val)
+              if node.left: q.append(node.left)
+              if node.right: q.append(node.right)
+          return out
+    `],
+  ],
+  java:[
+    [null,`
+      class TreeNode {
+          int val; TreeNode left, right;
+          TreeNode(int val) { this.val = val; }
+      }
+      TreeNode insert(TreeNode root, int val) {
+          if (root == null) return new TreeNode(val);
+          if (val < root.val) root.left = insert(root.left, val);
+          else root.right = insert(root.right, val);
+          return root;
+      }
+    `],
+    ["traversals (in-order + level order)",`
+      void inorder(TreeNode root, List<Integer> out) {          // left, node, right -- sorted for a BST
+          if (root == null) return;
+          inorder(root.left, out); out.add(root.val); inorder(root.right, out);
+      }
+      List<Integer> levelOrder(TreeNode root) {                    // breadth-first
+          List<Integer> out = new ArrayList<>();
+          if (root == null) return out;
+          Deque<TreeNode> q = new ArrayDeque<>(); q.add(root);
+          while (!q.isEmpty()) {
+              TreeNode node = q.poll(); out.add(node.val);
+              if (node.left != null) q.add(node.left);
+              if (node.right != null) q.add(node.right);
+          }
+          return out;
+      }
+    `],
+  ],
+  scala:[
+    [null,`
+      class TreeNode(val value: Int, var left: TreeNode = null, var right: TreeNode = null)
+
+      def insert(root: TreeNode, v: Int): TreeNode =
+        if root == null then TreeNode(v)
+        else
+          if v < root.value then root.left = insert(root.left, v)
+          else root.right = insert(root.right, v)
+          root
+    `],
+    ["traversals (in-order + level order)",`
+      def inorder(root: TreeNode): List[Int] =              // left, node, right -- sorted for a BST
+        if root == null then Nil
+        else inorder(root.left) ++ List(root.value) ++ inorder(root.right)
+
+      def levelOrder(root: TreeNode): List[Int] =                // breadth-first
+        val q = mutable.Queue[TreeNode](); if root != null then q.enqueue(root)
+        var out = List.empty[Int]
+        while q.nonEmpty do
+          val node = q.dequeue(); out :+= node.value
+          if node.left != null then q.enqueue(node.left)
+          if node.right != null then q.enqueue(node.right)
+        out
+    `],
+  ],
+  go:[
+    [null,`
+      type TreeNode struct {
+          Val         int
+          Left, Right *TreeNode
+      }
+      func insert(root *TreeNode, v int) *TreeNode {
+          if root == nil { return &TreeNode{Val: v} }
+          if v < root.Val { root.Left = insert(root.Left, v) } else { root.Right = insert(root.Right, v) }
+          return root
+      }
+    `],
+    ["traversals (in-order + level order)",`
+      func inorder(root *TreeNode, out *[]int) {               // left, node, right -- sorted for a BST
+          if root == nil { return }
+          inorder(root.Left, out); *out = append(*out, root.Val); inorder(root.Right, out)
+      }
+      func levelOrder(root *TreeNode) []int {                     // breadth-first
+          out := []int{}
+          if root == nil { return out }
+          q := []*TreeNode{root}
+          for len(q) > 0 {
+              node := q[0]; q = q[1:]; out = append(out, node.Val)
+              if node.Left != nil { q = append(q, node.Left) }
+              if node.Right != nil { q = append(q, node.Right) }
+          }
+          return out
+      }
+    `],
+  ],
+}],
+
+["graph","Graph","adjacency list, BFS/DFS",{
+  python:[
+    [null,`
+      from collections import defaultdict, deque
+      graph = defaultdict(list)
+      def add_edge(u, v, directed=False):
+          graph[u].append(v)
+          if not directed: graph[v].append(u)
+
+      def bfs(graph, start):
+          seen, q, out = {start}, deque([start]), []
+          while q:
+              node = q.popleft(); out.append(node)
+              for nxt in graph[node]:
+                  if nxt not in seen: seen.add(nxt); q.append(nxt)
+          return out
+    `],
+    ["DFS, iterative",`
+      def dfs_iterative(graph, start):    # avoids the recursion limit
+          seen, stack, out = {start}, [start], []
+          while stack:
+              node = stack.pop(); out.append(node)
+              for nxt in graph[node]:
+                  if nxt not in seen: seen.add(nxt); stack.append(nxt)
+          return out
+    `],
+  ],
+  java:[
+    [null,`
+      Map<Integer, List<Integer>> graph = new HashMap<>();
+      void addEdge(int u, int v, boolean directed) {
+          graph.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
+          if (!directed) graph.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+      }
+      List<Integer> bfs(Map<Integer, List<Integer>> graph, int start) {
+          Set<Integer> seen = new HashSet<>(List.of(start));
+          Deque<Integer> q = new ArrayDeque<>(List.of(start));
+          List<Integer> out = new ArrayList<>();
+          while (!q.isEmpty()) {
+              int node = q.poll(); out.add(node);
+              for (int nxt : graph.getOrDefault(node, List.of()))
+                  if (seen.add(nxt)) q.add(nxt);
+          }
+          return out;
+      }
+    `],
+    ["DFS, iterative",`
+      List<Integer> dfsIterative(Map<Integer, List<Integer>> graph, int start) {  // avoids stack overflow
+          Set<Integer> seen = new HashSet<>(List.of(start));
+          Deque<Integer> stack = new ArrayDeque<>(List.of(start));
+          List<Integer> out = new ArrayList<>();
+          while (!stack.isEmpty()) {
+              int node = stack.pop(); out.add(node);
+              for (int nxt : graph.getOrDefault(node, List.of()))
+                  if (seen.add(nxt)) stack.push(nxt);
+          }
+          return out;
+      }
+    `],
+  ],
+  scala:[
+    [null,`
+      val graph = mutable.Map[Int, mutable.Buffer[Int]]()
+      def addEdge(u: Int, v: Int, directed: Boolean = false): Unit =
+        graph.getOrElseUpdate(u, mutable.Buffer()) += v
+        if !directed then graph.getOrElseUpdate(v, mutable.Buffer()) += u
+
+      def bfs(graph: Map[Int, Seq[Int]], start: Int): List[Int] =
+        val seen = mutable.Set(start); val q = mutable.Queue(start); var out = List.empty[Int]
+        while q.nonEmpty do
+          val node = q.dequeue(); out :+= node
+          for nxt <- graph.getOrElse(node, Nil) if seen.add(nxt) do q.enqueue(nxt)
+        out
+    `],
+    ["DFS, iterative",`
+      def dfsIterative(graph: Map[Int, Seq[Int]], start: Int): List[Int] =    // avoids stack overflow
+        val seen = mutable.Set(start); val stack = mutable.Stack(start); var out = List.empty[Int]
+        while stack.nonEmpty do
+          val node = stack.pop(); out :+= node
+          for nxt <- graph.getOrElse(node, Nil) if seen.add(nxt) do stack.push(nxt)
+        out
+    `],
+  ],
+  go:[
+    [null,`
+      graph := map[int][]int{}
+      func addEdge(u, v int, directed bool) {
+          graph[u] = append(graph[u], v)
+          if !directed { graph[v] = append(graph[v], u) }
+      }
+      func bfs(graph map[int][]int, start int) []int {
+          seen := map[int]bool{start: true}
+          q := []int{start}
+          out := []int{}
+          for len(q) > 0 {
+              node := q[0]; q = q[1:]; out = append(out, node)
+              for _, nxt := range graph[node] {
+                  if !seen[nxt] { seen[nxt] = true; q = append(q, nxt) }
+              }
+          }
+          return out
+      }
+    `],
+    ["DFS, iterative",`
+      func dfsIterative(graph map[int][]int, start int) []int {   // avoids stack overflow
+          seen := map[int]bool{start: true}
+          stack := []int{start}
+          out := []int{}
+          for len(stack) > 0 {
+              node := stack[len(stack)-1]; stack = stack[:len(stack)-1]; out = append(out, node)
+              for _, nxt := range graph[node] {
+                  if !seen[nxt] { seen[nxt] = true; stack = append(stack, nxt) }
+              }
+          }
+          return out
+      }
+    `],
+  ],
+}],
+
+["strings","Strings","reverse, build, char math",{
+  python:[
+    [null,`
+      s = "hello world"
+      s[::-1]                    # reverse
+      s == s[::-1]                  # palindrome check
+      s.split()                        # ["hello","world"]
+      "-".join(["a","b","c"])             # "a-b-c"
+
+      chars = [c.upper() for c in "abc"]
+      "".join(chars)                        # build strings via list+join, not +=
+    `],
+    ["char math &amp; checks",`
+      ord("a"), chr(97)                        # char <-> code point
+      ord("c") - ord("a")                        # 'a'..'z' -> 0..25
+      s.isalpha(), s.isdigit(), s.count("l")
+    `],
+  ],
+  java:[
+    [null,`
+      String s = "hello world";
+      new StringBuilder(s).reverse().toString();     // reverse -- strings are immutable in Java
+      s.equals(new StringBuilder(s).reverse().toString());   // palindrome check
+      s.split(" ");                                     // ["hello", "world"]
+      String.join("-", "a", "b", "c");                    // "a-b-c"
+
+      StringBuilder sb = new StringBuilder();               // build via StringBuilder, not +=
+      for (char c : "abc".toCharArray()) sb.append(Character.toUpperCase(c));
+      sb.toString();
+    `],
+    ["char math &amp; checks",`
+      (int) 'a'; (char) 97;                 // char <-> code point
+      'c' - 'a';                                // 'a'..'z' -> 0..25 (chars subtract like ints)
+      Character.isLetter('a'); Character.isDigit('1');
+    `],
+  ],
+  scala:[
+    [null,`
+      val s = "hello world"
+      s.reverse                    // reverse
+      s == s.reverse                  // palindrome check
+      s.split(" ")                       // Array("hello", "world")
+      List("a","b","c").mkString("-")       // "a-b-c"
+
+      "abc".map(_.toUpper)                     // build via map, returns a new String directly
+    `],
+    ["char math &amp; checks",`
+      'a'.toInt; 97.toChar                 // char <-> code point
+      'c' - 'a'                                // 'a'..'z' -> 0..25
+      s.forall(_.isLetter); s.exists(_.isDigit)
+    `],
+  ],
+  go:[
+    [null,`
+      s := "hello world"
+      runes := []rune(s)                       // convert to runes -- strings are immutable & byte-based
+      for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 { runes[i], runes[j] = runes[j], runes[i] }
+      reversed := string(runes)
+
+      strings.Split(s, " ")                       // ["hello" "world"]
+      strings.Join([]string{"a","b","c"}, "-")       // "a-b-c"
+
+      var sb strings.Builder                            // build via Builder, not += in a loop
+      for _, c := range "abc" { sb.WriteRune(unicode.ToUpper(c)) }
+      sb.String()
+    `],
+    ["char math &amp; checks",`
+      int('a')                              // 97 -- a rune IS an int32, no cast function needed
+      rune(97)                                 // 'a'
+      'c' - 'a'                                  // 25 -- runes subtract like ints
+      unicode.IsLetter('a'); unicode.IsDigit('1')
+    `],
+  ],
+}],
+
+["sorting","Sorting &amp; searching","sort by key, binary search",{
+  python:[
+    [null,`
+      nums = [5, 2, 4, 1]
+      sorted(nums)                          # new list, ascending
+      nums.sort(reverse=True)                 # in place, descending, returns None
+      sorted(words, key=len)                    # sort by a computed key
+      sorted(people, key=lambda p: (p.age, p.name))   # multi-key
+    `],
+    ["bisect &amp; your own binary search",`
+      import bisect
+      a = [1, 3, 3, 5, 7]
+      bisect.bisect_left(a, 3)      # 1 -- leftmost insert point
+      bisect.bisect_right(a, 3)       # 3 -- rightmost insert point
+      bisect.insort(a, 4)               # insert, keep sorted, in place
+
+      def binary_search(nums, target):
+          lo, hi = 0, len(nums) - 1
+          while lo <= hi:
+              mid = (lo + hi) // 2
+              if nums[mid] == target: return mid
+              if nums[mid] < target: lo = mid + 1
+              else: hi = mid - 1
+          return -1
+    `],
+  ],
+  java:[
+    [null,`
+      int[] nums = {5, 2, 4, 1};
+      int[] sorted = nums.clone(); Arrays.sort(sorted);       // ascending; mutates in place
+      List<Integer> boxed = new ArrayList<>(List.of(5,2,4,1));
+      boxed.sort(Comparator.reverseOrder());                    // descending, needs boxed Integers
+      words.sort(Comparator.comparingInt(String::length));        // sort by a computed key
+      people.sort(Comparator.comparingInt((Person p) -> p.age)
+                              .thenComparing(p -> p.name));          // multi-key
+    `],
+    ["binary search",`
+      int idx = Arrays.binarySearch(a, 3);        // an exact match at ANY equal index
+
+      int binarySearch(int[] nums, int target) {     // write-it-yourself template
+          int lo = 0, hi = nums.length - 1;
+          while (lo <= hi) {
+              int mid = lo + (hi - lo) / 2;
+              if (nums[mid] == target) return mid;
+              if (nums[mid] < target) lo = mid + 1; else hi = mid - 1;
+          }
+          return -1;
+      }
+    `],
+  ],
+  scala:[
+    [null,`
+      val nums = List(5, 2, 4, 1)
+      nums.sorted                          // new list, ascending
+      nums.sorted(Ordering.Int.reverse)       // descending
+      words.sortBy(_.length)                     // sort by a computed key
+      people.sortBy(p => (p.age, p.name))          // multi-key (tuple ordering)
+    `],
+    ["binary search",`
+      def binarySearch(nums: Array[Int], target: Int): Int =    // write-it-yourself template
+        var lo = 0; var hi = nums.length - 1
+        while lo <= hi do
+          val mid = lo + (hi - lo) / 2
+          if nums(mid) == target then return mid
+          else if nums(mid) < target then lo = mid + 1 else hi = mid - 1
+        -1
+    `],
+  ],
+  go:[
+    [null,`
+      nums := []int{5, 2, 4, 1}
+      sort.Ints(nums)                          // ascending, in place
+      sort.Sort(sort.Reverse(sort.IntSlice(nums)))   // descending
+      sort.Slice(words, func(i, j int) bool {          // sort by a computed key
+          return len(words[i]) < len(words[j])
+      })
+      sort.Slice(people, func(i, j int) bool {           // multi-key: compare age, then name
+          if people[i].Age != people[j].Age { return people[i].Age < people[j].Age }
+          return people[i].Name < people[j].Name
+      })
+    `],
+    ["bisect &amp; your own binary search",`
+      a := []int{1, 3, 3, 5, 7}
+      i := sort.SearchInts(a, 3)          // leftmost insert point (like bisect_left)
+
+      func binarySearch(nums []int, target int) int {   // write-it-yourself template
+          lo, hi := 0, len(nums)-1
+          for lo <= hi {
+              mid := lo + (hi-lo)/2
+              if nums[mid] == target { return mid }
+              if nums[mid] < target { lo = mid + 1 } else { hi = mid - 1 }
+          }
+          return -1
+      }
+    `],
+  ],
+}],
+
+["math","Math &amp; bits","division, gcd, bitwise ops",{
+  python:[
+    [null,`
+      7 // 2, 7 % 2, divmod(7, 2)     # 3, 1, (3, 1)
+      2 ** 10                            # 1024 -- exponent, not ^
+      import math
+      math.gcd(12, 18)                     # 6
+      float("inf"), float("-inf")            # unbounded sentinels for "best so far"
+    `],
+    ["bitwise",`
+      5 & 3, 5 | 3, 5 ^ 3, ~5     # AND, OR, XOR, NOT
+      5 << 1, 5 >> 1                # shift left/right (x2, /2)
+      bin(5)                          # "0b101"
+      bin(5).count("1")                 # popcount: number of set bits
+      5 & 1                                # 1 -- odd check
+    `],
+  ],
+  java:[
+    [null,`
+      7 / 2; 7 % 2;                       // 3, 1 -- int division truncates toward zero
+      Math.floorDiv(7, 2); Math.floorMod(7, 2);   // 3, 1 -- floor semantics, matters for negatives
+      Math.pow(2, 10);                       // 1024.0 -- returns a double, not an int
+      double inf = Double.POSITIVE_INFINITY;    // unbounded sentinel for "best so far"
+    `],
+    ["bitwise",`
+      5 & 3; 5 | 3; 5 ^ 3; ~5;     // AND, OR, XOR, NOT
+      5 << 1; 5 >> 1;                 // shift left/right (x2, /2)
+      Integer.toBinaryString(5);         // "101"
+      Integer.bitCount(5);                  // popcount: number of set bits
+      (5 & 1) == 1;                            // odd check
+    `],
+  ],
+  scala:[
+    [null,`
+      7 / 2; 7 % 2                       // 3, 1 -- int division truncates toward zero
+      Math.floorDiv(7, 2); Math.floorMod(7, 2)   // 3, 1 -- floor semantics
+      math.pow(2, 10)                        // 1024.0 -- returns a Double
+      Double.PositiveInfinity                  // unbounded sentinel for "best so far"
+    `],
+    ["bitwise",`
+      5 & 3; 5 | 3; 5 ^ 3; ~5     // AND, OR, XOR, NOT
+      5 << 1; 5 >> 1                 // shift left/right (x2, /2)
+      Integer.toBinaryString(5)         // "101"
+      Integer.bitCount(5)                  // popcount: number of set bits
+      (5 & 1) == 1                            // odd check
+    `],
+  ],
+  go:[
+    [null,`
+      7 / 2; 7 % 2                       // 3, 1 -- int division truncates toward zero
+      math.Floor(7.0 / 2.0)                  // floor division for floats
+      math.Pow(2, 10)                          // 1024 -- returns a float64
+      math.Inf(1); math.Inf(-1)                  // unbounded sentinels for "best so far"
+    `],
+    ["bitwise",`
+      5 & 3; 5 | 3; 5 ^ 3; ^5     // AND, OR, XOR, NOT (Go uses ^ as unary NOT too)
+      5 << 1; 5 >> 1                 // shift left/right (x2, /2)
+      strconv.FormatInt(5, 2)           // "101"
+      bits.OnesCount(5)                    // popcount: number of set bits
+      5&1 == 1                                // odd check
+    `],
+  ],
+}],
+
+["itertools","Combinatorics","permutations, combinations, running totals",{
+  python:[[null,`
+    from itertools import permutations, combinations, product, accumulate
+    list(permutations([1,2,3], 2))    # ordered pairs: (1,2),(1,3),(2,1)...
+    list(combinations([1,2,3], 2))      # unordered pairs: (1,2),(1,3),(2,3)
+    list(product([0,1], repeat=2))        # (0,0),(0,1),(1,0),(1,1)
+    list(accumulate([1,2,3,4]))             # running total: [1,3,6,10]
+  `]],
+  java:[[null,`
+    IntStream.rangeClosed(1, 4).boxed().toList();     // [1,2,3,4]
+    nums.stream().mapToInt(Integer::intValue).sum();    // reduce/sum
+    IntStream.range(0, 4).mapToObj(i -> i * i).toList();  // map
+    // no stdlib permutations/combinations/product -- write them by hand, or use a library
+  `]],
+  scala:[[null,`
+    List(1,2,3).permutations.toList        // built into every collection
+    List(1,2,3).combinations(2).toList        // unordered pairs
+    for a <- List(0,1); b <- List(0,1) yield (a, b)   // Cartesian product via a for-comprehension
+    List(1,2,3,4).scanLeft(0)(_ + _).tail        // running total: List(1,3,6,10)
+  `]],
+  go:[[null,`
+    func permutations(nums []int) [][]int {       // no stdlib helper -- write it yourself
+        var out [][]int
+        var backtrack func([]int, []int)
+        backtrack = func(cur, remaining []int) {
+            if len(remaining) == 0 { out = append(out, append([]int{}, cur...)); return }
+            for i, v := range remaining {
+                rest := append(append([]int{}, remaining[:i]...), remaining[i+1:]...)
+                backtrack(append(cur, v), rest)
+            }
+        }
+        backtrack([]int{}, nums)
+        return out
+    }
+  `]],
+}],
+
+["twoptr","Two pointers","sorted array, converge from both ends",{
+  python:[[null,`
+    def two_sum_sorted(nums, target):
+        lo, hi = 0, len(nums) - 1
+        while lo < hi:
+            s = nums[lo] + nums[hi]
+            if s == target: return lo, hi
+            if s < target: lo += 1
+            else: hi -= 1
+        return -1, -1
+  `]],
+  java:[[null,`
+    int[] twoSumSorted(int[] nums, int target) {
+        int lo = 0, hi = nums.length - 1;
+        while (lo < hi) {
+            int sum = nums[lo] + nums[hi];
+            if (sum == target) return new int[]{lo, hi};
+            if (sum < target) lo++; else hi--;
+        }
+        return new int[]{-1, -1};
+    }
+  `]],
+  scala:[[null,`
+    def twoSumSorted(nums: Array[Int], target: Int): (Int, Int) =
+      var lo = 0; var hi = nums.length - 1
+      while lo < hi do
+        val sum = nums(lo) + nums(hi)
+        if sum == target then return (lo, hi)
+        else if sum < target then lo += 1 else hi -= 1
+      (-1, -1)
+  `]],
+  go:[[null,`
+    func twoSumSorted(nums []int, target int) (int, int) {
+        lo, hi := 0, len(nums)-1
+        for lo < hi {
+            sum := nums[lo] + nums[hi]
+            if sum == target { return lo, hi }
+            if sum < target { lo++ } else { hi-- }
+        }
+        return -1, -1
+    }
+  `]],
+}],
+
+["window","Sliding window","shrink/grow a window over a range",{
+  python:[[null,`
+    def longest_unique_substring(s):
+        seen = {}                     # char -> last index seen
+        start = best = 0
+        for i, c in enumerate(s):
+            if c in seen and seen[c] >= start:
+                start = seen[c] + 1     # shrink past the repeat
+            seen[c] = i
+            best = max(best, i - start + 1)
+        return best
+  `]],
+  java:[[null,`
+    int longestUniqueSubstring(String s) {
+        Map<Character, Integer> seen = new HashMap<>();      // char -> last index seen
+        int start = 0, best = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (seen.containsKey(c) && seen.get(c) >= start) start = seen.get(c) + 1;
+            seen.put(c, i);
+            best = Math.max(best, i - start + 1);
+        }
+        return best;
+    }
+  `]],
+  scala:[[null,`
+    def longestUniqueSubstring(s: String): Int =
+      val seen = mutable.Map[Char, Int]()          // char -> last index seen
+      var start = 0; var best = 0
+      for (c, i) <- s.zipWithIndex do
+        if seen.contains(c) && seen(c) >= start then start = seen(c) + 1
+        seen(c) = i
+        best = math.max(best, i - start + 1)
+      best
+  `]],
+  go:[[null,`
+    func longestUniqueSubstring(s string) int {
+        seen := map[byte]int{}          // char -> last index seen
+        start, best := 0, 0
+        for i := 0; i < len(s); i++ {
+            c := s[i]
+            if idx, ok := seen[c]; ok && idx >= start { start = idx + 1 }
+            seen[c] = i
+            if i-start+1 > best { best = i - start + 1 }
+        }
+        return best
+    }
+  `]],
+}],
+
+["prefix","Prefix sums","O(1) range sums after an O(n) setup",{
+  python:[[null,`
+    nums = [1, 2, 3, 4]
+    prefix = [0]
+    for x in nums: prefix.append(prefix[-1] + x)   # prefix[i] = sum(nums[:i])
+
+    def range_sum(lo, hi):       # inclusive lo..hi
+        return prefix[hi + 1] - prefix[lo]
+  `]],
+  java:[[null,`
+    int[] nums = {1, 2, 3, 4};
+    int[] prefix = new int[nums.length + 1];
+    for (int i = 0; i < nums.length; i++) prefix[i + 1] = prefix[i] + nums[i];
+
+    int rangeSum(int lo, int hi) { return prefix[hi + 1] - prefix[lo]; }   // inclusive lo..hi
+  `]],
+  scala:[[null,`
+    val nums = List(1, 2, 3, 4)
+    val prefix = nums.scanLeft(0)(_ + _)      // prefix(i) = sum(nums.take(i))
+
+    def rangeSum(lo: Int, hi: Int): Int = prefix(hi + 1) - prefix(lo)   // inclusive lo..hi
+  `]],
+  go:[[null,`
+    nums := []int{1, 2, 3, 4}
+    prefix := make([]int, len(nums)+1)
+    for i, x := range nums { prefix[i+1] = prefix[i] + x }
+
+    func rangeSum(lo, hi int) int { return prefix[hi+1] - prefix[lo] }   // inclusive lo..hi
+  `]],
+}],
+];
+
+var TABLES=[
+["gotchas","null vs. None vs. nil","the “absence of a value” gotcha, compared",
+  table(["Concept","Python","Java","Scala","Go"], [
+    ["Absence of a value","<code>None</code>","<code>null</code>","<code>null</code> (avoid) / idiomatic <code>Option</code>","<code>nil</code> (pointers, slices, maps, chans, funcs, interfaces)"],
+    ["Empty vs. absent","<code>[]</code> is not <code>None</code>","empty <code>List.of()</code> is not <code>null</code>","<code>Nil</code>/empty collection is not <code>None</code>","empty <code>[]int{}</code> is not <code>nil</code> -- though a nil slice also has length 0"],
+    ["Checking “is it empty?”","<code>not seq</code>","<code>list.isEmpty()</code>","<code>seq.isEmpty</code>","<code>len(x) == 0</code>"],
+    ["Equality: value vs. identity","<code>==</code> value, <code>is</code> identity","<code>.equals()</code> value, <code>==</code> reference","<code>==</code> value (calls <code>equals</code>), <code>eq</code> reference","<code>==</code> compares values for structs/arrays, addresses for pointers"],
+    ["Default / zero values","unset name raises <code>NameError</code>","field defaults to <code>null</code>/<code>0</code>; locals must be assigned","no defaults -- use <code>Option</code> for “maybe unset”","every variable gets a zero value automatically (<code>0</code>, <code>\"\"</code>, <code>nil</code>, <code>false</code>)"],
+    ["Mutable default arguments","<code>def f(x=[])</code> reuses one list across every call","no default arguments in Java","default args are re-evaluated per call -- safe","no default arguments in Go"],
+    ["Integer overflow","ints are arbitrary precision -- never overflows","32-bit <code>int</code> wraps silently; use <code>long</code> for bigger","same as Java (JVM <code>Int</code>/<code>Long</code>)","fixed-width <code>int</code> wraps silently on overflow"],
+    ["String mutability","immutable -- build with a list + <code>join</code>","immutable -- build with <code>StringBuilder</code>","immutable -- build with <code>map</code>/interpolation","immutable -- build with <code>strings.Builder</code>"],
+  ])
+],
+["complexity","Big-O cheat table","average case; “--” = doesn't apply as phrased",
+  table(["Structure","Access","Search","Insert","Delete","Notes"], [
+    ["List (array)","O(1)","O(n)","O(1) end / O(n) front","O(1) end / O(n) front","dynamic array in every language here"],
+    ["Linked list","O(n)","O(n)","O(1) at a known node","O(1) at a known node","no O(1) random access"],
+    ["Stack","O(1) top","O(n)","O(1)","O(1)","push/pop from one end only"],
+    ["Queue / deque","O(1) ends","O(n)","O(1)","O(1)","use a real deque, not a plain list/array, for the front"],
+    ["Hash map","--","O(1) avg","O(1) avg","O(1) avg","O(n) worst case, on hash collisions"],
+    ["Set","--","O(1) avg","O(1) avg","O(1) avg","same caveat as a hash map"],
+    ["Binary heap","O(1) min/max","O(n)","O(log n)","O(log n)","a min-heap by default in every language here"],
+    ["BST (balanced)","O(log n)","O(log n)","O(log n)","O(log n)","degrades to O(n) if unbalanced"],
+    ["Graph (adjacency list)","--","O(V+E) BFS/DFS","O(1) add edge","O(E) remove edge","V = vertices, E = edges"],
+  ])
+],
+];
+
+var LANGS=[["python","Python"],["java","Java"],["scala","Scala"],["go","Go"]];
+var lang="python";
+try{
+  var saved=localStorage.getItem("sanrachana-lang");
+  if(saved && LANGS.some(function(l){return l[0]===saved})) lang=saved;
+}catch(e){}
+
+function renderLangs(){
+  document.getElementById("langs").innerHTML=LANGS.map(function(l){
+    return '<button type="button" data-lang="'+l[0]+'" class="'+(l[0]===lang?"active":"")+'">'+l[1]+'</button>';
+  }).join("");
+}
+function renderBoard(){
+  var board=CARDS.map(function(c){
+    var blocks=c[3][lang]||c[3].python;
+    return card(c[0],c[1],c[2],blocksHtml(blocks));
+  }).concat(TABLES.map(function(t){return card(t[0],t[1],t[2],t[3],true)})).join("");
+  document.getElementById("board").innerHTML=board;
+}
+
+var jump=CARDS.map(function(c){return '<a href="#'+c[0]+'">'+c[1]+'</a>'})
+  .concat(TABLES.map(function(t){return '<a href="#'+t[0]+'">'+t[1]+'</a>'})).join("");
+document.getElementById("jump").innerHTML=jump;
+
+document.getElementById("langs").addEventListener("click", function(e){
+  var btn=e.target.closest("button[data-lang]");
+  if(!btn) return;
+  lang=btn.getAttribute("data-lang");
+  try{localStorage.setItem("sanrachana-lang", lang)}catch(err){}
+  renderLangs(); renderBoard();
+});
+
+renderLangs();
+renderBoard();
+})();
+</script>
+</body>
+</html>
