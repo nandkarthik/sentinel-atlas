@@ -128,7 +128,9 @@ var BI=[
   "isalpha","isdigit","numeric_limits","bitset","stringstream","cout","cin","endl",
   "TypeVar","Generic","Function","Supplier","RuntimeException","IllegalArgumentException","IOException",
   "Comparable","Try","Success","Failure","Either","Left","Right","log","Errorf",
-  "invalid_argument","exception","function"
+  "invalid_argument","exception","function",
+  "Thread","ExecutorService","Executors","Future","CompletableFuture","AtomicInteger","Await",
+  "sync","WaitGroup","Mutex","thread","launch","mutex","atomic"
 ];
 var KWS={},BIS={};KW.forEach(function(k){KWS[k]=1});BI.forEach(function(k){BIS[k]=1});
 
@@ -469,6 +471,119 @@ var CARDS=[
           int count = 0;
           return [count]() mutable { return ++count; };    // [count] copies it; "mutable" allows mutating the copy
       }
+    `],
+  ],
+}],
+["concurrency","Concurrency","threads, locks, async/futures, channels",{
+  python:[
+    [null,`
+      import threading
+
+      def worker(n):
+          print(f"worker {n}")
+
+      t = threading.Thread(target=worker, args=(1,))
+      t.start()
+      t.join()                          # wait for it to finish
+
+      # the GIL means only one thread runs Python bytecode at a time --
+      # threads help with I/O-bound work, NOT CPU-bound (use multiprocessing for that)
+    `],
+    ["locks & asyncio",`
+      lock = threading.Lock()
+      counter = 0
+      def increment():
+          global counter
+          with lock:                      # mutual exclusion -- only one thread at a time
+              counter += 1
+
+      import asyncio
+      async def fetch(url):
+          await asyncio.sleep(1)             # yields control, doesn't block the thread
+          return "data"
+
+      asyncio.run(fetch("http://x"))            # single-threaded concurrency, cooperative
+    `],
+  ],
+  java:[
+    [null,`
+      Thread t = new Thread(() -> System.out.println("worker"));
+      t.start(); t.join();                          // wait for it to finish
+
+      ExecutorService pool = Executors.newFixedThreadPool(4);   // idiomatic -- don't manage raw Threads
+      Future<Integer> f = pool.submit(() -> 42);
+      f.get();                                          // blocks until the result is ready
+      pool.shutdown();
+    `],
+    ["synchronization",`
+      synchronized(this) { counter++; }              // mutual exclusion -- only one thread at a time
+
+      AtomicInteger atomic = new AtomicInteger(0);
+      atomic.incrementAndGet();                          // lock-free atomic update -- the preferred alternative
+
+      CompletableFuture.supplyAsync(() -> fetch())          // async pipeline, chained without blocking
+          .thenApply(data -> process(data));
+    `],
+  ],
+  scala:[
+    [null,`
+      val t = new Thread(() => println("worker"))
+      t.start(); t.join()                          // wait for it to finish
+
+      import scala.concurrent.{Future, Await}
+      import scala.concurrent.ExecutionContext.Implicits.global
+      import scala.concurrent.duration._
+
+      val f: Future[Int] = Future { 42 }              // runs on a thread pool, asynchronously
+      Await.result(f, 5.seconds)                         // blocks until ready (avoid in real code -- prefer map)
+    `],
+    ["synchronization",`
+      import java.util.concurrent.atomic.AtomicInteger
+      val counter = new AtomicInteger(0)
+      counter.incrementAndGet()                       // lock-free atomic update
+
+      f.map(data => process(data))                       // chain without blocking -- returns a new Future
+    `],
+  ],
+  go:[
+    [null,`
+      go worker(1)                              // "go" spawns a goroutine -- lightweight, not an OS thread
+
+      var wg sync.WaitGroup
+      wg.Add(1)
+      go func() {
+          defer wg.Done()
+          doWork()
+      }()
+      wg.Wait()                                    // block until all goroutines finish
+    `],
+    ["channels & mutex",`
+      ch := make(chan int)                       // channels are the idiomatic way to communicate
+      go func() { ch <- 42 }()                      // send
+      v := <-ch                                       // receive -- blocks until a value is sent
+
+      var mu sync.Mutex
+      mu.Lock()
+      counter++                                          // mutual exclusion -- only one goroutine at a time
+      mu.Unlock()
+    `],
+  ],
+  cpp:[
+    [null,`
+      thread t([]{ cout << "worker\\n"; });
+      t.join();                                    // wait for it to finish
+
+      auto fut = async(launch::async, []{ return 42; });   // runs on its own thread
+      fut.get();                                      // blocks until the result is ready
+    `],
+    ["synchronization",`
+      mutex mtx;
+      mtx.lock();
+      counter++;                                    // mutual exclusion -- only one thread at a time
+      mtx.unlock();
+
+      atomic<int> atomicCounter{0};
+      atomicCounter++;                                 // lock-free atomic update -- the preferred alternative
     `],
   ],
 }],
@@ -2811,6 +2926,116 @@ var CARDS=[
             counts[total]++;
         }
         return ans;
+    }
+  `],
+  ],
+}],
+["bitmask","Bitmasking","subsets as integers, XOR tricks",{
+  python:[
+    ["LeetCode 136 &middot; Single Number (XOR cancels duplicates)",`
+    # recognize: every element appears twice except one -> XOR cancels duplicate pairs to 0
+    def single_number(nums):
+        result = 0
+        for n in nums:
+            result ^= n              # x ^ x == 0, x ^ 0 == x -- duplicates vanish, survivor remains
+        return result
+  `],
+    ["LeetCode 78 &middot; Subsets (bitmask enumerates every subset)",`
+    # recognize: need every subset of n elements -> ints 0..2^n-1 ARE the subsets, bit i = "include nums[i]"
+    def subsets(nums):
+        n = len(nums)
+        res = []
+        for mask in range(1 << n):                # 2^n masks
+            subset = [nums[i] for i in range(n) if mask & (1 << i)]   # check bit i
+            res.append(subset)
+        return res
+  `],
+  ],
+  java:[
+    ["LeetCode 136 &middot; Single Number (XOR cancels duplicates)",`
+    // recognize: every element appears twice except one -> XOR cancels duplicate pairs to 0
+    int singleNumber(int[] nums) {
+        int result = 0;
+        for (int n : nums) result ^= n;   // x ^ x == 0, x ^ 0 == x -- duplicates vanish, survivor remains
+        return result;
+    }
+  `],
+    ["LeetCode 78 &middot; Subsets (bitmask enumerates every subset)",`
+    List<List<Integer>> subsets(int[] nums) {
+        int n = nums.length;
+        List<List<Integer>> res = new ArrayList<>();
+        for (int mask = 0; mask < (1 << n); mask++) {        // 2^n masks
+            List<Integer> subset = new ArrayList<>();
+            for (int i = 0; i < n; i++)
+                if ((mask & (1 << i)) != 0) subset.add(nums[i]);   // check bit i
+            res.add(subset);
+        }
+        return res;
+    }
+  `],
+  ],
+  scala:[
+    ["LeetCode 136 &middot; Single Number (XOR cancels duplicates)",`
+    // recognize: every element appears twice except one -> XOR cancels duplicate pairs to 0
+    def singleNumber(nums: List[Int]): Int =
+      nums.foldLeft(0)(_ ^ _)             // x ^ x == 0, x ^ 0 == x -- duplicates vanish, survivor remains
+  `],
+    ["LeetCode 78 &middot; Subsets (bitmask enumerates every subset)",`
+    def subsets(nums: List[Int]): List[List[Int]] =
+      val n = nums.length
+      (0 until (1 << n)).map { mask =>                  // 2^n masks
+        nums.indices.filter(i => (mask & (1 << i)) != 0).map(nums).toList  // check bit i
+      }.toList
+  `],
+  ],
+  go:[
+    ["LeetCode 136 &middot; Single Number (XOR cancels duplicates)",`
+    // recognize: every element appears twice except one -> XOR cancels duplicate pairs to 0
+    func singleNumber(nums []int) int {
+        result := 0
+        for _, n := range nums {
+            result ^= n   // x ^ x == 0, x ^ 0 == x -- duplicates vanish, survivor remains
+        }
+        return result
+    }
+  `],
+    ["LeetCode 78 &middot; Subsets (bitmask enumerates every subset)",`
+    func subsets(nums []int) [][]int {
+        n := len(nums)
+        var res [][]int
+        for mask := 0; mask < (1 << n); mask++ {        // 2^n masks
+            var subset []int
+            for i := 0; i < n; i++ {
+                if mask&(1<<i) != 0 {                        // check bit i
+                    subset = append(subset, nums[i])
+                }
+            }
+            res = append(res, subset)
+        }
+        return res
+    }
+  `],
+  ],
+  cpp:[
+    ["LeetCode 136 &middot; Single Number (XOR cancels duplicates)",`
+    // recognize: every element appears twice except one -> XOR cancels duplicate pairs to 0
+    int singleNumber(vector<int>& nums) {
+        int result = 0;
+        for (int n : nums) result ^= n;   // x ^ x == 0, x ^ 0 == x -- duplicates vanish, survivor remains
+        return result;
+    }
+  `],
+    ["LeetCode 78 &middot; Subsets (bitmask enumerates every subset)",`
+    vector<vector<int>> subsets(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> res;
+        for (int mask = 0; mask < (1 << n); mask++) {        // 2^n masks
+            vector<int> subset;
+            for (int i = 0; i < n; i++)
+                if (mask & (1 << i)) subset.push_back(nums[i]);   // check bit i
+            res.push_back(subset);
+        }
+        return res;
     }
   `],
   ],
