@@ -89,7 +89,7 @@ footer.foot a{color:var(--accent)}
 <div class="wrap">
   <div class="crumbs"><a href="../">← Sentinel Atlas</a><a href="../rajya/">Rajya: States and UTs →</a></div>
   <h1>Sanrachana: Syntax Reference for Python, Java, Scala, Go &amp; C++</h1>
-  <p class="lede">A one-page syntax reference for coding interviews: exactly how to write a class, a list, a map, a tree, a graph, and the two-pointer, sliding-window and prefix-sum patterns in each of five languages, side by side &mdash; each pattern backed by a named, solved LeetCode problem and the cue that flags it. Pick a language below and every card switches with it.</p>
+  <p class="lede">A one-page syntax reference for coding interviews: exactly how to write a class, a list, a map, a tree, a graph, and the two-pointer, sliding-window and prefix-sum patterns in each of five languages, side by side. Pick a language below and every card switches with it.</p>
 
   <div class="controls">
     <input type="search" class="search" id="search" aria-label="Search syntax reference" placeholder="Search syntax… e.g. closures, binary search, type check">
@@ -2535,448 +2535,307 @@ var CARDS=[
   `]],
 }],
 
-["twoptr","Two pointers","sorted array, converge from both ends",{
+["twoptr","Two pointers","converge from both ends, or fast/slow",{
   python:[
-    ["LeetCode 167 &middot; Two Sum II (sorted)",`
-    # recognize: sorted array + a pair that must hit a target -> converge two pointers
-    def two_sum_sorted(nums, target):
-        lo, hi = 0, len(nums) - 1
-        while lo < hi:
-            s = nums[lo] + nums[hi]
-            if s == target: return lo, hi
-            if s < target: lo += 1
-            else: hi -= 1
-        return -1, -1
-  `],
-    ["LeetCode 15 &middot; 3Sum (fix one, two-pointer the rest)",`
-    def three_sum(nums):
-        nums.sort()                      # sorting is what makes the two-pointer trick work
-        res = []
-        for i in range(len(nums) - 2):
-            if i > 0 and nums[i] == nums[i - 1]:
-                continue                   # skip duplicate anchors
-            lo, hi = i + 1, len(nums) - 1
-            while lo < hi:
-                s = nums[i] + nums[lo] + nums[hi]
-                if s == 0:
-                    res.append([nums[i], nums[lo], nums[hi]])
-                    lo += 1; hi -= 1
-                    while lo < hi and nums[lo] == nums[lo - 1]: lo += 1   # skip duplicates
-                    while lo < hi and nums[hi] == nums[hi + 1]: hi -= 1
-                elif s < 0: lo += 1
-                else: hi -= 1
-        return res
-  `],
+    ["converge from both ends (sorted input)",`
+      lo, hi = 0, len(nums) - 1
+      while lo < hi:
+          s = nums[lo] + nums[hi]
+          if s == target: ...          # found it
+          elif s < target: lo += 1        # sum too small -- move lo up
+          else: hi -= 1                      # sum too big -- move hi down
+    `],
+    ["same-direction (fast/slow, in-place compaction)",`
+      slow = 0
+      for fast in range(len(nums)):
+          if keep(nums[fast]):                # condition for keeping this element
+              nums[slow], nums[fast] = nums[fast], nums[slow]
+              slow += 1
+      # nums[:slow] is now the compacted result
+    `],
   ],
   java:[
-    ["LeetCode 167 &middot; Two Sum II (sorted)",`
-    // recognize: sorted array + a pair that must hit a target -> converge two pointers
-    int[] twoSumSorted(int[] nums, int target) {
-        int lo = 0, hi = nums.length - 1;
-        while (lo < hi) {
-            int sum = nums[lo] + nums[hi];
-            if (sum == target) return new int[]{lo, hi};
-            if (sum < target) lo++; else hi--;
-        }
-        return new int[]{-1, -1};
-    }
-  `],
-    ["LeetCode 15 &middot; 3Sum (fix one, two-pointer the rest)",`
-    List<List<Integer>> threeSum(int[] nums) {
-        Arrays.sort(nums);                       // sorting is what makes the two-pointer trick work
-        List<List<Integer>> res = new ArrayList<>();
-        for (int i = 0; i < nums.length - 2; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue;    // skip duplicate anchors
-            int lo = i + 1, hi = nums.length - 1;
-            while (lo < hi) {
-                int sum = nums[i] + nums[lo] + nums[hi];
-                if (sum == 0) {
-                    res.add(List.of(nums[i], nums[lo], nums[hi]));
-                    lo++; hi--;
-                    while (lo < hi && nums[lo] == nums[lo - 1]) lo++;   // skip duplicates
-                    while (lo < hi && nums[hi] == nums[hi + 1]) hi--;
-                } else if (sum < 0) lo++; else hi--;
-            }
-        }
-        return res;
-    }
-  `],
+    ["converge from both ends (sorted input)",`
+      int lo = 0, hi = nums.length - 1;
+      while (lo < hi) {
+          int sum = nums[lo] + nums[hi];
+          if (sum == target) { ... }          // found it
+          else if (sum < target) lo++;           // sum too small -- move lo up
+          else hi--;                                // sum too big -- move hi down
+      }
+    `],
+    ["same-direction (fast/slow, in-place compaction)",`
+      int slow = 0;
+      for (int fast = 0; fast < nums.length; fast++) {
+          if (keep(nums[fast])) {                  // condition for keeping this element
+              int tmp = nums[slow]; nums[slow] = nums[fast]; nums[fast] = tmp;
+              slow++;
+          }
+      }
+      // nums[0..slow) is now the compacted result
+    `],
   ],
   scala:[
-    ["LeetCode 167 &middot; Two Sum II (sorted)",`
-    // recognize: sorted array + a pair that must hit a target -> converge two pointers
-    def twoSumSorted(nums: Array[Int], target: Int): (Int, Int) =
+    ["converge from both ends (sorted input)",`
       var lo = 0; var hi = nums.length - 1
       while lo < hi do
         val sum = nums(lo) + nums(hi)
-        if sum == target then return (lo, hi)
-        else if sum < target then lo += 1 else hi -= 1
-      (-1, -1)
-  `],
-    ["LeetCode 15 &middot; 3Sum (fix one, two-pointer the rest)",`
-    def threeSum(nums: Array[Int]): List[List[Int]] =
-      scala.util.Sorting.quickSort(nums)          // sorting is what makes the two-pointer trick work
-      var res = List.empty[List[Int]]
-      for i <- 0 until nums.length - 2 do
-        if i == 0 || nums(i) != nums(i - 1) then       // skip duplicate anchors
-          var lo = i + 1; var hi = nums.length - 1
-          while lo < hi do
-            val sum = nums(i) + nums(lo) + nums(hi)
-            if sum == 0 then
-              res :+= List(nums(i), nums(lo), nums(hi))
-              lo += 1; hi -= 1
-              while lo < hi && nums(lo) == nums(lo - 1) do lo += 1   // skip duplicates
-              while lo < hi && nums(hi) == nums(hi + 1) do hi -= 1
-            else if sum < 0 then lo += 1 else hi -= 1
-      res
-  `],
+        if sum == target then ...             // found it
+        else if sum < target then lo += 1        // sum too small -- move lo up
+        else hi -= 1                                // sum too big -- move hi down
+    `],
+    ["same-direction (fast/slow, in-place compaction)",`
+      var slow = 0
+      for fast <- nums.indices do
+        if keep(nums(fast)) then                  // condition for keeping this element
+          val tmp = nums(slow); nums(slow) = nums(fast); nums(fast) = tmp
+          slow += 1
+      // nums.take(slow) is now the compacted result
+    `],
   ],
   go:[
-    ["LeetCode 167 &middot; Two Sum II (sorted)",`
-    // recognize: sorted array + a pair that must hit a target -> converge two pointers
-    func twoSumSorted(nums []int, target int) (int, int) {
-        lo, hi := 0, len(nums)-1
-        for lo < hi {
-            sum := nums[lo] + nums[hi]
-            if sum == target { return lo, hi }
-            if sum < target { lo++ } else { hi-- }
-        }
-        return -1, -1
-    }
-  `],
-    ["LeetCode 15 &middot; 3Sum (fix one, two-pointer the rest)",`
-    func threeSum(nums []int) [][]int {
-        sort.Ints(nums)                              // sorting is what makes the two-pointer trick work
-        res := [][]int{}
-        for i := 0; i < len(nums)-2; i++ {
-            if i > 0 && nums[i] == nums[i-1] { continue }   // skip duplicate anchors
-            lo, hi := i+1, len(nums)-1
-            for lo < hi {
-                sum := nums[i] + nums[lo] + nums[hi]
-                if sum == 0 {
-                    res = append(res, []int{nums[i], nums[lo], nums[hi]})
-                    lo++; hi--
-                    for lo < hi && nums[lo] == nums[lo-1] { lo++ }   // skip duplicates
-                    for lo < hi && nums[hi] == nums[hi+1] { hi-- }
-                } else if sum < 0 { lo++ } else { hi-- }
-            }
-        }
-        return res
-    }
-  `],
+    ["converge from both ends (sorted input)",`
+      lo, hi := 0, len(nums)-1
+      for lo < hi {
+          sum := nums[lo] + nums[hi]
+          if sum == target {
+              ...                      // found it
+          } else if sum < target {
+              lo++                        // sum too small -- move lo up
+          } else {
+              hi--                           // sum too big -- move hi down
+          }
+      }
+    `],
+    ["same-direction (fast/slow, in-place compaction)",`
+      slow := 0
+      for fast := 0; fast < len(nums); fast++ {
+          if keep(nums[fast]) {                  // condition for keeping this element
+              nums[slow], nums[fast] = nums[fast], nums[slow]
+              slow++
+          }
+      }
+      // nums[:slow] is now the compacted result
+    `],
   ],
   cpp:[
-    ["LeetCode 167 &middot; Two Sum II (sorted)",`
-    // recognize: sorted array + a pair that must hit a target -> converge two pointers
-    pair<int,int> twoSumSorted(vector<int>& nums, int target) {
-        int lo = 0, hi = nums.size() - 1;
-        while (lo < hi) {
-            int sum = nums[lo] + nums[hi];
-            if (sum == target) return {lo, hi};
-            if (sum < target) lo++; else hi--;
-        }
-        return {-1, -1};
-    }
-  `],
-    ["LeetCode 15 &middot; 3Sum (fix one, two-pointer the rest)",`
-    vector<vector<int>> threeSum(vector<int>& nums) {
-        sort(nums.begin(), nums.end());                    // sorting is what makes the two-pointer trick work
-        vector<vector<int>> res;
-        for (int i = 0; i < (int)nums.size() - 2; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue;    // skip duplicate anchors
-            int lo = i + 1, hi = nums.size() - 1;
-            while (lo < hi) {
-                int sum = nums[i] + nums[lo] + nums[hi];
-                if (sum == 0) {
-                    res.push_back({nums[i], nums[lo], nums[hi]});
-                    lo++; hi--;
-                    while (lo < hi && nums[lo] == nums[lo - 1]) lo++;   // skip duplicates
-                    while (lo < hi && nums[hi] == nums[hi + 1]) hi--;
-                } else if (sum < 0) lo++; else hi--;
-            }
-        }
-        return res;
-    }
-  `],
+    ["converge from both ends (sorted input)",`
+      int lo = 0, hi = nums.size() - 1;
+      while (lo < hi) {
+          int sum = nums[lo] + nums[hi];
+          if (sum == target) { ... }          // found it
+          else if (sum < target) lo++;           // sum too small -- move lo up
+          else hi--;                                // sum too big -- move hi down
+      }
+    `],
+    ["same-direction (fast/slow, in-place compaction)",`
+      int slow = 0;
+      for (int fast = 0; fast < (int)nums.size(); fast++) {
+          if (keep(nums[fast])) {                  // condition for keeping this element
+              int tmp = nums[slow]; nums[slow] = nums[fast]; nums[fast] = tmp;
+              slow++;
+          }
+      }
+      // nums[0..slow) is now the compacted result
+    `],
   ],
 }],
 
-["window","Sliding window","shrink/grow a window over a range",{
+["window","Sliding window","fixed-size, or grow/shrink over a range",{
   python:[
-    ["LeetCode 3 &middot; Longest Substring Without Repeating Characters",`
-    # recognize: contiguous substring/subarray + a "no repeats"/"at most K" constraint -> sliding window
-    def longest_unique_substring(s):
-        seen = {}                     # char -> last index seen
-        start = best = 0
-        for i, c in enumerate(s):
-            if c in seen and seen[c] >= start:
-                start = seen[c] + 1     # shrink past the repeat
-            seen[c] = i
-            best = max(best, i - start + 1)
-        return best
-  `],
-    ["LeetCode 76 &middot; Minimum Window Substring (variable window)",`
-    from collections import Counter
-
-    def min_window(s, t):
-        need = Counter(t)                 # counts we still owe
-        missing = len(t)                    # total chars still owed (with multiplicity)
-        lo = start = end = 0
-        for hi, c in enumerate(s, 1):
-            if need[c] > 0: missing -= 1
-            need[c] -= 1
-            if missing == 0:                  # window is valid -- shrink it as far as it stays valid
-                while need[s[lo]] < 0:
-                    need[s[lo]] += 1
-                    lo += 1
-                if end == 0 or hi - lo < end - start:
-                    start, end = lo, hi
-        return s[start:end]
-  `],
+    ["fixed-size window",`
+      window_sum = sum(nums[:k])
+      best = window_sum
+      for i in range(k, len(nums)):
+          window_sum += nums[i] - nums[i - k]   # add the new element, drop the oldest
+          best = max(best, window_sum)
+    `],
+    ["variable-size window (grow/shrink)",`
+      lo = 0
+      for hi in range(len(nums)):
+          ...                                  # expand: fold nums[hi] into the window's running state
+          while window_is_invalid():              # shrink while the window breaks the constraint
+              ...                                     # remove nums[lo] from the running state
+              lo += 1
+          best = max(best, hi - lo + 1)
+    `],
   ],
   java:[
-    ["LeetCode 3 &middot; Longest Substring Without Repeating Characters",`
-    // recognize: contiguous substring/subarray + a "no repeats"/"at most K" constraint -> sliding window
-    int longestUniqueSubstring(String s) {
-        Map<Character, Integer> seen = new HashMap<>();      // char -> last index seen
-        int start = 0, best = 0;
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (seen.containsKey(c) && seen.get(c) >= start) start = seen.get(c) + 1;
-            seen.put(c, i);
-            best = Math.max(best, i - start + 1);
-        }
-        return best;
-    }
-  `],
-    ["LeetCode 76 &middot; Minimum Window Substring (variable window)",`
-    String minWindow(String s, String t) {
-        Map<Character, Integer> need = new HashMap<>();
-        for (char c : t.toCharArray()) need.merge(c, 1, Integer::sum);   // counts we still owe
-        int missing = t.length();                                          // total chars still owed
-        int lo = 0, start = 0, end = 0;
-        for (int hi = 1; hi <= s.length(); hi++) {
-            char c = s.charAt(hi - 1);
-            if (need.getOrDefault(c, 0) > 0) missing--;
-            need.merge(c, -1, Integer::sum);
-            if (missing == 0) {                       // window is valid -- shrink it as far as it stays valid
-                while (need.get(s.charAt(lo)) < 0) need.merge(s.charAt(lo++), 1, Integer::sum);
-                if (end == 0 || hi - lo < end - start) { start = lo; end = hi; }
-            }
-        }
-        return s.substring(start, end);
-    }
-  `],
+    ["fixed-size window",`
+      int windowSum = 0;
+      for (int i = 0; i < k; i++) windowSum += nums[i];
+      int best = windowSum;
+      for (int i = k; i < nums.length; i++) {
+          windowSum += nums[i] - nums[i - k];      // add the new element, drop the oldest
+          best = Math.max(best, windowSum);
+      }
+    `],
+    ["variable-size window (grow/shrink)",`
+      int lo = 0, best = 0;
+      for (int hi = 0; hi < nums.length; hi++) {
+          ...                                        // expand: fold nums[hi] into the window's running state
+          while (windowIsInvalid()) {                   // shrink while the window breaks the constraint
+              ...                                          // remove nums[lo] from the running state
+              lo++;
+          }
+          best = Math.max(best, hi - lo + 1);
+      }
+    `],
   ],
   scala:[
-    ["LeetCode 3 &middot; Longest Substring Without Repeating Characters",`
-    // recognize: contiguous substring/subarray + a "no repeats"/"at most K" constraint -> sliding window
-    def longestUniqueSubstring(s: String): Int =
-      val seen = mutable.Map[Char, Int]()          // char -> last index seen
-      var start = 0; var best = 0
-      for (c, i) <- s.zipWithIndex do
-        if seen.contains(c) && seen(c) >= start then start = seen(c) + 1
-        seen(c) = i
-        best = math.max(best, i - start + 1)
-      best
-  `],
-    ["LeetCode 76 &middot; Minimum Window Substring (variable window)",`
-    def minWindow(s: String, t: String): String =
-      val need = mutable.Map[Char, Int]().withDefaultValue(0)
-      for c <- t do need(c) += 1                  // counts we still owe
-      var missing = t.length                        // total chars still owed
-      var lo = 0; var start = 0; var end = 0
-      for hi <- 1 to s.length do
-        val c = s(hi - 1)
-        if need(c) > 0 then missing -= 1
-        need(c) -= 1
-        if missing == 0 then                          // window is valid -- shrink it as far as it stays valid
-          while need(s(lo)) < 0 do { need(s(lo)) += 1; lo += 1 }
-          if end == 0 || hi - lo < end - start then { start = lo; end = hi }
-      s.substring(start, end)
-  `],
+    ["fixed-size window",`
+      var windowSum = nums.take(k).sum
+      var best = windowSum
+      for i <- k until nums.length do
+        windowSum += nums(i) - nums(i - k)        // add the new element, drop the oldest
+        best = math.max(best, windowSum)
+    `],
+    ["variable-size window (grow/shrink)",`
+      var lo = 0; var best = 0
+      for hi <- nums.indices do
+        ...                                        // expand: fold nums(hi) into the window's running state
+        while windowIsInvalid() do                    // shrink while the window breaks the constraint
+          ...                                             // remove nums(lo) from the running state
+          lo += 1
+        best = math.max(best, hi - lo + 1)
+    `],
   ],
   go:[
-    ["LeetCode 3 &middot; Longest Substring Without Repeating Characters",`
-    // recognize: contiguous substring/subarray + a "no repeats"/"at most K" constraint -> sliding window
-    func longestUniqueSubstring(s string) int {
-        seen := map[byte]int{}          // char -> last index seen
-        start, best := 0, 0
-        for i := 0; i < len(s); i++ {
-            c := s[i]
-            if idx, ok := seen[c]; ok && idx >= start { start = idx + 1 }
-            seen[c] = i
-            if i-start+1 > best { best = i - start + 1 }
-        }
-        return best
-    }
-  `],
-    ["LeetCode 76 &middot; Minimum Window Substring (variable window)",`
-    func minWindow(s, t string) string {
-        need := map[byte]int{}
-        for i := 0; i < len(t); i++ { need[t[i]]++ }        // counts we still owe
-        missing := len(t)                                      // total chars still owed
-        lo, start, end := 0, 0, 0
-        for hi := 1; hi <= len(s); hi++ {
-            c := s[hi-1]
-            if need[c] > 0 { missing-- }
-            need[c]--
-            if missing == 0 {                       // window is valid -- shrink it as far as it stays valid
-                for need[s[lo]] < 0 {
-                    need[s[lo]]++
-                    lo++
-                }
-                if end == 0 || hi-lo < end-start { start, end = lo, hi }
-            }
-        }
-        return s[start:end]
-    }
-  `],
+    ["fixed-size window",`
+      windowSum := 0
+      for i := 0; i < k; i++ { windowSum += nums[i] }
+      best := windowSum
+      for i := k; i < len(nums); i++ {
+          windowSum += nums[i] - nums[i-k]      // add the new element, drop the oldest
+          if windowSum > best { best = windowSum }
+      }
+    `],
+    ["variable-size window (grow/shrink)",`
+      lo, best := 0, 0
+      for hi := 0; hi < len(nums); hi++ {
+          // expand: fold nums[hi] into the window's running state
+          for windowIsInvalid() {                    // shrink while the window breaks the constraint
+              // remove nums[lo] from the running state
+              lo++
+          }
+          if hi-lo+1 > best { best = hi - lo + 1 }
+      }
+    `],
   ],
   cpp:[
-    ["LeetCode 3 &middot; Longest Substring Without Repeating Characters",`
-    // recognize: contiguous substring/subarray + a "no repeats"/"at most K" constraint -> sliding window
-    int longestUniqueSubstring(string s) {
-        unordered_map<char, int> seen;      // char -> last index seen
-        int start = 0, best = 0;
-        for (int i = 0; i < (int)s.size(); i++) {
-            char c = s[i];
-            if (seen.count(c) && seen[c] >= start) start = seen[c] + 1;
-            seen[c] = i;
-            best = max(best, i - start + 1);
-        }
-        return best;
-    }
-  `],
-    ["LeetCode 76 &middot; Minimum Window Substring (variable window)",`
-    string minWindow(string s, string t) {
-        unordered_map<char, int> need;
-        for (char c : t) need[c]++;                 // counts we still owe
-        int missing = t.size();                        // total chars still owed
-        int lo = 0, start = 0, end = 0;
-        for (int hi = 1; hi <= (int)s.size(); hi++) {
-            char c = s[hi - 1];
-            if (need[c] > 0) missing--;
-            need[c]--;
-            if (missing == 0) {                       // window is valid -- shrink it as far as it stays valid
-                while (need[s[lo]] < 0) need[s[lo++]]++;
-                if (end == 0 || hi - lo < end - start) { start = lo; end = hi; }
-            }
-        }
-        return s.substr(start, end - start);
-    }
-  `],
+    ["fixed-size window",`
+      int windowSum = 0;
+      for (int i = 0; i < k; i++) windowSum += nums[i];
+      int best = windowSum;
+      for (int i = k; i < (int)nums.size(); i++) {
+          windowSum += nums[i] - nums[i - k];      // add the new element, drop the oldest
+          best = max(best, windowSum);
+      }
+    `],
+    ["variable-size window (grow/shrink)",`
+      int lo = 0, best = 0;
+      for (int hi = 0; hi < (int)nums.size(); hi++) {
+          // expand: fold nums[hi] into the window's running state
+          while (windowIsInvalid()) {                   // shrink while the window breaks the constraint
+              // remove nums[lo] from the running state
+              lo++;
+          }
+          best = max(best, hi - lo + 1);
+      }
+    `],
   ],
 }],
 
 ["prefix","Prefix sums","O(1) range sums after an O(n) setup",{
   python:[
-    ["LeetCode 303 &middot; Range Sum Query - Immutable",`
-    # recognize: many repeated range-sum queries on a fixed array -> precompute a prefix array
-    nums = [1, 2, 3, 4]
-    prefix = [0]
-    for x in nums: prefix.append(prefix[-1] + x)   # prefix[i] = sum(nums[:i])
+    ["prefix array -> O(1) range sum",`
+      nums = [1, 2, 3, 4]
+      prefix = [0]
+      for x in nums: prefix.append(prefix[-1] + x)   # prefix[i] = sum(nums[:i])
 
-    def range_sum(lo, hi):       # inclusive lo..hi
-        return prefix[hi + 1] - prefix[lo]
-  `],
-    ["LeetCode 560 &middot; Subarray Sum Equals K (prefix sum + hashmap)",`
-    def subarray_sum(nums, k):
-        counts = {0: 1}          # prefix sum 0 seen once (before the array starts)
-        total = ans = 0
-        for x in nums:
-            total += x
-            ans += counts.get(total - k, 0)   # a previous prefix that's exactly k less means a subarray summing to k
-            counts[total] = counts.get(total, 0) + 1
-        return ans
-  `],
+      def range_sum(lo, hi):       # inclusive lo..hi
+          return prefix[hi + 1] - prefix[lo]
+    `],
+    ["running sum + hashmap (count subarrays hitting a target)",`
+      counts = {0: 1}          # running sum 0 seen once (before the array starts)
+      total = ans = 0
+      for x in nums:
+          total += x
+          ans += counts.get(total - k, 0)   # a previous running sum exactly k less means a subarray summing to k
+          counts[total] = counts.get(total, 0) + 1
+    `],
   ],
   java:[
-    ["LeetCode 303 &middot; Range Sum Query - Immutable",`
-    // recognize: many repeated range-sum queries on a fixed array -> precompute a prefix array
-    int[] nums = {1, 2, 3, 4};
-    int[] prefix = new int[nums.length + 1];
-    for (int i = 0; i < nums.length; i++) prefix[i + 1] = prefix[i] + nums[i];
+    ["prefix array -> O(1) range sum",`
+      int[] nums = {1, 2, 3, 4};
+      int[] prefix = new int[nums.length + 1];
+      for (int i = 0; i < nums.length; i++) prefix[i + 1] = prefix[i] + nums[i];
 
-    int rangeSum(int lo, int hi) { return prefix[hi + 1] - prefix[lo]; }   // inclusive lo..hi
-  `],
-    ["LeetCode 560 &middot; Subarray Sum Equals K (prefix sum + hashmap)",`
-    int subarraySum(int[] nums, int k) {
-        Map<Integer, Integer> counts = new HashMap<>();
-        counts.put(0, 1);                     // prefix sum 0 seen once (before the array starts)
-        int total = 0, ans = 0;
-        for (int x : nums) {
-            total += x;
-            ans += counts.getOrDefault(total - k, 0);   // a previous prefix that's exactly k less means a subarray summing to k
-            counts.merge(total, 1, Integer::sum);
-        }
-        return ans;
-    }
-  `],
+      int rangeSum(int lo, int hi) { return prefix[hi + 1] - prefix[lo]; }   // inclusive lo..hi
+    `],
+    ["running sum + hashmap (count subarrays hitting a target)",`
+      Map<Integer, Integer> counts = new HashMap<>();
+      counts.put(0, 1);                     // running sum 0 seen once (before the array starts)
+      int total = 0, ans = 0;
+      for (int x : nums) {
+          total += x;
+          ans += counts.getOrDefault(total - k, 0);   // a previous running sum exactly k less means a subarray summing to k
+          counts.merge(total, 1, Integer::sum);
+      }
+    `],
   ],
   scala:[
-    ["LeetCode 303 &middot; Range Sum Query - Immutable",`
-    // recognize: many repeated range-sum queries on a fixed array -> precompute a prefix array
-    val nums = List(1, 2, 3, 4)
-    val prefix = nums.scanLeft(0)(_ + _)      // prefix(i) = sum(nums.take(i))
+    ["prefix array -> O(1) range sum",`
+      val nums = List(1, 2, 3, 4)
+      val prefix = nums.scanLeft(0)(_ + _)      // prefix(i) = sum(nums.take(i))
 
-    def rangeSum(lo: Int, hi: Int): Int = prefix(hi + 1) - prefix(lo)   // inclusive lo..hi
-  `],
-    ["LeetCode 560 &middot; Subarray Sum Equals K (prefix sum + hashmap)",`
-    def subarraySum(nums: Array[Int], k: Int): Int =
-      val counts = mutable.Map(0 -> 1)         // prefix sum 0 seen once (before the array starts)
+      def rangeSum(lo: Int, hi: Int): Int = prefix(hi + 1) - prefix(lo)   // inclusive lo..hi
+    `],
+    ["running sum + hashmap (count subarrays hitting a target)",`
+      val counts = mutable.Map(0 -> 1)         // running sum 0 seen once (before the array starts)
       var total = 0; var ans = 0
       for x <- nums do
         total += x
-        ans += counts.getOrElse(total - k, 0)     // a previous prefix that's exactly k less means a subarray summing to k
+        ans += counts.getOrElse(total - k, 0)     // a previous running sum exactly k less means a subarray summing to k
         counts(total) = counts.getOrElse(total, 0) + 1
-      ans
-  `],
+    `],
   ],
   go:[
-    ["LeetCode 303 &middot; Range Sum Query - Immutable",`
-    // recognize: many repeated range-sum queries on a fixed array -> precompute a prefix array
-    nums := []int{1, 2, 3, 4}
-    prefix := make([]int, len(nums)+1)
-    for i, x := range nums { prefix[i+1] = prefix[i] + x }
+    ["prefix array -> O(1) range sum",`
+      nums := []int{1, 2, 3, 4}
+      prefix := make([]int, len(nums)+1)
+      for i, x := range nums { prefix[i+1] = prefix[i] + x }
 
-    func rangeSum(lo, hi int) int { return prefix[hi+1] - prefix[lo] }   // inclusive lo..hi
-  `],
-    ["LeetCode 560 &middot; Subarray Sum Equals K (prefix sum + hashmap)",`
-    func subarraySum(nums []int, k int) int {
-        counts := map[int]int{0: 1}      // prefix sum 0 seen once (before the array starts)
-        total, ans := 0, 0
-        for _, x := range nums {
-            total += x
-            ans += counts[total-k]         // a previous prefix that's exactly k less means a subarray summing to k
-            counts[total]++
-        }
-        return ans
-    }
-  `],
+      func rangeSum(lo, hi int) int { return prefix[hi+1] - prefix[lo] }   // inclusive lo..hi
+    `],
+    ["running sum + hashmap (count subarrays hitting a target)",`
+      counts := map[int]int{0: 1}      // running sum 0 seen once (before the array starts)
+      total, ans := 0, 0
+      for _, x := range nums {
+          total += x
+          ans += counts[total-k]         // a previous running sum exactly k less means a subarray summing to k
+          counts[total]++
+      }
+    `],
   ],
   cpp:[
-    ["LeetCode 303 &middot; Range Sum Query - Immutable",`
-    // recognize: many repeated range-sum queries on a fixed array -> precompute a prefix array
-    vector<int> nums = {1, 2, 3, 4};
-    vector<int> prefix(nums.size() + 1, 0);
-    for (int i = 0; i < (int)nums.size(); i++) prefix[i + 1] = prefix[i] + nums[i];
+    ["prefix array -> O(1) range sum",`
+      vector<int> nums = {1, 2, 3, 4};
+      vector<int> prefix(nums.size() + 1, 0);
+      for (int i = 0; i < (int)nums.size(); i++) prefix[i + 1] = prefix[i] + nums[i];
 
-    int rangeSum(int lo, int hi) { return prefix[hi + 1] - prefix[lo]; }   // inclusive lo..hi
-  `],
-    ["LeetCode 560 &middot; Subarray Sum Equals K (prefix sum + hashmap)",`
-    int subarraySum(vector<int>& nums, int k) {
-        unordered_map<int, int> counts = {{0, 1}};      // prefix sum 0 seen once (before the array starts)
-        int total = 0, ans = 0;
-        for (int x : nums) {
-            total += x;
-            auto it = counts.find(total - k);
-            if (it != counts.end()) ans += it->second;   // a previous prefix that's exactly k less means a subarray summing to k
-            counts[total]++;
-        }
-        return ans;
-    }
-  `],
+      int rangeSum(int lo, int hi) { return prefix[hi + 1] - prefix[lo]; }   // inclusive lo..hi
+    `],
+    ["running sum + hashmap (count subarrays hitting a target)",`
+      unordered_map<int, int> counts = {{0, 1}};      // running sum 0 seen once (before the array starts)
+      int total = 0, ans = 0;
+      for (int x : nums) {
+          total += x;
+          auto it = counts.find(total - k);
+          if (it != counts.end()) ans += it->second;   // a previous running sum exactly k less means a subarray summing to k
+          counts[total]++;
+      }
+    `],
   ],
 }],
 ["bitmask","Bitmasking","bit tricks, an int as a set",{
