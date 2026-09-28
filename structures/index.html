@@ -2930,114 +2930,101 @@ var CARDS=[
   `],
   ],
 }],
-["bitmask","Bitmasking","subsets as integers, XOR tricks",{
+["bitmask","Bitmasking","bit tricks, an int as a set",{
   python:[
-    ["LeetCode 136 &middot; Single Number (XOR cancels duplicates)",`
-    # recognize: every element appears twice except one -> XOR cancels duplicate pairs to 0
-    def single_number(nums):
-        result = 0
-        for n in nums:
-            result ^= n              # x ^ x == 0, x ^ 0 == x -- duplicates vanish, survivor remains
-        return result
-  `],
-    ["LeetCode 78 &middot; Subsets (bitmask enumerates every subset)",`
-    # recognize: need every subset of n elements -> ints 0..2^n-1 ARE the subsets, bit i = "include nums[i]"
-    def subsets(nums):
-        n = len(nums)
-        res = []
-        for mask in range(1 << n):                # 2^n masks
-            subset = [nums[i] for i in range(n) if mask & (1 << i)]   # check bit i
-            res.append(subset)
-        return res
-  `],
+    ["bit tricks",`
+      n = 12                        # 0b1100
+      n & -n                          # 4  -- isolates the lowest set bit (0b0100)
+      n & (n - 1)                       # 8  -- clears the lowest set bit (0b1000)
+      n & (n - 1) == 0                    # False -- True only when n is a power of two (n != 0)
+      (n & -n).bit_length() - 1              # 2  -- index of the lowest set bit
+    `],
+    ["an int as a set",`
+      mask = 0
+      mask |= (1 << 3)                # add element 3 to the set
+      mask &= ~(1 << 3)                  # remove element 3
+      mask ^= (1 << 3)                     # toggle element 3
+      mask & (1 << 3) != 0                    # membership check -- "is 3 in the set?"
+
+      for i in range(4):                             # iterate elements 0..3
+          if mask & (1 << i): print(i)                  # print i if it's in the set
+    `],
   ],
   java:[
-    ["LeetCode 136 &middot; Single Number (XOR cancels duplicates)",`
-    // recognize: every element appears twice except one -> XOR cancels duplicate pairs to 0
-    int singleNumber(int[] nums) {
-        int result = 0;
-        for (int n : nums) result ^= n;   // x ^ x == 0, x ^ 0 == x -- duplicates vanish, survivor remains
-        return result;
-    }
-  `],
-    ["LeetCode 78 &middot; Subsets (bitmask enumerates every subset)",`
-    List<List<Integer>> subsets(int[] nums) {
-        int n = nums.length;
-        List<List<Integer>> res = new ArrayList<>();
-        for (int mask = 0; mask < (1 << n); mask++) {        // 2^n masks
-            List<Integer> subset = new ArrayList<>();
-            for (int i = 0; i < n; i++)
-                if ((mask & (1 << i)) != 0) subset.add(nums[i]);   // check bit i
-            res.add(subset);
-        }
-        return res;
-    }
-  `],
+    ["bit tricks",`
+      int n = 12;                       // 0b1100
+      n & -n;                             // 4  -- isolates the lowest set bit (0b0100)
+      n & (n - 1);                          // 8  -- clears the lowest set bit (0b1000)
+      (n & (n - 1)) == 0;                      // false -- true only when n is a power of two (n != 0)
+      Integer.numberOfTrailingZeros(n);           // 2  -- index of the lowest set bit
+    `],
+    ["an int as a set",`
+      int mask = 0;
+      mask |= (1 << 3);                 // add element 3 to the set
+      mask &= ~(1 << 3);                   // remove element 3
+      mask ^= (1 << 3);                      // toggle element 3
+      (mask & (1 << 3)) != 0;                   // membership check -- "is 3 in the set?"
+
+      for (int i = 0; i < 4; i++)                      // iterate elements 0..3
+          if ((mask & (1 << i)) != 0) System.out.println(i);  // print i if it's in the set
+    `],
   ],
   scala:[
-    ["LeetCode 136 &middot; Single Number (XOR cancels duplicates)",`
-    // recognize: every element appears twice except one -> XOR cancels duplicate pairs to 0
-    def singleNumber(nums: List[Int]): Int =
-      nums.foldLeft(0)(_ ^ _)             // x ^ x == 0, x ^ 0 == x -- duplicates vanish, survivor remains
-  `],
-    ["LeetCode 78 &middot; Subsets (bitmask enumerates every subset)",`
-    def subsets(nums: List[Int]): List[List[Int]] =
-      val n = nums.length
-      (0 until (1 << n)).map { mask =>                  // 2^n masks
-        nums.indices.filter(i => (mask & (1 << i)) != 0).map(nums).toList  // check bit i
-      }.toList
-  `],
+    ["bit tricks",`
+      val n = 12                       // 0b1100
+      n & -n                             // 4  -- isolates the lowest set bit (0b0100)
+      n & (n - 1)                          // 8  -- clears the lowest set bit (0b1000)
+      (n & (n - 1)) == 0                      // false -- true only when n is a power of two (n != 0)
+      Integer.numberOfTrailingZeros(n)           // 2  -- index of the lowest set bit
+    `],
+    ["an int as a set",`
+      var mask = 0
+      mask |= (1 << 3)                  // add element 3 to the set
+      mask &= ~(1 << 3)                    // remove element 3
+      mask ^= (1 << 3)                       // toggle element 3
+      (mask & (1 << 3)) != 0                    // membership check -- "is 3 in the set?"
+
+      for i <- 0 until 4 if (mask & (1 << i)) != 0 do println(i)   // print i if it's in the set
+    `],
   ],
   go:[
-    ["LeetCode 136 &middot; Single Number (XOR cancels duplicates)",`
-    // recognize: every element appears twice except one -> XOR cancels duplicate pairs to 0
-    func singleNumber(nums []int) int {
-        result := 0
-        for _, n := range nums {
-            result ^= n   // x ^ x == 0, x ^ 0 == x -- duplicates vanish, survivor remains
-        }
-        return result
-    }
-  `],
-    ["LeetCode 78 &middot; Subsets (bitmask enumerates every subset)",`
-    func subsets(nums []int) [][]int {
-        n := len(nums)
-        var res [][]int
-        for mask := 0; mask < (1 << n); mask++ {        // 2^n masks
-            var subset []int
-            for i := 0; i < n; i++ {
-                if mask&(1<<i) != 0 {                        // check bit i
-                    subset = append(subset, nums[i])
-                }
-            }
-            res = append(res, subset)
-        }
-        return res
-    }
-  `],
+    ["bit tricks",`
+      n := 12                          // 0b1100
+      n & -n                              // 4  -- isolates the lowest set bit (0b0100)
+      n & (n - 1)                           // 8  -- clears the lowest set bit (0b1000)
+      n&(n-1) == 0                             // false -- true only when n is a power of two (n != 0)
+      bits.TrailingZeros(uint(n))                 // 2  -- index of the lowest set bit
+    `],
+    ["an int as a set",`
+      mask := 0
+      mask |= (1 << 3)                   // add element 3 to the set
+      mask &= ^(1 << 3)                     // remove element 3 -- Go uses ^ for unary NOT
+      mask ^= (1 << 3)                        // toggle element 3
+      mask&(1<<3) != 0                           // membership check -- "is 3 in the set?"
+
+      for i := 0; i < 4; i++ {                           // iterate elements 0..3
+          if mask&(1<<i) != 0 { fmt.Println(i) }             // print i if it's in the set
+      }
+    `],
   ],
   cpp:[
-    ["LeetCode 136 &middot; Single Number (XOR cancels duplicates)",`
-    // recognize: every element appears twice except one -> XOR cancels duplicate pairs to 0
-    int singleNumber(vector<int>& nums) {
-        int result = 0;
-        for (int n : nums) result ^= n;   // x ^ x == 0, x ^ 0 == x -- duplicates vanish, survivor remains
-        return result;
-    }
-  `],
-    ["LeetCode 78 &middot; Subsets (bitmask enumerates every subset)",`
-    vector<vector<int>> subsets(vector<int>& nums) {
-        int n = nums.size();
-        vector<vector<int>> res;
-        for (int mask = 0; mask < (1 << n); mask++) {        // 2^n masks
-            vector<int> subset;
-            for (int i = 0; i < n; i++)
-                if (mask & (1 << i)) subset.push_back(nums[i]);   // check bit i
-            res.push_back(subset);
-        }
-        return res;
-    }
-  `],
+    ["bit tricks",`
+      int n = 12;                       // 0b1100
+      n & -n;                              // 4  -- isolates the lowest set bit (0b0100)
+      n & (n - 1);                           // 8  -- clears the lowest set bit (0b1000)
+      (n & (n - 1)) == 0;                       // false -- true only when n is a power of two (n != 0)
+      __builtin_ctz(n);                            // 2  -- index of the lowest set bit (count trailing zeros)
+    `],
+    ["an int as a set",`
+      int mask = 0;
+      mask |= (1 << 3);                  // add element 3 to the set
+      mask &= ~(1 << 3);                    // remove element 3
+      mask ^= (1 << 3);                       // toggle element 3
+      (mask & (1 << 3)) != 0;                    // membership check -- "is 3 in the set?"
+
+      for (int i = 0; i < 4; i++)                         // iterate elements 0..3
+          if (mask & (1 << i)) cout << i << "\\n";            // print i if it's in the set
+    `],
   ],
 }],
 ];
