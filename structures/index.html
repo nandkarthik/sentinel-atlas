@@ -194,6 +194,14 @@ var CARDS=[
       from typing import Optional
       def f(x: Optional[int] = None): ...   # "maybe an int, maybe None"
     `],
+    ["check the type of an unknown value",`
+      if isinstance(x, str): ...
+      elif isinstance(x, (int, float)): ...      # tuple -- match against several types at once
+      else: ...
+
+      type(x) is str                    # exact type match (skips subclasses, rarely what you want)
+      type(x).__name__                     # "int", "str", ... -- as a printable name
+    `],
   ],
   java:[
     [null,`
@@ -210,6 +218,14 @@ var CARDS=[
       long l = (long) i;                          // widening cast -- safe
       int back = (int) 3.99;                        // narrowing cast -- truncates to 3
     `],
+    ["check the type of an unknown value",`
+      Object x = ...;
+      if (x instanceof String s) { ... }             // pattern variable -- 's' is already cast, ready to use
+      else if (x instanceof Integer || x instanceof Double) { ... }
+      else { ... }
+
+      x.getClass().getSimpleName();                  // "String", "Integer", ... -- as a printable name
+    `],
   ],
   scala:[
     [null,`
@@ -224,6 +240,15 @@ var CARDS=[
     ["Option instead of null",`
       val (a, b) = (1, 2)                  // tuple destructuring
       def f(x: Option[Int] = None): Unit = ()   // "maybe an Int, maybe None" -- the idiomatic absence type
+    `],
+    ["check the type of an unknown value",`
+      def describe(x: Any): String = x match {        // match against a type -- the idiomatic way
+        case s: String => s"string: $s"
+        case i: Int    => s"int: $i"
+        case _         => "something else"
+      }
+
+      x.getClass.getSimpleName                       // "String", "Integer", ... -- as a printable name
     `],
   ],
   go:[
@@ -241,6 +266,18 @@ var CARDS=[
       var f float64 = float64(i)           // Go never converts implicitly -- even int -> float64 needs a cast
       var i2 int = int(f)
     `],
+    ["check the type of an unknown value",`
+      switch v := x.(type) {                          // type switch -- the idiomatic way to branch on an interface{}/any value
+      case string:
+          fmt.Println("string:", v)
+      case int, float64:
+          fmt.Println("number:", v)
+      default:
+          fmt.Println("something else")
+      }
+
+      reflect.TypeOf(x).String()                        // "string", "int", ... -- as a printable name
+    `],
   ],
   cpp:[
     [null,`
@@ -255,6 +292,13 @@ var CARDS=[
       int i = 42;
       long l = (long) i;                     // C-style cast -- widening, safe
       int back = static_cast<int>(3.99);        // static_cast -- the idiomatic C++ way, truncates to 3
+    `],
+    ["check the type of an unknown value",`
+      variant<string, int, double> x = 42;
+      if (holds_alternative<int>(x)) { ... }           // check which alternative is active
+      visit([](auto&& v) { cout << v; }, x);              // visit -- dispatch on whichever type is held
+
+      typeid(x).name();                                     // mangled type name -- mainly for debugging, rarely used for logic
     `],
   ],
 }],
