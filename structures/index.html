@@ -59,6 +59,15 @@ h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.7rem,3.4vw,
 .jump{display:flex;flex-wrap:wrap;gap:.32rem}
 .jump a{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--line);color:var(--ink-soft);padding:.26rem .58rem;border-radius:99px;text-decoration:none;white-space:nowrap}
 .jump a:hover{border-color:var(--accent);color:var(--ink);background:var(--accent-soft)}
+.jump-toggle{display:none}
+@media (max-width:640px){
+  .jump-toggle{display:flex;align-items:center;gap:.35rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);background:none;border:1px solid var(--line);border-radius:6px;padding:.45rem .7rem;width:100%;margin:0 0 .5rem}
+  .jump-toggle:hover{border-color:var(--accent);color:var(--ink)}
+  .jump-toggle .chev{transition:transform .15s ease;margin-left:auto}
+  .jump-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+  .jump{display:none}
+  .jump.open{display:flex}
+}
 a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .board{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:.65rem}
 .card{border:1px solid var(--line);border-radius:6px;background:var(--card);box-shadow:var(--shadow);padding:.7rem .8rem .8rem;min-width:0;scroll-margin-top:5.4rem}
@@ -94,6 +103,7 @@ footer.foot a{color:var(--accent)}
   <div class="controls">
     <input type="search" class="search" id="search" aria-label="Search syntax reference" placeholder="Search syntax… e.g. closures, binary search, type check">
     <div class="langs" id="langs" role="tablist" aria-label="Language"></div>
+    <button type="button" class="jump-toggle" id="jumpToggle" aria-expanded="false" aria-controls="jump">Browse categories<span class="chev">&#9662;</span></button>
     <nav class="jump" aria-label="Jump to a card" id="jump"></nav>
   </div>
 
@@ -185,94 +195,94 @@ var CARDS=[
 ["vartypes","Variables &amp; types","declare, infer, convert",{
   python:[
     [null,`
-      x = 42                       # dynamically typed -- no declaration needed
-      x: int = 42                    # optional type hint (not enforced at runtime)
+      x = 42  # dynamically typed -- no declaration needed
+      x: int = 42  # optional type hint (not enforced at runtime)
       y = "hello"; z = 3.14; ok = True
 
-      type(x)                              # <class 'int'> -- inspect the runtime type
-      int("42"); str(42); float("3.14")       # conversions -- raise ValueError on bad input
-      isinstance(x, int)                         # type check
+      type(x)  # <class 'int'> -- inspect the runtime type
+      int("42"); str(42); float("3.14")  # conversions -- raise ValueError on bad input
+      isinstance(x, int)  # type check
     `],
     ["None, tuples & unpacking",`
-      a, b = 1, 2; a, b = b, a         # swap, no temp variable needed
+      a, b = 1, 2; a, b = b, a  # swap, no temp variable needed
 
       from typing import Optional
-      def f(x: Optional[int] = None): ...   # "maybe an int, maybe None"
+      def f(x: Optional[int] = None): ...  # "maybe an int, maybe None"
     `],
     ["check the type of an unknown value",`
       if isinstance(x, str): ...
-      elif isinstance(x, (int, float)): ...      # tuple -- match against several types at once
+      elif isinstance(x, (int, float)): ...  # tuple -- match against several types at once
       else: ...
 
-      type(x) is str                    # exact type match (skips subclasses, rarely what you want)
-      type(x).__name__                     # "int", "str", ... -- as a printable name
+      type(x) is str  # exact type match (skips subclasses, rarely what you want)
+      type(x).__name__  # "int", "str", ... -- as a printable name
     `],
   ],
   java:[
     [null,`
-      int x = 42;                               // statically typed -- declare with the type
-      var y = "hello";                             // type inference (Java 10+) -- still statically typed
+      int x = 42;  // statically typed -- declare with the type
+      var y = "hello";  // type inference (Java 10+) -- still statically typed
       double z = 3.14; boolean ok = true;
 
-      Object o = x;                                   // autoboxing: int -> Integer when needed
-      Integer.parseInt("42"); String.valueOf(42); Double.parseDouble("3.14");   // conversions
-      boolean isInt = x instanceof Integer;                // (primitives skip instanceof directly)
+      Object o = x;  // autoboxing: int -> Integer when needed
+      Integer.parseInt("42"); String.valueOf(42); Double.parseDouble("3.14");  // conversions
+      boolean isInt = x instanceof Integer;  // (primitives skip instanceof directly)
     `],
     ["primitives vs. boxed, casting",`
-      int i = 42; Integer boxed = i;          // primitive vs. its boxed wrapper class
-      long l = (long) i;                          // widening cast -- safe
-      int back = (int) 3.99;                        // narrowing cast -- truncates to 3
+      int i = 42; Integer boxed = i;  // primitive vs. its boxed wrapper class
+      long l = (long) i;  // widening cast -- safe
+      int back = (int) 3.99;  // narrowing cast -- truncates to 3
     `],
     ["check the type of an unknown value",`
       Object x = ...;
-      if (x instanceof String s) { ... }             // pattern variable -- 's' is already cast, ready to use
+      if (x instanceof String s) { ... }  // pattern variable -- 's' is already cast, ready to use
       else if (x instanceof Integer || x instanceof Double) { ... }
       else { ... }
 
-      x.getClass().getSimpleName();                  // "String", "Integer", ... -- as a printable name
+      x.getClass().getSimpleName();  // "String", "Integer", ... -- as a printable name
     `],
   ],
   scala:[
     [null,`
-      val x: Int = 42                     // val = immutable; type is inferred if omitted
-      var y = "hello"                        // var = mutable (prefer val)
+      val x: Int = 42  // val = immutable; type is inferred if omitted
+      var y = "hello"  // var = mutable (prefer val)
       val z = 3.14; val ok = true
 
-      x.getClass                                // inspect the runtime type
-      "42".toInt; 42.toString; "3.14".toDouble    // conversions -- throw on bad input
-      x.isInstanceOf[Int]                           // type check
+      x.getClass  // inspect the runtime type
+      "42".toInt; 42.toString; "3.14".toDouble  // conversions -- throw on bad input
+      x.isInstanceOf[Int]  // type check
     `],
     ["Option instead of null",`
-      val (a, b) = (1, 2)                  // tuple destructuring
-      def f(x: Option[Int] = None): Unit = ()   // "maybe an Int, maybe None" -- the idiomatic absence type
+      val (a, b) = (1, 2)  // tuple destructuring
+      def f(x: Option[Int] = None): Unit = ()  // "maybe an Int, maybe None" -- the idiomatic absence type
     `],
     ["check the type of an unknown value",`
-      def describe(x: Any): String = x match {        // match against a type -- the idiomatic way
+      def describe(x: Any): String = x match {  // match against a type -- the idiomatic way
         case s: String => s"string: $s"
         case i: Int    => s"int: $i"
         case _         => "something else"
       }
 
-      x.getClass.getSimpleName                       // "String", "Integer", ... -- as a printable name
+      x.getClass.getSimpleName  // "String", "Integer", ... -- as a printable name
     `],
   ],
   go:[
     [null,`
-      var x int = 42                         // explicit type
-      y := "hello"                              // := infers the type -- must be inside a function
+      var x int = 42  // explicit type
+      y := "hello"  // := infers the type -- must be inside a function
       var z float64 = 3.14
       ok := true
 
-      strconv.Itoa(42)                             // int -> string
-      n, err := strconv.Atoi("42")                    // string -> (int, error) -- errors are explicit values
+      strconv.Itoa(42)  // int -> string
+      n, err := strconv.Atoi("42")  // string -> (int, error) -- errors are explicit values
     `],
     ["type conversion is always explicit",`
       var i int = 42
-      var f float64 = float64(i)           // Go never converts implicitly -- even int -> float64 needs a cast
+      var f float64 = float64(i)  // Go never converts implicitly -- even int -> float64 needs a cast
       var i2 int = int(f)
     `],
     ["check the type of an unknown value",`
-      switch v := x.(type) {                          // type switch -- the idiomatic way to branch on an interface{}/any value
+      switch v := x.(type) {  // type switch -- the idiomatic way to branch on an interface{}/any value
       case string:
           fmt.Println("string:", v)
       case int, float64:
@@ -281,29 +291,29 @@ var CARDS=[
           fmt.Println("something else")
       }
 
-      reflect.TypeOf(x).String()                        // "string", "int", ... -- as a printable name
+      reflect.TypeOf(x).String()  // "string", "int", ... -- as a printable name
     `],
   ],
   cpp:[
     [null,`
-      int x = 42;                               // statically typed -- declare with the type
-      auto y = string("hello");                    // type inference -- still statically typed, resolved at compile time
+      int x = 42;  // statically typed -- declare with the type
+      auto y = string("hello");  // type inference -- still statically typed, resolved at compile time
       double z = 3.14; bool ok = true;
 
-      to_string(42);                                  // int -> string
-      stoi("42"); stod("3.14");                          // string -> int/double -- throw std::invalid_argument on bad input
+      to_string(42);  // int -> string
+      stoi("42"); stod("3.14");  // string -> int/double -- throw std::invalid_argument on bad input
     `],
     ["casting",`
       int i = 42;
-      long l = (long) i;                     // C-style cast -- widening, safe
-      int back = static_cast<int>(3.99);        // static_cast -- the idiomatic C++ way, truncates to 3
+      long l = (long) i;  // C-style cast -- widening, safe
+      int back = static_cast<int>(3.99);  // static_cast -- the idiomatic C++ way, truncates to 3
     `],
     ["check the type of an unknown value",`
       variant<string, int, double> x = 42;
-      if (holds_alternative<int>(x)) { ... }           // check which alternative is active
-      visit([](auto&& v) { cout << v; }, x);              // visit -- dispatch on whichever type is held
+      if (holds_alternative<int>(x)) { ... }  // check which alternative is active
+      visit([](auto&& v) { cout << v; }, x);  // visit -- dispatch on whichever type is held
 
-      typeid(x).name();                                     // mangled type name -- mainly for debugging, rarely used for logic
+      typeid(x).name();  // mangled type name -- mainly for debugging, rarely used for logic
     `],
   ],
 }],
@@ -314,12 +324,12 @@ var CARDS=[
       elif x == 0: ...
       else: ...
 
-      for i in range(5): ...               # 0..4
-      for item in items: ...                   # iterate directly, no index needed
+      for i in range(5): ...  # 0..4
+      for item in items: ...  # iterate directly, no index needed
       while x > 0: x -= 1
 
-      "pos" if x > 0 else "non-pos"              # ternary
-      match x:                                      # structural pattern matching (3.10+)
+      "pos" if x > 0 else "non-pos"  # ternary
+      match x:  # structural pattern matching (3.10+)
           case 0: ...
           case n if n > 0: ...
           case _: ...
@@ -328,7 +338,7 @@ var CARDS=[
       for i in range(10):
           if i == 3: continue
           if i == 7: break
-      else:                        # runs only if the loop was NOT broken -- for/while both support this
+      else:  # runs only if the loop was NOT broken -- for/while both support this
           print("completed")
     `],
   ],
@@ -338,12 +348,12 @@ var CARDS=[
       else if (x == 0) { ... }
       else { ... }
 
-      for (int i = 0; i < 5; i++) { ... }         // C-style, explicit index
-      for (int item : items) { ... }                 // enhanced for-loop
+      for (int i = 0; i < 5; i++) { ... }  // C-style, explicit index
+      for (int item : items) { ... }  // enhanced for-loop
       while (x > 0) x--;
 
-      String s = x > 0 ? "pos" : "non-pos";            // ternary
-      switch (x) {                                        // pattern-matching switch (Java 21+)
+      String s = x > 0 ? "pos" : "non-pos";  // ternary
+      switch (x) {  // pattern-matching switch (Java 21+)
           case 0 -> System.out.println("zero");
           case Integer n when n > 0 -> System.out.println("pos");
           default -> System.out.println("other");
@@ -353,7 +363,7 @@ var CARDS=[
       outer:
       for (int i = 0; i < 3; i++) {
           for (int j = 0; j < 3; j++) {
-              if (j == 1) continue outer;    // labels let you break/continue an OUTER loop
+              if (j == 1) continue outer;  // labels let you break/continue an OUTER loop
               if (i == 2) break outer;
           }
       }
@@ -365,18 +375,18 @@ var CARDS=[
       else if x == 0 then ...
       else ...
 
-      for i <- 0 until 5 do ...            // 0..4, exclusive end
+      for i <- 0 until 5 do ...  // 0..4, exclusive end
       for item <- items do ...
       while x > 0 do x -= 1
 
-      val s = if x > 0 then "pos" else "non-pos"    // if IS an expression -- no separate ternary operator
-      x match                                          // structural pattern matching, exhaustive
+      val s = if x > 0 then "pos" else "non-pos"  // if IS an expression -- no separate ternary operator
+      x match  // structural pattern matching, exhaustive
         case 0 => ...
         case n if n > 0 => ...
         case _ => ...
     `],
     ["for-comprehensions build values",`
-      val evens = for i <- 0 until 10 if i % 2 == 0 yield i   // "yield" -- for is an expression here
+      val evens = for i <- 0 until 10 if i % 2 == 0 yield i  // "yield" -- for is an expression here
       // no labeled break/continue -- restructure with a helper function or a boolean flag instead
     `],
   ],
@@ -390,11 +400,11 @@ var CARDS=[
           ...
       }
 
-      for i := 0; i < 5; i++ { ... }         // the ONLY loop keyword in Go -- no while, no do-while
-      for _, item := range items { ... }        // range form
-      for x > 0 { x-- }                            // this IS Go's "while"
+      for i := 0; i < 5; i++ { ... }  // the ONLY loop keyword in Go -- no while, no do-while
+      for _, item := range items { ... }  // range form
+      for x > 0 { x-- }  // this IS Go's "while"
 
-      switch x {                                      // no fallthrough by default (opposite of C/Java)
+      switch x {  // no fallthrough by default (opposite of C/Java)
       case 0:
           ...
       default:
@@ -406,7 +416,7 @@ var CARDS=[
       outer:
       for i := 0; i < 3; i++ {
           for j := 0; j < 3; j++ {
-              if j == 1 { continue outer }    // labels let you break/continue an OUTER loop
+              if j == 1 { continue outer }  // labels let you break/continue an OUTER loop
               if i == 2 { break outer }
           }
       }
@@ -418,12 +428,12 @@ var CARDS=[
       else if (x == 0) { ... }
       else { ... }
 
-      for (int i = 0; i < 5; i++) { ... }         // C-style, explicit index
-      for (int item : items) { ... }                 // range-based for (C++11+)
+      for (int i = 0; i < 5; i++) { ... }  // C-style, explicit index
+      for (int item : items) { ... }  // range-based for (C++11+)
       while (x > 0) x--;
 
-      string s = x > 0 ? "pos" : "non-pos";            // ternary
-      switch (x) {                                        // falls through by default -- needs explicit break
+      string s = x > 0 ? "pos" : "non-pos";  // ternary
+      switch (x) {  // falls through by default -- needs explicit break
           case 0: cout << "zero"; break;
           default: cout << "other"; break;
       }
@@ -431,7 +441,7 @@ var CARDS=[
     ["labeled loops don't exist -- goto does",`
       for (int i = 0; i < 3; i++) {
           for (int j = 0; j < 3; j++) {
-              if (i == 2 && j == 1) goto done;   // no labeled break like Java/Go -- goto is the (rare) escape hatch
+              if (i == 2 && j == 1) goto done;  // no labeled break like Java/Go -- goto is the (rare) escape hatch
           }
       }
       done:;
@@ -441,84 +451,84 @@ var CARDS=[
 ["functions","Functions &amp; lambdas","params, defaults, closures",{
   python:[
     [null,`
-      def add(a, b=0):                    # default parameter
+      def add(a, b=0):  # default parameter
           return a + b
 
-      add(1, 2); add(1); add(a=1, b=2)       # positional, default, named args
+      add(1, 2); add(1); add(a=1, b=2)  # positional, default, named args
 
-      square = lambda x: x * x                 # anonymous function
+      square = lambda x: x * x  # anonymous function
       def apply(f, x): return f(x)
-      apply(square, 5)                             # functions are values -- pass them around
+      apply(square, 5)  # functions are values -- pass them around
     `],
     ["closures",`
       def outer():
           count = 0
-          def inner():                              # closure -- captures \`count\` from the enclosing scope
+          def inner():  # closure -- captures \`count\` from the enclosing scope
               nonlocal count; count += 1; return count
           return inner
     `],
   ],
   java:[
     [null,`
-      int add(int a, int b) { return a + b; }      // no default params in Java -- overload instead
+      int add(int a, int b) { return a + b; }  // no default params in Java -- overload instead
       int add(int a) { return add(a, 0); }
 
-      Function<Integer, Integer> square = x -> x * x;    // lambda, needs a functional-interface type
+      Function<Integer, Integer> square = x -> x * x;  // lambda, needs a functional-interface type
       int apply(Function<Integer, Integer> f, int x) { return f.apply(x); }
       apply(square, 5);
     `],
     ["closures",`
       Supplier<Integer> counter() {
-          int[] count = {0};                             // effectively-final workaround -- lambdas can't mutate captured locals
+          int[] count = {0};  // effectively-final workaround -- lambdas can't mutate captured locals
           return () -> ++count[0];
       }
     `],
   ],
   scala:[
     [null,`
-      def add(a: Int, b: Int = 0): Int = a + b      // default parameter
+      def add(a: Int, b: Int = 0): Int = a + b  // default parameter
 
-      add(1, 2); add(1); add(a = 1, b = 2)             // positional, default, named args
+      add(1, 2); add(1); add(a = 1, b = 2)  // positional, default, named args
 
-      val square = (x: Int) => x * x                      // lambda -- a first-class function value
+      val square = (x: Int) => x * x  // lambda -- a first-class function value
       def apply(f: Int => Int, x: Int): Int = f(x)
       apply(square, 5)
     `],
     ["closures",`
       def outer(): () => Int =
         var count = 0
-        () => { count += 1; count }               // closure -- captures & mutates \`count\` freely
+        () => { count += 1; count }  // closure -- captures & mutates \`count\` freely
     `],
   ],
   go:[
     [null,`
-      func add(a, b int) int { return a + b }        // no default params, no overloading in Go
+      func add(a, b int) int { return a + b }  // no default params, no overloading in Go
 
-      square := func(x int) int { return x * x }        // function literal -- a value like any other
+      square := func(x int) int { return x * x }  // function literal -- a value like any other
       func apply(f func(int) int, x int) int { return f(x) }
       apply(square, 5)
     `],
     ["closures",`
       func counter() func() int {
           count := 0
-          return func() int { count++; return count }    // closure -- captures \`count\` by reference
+          return func() int { count++; return count }  // closure -- captures \`count\` by reference
       }
     `],
   ],
   cpp:[
     [null,`
-      int add(int a, int b = 0) { return a + b; }      // default parameter
+      int add(int a, int b = 0) { return a + b; }  // default parameter
 
-      add(1, 2); add(1);                                   // C++ has no named-argument syntax
+      add(1, 2); add(1);  // C++ has no named-argument syntax
 
-      auto square = [](int x) { return x * x; };             // lambda
+      auto square = [](int x) { return x * x; };  // lambda
       int apply(function<int(int)> f, int x) { return f(x); }
       apply(square, 5);
     `],
     ["closures",`
       function<int()> counter() {
           int count = 0;
-          return [count]() mutable { return ++count; };    // [count] copies it; "mutable" allows mutating the copy
+          return [count]() mutable { return ++count; };  // [count] copies it; "mutable" allows mutating the copy
       }
     `],
   ],
@@ -533,7 +543,7 @@ var CARDS=[
 
       t = threading.Thread(target=worker, args=(1,))
       t.start()
-      t.join()                          # wait for it to finish
+      t.join()  # wait for it to finish
 
       # the GIL means only one thread runs Python bytecode at a time --
       # threads help with I/O-bound work, NOT CPU-bound (use multiprocessing for that)
@@ -543,60 +553,60 @@ var CARDS=[
       counter = 0
       def increment():
           global counter
-          with lock:                      # mutual exclusion -- only one thread at a time
+          with lock:  # mutual exclusion -- only one thread at a time
               counter += 1
 
       import asyncio
       async def fetch(url):
-          await asyncio.sleep(1)             # yields control, doesn't block the thread
+          await asyncio.sleep(1)  # yields control, doesn't block the thread
           return "data"
 
-      asyncio.run(fetch("http://x"))            # single-threaded concurrency, cooperative
+      asyncio.run(fetch("http://x"))  # single-threaded concurrency, cooperative
     `],
   ],
   java:[
     [null,`
       Thread t = new Thread(() -> System.out.println("worker"));
-      t.start(); t.join();                          // wait for it to finish
+      t.start(); t.join();  // wait for it to finish
 
-      ExecutorService pool = Executors.newFixedThreadPool(4);   // idiomatic -- don't manage raw Threads
+      ExecutorService pool = Executors.newFixedThreadPool(4);  // idiomatic -- don't manage raw Threads
       Future<Integer> f = pool.submit(() -> 42);
-      f.get();                                          // blocks until the result is ready
+      f.get();  // blocks until the result is ready
       pool.shutdown();
     `],
     ["synchronization",`
-      synchronized(this) { counter++; }              // mutual exclusion -- only one thread at a time
+      synchronized(this) { counter++; }  // mutual exclusion -- only one thread at a time
 
       AtomicInteger atomic = new AtomicInteger(0);
-      atomic.incrementAndGet();                          // lock-free atomic update -- the preferred alternative
+      atomic.incrementAndGet();  // lock-free atomic update -- the preferred alternative
 
-      CompletableFuture.supplyAsync(() -> fetch())          // async pipeline, chained without blocking
+      CompletableFuture.supplyAsync(() -> fetch())  // async pipeline, chained without blocking
           .thenApply(data -> process(data));
     `],
   ],
   scala:[
     [null,`
       val t = new Thread(() => println("worker"))
-      t.start(); t.join()                          // wait for it to finish
+      t.start(); t.join()  // wait for it to finish
 
       import scala.concurrent.{Future, Await}
       import scala.concurrent.ExecutionContext.Implicits.global
       import scala.concurrent.duration._
 
-      val f: Future[Int] = Future { 42 }              // runs on a thread pool, asynchronously
-      Await.result(f, 5.seconds)                         // blocks until ready (avoid in real code -- prefer map)
+      val f: Future[Int] = Future { 42 }  // runs on a thread pool, asynchronously
+      Await.result(f, 5.seconds)  // blocks until ready (avoid in real code -- prefer map)
     `],
     ["synchronization",`
       import java.util.concurrent.atomic.AtomicInteger
       val counter = new AtomicInteger(0)
-      counter.incrementAndGet()                       // lock-free atomic update
+      counter.incrementAndGet()  // lock-free atomic update
 
-      f.map(data => process(data))                       // chain without blocking -- returns a new Future
+      f.map(data => process(data))  // chain without blocking -- returns a new Future
     `],
   ],
   go:[
     [null,`
-      go worker(1)                              // "go" spawns a goroutine -- lightweight, not an OS thread
+      go worker(1)  // "go" spawns a goroutine -- lightweight, not an OS thread
 
       var wg sync.WaitGroup
       wg.Add(1)
@@ -604,35 +614,35 @@ var CARDS=[
           defer wg.Done()
           doWork()
       }()
-      wg.Wait()                                    // block until all goroutines finish
+      wg.Wait()  // block until all goroutines finish
     `],
     ["channels & mutex",`
-      ch := make(chan int)                       // channels are the idiomatic way to communicate
-      go func() { ch <- 42 }()                      // send
-      v := <-ch                                       // receive -- blocks until a value is sent
+      ch := make(chan int)  // channels are the idiomatic way to communicate
+      go func() { ch <- 42 }()  // send
+      v := <-ch  // receive -- blocks until a value is sent
 
       var mu sync.Mutex
       mu.Lock()
-      counter++                                          // mutual exclusion -- only one goroutine at a time
+      counter++  // mutual exclusion -- only one goroutine at a time
       mu.Unlock()
     `],
   ],
   cpp:[
     [null,`
       thread t([]{ cout << "worker\\n"; });
-      t.join();                                    // wait for it to finish
+      t.join();  // wait for it to finish
 
-      auto fut = async(launch::async, []{ return 42; });   // runs on its own thread
-      fut.get();                                      // blocks until the result is ready
+      auto fut = async(launch::async, []{ return 42; });  // runs on its own thread
+      fut.get();  // blocks until the result is ready
     `],
     ["synchronization",`
       mutex mtx;
       mtx.lock();
-      counter++;                                    // mutual exclusion -- only one thread at a time
+      counter++;  // mutual exclusion -- only one thread at a time
       mtx.unlock();
 
       atomic<int> atomicCounter{0};
-      atomicCounter++;                                 // lock-free atomic update -- the preferred alternative
+      atomicCounter++;  // lock-free atomic update -- the preferred alternative
     `],
   ],
 }],
@@ -643,14 +653,14 @@ var CARDS=[
           risky()
       except ValueError as e:
           print(f"bad value: {e}")
-      except (TypeError, KeyError) as e:         # catch multiple types at once
+      except (TypeError, KeyError) as e:  # catch multiple types at once
           print(f"other: {e}")
       else:
-          print("no exception")                     # runs only if no exception was raised
+          print("no exception")  # runs only if no exception was raised
       finally:
-          cleanup()                                     # always runs
+          cleanup()  # always runs
 
-      raise ValueError("bad input")                       # raise your own
+      raise ValueError("bad input")  # raise your own
     `],
     ["custom exceptions",`
       class InsufficientFundsError(Exception):
@@ -668,15 +678,15 @@ var CARDS=[
           risky();
       } catch (IllegalArgumentException e) {
           System.out.println("bad value: " + e.getMessage());
-      } catch (RuntimeException e) {                 // catch a broader type -- order matters, most specific first
+      } catch (RuntimeException e) {  // catch a broader type -- order matters, most specific first
           System.out.println("other: " + e.getMessage());
       } finally {
-          cleanup();                                     // always runs
+          cleanup();  // always runs
       }
 
-      throw new IllegalArgumentException("bad input");        // raise your own
+      throw new IllegalArgumentException("bad input");  // raise your own
 
-      void risky() throws IOException { ... }               // checked exceptions must be declared or caught
+      void risky() throws IOException { ... }  // checked exceptions must be declared or caught
     `],
     ["custom exceptions",`
       class InsufficientFundsException extends RuntimeException {
@@ -693,26 +703,26 @@ var CARDS=[
         case e: IllegalArgumentException => println(s"bad value: \${e.getMessage}")
         case e: RuntimeException => println(s"other: \${e.getMessage}")
       finally
-        cleanup()                                     // always runs
+        cleanup()  // always runs
 
-      throw IllegalArgumentException("bad input")          // raise your own
+      throw IllegalArgumentException("bad input")  // raise your own
     `],
     ["Try / Either -- the idiomatic alternative",`
       import scala.util.{Try, Success, Failure}
-      val result: Try[Int] = Try(risky())            // wraps success OR the exception as a value
+      val result: Try[Int] = Try(risky())  // wraps success OR the exception as a value
       result match
         case Success(v) => println(v)
         case Failure(e) => println(e.getMessage)
 
-      def parse(s: String): Either[String, Int] =      // Left = error, Right = success -- no exception at all
+      def parse(s: String): Either[String, Int] =  // Left = error, Right = success -- no exception at all
         s.toIntOption.toRight(s"not a number: $s")
     `],
   ],
   go:[
     [null,`
-      func risky() (int, error) {                 // errors are just ordinary return values, not exceptions
+      func risky() (int, error) {  // errors are just ordinary return values, not exceptions
           if bad {
-              return 0, fmt.Errorf("bad input: %w", cause)   // %w wraps the underlying error
+              return 0, fmt.Errorf("bad input: %w", cause)  // %w wraps the underlying error
           }
           return 42, nil
       }
@@ -725,12 +735,12 @@ var CARDS=[
     `],
     ["panic/recover -- for truly exceptional cases only",`
       func safeDivide(a, b int) (result int, err error) {
-          defer func() {                               // recover only works inside a deferred function
+          defer func() {  // recover only works inside a deferred function
               if r := recover(); r != nil {
                   err = fmt.Errorf("recovered: %v", r)
               }
           }()
-          return a / b, nil                                // dividing by 0 panics -- recover() catches it above
+          return a / b, nil  // dividing by 0 panics -- recover() catches it above
       }
     `],
   ],
@@ -740,11 +750,11 @@ var CARDS=[
           risky();
       } catch (const invalid_argument& e) {
           cout << "bad value: " << e.what() << "\\n";
-      } catch (const exception& e) {                 // catch a broader type -- order matters, most specific first
+      } catch (const exception& e) {  // catch a broader type -- order matters, most specific first
           cout << "other: " << e.what() << "\\n";
       }
 
-      throw invalid_argument("bad input");                 // raise your own -- always throw by value, catch by const&
+      throw invalid_argument("bad input");  // raise your own -- always throw by value, catch by const&
     `],
     ["custom exceptions",`
       class InsufficientFundsError : public exception {
@@ -762,7 +772,7 @@ var CARDS=[
       from typing import TypeVar, Generic
       T = TypeVar("T")
 
-      def first(items: list[T]) -> T:           # duck-typed at runtime -- type hints are just documentation
+      def first(items: list[T]) -> T:  # duck-typed at runtime -- type hints are just documentation
           return items[0]
 
       class Box(Generic[T]):
@@ -771,37 +781,37 @@ var CARDS=[
   ],
   java:[
     [null,`
-      <T> T first(List<T> items) { return items.get(0); }      // generic method
+      <T> T first(List<T> items) { return items.get(0); }  // generic method
 
       class Box<T> {
           T value;
           Box(T value) { this.value = value; }
       }
 
-      <T extends Comparable<T>> T max(T a, T b) {                 // bounded type parameter
+      <T extends Comparable<T>> T max(T a, T b) {  // bounded type parameter
           return a.compareTo(b) > 0 ? a : b;
       }
     `],
   ],
   scala:[
     [null,`
-      def first[T](items: List[T]): T = items.head         // generic method
+      def first[T](items: List[T]): T = items.head  // generic method
 
       class Box[T](val value: T)
 
-      def max[T <: Ordered[T]](a: T, b: T): T =                // bounded type parameter
+      def max[T <: Ordered[T]](a: T, b: T): T =  // bounded type parameter
         if a > b then a else b
     `],
   ],
   go:[
     [null,`
-      func First[T any](items []T) T { return items[0] }      // generics (Go 1.18+)
+      func First[T any](items []T) T { return items[0] }  // generics (Go 1.18+)
 
       type Box[T any] struct {
           Value T
       }
 
-      type Ordered interface { ~int | ~float64 | ~string }       // a constraint interface
+      type Ordered interface { ~int | ~float64 | ~string }  // a constraint interface
       func Max[T Ordered](a, b T) T {
           if a > b { return a }
           return b
@@ -811,7 +821,7 @@ var CARDS=[
   cpp:[
     [null,`
       template<typename T>
-      T first(vector<T>& items) { return items[0]; }      // generic function
+      T first(vector<T>& items) { return items[0]; }  // generic function
 
       template<typename T>
       class Box {
@@ -821,28 +831,28 @@ var CARDS=[
       };
 
       template<typename T>
-      T maxVal(T a, T b) { return a > b ? a : b; }             // no explicit bound needed -- ">" just has to compile for T
+      T maxVal(T a, T b) { return a > b ? a : b; }  // no explicit bound needed -- ">" just has to compile for T
     `],
   ],
 }],
 ["imports","Imports &amp; entry point","modules, packages, program start",{
   python:[
     [null,`
-      import math                        # whole module
-      from collections import deque         # specific names
-      from . import helpers                    # relative import, within a package
+      import math  # whole module
+      from collections import deque  # specific names
+      from . import helpers  # relative import, within a package
 
-      if __name__ == "__main__":               # entry point -- only runs when executed directly, not when imported
+      if __name__ == "__main__":  # entry point -- only runs when executed directly, not when imported
           main()
     `],
   ],
   java:[
     [null,`
-      import java.util.List;                // specific class
-      import java.util.*;                      // whole package (avoid in real code -- be explicit)
+      import java.util.List;  // specific class
+      import java.util.*;  // whole package (avoid in real code -- be explicit)
 
       public class Main {
-          public static void main(String[] args) {    // entry point -- exact signature required
+          public static void main(String[] args) {  // entry point -- exact signature required
               System.out.println("hello");
           }
       }
@@ -850,10 +860,10 @@ var CARDS=[
   ],
   scala:[
     [null,`
-      import scala.collection.mutable                 // whole package
-      import scala.collection.mutable.{Map, Set}          // specific names
+      import scala.collection.mutable  // whole package
+      import scala.collection.mutable.{Map, Set}  // specific names
 
-      @main def run(): Unit =                             // entry point (Scala 3) -- no boilerplate class needed
+      @main def run(): Unit =  // entry point (Scala 3) -- no boilerplate class needed
         println("hello")
 
       // Scala 2 style: object Main extends App { println("hello") }
@@ -862,25 +872,25 @@ var CARDS=[
   go:[
     [null,`
       import (
-          "fmt"                      // standard library
-          "myproject/utils"             // local package, by its module path
+          "fmt"  // standard library
+          "myproject/utils"  // local package, by its module path
       )
 
-      package main                         // every executable needs "package main"
+      package main  // every executable needs "package main"
 
-      func main() {                           // entry point -- exact name required, no args, no return
+      func main() {  // entry point -- exact name required, no args, no return
           fmt.Println("hello")
       }
     `],
   ],
   cpp:[
     [null,`
-      #include <vector>                  // standard library header
-      #include "myheader.h"                 // local header, quotes not angle brackets
+      #include <vector>  // standard library header
+      #include "myheader.h"  // local header, quotes not angle brackets
 
-      using namespace std;                     // brings std:: names into scope (fine for small files/demos)
+      using namespace std;  // brings std:: names into scope (fine for small files/demos)
 
-      int main() {                                // entry point -- returns an int (0 == success) to the OS
+      int main() {  // entry point -- returns an int (0 == success) to the OS
           cout << "hello\\n";
           return 0;
       }
@@ -890,21 +900,21 @@ var CARDS=[
 ["basics","Language basics","identity, empties, defaults",{
   python:[
     [null,`
-      x = None                  # no null/nil in Python
-      y = []                     # empty, but NOT None
-      not y                        # True -- falsy check: "is it empty?"
-      y is None                     # False -- use "is None" for "never assigned"
+      x = None  # no null/nil in Python
+      y = []  # empty, but NOT None
+      not y  # True -- falsy check: "is it empty?"
+      y is None  # False -- use "is None" for "never assigned"
       a, b = [1], [1]
-      a == b                          # True  (same values)
-      a is b                            # False (different objects)
+      a == b  # True  (same values)
+      a is b  # False (different objects)
     `],
     [null,`
       n = 42
-      f"{n=}"                     # "n=42" -- quick debug print
-      f"{3.14159:.2f}"              # "3.14"
+      f"{n=}"  # "n=42" -- quick debug print
+      f"{3.14159:.2f}"  # "3.14"
 
-      def add(item, bucket=None):     # never default to a mutable ([] / {}):
-          if bucket is None:            # it's created once and reused every call
+      def add(item, bucket=None):  # never default to a mutable ([] / {}):
+          if bucket is None:  # it's created once and reused every call
               bucket = []
           bucket.append(item)
           return bucket
@@ -912,78 +922,78 @@ var CARDS=[
   ],
   java:[
     [null,`
-      Object x = null;                 // no None/nil in Java -- null is the absence of a reference
-      List<Integer> y = new ArrayList<>();   // empty, but NOT null
-      y.isEmpty()                        // true -- use isEmpty(), not size() == 0
-      y == null                            // false -- null-check is a separate question
+      Object x = null;  // no None/nil in Java -- null is the absence of a reference
+      List<Integer> y = new ArrayList<>();  // empty, but NOT null
+      y.isEmpty()  // true -- use isEmpty(), not size() == 0
+      y == null  // false -- null-check is a separate question
       List<Integer> a = List.of(1), b = List.of(1);
-      a.equals(b)                            // true  (.equals() compares content)
-      a == b                                    // false (== compares references)
+      a.equals(b)  // true  (.equals() compares content)
+      a == b  // false (== compares references)
     `],
     [null,`
       int n = 42;
-      System.out.printf("n=%d%n", n);        // quick debug print
-      String.format("%.2f", 3.14159);          // "3.14"
+      System.out.printf("n=%d%n", n);  // quick debug print
+      String.format("%.2f", 3.14159);  // "3.14"
 
       Integer a = 127, b = 127;
-      a == b                                      // true  -- small ints are cached, -128..127
+      a == b  // true  -- small ints are cached, -128..127
       Integer c = 200, d = 200;
-      c == d                                        // false -- NOT cached, use .equals()
+      c == d  // false -- NOT cached, use .equals()
     `],
   ],
   scala:[
     [null,`
-      val x: Option[Int] = None            // no null for value types; Option is the "maybe nothing"
-      val y: List[Int] = List()              // empty, but NOT None
-      y.isEmpty                                // true -- works on any collection
-      x.isEmpty                                  // true
+      val x: Option[Int] = None  // no null for value types; Option is the "maybe nothing"
+      val y: List[Int] = List()  // empty, but NOT None
+      y.isEmpty  // true -- works on any collection
+      x.isEmpty  // true
       val a = List(1); val b = List(1)
-      a == b                                        // true  -- collections compare by value
-      a eq b                                          // false -- eq compares reference identity
+      a == b  // true  -- collections compare by value
+      a eq b  // false -- eq compares reference identity
     `],
     [null,`
       val n = 42
-      s"n=$n"                     // "n=42" -- string interpolation
-      f"\${3.14159}%.2f"              // "3.14"
+      s"n=$n"  // "n=42" -- string interpolation
+      f"\${3.14159}%.2f"  // "3.14"
 
       def add(item: Int, bucket: List[Int] = Nil): List[Int] =
-        bucket :+ item                  // lists are immutable -- this returns a NEW list
+        bucket :+ item  // lists are immutable -- this returns a NEW list
     `],
   ],
   go:[
     [null,`
-      var x *int = nil                 // nil is the zero value for pointers, slices, maps...
-      y := []int{}                       // empty, but NOT nil
-      len(y) == 0                          // true -- always check with len(), not == nil
-      y == nil                               // false -- an empty slice literal is non-nil
-      var z []int                              // a nil slice: len(z)==0 AND z==nil are both true
+      var x *int = nil  // nil is the zero value for pointers, slices, maps...
+      y := []int{}  // empty, but NOT nil
+      len(y) == 0  // true -- always check with len(), not == nil
+      y == nil  // false -- an empty slice literal is non-nil
+      var z []int  // a nil slice: len(z)==0 AND z==nil are both true
     `],
     [null,`
       n := 42
-      fmt.Printf("n=%d\\n", n)        // quick debug print
-      fmt.Sprintf("%.2f", 3.14159)      // "3.14"
+      fmt.Printf("n=%d\\n", n)  // quick debug print
+      fmt.Sprintf("%.2f", 3.14159)  // "3.14"
 
-      var count int                       // zero value: 0 for numbers, "" for strings, nil for pointers
-      var m map[string]int                  // nil map -- reading is fine, writing PANICS
-      m = make(map[string]int)                // must make() before writing
+      var count int  // zero value: 0 for numbers, "" for strings, nil for pointers
+      var m map[string]int  // nil map -- reading is fine, writing PANICS
+      m = make(map[string]int)  // must make() before writing
     `],
   ],
   cpp:[
     [null,`
-      int* x = nullptr;                 // nullptr is C++'s "no value" for pointers
-      vector<int> y;                      // empty, but NOT nullptr -- vectors are value types, not pointers
-      y.empty()                             // true -- always check with .empty(), not size()==0
+      int* x = nullptr;  // nullptr is C++'s "no value" for pointers
+      vector<int> y;  // empty, but NOT nullptr -- vectors are value types, not pointers
+      y.empty()  // true -- always check with .empty(), not size()==0
       vector<int> a = {1}, b = {1};
-      a == b                                   // true  -- vector== compares elements
-      &a == &b                                   // false -- compares addresses, not content
+      a == b  // true  -- vector== compares elements
+      &a == &b  // false -- compares addresses, not content
     `],
     [null,`
       int n = 42;
-      cout << "n=" << n << "\\n";              // quick debug print
-      printf("%.2f\\n", 3.14159);                 // "3.14"
+      cout << "n=" << n << "\\n";  // quick debug print
+      printf("%.2f\\n", 3.14159);  // "3.14"
 
-      void add(vector<int>& bucket, int item = 0) {   // default args are fine here -- NOT shared/reused like Python's
-          bucket.push_back(item);                        // each call gets a fresh copy of the default
+      void add(vector<int>& bucket, int item = 0) {  // default args are fine here -- NOT shared/reused like Python's
+          bucket.push_back(item);  // each call gets a fresh copy of the default
       }
     `],
   ],
@@ -993,124 +1003,124 @@ var CARDS=[
   python:[
     [null,`
       class Point:
-          def __init__(self, x, y):    # constructor; self = the new object
-              self.x, self.y = x, y     # instance attributes
+          def __init__(self, x, y):  # constructor; self = the new object
+              self.x, self.y = x, y  # instance attributes
 
-      p = Point(3, 4)                     # create ("instantiate") an object
+      p = Point(3, 4)  # create ("instantiate") an object
 
       class Animal:
           def __init__(self, name): self.name = name
           def speak(self): return f"{self.name} makes a sound"
 
-      class Dog(Animal):                    # inherit
-          def speak(self):                    # override
+      class Dog(Animal):  # inherit
+          def speak(self):  # override
               return f"{self.name} says Woof"
 
       class Puppy(Dog):
           def __init__(self, name, age):
-              super().__init__(name)            # call the parent's __init__
+              super().__init__(name)  # call the parent's __init__
               self.age = age
 
-      isinstance(Puppy("Fido", 1), Animal)         # True
+      isinstance(Puppy("Fido", 1), Animal)  # True
     `],
     ["dunder methods",`
       class Interval:
           def __init__(self, s, e): self.s, self.e = s, e
           def __repr__(self): return f"Interval({self.s},{self.e})"  # print()/debug
           def __eq__(self, o): return (self.s, self.e) == (o.s, o.e)  # ==
-          def __lt__(self, o): return self.s < o.s                     # sorted()/heapq
-          def __hash__(self): return hash((self.s, self.e))              # set/dict key
+          def __lt__(self, o): return self.s < o.s  # sorted()/heapq
+          def __hash__(self): return hash((self.s, self.e))  # set/dict key
 
-      sorted([Interval(2, 3), Interval(0, 1)])       # uses __lt__
+      sorted([Interval(2, 3), Interval(0, 1)])  # uses __lt__
     `],
   ],
   java:[
     [null,`
       class Point {
-          int x, y;                        // fields
+          int x, y;  // fields
           Point(int x, int y) { this.x = x; this.y = y; }  // constructor
       }
-      Point p = new Point(3, 4);             // create ("instantiate") an object
+      Point p = new Point(3, 4);  // create ("instantiate") an object
 
       class Animal {
           String name;
           Animal(String name) { this.name = name; }
           String speak() { return name + " makes a sound"; }
       }
-      class Dog extends Animal {              // inherit
-          Dog(String name) { super(name); }      // call the parent's constructor
+      class Dog extends Animal {  // inherit
+          Dog(String name) { super(name); }  // call the parent's constructor
           @Override String speak() { return name + " says Woof"; }  // override
       }
       class Puppy extends Dog {
           int age;
           Puppy(String name, int age) { super(name); this.age = age; }
       }
-      new Puppy("Fido", 1) instanceof Animal;    // true
+      new Puppy("Fido", 1) instanceof Animal;  // true
     `],
     ["equals / hashCode / compareTo",`
       class Interval implements Comparable<Interval> {
           int s, e;
           Interval(int s, int e) { this.s = s; this.e = e; }
           @Override public String toString() { return "Interval(" + s + "," + e + ")"; }
-          @Override public boolean equals(Object o) {                     // ==
+          @Override public boolean equals(Object o) {  // ==
               if (!(o instanceof Interval i)) return false;
               return s == i.s && e == i.e;
           }
-          @Override public int hashCode() { return Objects.hash(s, e); }   // set/map key
+          @Override public int hashCode() { return Objects.hash(s, e); }  // set/map key
           @Override public int compareTo(Interval o) { return Integer.compare(s, o.s); }  // sort()
       }
     `],
   ],
   scala:[
     [null,`
-      class Point(val x: Int, val y: Int)      // constructor params live in the class header
+      class Point(val x: Int, val y: Int)  // constructor params live in the class header
 
-      val p = Point(3, 4)                        // create an object ("new" is optional in Scala 3)
+      val p = Point(3, 4)  // create an object ("new" is optional in Scala 3)
 
       class Animal(val name: String):
         def speak(): String = s"$name makes a sound"
 
-      class Dog(name: String) extends Animal(name):    // inherit
+      class Dog(name: String) extends Animal(name):  // inherit
         override def speak(): String = s"$name says Woof"  // override
 
       class Puppy(name: String, val age: Int) extends Dog(name)
 
-      Puppy("Fido", 1).isInstanceOf[Animal]        // true
+      Puppy("Fido", 1).isInstanceOf[Animal]  // true
     `],
     ["case class: equality for free",`
-      case class Interval(s: Int, e: Int)         // gives you equals/hashCode/toString/copy for free
+      case class Interval(s: Int, e: Int)  // gives you equals/hashCode/toString/copy for free
         extends Ordered[Interval]:
-        def compare(o: Interval): Int = s - o.s     // used by sorted
+        def compare(o: Interval): Int = s - o.s  // used by sorted
 
-      Interval(2, 3) == Interval(2, 3)               // true -- structural equality, no override needed
-      List(Interval(2, 3), Interval(0, 1)).sorted       // uses compare
+      Interval(2, 3) == Interval(2, 3)  // true -- structural equality, no override needed
+      List(Interval(2, 3), Interval(0, 1)).sorted  // uses compare
     `],
   ],
   go:[
     [null,`
-      type Point struct{ X, Y int }         // a struct is Go's "class" -- data only, no methods yet
+      type Point struct{ X, Y int }  // a struct is Go's "class" -- data only, no methods yet
 
-      p := Point{X: 3, Y: 4}                  // create a value -- no "new" keyword needed
+      p := Point{X: 3, Y: 4}  // create a value -- no "new" keyword needed
 
       type Animal struct{ Name string }
       func (a Animal) Speak() string { return a.Name + " makes a sound" }  // method on Animal
 
-      type Dog struct{ Animal }               // embedding = "inherits" Animal's fields & methods
-      func (d Dog) Speak() string { return d.Name + " says Woof" }           // "override" by redefining
+      type Dog struct{ Animal }  // embedding = "inherits" Animal's fields & methods
+      func (d Dog) Speak() string { return d.Name + " says Woof" }  // "override" by redefining
 
-      type Speaker interface{ Speak() string }   // interfaces are satisfied implicitly
-      var s Speaker = Dog{Animal{"Fido"}}          // Dog satisfies Speaker automatically
+      type Speaker interface{ Speak() string }  // interfaces are satisfied implicitly
+      var s Speaker = Dog{Animal{"Fido"}}  // Dog satisfies Speaker automatically
     `],
     ["no operator overloading; String() for printing",`
       type Interval struct{ S, E int }
 
-      func (i Interval) String() string {                  // fmt.Println uses this automatically
+      func (i Interval) String() string {  // fmt.Println uses this automatically
           return fmt.Sprintf("Interval(%d,%d)", i.S, i.E)
       }
       func (i Interval) Less(o Interval) bool { return i.S < o.S }  // your own convention
 
       a, b := Interval{2, 3}, Interval{2, 3}
-      a == b                                                   // true -- structs compare field-by-field
+      a == b  // true -- structs compare field-by-field
     `],
   ],
   cpp:[
@@ -1118,34 +1128,34 @@ var CARDS=[
       class Point {
       public:
           int x, y;
-          Point(int x, int y) : x(x), y(y) {}     // constructor with an initializer list
+          Point(int x, int y) : x(x), y(y) {}  // constructor with an initializer list
       };
-      Point p(3, 4);                                // create an object -- no explicit "new" needed on the stack
+      Point p(3, 4);  // create an object -- no explicit "new" needed on the stack
 
       class Animal {
       public:
           string name;
           Animal(string name) : name(name) {}
-          virtual string speak() { return name + " makes a sound"; }   // virtual -- enables overriding
+          virtual string speak() { return name + " makes a sound"; }  // virtual -- enables overriding
       };
-      class Dog : public Animal {                     // inherit
+      class Dog : public Animal {  // inherit
       public:
           Dog(string name) : Animal(name) {}
-          string speak() override { return name + " says Woof"; }        // override
+          string speak() override { return name + " says Woof"; }  // override
       };
       class Puppy : public Dog {
       public:
           int age;
           Puppy(string name, int age) : Dog(name), age(age) {}
       };
-      Animal* a = new Puppy("Fido", 1);                  // polymorphism needs a pointer or reference
-      dynamic_cast<Puppy*>(a) != nullptr;                    // true -- runtime type check
+      Animal* a = new Puppy("Fido", 1);  // polymorphism needs a pointer or reference
+      dynamic_cast<Puppy*>(a) != nullptr;  // true -- runtime type check
     `],
     ["operator overloading",`
       struct Interval {
           int s, e;
-          bool operator==(const Interval& o) const { return s == o.s && e == o.e; }   // ==
-          bool operator<(const Interval& o) const { return s < o.s; }                    // sort()/priority_queue
+          bool operator==(const Interval& o) const { return s == o.s && e == o.e; }  // ==
+          bool operator<(const Interval& o) const { return s < o.s; }  // sort()/priority_queue
       };
       // no built-in __repr__/toString -- overload operator<< to teach cout how to print one
       ostream& operator<<(ostream& os, const Interval& i) { return os << "Interval(" << i.s << "," << i.e << ")"; }
@@ -1157,107 +1167,107 @@ var CARDS=[
   python:[
     [null,`
       nums = [1, 2, 3, 4, 5]
-      nums[0], nums[-1]           # first, last
-      nums[1:3]                     # [2, 3] -- slice, end excluded
-      nums[::-1]                      # reversed copy
-      nums.append(6)                    # add to end          O(1)
-      nums.insert(0, 0)                   # insert at index      O(n)
-      nums.pop()                            # remove & return last  O(1)
-      nums.pop(0)                             # remove & return first O(n)
-      nums.remove(3)                            # remove first value==3 O(n)
-      not nums                                    # is it empty?
-      [x*x for x in range(5)]                       # comprehension: [0,1,4,9,16]
+      nums[0], nums[-1]  # first, last
+      nums[1:3]  # [2, 3] -- slice, end excluded
+      nums[::-1]  # reversed copy
+      nums.append(6)  # add to end          O(1)
+      nums.insert(0, 0)  # insert at index      O(n)
+      nums.pop()  # remove & return last  O(1)
+      nums.pop(0)  # remove & return first O(n)
+      nums.remove(3)  # remove first value==3 O(n)
+      not nums  # is it empty?
+      [x*x for x in range(5)]  # comprehension: [0,1,4,9,16]
     `],
     ["the 2D-list bug",`
-      grid = [[0]*3]*3                    # BUG: 3 references to the SAME row
-      grid = [[0]*3 for _ in range(3)]      # correct: a fresh row every time
+      grid = [[0]*3]*3  # BUG: 3 references to the SAME row
+      grid = [[0]*3 for _ in range(3)]  # correct: a fresh row every time
     `],
   ],
   java:[
     [null,`
       List<Integer> nums = new ArrayList<>(List.of(1, 2, 3, 4, 5));
-      nums.get(0); nums.get(nums.size() - 1);   // first, last -- no negative indices
-      nums.subList(1, 3);                          // [2, 3] -- view, end excluded
-      Collections.reverse(nums);                    // reverse in place
+      nums.get(0); nums.get(nums.size() - 1);  // first, last -- no negative indices
+      nums.subList(1, 3);  // [2, 3] -- view, end excluded
+      Collections.reverse(nums);  // reverse in place
 
-      nums.add(6);                    // add to end             O(1) amortized
-      nums.add(0, 0);                    // insert at index         O(n)
-      nums.remove(nums.size() - 1);         // remove & return last    O(1)
-      nums.remove(0);                         // remove & return first   O(n)
-      nums.remove(Integer.valueOf(3));          // remove first value==3 (remove(int) is by index!)
-      nums.isEmpty();                              // is it empty?
+      nums.add(6);  // add to end             O(1) amortized
+      nums.add(0, 0);  // insert at index         O(n)
+      nums.remove(nums.size() - 1);  // remove & return last    O(1)
+      nums.remove(0);  // remove & return first   O(n)
+      nums.remove(Integer.valueOf(3));  // remove first value==3 (remove(int) is by index!)
+      nums.isEmpty();  // is it empty?
     `],
     ["arrays &amp; 2D",`
-      int[] arr = new int[5];                 // fixed-size primitive array
-      int[][] grid = new int[3][3];             // correctly gives each row its own array
+      int[] arr = new int[5];  // fixed-size primitive array
+      int[][] grid = new int[3][3];  // correctly gives each row its own array
       Arrays.fill(arr, -1);
       List<Integer> squares = new ArrayList<>();
-      for (int x = 0; x < 5; x++) squares.add(x * x);   // no comprehensions -- build with a loop
+      for (int x = 0; x < 5; x++) squares.add(x * x);  // no comprehensions -- build with a loop
     `],
   ],
   scala:[
     [null,`
-      val nums = mutable.ArrayBuffer(1, 2, 3, 4, 5)     // mutable, resizable
-      nums.head; nums.last                        // first, last
-      nums.slice(1, 3)                              // ArrayBuffer(2, 3) -- end excluded
-      nums.reverse                                    // reversed copy (returns new)
+      val nums = mutable.ArrayBuffer(1, 2, 3, 4, 5)  // mutable, resizable
+      nums.head; nums.last  // first, last
+      nums.slice(1, 3)  // ArrayBuffer(2, 3) -- end excluded
+      nums.reverse  // reversed copy (returns new)
 
-      nums += 6                     // add to end             O(1) amortized
-      nums.insert(0, 0)                // insert at index         O(n)
-      nums.remove(nums.length - 1)        // remove & return last    O(1)
-      nums.remove(0)                        // remove & return first   O(n)
-      nums -= 3                               // remove first value==3   O(n)
-      nums.isEmpty                              // is it empty?
-      (0 until 5).map(x => x * x).toList          // comprehension: List(0,1,4,9,16)
+      nums += 6  // add to end             O(1) amortized
+      nums.insert(0, 0)  // insert at index         O(n)
+      nums.remove(nums.length - 1)  // remove & return last    O(1)
+      nums.remove(0)  // remove & return first   O(n)
+      nums -= 3  // remove first value==3   O(n)
+      nums.isEmpty  // is it empty?
+      (0 until 5).map(x => x * x).toList  // comprehension: List(0,1,4,9,16)
     `],
     ["2D arrays",`
-      val grid = Array.fill(3, 3)(0)      // correctly gives each row its own array
-      val flat = grid.flatten                // flatten to 1D
+      val grid = Array.fill(3, 3)(0)  // correctly gives each row its own array
+      val flat = grid.flatten  // flatten to 1D
     `],
   ],
   go:[
     [null,`
       nums := []int{1, 2, 3, 4, 5}
-      nums[0]; nums[len(nums)-1]        // first, last -- no negative indices
-      nums[1:3]                            // [2 3] -- slice, end excluded
-      slices.Reverse(nums)                    // reverse in place (Go 1.21+, "slices" package)
+      nums[0]; nums[len(nums)-1]  // first, last -- no negative indices
+      nums[1:3]  // [2 3] -- slice, end excluded
+      slices.Reverse(nums)  // reverse in place (Go 1.21+, "slices" package)
 
-      nums = append(nums, 6)      // add to end                amortized O(1)
-      nums = append([]int{0}, nums...)    // insert at front -- no built-in insert
-      nums = nums[:len(nums)-1]      // remove last                       O(1)
-      nums = nums[1:]                  // remove first                      O(1) (re-slices)
-      len(nums) == 0                      // is it empty?
+      nums = append(nums, 6)  // add to end                amortized O(1)
+      nums = append([]int{0}, nums...)  // insert at front -- no built-in insert
+      nums = nums[:len(nums)-1]  // remove last                       O(1)
+      nums = nums[1:]  // remove first                      O(1) (re-slices)
+      len(nums) == 0  // is it empty?
     `],
     ["2D slices",`
-      grid := make([][]int, 3)          // correctly gives each row its own slice
+      grid := make([][]int, 3)  // correctly gives each row its own slice
       for i := range grid {
           grid[i] = make([]int, 3)
       }
-      squares := make([]int, 0, 5)          // len 0, capacity 5 -- avoids re-allocating
+      squares := make([]int, 0, 5)  // len 0, capacity 5 -- avoids re-allocating
       for x := 0; x < 5; x++ {
-          squares = append(squares, x*x)      // no comprehensions -- build with a loop
+          squares = append(squares, x*x)  // no comprehensions -- build with a loop
       }
     `],
   ],
   cpp:[
     [null,`
       vector<int> nums = {1, 2, 3, 4, 5};
-      nums[0]; nums.back();                 // first, last -- no negative indices
-      vector<int> mid(nums.begin()+1, nums.begin()+3);   // {2, 3} -- slice via iterators, end excluded
-      reverse(nums.begin(), nums.end());       // reverse in place
+      nums[0]; nums.back();  // first, last -- no negative indices
+      vector<int> mid(nums.begin()+1, nums.begin()+3);  // {2, 3} -- slice via iterators, end excluded
+      reverse(nums.begin(), nums.end());  // reverse in place
 
-      nums.push_back(6);                    // add to end             O(1) amortized
-      nums.insert(nums.begin(), 0);            // insert at index         O(n)
-      nums.pop_back();                            // remove last              O(1)
-      nums.erase(nums.begin());                     // remove first             O(n)
-      nums.erase(find(nums.begin(), nums.end(), 3));   // remove first value==3   O(n)
-      nums.empty()                                       // is it empty?
+      nums.push_back(6);  // add to end             O(1) amortized
+      nums.insert(nums.begin(), 0);  // insert at index         O(n)
+      nums.pop_back();  // remove last              O(1)
+      nums.erase(nums.begin());  // remove first             O(n)
+      nums.erase(find(nums.begin(), nums.end(), 3));  // remove first value==3   O(n)
+      nums.empty()  // is it empty?
     `],
     ["arrays & 2D",`
-      vector<vector<int>> grid(3, vector<int>(3, 0));     // correctly gives each row its own vector
+      vector<vector<int>> grid(3, vector<int>(3, 0));  // correctly gives each row its own vector
       vector<int> squares;
-      squares.reserve(5);                                     // optional -- avoids reallocation
-      for (int x = 0; x < 5; x++) squares.push_back(x * x);      // no comprehensions -- build with a loop
+      squares.reserve(5);  // optional -- avoids reallocation
+      for (int x = 0; x < 5; x++) squares.push_back(x * x);  // no comprehensions -- build with a loop
     `],
   ],
 }],
@@ -1271,13 +1281,13 @@ var CARDS=[
           for c in range(cols):
               grid[r][c] = r*cols + c
 
-      transposed = [list(r) for r in zip(*grid)]         # swap rows/cols
-      rotate_cw   = [list(r) for r in zip(*grid[::-1])]    # rotate 90° clockwise
-      rotate_ccw  = [list(r) for r in zip(*grid)][::-1]     # rotate 90° counter-cw
+      transposed = [list(r) for r in zip(*grid)]  # swap rows/cols
+      rotate_cw   = [list(r) for r in zip(*grid[::-1])]  # rotate 90° clockwise
+      rotate_ccw  = [list(r) for r in zip(*grid)][::-1]  # rotate 90° counter-cw
       flat = [x for row in grid for x in row]
     `],
     ["grid BFS/DFS template",`
-      DIRS = [(-1,0), (1,0), (0,-1), (0,1)]     # up, down, left, right
+      DIRS = [(-1,0), (1,0), (0,-1), (0,1)]  # up, down, left, right
 
       def neighbors(r, c, rows, cols):
           for dr, dc in DIRS:
@@ -1294,13 +1304,13 @@ var CARDS=[
           for (int c = 0; c < cols; c++)
               grid[r][c] = r * cols + c;
 
-      int[][] transposed = new int[cols][rows];       // swap rows/cols
+      int[][] transposed = new int[cols][rows];  // swap rows/cols
       for (int r = 0; r < rows; r++)
           for (int c = 0; c < cols; c++)
               transposed[c][r] = grid[r][c];
     `],
     ["grid BFS/DFS template",`
-      int[][] DIRS = {{-1,0}, {1,0}, {0,-1}, {0,1}};   // up, down, left, right
+      int[][] DIRS = {{-1,0}, {1,0}, {0,-1}, {0,1}};  // up, down, left, right
 
       List<int[]> neighbors(int r, int c, int rows, int cols) {
           List<int[]> out = new ArrayList<>();
@@ -1317,11 +1327,11 @@ var CARDS=[
       val rows = 3; val cols = 4
       val grid = Array.tabulate(rows, cols)((r, c) => r * cols + c)
 
-      val transposed = grid.transpose        // swap rows/cols -- built in
+      val transposed = grid.transpose  // swap rows/cols -- built in
       val flat = grid.flatten
     `],
     ["grid BFS/DFS template",`
-      val DIRS = List((-1,0), (1,0), (0,-1), (0,1))    // up, down, left, right
+      val DIRS = List((-1,0), (1,0), (0,-1), (0,1))  // up, down, left, right
 
       def neighbors(r: Int, c: Int, rows: Int, cols: Int): List[(Int, Int)] =
         DIRS.map((dr, dc) => (r + dr, c + dc))
@@ -1339,7 +1349,7 @@ var CARDS=[
           }
       }
 
-      transposed := make([][]int, cols)      // swap rows/cols
+      transposed := make([][]int, cols)  // swap rows/cols
       for c := range transposed {
           transposed[c] = make([]int, rows)
           for r := range grid {
@@ -1348,7 +1358,7 @@ var CARDS=[
       }
     `],
     ["grid BFS/DFS template",`
-      var dirs = [4][2]int{{-1,0}, {1,0}, {0,-1}, {0,1}}   // up, down, left, right
+      var dirs = [4][2]int{{-1,0}, {1,0}, {0,-1}, {0,1}}  // up, down, left, right
 
       func neighbors(r, c, rows, cols int) [][2]int {
           out := [][2]int{}
@@ -1370,13 +1380,13 @@ var CARDS=[
           for (int c = 0; c < cols; c++)
               grid[r][c] = r * cols + c;
 
-      vector<vector<int>> transposed(cols, vector<int>(rows));    // swap rows/cols
+      vector<vector<int>> transposed(cols, vector<int>(rows));  // swap rows/cols
       for (int r = 0; r < rows; r++)
           for (int c = 0; c < cols; c++)
               transposed[c][r] = grid[r][c];
     `],
     ["grid BFS/DFS template",`
-      int dirs[4][2] = {{-1,0}, {1,0}, {0,-1}, {0,1}};   // up, down, left, right
+      int dirs[4][2] = {{-1,0}, {1,0}, {0,-1}, {0,1}};  // up, down, left, right
 
       vector<pair<int,int>> neighbors(int r, int c, int rows, int cols) {
           vector<pair<int,int>> out;
@@ -1396,10 +1406,10 @@ var CARDS=[
       class ListNode:
           def __init__(self, val, next=None):
               self.val = val
-              self.next = next        # a "pointer": a variable holding a reference
+              self.next = next  # a "pointer": a variable holding a reference
 
       a, b = ListNode(1), ListNode(2)
-      a.next = b                        # a "points to" b -- nothing is copied
+      a.next = b  # a "points to" b -- nothing is copied
 
       def build(values):
           head = cur = ListNode(values[0])
@@ -1409,16 +1419,16 @@ var CARDS=[
 
       def to_list(head):
           out = []
-          while head:                  # None is falsy -- stops at the end
+          while head:  # None is falsy -- stops at the end
               out.append(head.val); head = head.next
           return out
     `],
     ["insert / delete / doubly linked",`
       def insert_after(node, val): node.next = ListNode(val, node.next)
       def delete_after(node):
-          if node.next: node.next = node.next.next   # old node is garbage-collected
+          if node.next: node.next = node.next.next  # old node is garbage-collected
 
-      class DListNode:                    # doubly linked
+      class DListNode:  # doubly linked
           def __init__(self, val, prev=None, next=None):
               self.val, self.prev, self.next = val, prev, next
     `],
@@ -1427,13 +1437,13 @@ var CARDS=[
     [null,`
       class ListNode {
           int val;
-          ListNode next;                    // a "pointer": a field holding a reference
+          ListNode next;  // a "pointer": a field holding a reference
           ListNode(int val) { this.val = val; }
           ListNode(int val, ListNode next) { this.val = val; this.next = next; }
       }
 
       ListNode a = new ListNode(1), b = new ListNode(2);
-      a.next = b;                             // a "points to" b -- nothing is copied
+      a.next = b;  // a "points to" b -- nothing is copied
 
       ListNode build(int[] values) {
           ListNode head = new ListNode(values[0]), cur = head;
@@ -1442,16 +1452,16 @@ var CARDS=[
       }
       List<Integer> toList(ListNode head) {
           List<Integer> out = new ArrayList<>();
-          while (head != null) { out.add(head.val); head = head.next; }   // null is the end
+          while (head != null) { out.add(head.val); head = head.next; }  // null is the end
           return out;
       }
     `],
     ["insert / delete / doubly linked",`
       void insertAfter(ListNode node, int val) { node.next = new ListNode(val, node.next); }
       void deleteAfter(ListNode node) {
-          if (node.next != null) node.next = node.next.next;    // old node becomes garbage
+          if (node.next != null) node.next = node.next.next;  // old node becomes garbage
       }
-      class DListNode {                       // doubly linked
+      class DListNode {  // doubly linked
           int val; DListNode prev, next;
           DListNode(int val) { this.val = val; }
       }
@@ -1459,10 +1469,10 @@ var CARDS=[
   ],
   scala:[
     [null,`
-      class ListNode(var value: Int, var next: ListNode = null)   // a "pointer" field
+      class ListNode(var value: Int, var next: ListNode = null)  // a "pointer" field
 
       val a = ListNode(1); val b = ListNode(2)
-      a.next = b                                  // a "points to" b -- nothing is copied
+      a.next = b  // a "points to" b -- nothing is copied
 
       def build(values: List[Int]): ListNode =
         val head = ListNode(values.head); var cur = head
@@ -1471,7 +1481,7 @@ var CARDS=[
 
       def toList(head: ListNode): List[Int] =
         var out = List.empty[Int]; var node = head
-        while node != null do { out :+= node.value; node = node.next }   // null still used for links
+        while node != null do { out :+= node.value; node = node.next }  // null still used for links
         out
     `],
     ["insert / delete / doubly linked",`
@@ -1486,11 +1496,11 @@ var CARDS=[
     [null,`
       type ListNode struct {
           Val  int
-          Next *ListNode      // a pointer: an address, or nil
+          Next *ListNode  // a pointer: an address, or nil
       }
 
       a, b := &ListNode{Val: 1}, &ListNode{Val: 2}
-      a.Next = b                     // a "points to" b -- nothing is copied
+      a.Next = b  // a "points to" b -- nothing is copied
 
       func build(values []int) *ListNode {
           head := &ListNode{Val: values[0]}
@@ -1503,7 +1513,7 @@ var CARDS=[
       }
       func toList(head *ListNode) []int {
           out := []int{}
-          for head != nil {                 // nil is the end
+          for head != nil {  // nil is the end
               out = append(out, head.Val)
               head = head.Next
           }
@@ -1513,7 +1523,7 @@ var CARDS=[
     ["insert / delete / doubly linked",`
       func insertAfter(node *ListNode, v int) { node.Next = &ListNode{Val: v, Next: node.Next} }
       func deleteAfter(node *ListNode) {
-          if node.Next != nil { node.Next = node.Next.Next }   // old node is garbage-collected
+          if node.Next != nil { node.Next = node.Next.Next }  // old node is garbage-collected
       }
       type DListNode struct {
           Val        int
@@ -1525,13 +1535,13 @@ var CARDS=[
     [null,`
       struct ListNode {
           int val;
-          ListNode* next;                 // a pointer: an address, or nullptr
+          ListNode* next;  // a pointer: an address, or nullptr
           ListNode(int val) : val(val), next(nullptr) {}
       };
 
       ListNode* a = new ListNode(1);
       ListNode* b = new ListNode(2);
-      a->next = b;                          // a "points to" b -- nothing is copied
+      a->next = b;  // a "points to" b -- nothing is copied
 
       ListNode* build(vector<int>& values) {
           ListNode* head = new ListNode(values[0]);
@@ -1541,7 +1551,7 @@ var CARDS=[
       }
       vector<int> toList(ListNode* head) {
           vector<int> out;
-          while (head) { out.push_back(head->val); head = head->next; }   // nullptr is the end
+          while (head) { out.push_back(head->val); head = head->next; }  // nullptr is the end
           return out;
       }
     `],
@@ -1555,10 +1565,10 @@ var CARDS=[
           if (node->next) {
               ListNode* doomed = node->next;
               node->next = doomed->next;
-              delete doomed;                    // no GC in C++ -- you must free it yourself
+              delete doomed;  // no GC in C++ -- you must free it yourself
           }
       }
-      struct DListNode {                    // doubly linked
+      struct DListNode {  // doubly linked
           int val;
           DListNode *prev, *next;
           DListNode(int val) : val(val), prev(nullptr), next(nullptr) {}
@@ -1570,39 +1580,39 @@ var CARDS=[
 ["stack","Stack","LIFO: push/pop one end",{
   python:[[null,`
     stack = []
-    stack.append(1); stack.append(2)     # push                O(1)
-    stack.pop()                            # pop -- LIFO           O(1)
-    stack[-1]                                # peek
-    not stack                                  # empty?
+    stack.append(1); stack.append(2)  # push                O(1)
+    stack.pop()  # pop -- LIFO           O(1)
+    stack[-1]  # peek
+    not stack  # empty?
     # don't stack.pop(0) or insert(0, x) here -- O(n), that's a queue op
   `]],
   java:[[null,`
-    Deque<Integer> stack = new ArrayDeque<>();   // ArrayDeque -- faster than java.util.Stack
-    stack.push(1); stack.push(2);      // push                O(1)
-    stack.pop();                          // pop -- LIFO           O(1)
-    stack.peek();                            // peek
-    stack.isEmpty();                            // empty?
+    Deque<Integer> stack = new ArrayDeque<>();  // ArrayDeque -- faster than java.util.Stack
+    stack.push(1); stack.push(2);  // push                O(1)
+    stack.pop();  // pop -- LIFO           O(1)
+    stack.peek();  // peek
+    stack.isEmpty();  // empty?
   `]],
   scala:[[null,`
     val stack = mutable.Stack[Int]()
-    stack.push(1); stack.push(2)      // push                O(1)
-    stack.pop()                          // pop -- LIFO           O(1)
-    stack.top                               // peek
-    stack.isEmpty                             // empty?
+    stack.push(1); stack.push(2)  // push                O(1)
+    stack.pop()  // pop -- LIFO           O(1)
+    stack.top  // peek
+    stack.isEmpty  // empty?
   `]],
   go:[[null,`
     stack := []int{}
-    stack = append(stack, 1, 2)      // push                       O(1) amortized
-    top := stack[len(stack)-1]          // peek
-    stack = stack[:len(stack)-1]           // pop -- LIFO               O(1)
-    len(stack) == 0                          // empty?
+    stack = append(stack, 1, 2)  // push                       O(1) amortized
+    top := stack[len(stack)-1]  // peek
+    stack = stack[:len(stack)-1]  // pop -- LIFO               O(1)
+    len(stack) == 0  // empty?
   `]],
   cpp:[[null,`
     stack<int> st;
-    st.push(1); st.push(2);     // push                O(1)
-    int top = st.top(); st.pop();   // pop -- LIFO (top() peeks, pop() removes -- one call doesn't do both)   O(1)
-    st.top();                        // peek
-    st.empty();                        // empty?
+    st.push(1); st.push(2);  // push                O(1)
+    int top = st.top(); st.pop();  // pop -- LIFO (top() peeks, pop() removes -- one call doesn't do both)   O(1)
+    st.top();  // peek
+    st.empty();  // empty?
   `]],
 }],
 
@@ -1610,40 +1620,40 @@ var CARDS=[
   python:[[null,`
     from collections import deque
     q = deque()
-    q.append(1); q.append(2)     # add right                O(1)
-    q.popleft()                    # remove left -- FIFO       O(1)
-    q.appendleft(0); q.pop()          # deque works from either end
-    not q                               # empty?
+    q.append(1); q.append(2)  # add right                O(1)
+    q.popleft()  # remove left -- FIFO       O(1)
+    q.appendleft(0); q.pop()  # deque works from either end
+    not q  # empty?
     # a plain list.pop(0) also works but is O(n) -- avoid it for a queue
   `]],
   java:[[null,`
     Deque<Integer> q = new ArrayDeque<>();
-    q.addLast(1); q.addLast(2);      // add right                O(1)
-    q.pollFirst();                     // remove left -- FIFO       O(1)
-    q.addFirst(0); q.pollLast();          // works from either end
-    q.isEmpty();                              // empty?
+    q.addLast(1); q.addLast(2);  // add right                O(1)
+    q.pollFirst();  // remove left -- FIFO       O(1)
+    q.addFirst(0); q.pollLast();  // works from either end
+    q.isEmpty();  // empty?
   `]],
   scala:[[null,`
     val q = mutable.Queue[Int]()
-    q.enqueue(1, 2)              // add right                O(1)
-    q.dequeue()                     // remove left -- FIFO       O(1)
-    q.isEmpty                          // empty?
+    q.enqueue(1, 2)  // add right                O(1)
+    q.dequeue()  // remove left -- FIFO       O(1)
+    q.isEmpty  // empty?
     // for both-ends O(1), use mutable.ArrayDeque instead
   `]],
   go:[[null,`
     import "container/list"
     q := list.New()
-    q.PushBack(1); q.PushBack(2)      // add right                O(1)
+    q.PushBack(1); q.PushBack(2)  // add right                O(1)
     front := q.Front(); q.Remove(front)  // remove left -- FIFO       O(1)
-    q.Len() == 0                            // empty?
+    q.Len() == 0  // empty?
     // a slice works too: append(q, x) to enqueue, q[1:] to dequeue
   `]],
   cpp:[[null,`
     deque<int> q;
-    q.push_back(1); q.push_back(2);     // add right                O(1)
-    q.pop_front();                         // remove left -- FIFO       O(1)
-    q.push_front(0); q.pop_back();           // deque works from either end
-    q.empty();                                 // empty?
+    q.push_back(1); q.push_back(2);  // add right                O(1)
+    q.pop_front();  // remove left -- FIFO       O(1)
+    q.push_front(0); q.pop_back();  // deque works from either end
+    q.empty();  // empty?
     // queue<int> is a FIFO-only wrapper if you don't need both ends
   `]],
 }],
@@ -1654,46 +1664,46 @@ var CARDS=[
       import heapq
       h = []
       heapq.heappush(h, 5); heapq.heappush(h, 1); heapq.heappush(h, 3)
-      heapq.heappop(h)             # 1 -- smallest first       O(log n)
-      h[0]                            # peek smallest
-      heapq.heapify(existing_list)      # list -> heap in place    O(n)
+      heapq.heappop(h)  # 1 -- smallest first       O(log n)
+      h[0]  # peek smallest
+      heapq.heapify(existing_list)  # list -> heap in place    O(n)
     `],
     ["max-heap, tuples, custom objects",`
-      for x in [5, 1, 3]: heapq.heappush(h2, -x)   # max-heap: negate in...
-      -heapq.heappop(h2)                              # ...and out
+      for x in [5, 1, 3]: heapq.heappush(h2, -x)  # max-heap: negate in...
+      -heapq.heappop(h2)  # ...and out
 
-      heapq.heappush(h3, (2, "task B"))    # (priority, item) tuples compare
-      heapq.heappush(h3, (1, "task A"))      # left-to-right
-      heapq.heappush(h4, Interval(5, 9))       # custom objects need __lt__
+      heapq.heappush(h3, (2, "task B"))  # (priority, item) tuples compare
+      heapq.heappush(h3, (1, "task A"))  # left-to-right
+      heapq.heappush(h4, Interval(5, 9))  # custom objects need __lt__
     `],
   ],
   java:[
     [null,`
-      PriorityQueue<Integer> h = new PriorityQueue<>();   // min-heap by default
+      PriorityQueue<Integer> h = new PriorityQueue<>();  // min-heap by default
       h.offer(5); h.offer(1); h.offer(3);
-      h.poll();             // 1 -- smallest first       O(log n)
-      h.peek();                // peek smallest
+      h.poll();  // 1 -- smallest first       O(log n)
+      h.peek();  // peek smallest
     `],
     ["max-heap &amp; custom comparators",`
       PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
       maxHeap.addAll(List.of(5, 1, 3));
-      maxHeap.poll();                          // 5 -- largest first
+      maxHeap.poll();  // 5 -- largest first
 
       PriorityQueue<int[]> byFirst =
-          new PriorityQueue<>((a, b) -> a[0] - b[0]);    // custom comparator, e.g. (priority, item)
+          new PriorityQueue<>((a, b) -> a[0] - b[0]);  // custom comparator, e.g. (priority, item)
       byFirst.offer(new int[]{2, 99});
     `],
   ],
   scala:[
     [null,`
-      val h = mutable.PriorityQueue[Int]()(Ordering.Int.reverse)   // reverse the default max-heap
+      val h = mutable.PriorityQueue[Int]()(Ordering.Int.reverse)  // reverse the default max-heap
       h.enqueue(5, 1, 3)
-      h.dequeue()             // 1 -- smallest first       O(log n)
-      h.head                     // peek smallest
+      h.dequeue()  // 1 -- smallest first       O(log n)
+      h.head  // peek smallest
     `],
     ["max-heap &amp; custom ordering",`
-      val maxHeap = mutable.PriorityQueue[Int](5, 1, 3)   // max-heap is Scala's default ordering
-      maxHeap.dequeue()                                        // 5 -- largest first
+      val maxHeap = mutable.PriorityQueue[Int](5, 1, 3)  // max-heap is Scala's default ordering
+      maxHeap.dequeue()  // 5 -- largest first
 
       case class Task(priority: Int, name: String)
       val byPriority = mutable.PriorityQueue[Task]()(Ordering.by(t => -t.priority))
@@ -1703,9 +1713,9 @@ var CARDS=[
     [null,`
       import "container/heap"
 
-      type IntHeap []int                       // implement heap.Interface
+      type IntHeap []int  // implement heap.Interface
       func (h IntHeap) Len() int            { return len(h) }
-      func (h IntHeap) Less(i, j int) bool  { return h[i] < h[j] }    // "<" = min-heap
+      func (h IntHeap) Less(i, j int) bool  { return h[i] < h[j] }  // "<" = min-heap
       func (h IntHeap) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
       func (h *IntHeap) Push(x any)          { *h = append(*h, x.(int)) }
       func (h *IntHeap) Pop() any {
@@ -1716,24 +1726,24 @@ var CARDS=[
       h := &IntHeap{5, 1, 3}
       heap.Init(h)
       heap.Push(h, 2)
-      heap.Pop(h)              // 1 -- smallest first       O(log n)
-      (*h)[0]                     // peek smallest
+      heap.Pop(h)  // 1 -- smallest first       O(log n)
+      (*h)[0]  // peek smallest
       // for a max-heap, flip Less to "h[i] > h[j]"
     `],
   ],
   cpp:[
     [null,`
-      priority_queue<int> h;                 // max-heap by default -- same as Scala, opposite of Python/Java/Go
+      priority_queue<int> h;  // max-heap by default -- same as Scala, opposite of Python/Java/Go
       h.push(5); h.push(1); h.push(3);
-      h.top();             // 5 -- largest first
-      h.pop();                // remove the top          O(log n)
+      h.top();  // 5 -- largest first
+      h.pop();  // remove the top          O(log n)
     `],
     ["min-heap, pairs, custom objects",`
-      priority_queue<int, vector<int>, greater<int>> minHeap;   // greater<> flips it to a min-heap
+      priority_queue<int, vector<int>, greater<int>> minHeap;  // greater<> flips it to a min-heap
       minHeap.push(5); minHeap.push(1); minHeap.push(3);
-      minHeap.top();                                                // 1 -- smallest first
+      minHeap.top();  // 1 -- smallest first
 
-      priority_queue<pair<int,string>> byPriority;     // (priority, item) pairs compare left-to-right
+      priority_queue<pair<int,string>> byPriority;  // (priority, item) pairs compare left-to-right
       byPriority.push({2, "task B"});
       byPriority.push({1, "task A"});
 
@@ -1748,91 +1758,91 @@ var CARDS=[
   python:[
     [null,`
       d = {"a": 1, "b": 2}
-      d["c"] = 3                    # add / update
-      d.get("z")                      # None -- no KeyError
-      d.get("z", 0)                     # 0 -- with a default
-      del d["a"]; d.pop("b")               # remove (KeyError if missing)
-      d.pop("z", None)                       # remove safely
-      "c" in d                                  # key check           O(1) avg
-      not d                                       # empty?
-      for k, v in d.items(): ...                    # iterate pairs
+      d["c"] = 3  # add / update
+      d.get("z")  # None -- no KeyError
+      d.get("z", 0)  # 0 -- with a default
+      del d["a"]; d.pop("b")  # remove (KeyError if missing)
+      d.pop("z", None)  # remove safely
+      "c" in d  # key check           O(1) avg
+      not d  # empty?
+      for k, v in d.items(): ...  # iterate pairs
     `],
     ["defaultdict &amp; Counter",`
       from collections import defaultdict, Counter
-      g = defaultdict(list); g["x"].append(1)     # auto-creates missing keys
-      Counter("mississippi").most_common(2)         # [('i',4), ('s',4)]
+      g = defaultdict(list); g["x"].append(1)  # auto-creates missing keys
+      Counter("mississippi").most_common(2)  # [('i',4), ('s',4)]
     `],
   ],
   java:[
     [null,`
       Map<String, Integer> d = new HashMap<>();
       d.put("a", 1); d.put("b", 2);
-      d.put("c", 3);                    // add / update
-      d.get("z");                          // null -- no exception
-      d.getOrDefault("z", 0);                 // 0 -- with a default
-      d.remove("a");                            // remove (returns null if missing)
-      d.containsKey("c");                          // key check          O(1) avg
-      d.isEmpty();                                    // empty?
-      for (var e : d.entrySet()) { ... }                 // iterate pairs
+      d.put("c", 3);  // add / update
+      d.get("z");  // null -- no exception
+      d.getOrDefault("z", 0);  // 0 -- with a default
+      d.remove("a");  // remove (returns null if missing)
+      d.containsKey("c");  // key check          O(1) avg
+      d.isEmpty();  // empty?
+      for (var e : d.entrySet()) { ... }  // iterate pairs
     `],
     ["computeIfAbsent &amp; merge",`
       Map<String, List<Integer>> g = new HashMap<>();
-      g.computeIfAbsent("x", k -> new ArrayList<>()).add(1);   // auto-creates missing keys
+      g.computeIfAbsent("x", k -> new ArrayList<>()).add(1);  // auto-creates missing keys
 
       Map<Character, Integer> freq = new HashMap<>();
       for (char c : "mississippi".toCharArray())
-          freq.merge(c, 1, Integer::sum);                        // counting pattern
+          freq.merge(c, 1, Integer::sum);  // counting pattern
     `],
   ],
   scala:[
     [null,`
       val d = mutable.Map("a" -> 1, "b" -> 2)
-      d("c") = 3                       // add / update
-      d.get("z")                          // None -- no exception
-      d.getOrElse("z", 0)                    // 0 -- with a default
-      d -= "a"                                  // remove
-      d.contains("c")                              // key check          O(1) avg
-      d.isEmpty                                       // empty?
-      for (k, v) <- d do { ... }                        // iterate pairs
+      d("c") = 3  // add / update
+      d.get("z")  // None -- no exception
+      d.getOrElse("z", 0)  // 0 -- with a default
+      d -= "a"  // remove
+      d.contains("c")  // key check          O(1) avg
+      d.isEmpty  // empty?
+      for (k, v) <- d do { ... }  // iterate pairs
     `],
     ["getOrElseUpdate &amp; groupBy",`
       val g = mutable.Map[String, mutable.Buffer[Int]]()
-      g.getOrElseUpdate("x", mutable.Buffer()) += 1     // auto-creates missing keys
+      g.getOrElseUpdate("x", mutable.Buffer()) += 1  // auto-creates missing keys
 
-      "mississippi".groupBy(identity).view.mapValues(_.length).toMap   // counting pattern
+      "mississippi".groupBy(identity).view.mapValues(_.length).toMap  // counting pattern
     `],
   ],
   go:[
     [null,`
       d := map[string]int{"a": 1, "b": 2}
-      d["c"] = 3                    // add / update
-      v, ok := d["z"]                  // 0, false -- no error, just a zero value + ok flag
-      delete(d, "a")                      // remove -- no error even if missing
-      _, exists := d["c"]                    // key check          O(1) avg
-      len(d) == 0                               // empty?
-      for k, v := range d { ... }                  // iterate pairs
+      d["c"] = 3  // add / update
+      v, ok := d["z"]  // 0, false -- no error, just a zero value + ok flag
+      delete(d, "a")  // remove -- no error even if missing
+      _, exists := d["c"]  // key check          O(1) avg
+      len(d) == 0  // empty?
+      for k, v := range d { ... }  // iterate pairs
     `],
     ["counting pattern",`
       freq := map[rune]int{}
       for _, c := range "mississippi" {
-          freq[c]++                       // zero value (0) lets you increment directly
+          freq[c]++  // zero value (0) lets you increment directly
       }
     `],
   ],
   cpp:[
     [null,`
       unordered_map<string, int> d = {{"a", 1}, {"b", 2}};
-      d["c"] = 3;                    // add / update
-      d["z"];                           // 0 -- inserts "z":0 as a side effect! use .count() first to just check
-      d.count("z");                        // 0 -- safe existence check, no insertion
-      d.erase("a");                           // remove -- no error even if missing
-      d.count("c");                              // key check           O(1) avg
-      d.empty();                                    // empty?
-      for (auto& [k, v] : d) { ... }                   // iterate pairs (structured bindings)
+      d["c"] = 3;  // add / update
+      d["z"];  // 0 -- inserts "z":0 as a side effect! use .count() first to just check
+      d.count("z");  // 0 -- safe existence check, no insertion
+      d.erase("a");  // remove -- no error even if missing
+      d.count("c");  // key check           O(1) avg
+      d.empty();  // empty?
+      for (auto& [k, v] : d) { ... }  // iterate pairs (structured bindings)
     `],
     ["counting pattern",`
       unordered_map<char, int> freq;
-      for (char c : string("mississippi")) freq[c]++;   // operator[] default-constructs missing keys to 0
+      for (char c : string("mississippi")) freq[c]++;  // operator[] default-constructs missing keys to 0
     `],
   ],
 }],
@@ -1841,46 +1851,46 @@ var CARDS=[
   python:[[null,`
     s = {1, 2, 3}
     s.add(4)
-    s.remove(2)          # KeyError if missing
-    s.discard(9)            # no error either way
-    2 in s                     # O(1) avg
-    not s                        # empty?
-    {1,2,3} & {2,3,4}               # intersection {2, 3}
-    {1,2,3} | {2,3,4}               # union        {1, 2, 3, 4}
-    {1,2,3} - {2,3,4}               # difference   {1}
+    s.remove(2)  # KeyError if missing
+    s.discard(9)  # no error either way
+    2 in s  # O(1) avg
+    not s  # empty?
+    {1,2,3} & {2,3,4}  # intersection {2, 3}
+    {1,2,3} | {2,3,4}  # union        {1, 2, 3, 4}
+    {1,2,3} - {2,3,4}  # difference   {1}
   `]],
   java:[[null,`
     Set<Integer> s = new HashSet<>(Set.of(1, 2, 3));
     s.add(4);
-    s.remove(2);          // no error either way, returns boolean
-    s.contains(2);            // O(1) avg
-    s.isEmpty();                 // empty?
+    s.remove(2);  // no error either way, returns boolean
+    s.contains(2);  // O(1) avg
+    s.isEmpty();  // empty?
     Set<Integer> a = new HashSet<>(Set.of(1,2,3)), b = Set.of(2,3,4);
-    a.retainAll(b);                 // intersection -> a becomes {2, 3}
+    a.retainAll(b);  // intersection -> a becomes {2, 3}
   `]],
   scala:[[null,`
     var s = mutable.Set(1, 2, 3)
     s += 4
-    s -= 2               // no error either way
-    s.contains(2)            // O(1) avg
-    s.isEmpty                   // empty?
-    Set(1,2,3) & Set(2,3,4)       // intersection Set(2, 3)
-    Set(1,2,3) | Set(2,3,4)         // union        Set(1, 2, 3, 4)
-    Set(1,2,3) -- Set(2,3,4)          // difference   Set(1)
+    s -= 2  // no error either way
+    s.contains(2)  // O(1) avg
+    s.isEmpty  // empty?
+    Set(1,2,3) & Set(2,3,4)  // intersection Set(2, 3)
+    Set(1,2,3) | Set(2,3,4)  // union        Set(1, 2, 3, 4)
+    Set(1,2,3) -- Set(2,3,4)  // difference   Set(1)
   `]],
   go:[[null,`
-    s := map[int]struct{}{1: {}, 2: {}, 3: {}}    // struct{} costs zero bytes per value
+    s := map[int]struct{}{1: {}, 2: {}, 3: {}}  // struct{} costs zero bytes per value
     s[4] = struct{}{}
     delete(s, 2)
-    _, ok := s[2]              // membership check   O(1) avg
-    len(s) == 0                   // empty? -- no builtin set type in Go
+    _, ok := s[2]  // membership check   O(1) avg
+    len(s) == 0  // empty? -- no builtin set type in Go
   `]],
   cpp:[[null,`
     unordered_set<int> s = {1, 2, 3};
     s.insert(4);
-    s.erase(2);          // no error either way
-    s.count(2);              // O(1) avg -- membership check
-    s.empty();                  // empty?
+    s.erase(2);  // no error either way
+    s.count(2);  // O(1) avg -- membership check
+    s.empty();  // empty?
     // no built-in &, |, - set operators like Python/Scala -- write them yourself, or loop
   `]],
 }],
@@ -1899,13 +1909,13 @@ var CARDS=[
           return root
     `],
     ["traversals (in-order + level order)",`
-      def inorder(root):                  # left, node, right -- sorted for a BST
+      def inorder(root):  # left, node, right -- sorted for a BST
           if root:
               yield from inorder(root.left); yield root.val
               yield from inorder(root.right)
 
       from collections import deque
-      def level_order(root):              # breadth-first
+      def level_order(root):  # breadth-first
           if not root: return []
           q, out = deque([root]), []
           while q:
@@ -1929,11 +1939,11 @@ var CARDS=[
       }
     `],
     ["traversals (in-order + level order)",`
-      void inorder(TreeNode root, List<Integer> out) {          // left, node, right -- sorted for a BST
+      void inorder(TreeNode root, List<Integer> out) {  // left, node, right -- sorted for a BST
           if (root == null) return;
           inorder(root.left, out); out.add(root.val); inorder(root.right, out);
       }
-      List<Integer> levelOrder(TreeNode root) {                    // breadth-first
+      List<Integer> levelOrder(TreeNode root) {  // breadth-first
           List<Integer> out = new ArrayList<>();
           if (root == null) return out;
           Deque<TreeNode> q = new ArrayDeque<>(); q.add(root);
@@ -1958,11 +1968,11 @@ var CARDS=[
           root
     `],
     ["traversals (in-order + level order)",`
-      def inorder(root: TreeNode): List[Int] =              // left, node, right -- sorted for a BST
+      def inorder(root: TreeNode): List[Int] =  // left, node, right -- sorted for a BST
         if root == null then Nil
         else inorder(root.left) ++ List(root.value) ++ inorder(root.right)
 
-      def levelOrder(root: TreeNode): List[Int] =                // breadth-first
+      def levelOrder(root: TreeNode): List[Int] =  // breadth-first
         val q = mutable.Queue[TreeNode](); if root != null then q.enqueue(root)
         var out = List.empty[Int]
         while q.nonEmpty do
@@ -1985,11 +1995,11 @@ var CARDS=[
       }
     `],
     ["traversals (in-order + level order)",`
-      func inorder(root *TreeNode, out *[]int) {               // left, node, right -- sorted for a BST
+      func inorder(root *TreeNode, out *[]int) {  // left, node, right -- sorted for a BST
           if root == nil { return }
           inorder(root.Left, out); *out = append(*out, root.Val); inorder(root.Right, out)
       }
-      func levelOrder(root *TreeNode) []int {                     // breadth-first
+      func levelOrder(root *TreeNode) []int {  // breadth-first
           out := []int{}
           if root == nil { return out }
           q := []*TreeNode{root}
@@ -2018,11 +2028,11 @@ var CARDS=[
       }
     `],
     ["traversals (in-order + level order)",`
-      void inorder(TreeNode* root, vector<int>& out) {          // left, node, right -- sorted for a BST
+      void inorder(TreeNode* root, vector<int>& out) {  // left, node, right -- sorted for a BST
           if (!root) return;
           inorder(root->left, out); out.push_back(root->val); inorder(root->right, out);
       }
-      vector<int> levelOrder(TreeNode* root) {                    // breadth-first
+      vector<int> levelOrder(TreeNode* root) {  // breadth-first
           vector<int> out;
           if (!root) return out;
           queue<TreeNode*> q; q.push(root);
@@ -2055,7 +2065,7 @@ var CARDS=[
           return out
     `],
     ["DFS, iterative",`
-      def dfs_iterative(graph, start):    # avoids the recursion limit
+      def dfs_iterative(graph, start):  # avoids the recursion limit
           seen, stack, out = {start}, [start], []
           while stack:
               node = stack.pop(); out.append(node)
@@ -2112,7 +2122,7 @@ var CARDS=[
         out
     `],
     ["DFS, iterative",`
-      def dfsIterative(graph: Map[Int, Seq[Int]], start: Int): List[Int] =    // avoids stack overflow
+      def dfsIterative(graph: Map[Int, Seq[Int]], start: Int): List[Int] =  // avoids stack overflow
         val seen = mutable.Set(start); val stack = mutable.Stack(start); var out = List.empty[Int]
         while stack.nonEmpty do
           val node = stack.pop(); out :+= node
@@ -2141,7 +2151,7 @@ var CARDS=[
       }
     `],
     ["DFS, iterative",`
-      func dfsIterative(graph map[int][]int, start int) []int {   // avoids stack overflow
+      func dfsIterative(graph map[int][]int, start int) []int {  // avoids stack overflow
           seen := map[int]bool{start: true}
           stack := []int{start}
           out := []int{}
@@ -2169,13 +2179,13 @@ var CARDS=[
           while (!q.empty()) {
               int node = q.front(); q.pop(); out.push_back(node);
               for (int nxt : graph[node])
-                  if (seen.insert(nxt).second) q.push(nxt);    // insert().second is true only if it was new
+                  if (seen.insert(nxt).second) q.push(nxt);  // insert().second is true only if it was new
           }
           return out;
       }
     `],
     ["DFS, iterative",`
-      vector<int> dfsIterative(unordered_map<int, vector<int>>& graph, int start) {   // avoids stack overflow
+      vector<int> dfsIterative(unordered_map<int, vector<int>>& graph, int start) {  // avoids stack overflow
           unordered_set<int> seen = {start};
           vector<int> stack = {start}, out;
           while (!stack.empty()) {
@@ -2193,91 +2203,91 @@ var CARDS=[
   python:[
     [null,`
       s = "hello world"
-      s[::-1]                    # reverse
-      s == s[::-1]                  # palindrome check
-      s.split()                        # ["hello","world"]
-      "-".join(["a","b","c"])             # "a-b-c"
+      s[::-1]  # reverse
+      s == s[::-1]  # palindrome check
+      s.split()  # ["hello","world"]
+      "-".join(["a","b","c"])  # "a-b-c"
 
       chars = [c.upper() for c in "abc"]
-      "".join(chars)                        # build strings via list+join, not +=
+      "".join(chars)  # build strings via list+join, not +=
     `],
     ["char math &amp; checks",`
-      ord("a"), chr(97)                        # char <-> code point
-      ord("c") - ord("a")                        # 'a'..'z' -> 0..25
+      ord("a"), chr(97)  # char <-> code point
+      ord("c") - ord("a")  # 'a'..'z' -> 0..25
       s.isalpha(), s.isdigit(), s.count("l")
     `],
   ],
   java:[
     [null,`
       String s = "hello world";
-      new StringBuilder(s).reverse().toString();     // reverse -- strings are immutable in Java
-      s.equals(new StringBuilder(s).reverse().toString());   // palindrome check
-      s.split(" ");                                     // ["hello", "world"]
-      String.join("-", "a", "b", "c");                    // "a-b-c"
+      new StringBuilder(s).reverse().toString();  // reverse -- strings are immutable in Java
+      s.equals(new StringBuilder(s).reverse().toString());  // palindrome check
+      s.split(" ");  // ["hello", "world"]
+      String.join("-", "a", "b", "c");  // "a-b-c"
 
-      StringBuilder sb = new StringBuilder();               // build via StringBuilder, not +=
+      StringBuilder sb = new StringBuilder();  // build via StringBuilder, not +=
       for (char c : "abc".toCharArray()) sb.append(Character.toUpperCase(c));
       sb.toString();
     `],
     ["char math &amp; checks",`
-      (int) 'a'; (char) 97;                 // char <-> code point
-      'c' - 'a';                                // 'a'..'z' -> 0..25 (chars subtract like ints)
+      (int) 'a'; (char) 97;  // char <-> code point
+      'c' - 'a';  // 'a'..'z' -> 0..25 (chars subtract like ints)
       Character.isLetter('a'); Character.isDigit('1');
     `],
   ],
   scala:[
     [null,`
       val s = "hello world"
-      s.reverse                    // reverse
-      s == s.reverse                  // palindrome check
-      s.split(" ")                       // Array("hello", "world")
-      List("a","b","c").mkString("-")       // "a-b-c"
+      s.reverse  // reverse
+      s == s.reverse  // palindrome check
+      s.split(" ")  // Array("hello", "world")
+      List("a","b","c").mkString("-")  // "a-b-c"
 
-      "abc".map(_.toUpper)                     // build via map, returns a new String directly
+      "abc".map(_.toUpper)  // build via map, returns a new String directly
     `],
     ["char math &amp; checks",`
-      'a'.toInt; 97.toChar                 // char <-> code point
-      'c' - 'a'                                // 'a'..'z' -> 0..25
+      'a'.toInt; 97.toChar  // char <-> code point
+      'c' - 'a'  // 'a'..'z' -> 0..25
       s.forall(_.isLetter); s.exists(_.isDigit)
     `],
   ],
   go:[
     [null,`
       s := "hello world"
-      runes := []rune(s)                       // convert to runes -- strings are immutable & byte-based
+      runes := []rune(s)  // convert to runes -- strings are immutable & byte-based
       for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 { runes[i], runes[j] = runes[j], runes[i] }
       reversed := string(runes)
 
-      strings.Split(s, " ")                       // ["hello" "world"]
-      strings.Join([]string{"a","b","c"}, "-")       // "a-b-c"
+      strings.Split(s, " ")  // ["hello" "world"]
+      strings.Join([]string{"a","b","c"}, "-")  // "a-b-c"
 
-      var sb strings.Builder                            // build via Builder, not += in a loop
+      var sb strings.Builder  // build via Builder, not += in a loop
       for _, c := range "abc" { sb.WriteRune(unicode.ToUpper(c)) }
       sb.String()
     `],
     ["char math &amp; checks",`
-      int('a')                              // 97 -- a rune IS an int32, no cast function needed
-      rune(97)                                 // 'a'
-      'c' - 'a'                                  // 25 -- runes subtract like ints
+      int('a')  // 97 -- a rune IS an int32, no cast function needed
+      rune(97)  // 'a'
+      'c' - 'a'  // 25 -- runes subtract like ints
       unicode.IsLetter('a'); unicode.IsDigit('1')
     `],
   ],
   cpp:[
     [null,`
       string s = "hello world";
-      string r(s.rbegin(), s.rend());        // reverse -- strings ARE mutable in C++, unlike the other 4 languages
-      s == r                                     // palindrome check
+      string r(s.rbegin(), s.rend());  // reverse -- strings ARE mutable in C++, unlike the other 4 languages
+      s == r  // palindrome check
 
-      vector<string> words;                        // no built-in split -- write it with a stringstream
+      vector<string> words;  // no built-in split -- write it with a stringstream
       stringstream ss(s); string w;
-      while (ss >> w) words.push_back(w);            // ["hello", "world"]
+      while (ss >> w) words.push_back(w);  // ["hello", "world"]
 
-      string joined;                                    // build via += -- std::string is mutable, so this is O(n) amortized
-      for (int i = 0; i < 3; i++) joined += (i ? "-" : "") + string(1, 'a' + i);   // "a-b-c"
+      string joined;  // build via += -- std::string is mutable, so this is O(n) amortized
+      for (int i = 0; i < 3; i++) joined += (i ? "-" : "") + string(1, 'a' + i);  // "a-b-c"
     `],
     ["char math & checks",`
-      int('a'); char(97);                 // char <-> code point (chars ARE small ints in C++)
-      'c' - 'a';                              // 25 -- 'a'..'z' -> 0..25
+      int('a'); char(97);  // char <-> code point (chars ARE small ints in C++)
+      'c' - 'a';  // 25 -- 'a'..'z' -> 0..25
       isalpha('a'); isdigit('1'); count(s.begin(), s.end(), 'l');
     `],
   ],
@@ -2287,17 +2297,17 @@ var CARDS=[
   python:[
     [null,`
       nums = [5, 2, 4, 1]
-      sorted(nums)                          # new list, ascending
-      nums.sort(reverse=True)                 # in place, descending, returns None
-      sorted(words, key=len)                    # sort by a computed key
-      sorted(people, key=lambda p: (p.age, p.name))   # multi-key
+      sorted(nums)  # new list, ascending
+      nums.sort(reverse=True)  # in place, descending, returns None
+      sorted(words, key=len)  # sort by a computed key
+      sorted(people, key=lambda p: (p.age, p.name))  # multi-key
     `],
     ["bisect &amp; your own binary search",`
       import bisect
       a = [1, 3, 3, 5, 7]
-      bisect.bisect_left(a, 3)      # 1 -- leftmost insert point
-      bisect.bisect_right(a, 3)       # 3 -- rightmost insert point
-      bisect.insort(a, 4)               # insert, keep sorted, in place
+      bisect.bisect_left(a, 3)  # 1 -- leftmost insert point
+      bisect.bisect_right(a, 3)  # 3 -- rightmost insert point
+      bisect.insort(a, 4)  # insert, keep sorted, in place
 
       def binary_search(nums, target):
           lo, hi = 0, len(nums) - 1
@@ -2312,17 +2322,17 @@ var CARDS=[
   java:[
     [null,`
       int[] nums = {5, 2, 4, 1};
-      int[] sorted = nums.clone(); Arrays.sort(sorted);       // ascending; mutates in place
+      int[] sorted = nums.clone(); Arrays.sort(sorted);  // ascending; mutates in place
       List<Integer> boxed = new ArrayList<>(List.of(5,2,4,1));
-      boxed.sort(Comparator.reverseOrder());                    // descending, needs boxed Integers
-      words.sort(Comparator.comparingInt(String::length));        // sort by a computed key
+      boxed.sort(Comparator.reverseOrder());  // descending, needs boxed Integers
+      words.sort(Comparator.comparingInt(String::length));  // sort by a computed key
       people.sort(Comparator.comparingInt((Person p) -> p.age)
-                              .thenComparing(p -> p.name));          // multi-key
+                              .thenComparing(p -> p.name));  // multi-key
     `],
     ["binary search",`
-      int idx = Arrays.binarySearch(a, 3);        // an exact match at ANY equal index
+      int idx = Arrays.binarySearch(a, 3);  // an exact match at ANY equal index
 
-      int binarySearch(int[] nums, int target) {     // write-it-yourself template
+      int binarySearch(int[] nums, int target) {  // write-it-yourself template
           int lo = 0, hi = nums.length - 1;
           while (lo <= hi) {
               int mid = lo + (hi - lo) / 2;
@@ -2336,13 +2346,13 @@ var CARDS=[
   scala:[
     [null,`
       val nums = List(5, 2, 4, 1)
-      nums.sorted                          // new list, ascending
-      nums.sorted(Ordering.Int.reverse)       // descending
-      words.sortBy(_.length)                     // sort by a computed key
-      people.sortBy(p => (p.age, p.name))          // multi-key (tuple ordering)
+      nums.sorted  // new list, ascending
+      nums.sorted(Ordering.Int.reverse)  // descending
+      words.sortBy(_.length)  // sort by a computed key
+      people.sortBy(p => (p.age, p.name))  // multi-key (tuple ordering)
     `],
     ["binary search",`
-      def binarySearch(nums: Array[Int], target: Int): Int =    // write-it-yourself template
+      def binarySearch(nums: Array[Int], target: Int): Int =  // write-it-yourself template
         var lo = 0; var hi = nums.length - 1
         while lo <= hi do
           val mid = lo + (hi - lo) / 2
@@ -2354,21 +2364,21 @@ var CARDS=[
   go:[
     [null,`
       nums := []int{5, 2, 4, 1}
-      sort.Ints(nums)                          // ascending, in place
-      sort.Sort(sort.Reverse(sort.IntSlice(nums)))   // descending
-      sort.Slice(words, func(i, j int) bool {          // sort by a computed key
+      sort.Ints(nums)  // ascending, in place
+      sort.Sort(sort.Reverse(sort.IntSlice(nums)))  // descending
+      sort.Slice(words, func(i, j int) bool {  // sort by a computed key
           return len(words[i]) < len(words[j])
       })
-      sort.Slice(people, func(i, j int) bool {           // multi-key: compare age, then name
+      sort.Slice(people, func(i, j int) bool {  // multi-key: compare age, then name
           if people[i].Age != people[j].Age { return people[i].Age < people[j].Age }
           return people[i].Name < people[j].Name
       })
     `],
     ["bisect &amp; your own binary search",`
       a := []int{1, 3, 3, 5, 7}
-      i := sort.SearchInts(a, 3)          // leftmost insert point (like bisect_left)
+      i := sort.SearchInts(a, 3)  // leftmost insert point (like bisect_left)
 
-      func binarySearch(nums []int, target int) int {   // write-it-yourself template
+      func binarySearch(nums []int, target int) int {  // write-it-yourself template
           lo, hi := 0, len(nums)-1
           for lo <= hi {
               mid := lo + (hi-lo)/2
@@ -2382,19 +2392,19 @@ var CARDS=[
   cpp:[
     [null,`
       vector<int> nums = {5, 2, 4, 1};
-      vector<int> asc = nums; sort(asc.begin(), asc.end());     // new-ish copy, ascending; sort() itself mutates in place
-      sort(nums.begin(), nums.end(), greater<int>());              // descending
-      sort(words.begin(), words.end(), [](auto& a, auto& b) { return a.size() < b.size(); });   // sort by a computed key
-      sort(people.begin(), people.end(), [](auto& a, auto& b) {        // multi-key
+      vector<int> asc = nums; sort(asc.begin(), asc.end());  // new-ish copy, ascending; sort() itself mutates in place
+      sort(nums.begin(), nums.end(), greater<int>());  // descending
+      sort(words.begin(), words.end(), [](auto& a, auto& b) { return a.size() < b.size(); });  // sort by a computed key
+      sort(people.begin(), people.end(), [](auto& a, auto& b) {  // multi-key
           return a.age != b.age ? a.age < b.age : a.name < b.name;
       });
     `],
     ["binary search",`
       vector<int> a = {1, 3, 3, 5, 7};
-      lower_bound(a.begin(), a.end(), 3) - a.begin();     // 1 -- leftmost insert point (like bisect_left)
-      upper_bound(a.begin(), a.end(), 3) - a.begin();       // 3 -- rightmost insert point (like bisect_right)
+      lower_bound(a.begin(), a.end(), 3) - a.begin();  // 1 -- leftmost insert point (like bisect_left)
+      upper_bound(a.begin(), a.end(), 3) - a.begin();  // 3 -- rightmost insert point (like bisect_right)
 
-      int binarySearch(vector<int>& nums, int target) {     // write-it-yourself template
+      int binarySearch(vector<int>& nums, int target) {  // write-it-yourself template
           int lo = 0, hi = nums.size() - 1;
           while (lo <= hi) {
               int mid = lo + (hi - lo) / 2;
@@ -2410,79 +2420,79 @@ var CARDS=[
 ["math","Math &amp; bits","division, gcd, bitwise ops",{
   python:[
     [null,`
-      7 // 2, 7 % 2, divmod(7, 2)     # 3, 1, (3, 1)
-      2 ** 10                            # 1024 -- exponent, not ^
+      7 // 2, 7 % 2, divmod(7, 2)  # 3, 1, (3, 1)
+      2 ** 10  # 1024 -- exponent, not ^
       import math
-      math.gcd(12, 18)                     # 6
-      float("inf"), float("-inf")            # unbounded sentinels for "best so far"
+      math.gcd(12, 18)  # 6
+      float("inf"), float("-inf")  # unbounded sentinels for "best so far"
     `],
     ["bitwise",`
-      5 & 3, 5 | 3, 5 ^ 3, ~5     # AND, OR, XOR, NOT
-      5 << 1, 5 >> 1                # shift left/right (x2, /2)
-      bin(5)                          # "0b101"
-      bin(5).count("1")                 # popcount: number of set bits
-      5 & 1                                # 1 -- odd check
+      5 & 3, 5 | 3, 5 ^ 3, ~5  # AND, OR, XOR, NOT
+      5 << 1, 5 >> 1  # shift left/right (x2, /2)
+      bin(5)  # "0b101"
+      bin(5).count("1")  # popcount: number of set bits
+      5 & 1  # 1 -- odd check
     `],
   ],
   java:[
     [null,`
-      7 / 2; 7 % 2;                       // 3, 1 -- int division truncates toward zero
-      Math.floorDiv(7, 2); Math.floorMod(7, 2);   // 3, 1 -- floor semantics, matters for negatives
-      Math.pow(2, 10);                       // 1024.0 -- returns a double, not an int
-      double inf = Double.POSITIVE_INFINITY;    // unbounded sentinel for "best so far"
+      7 / 2; 7 % 2;  // 3, 1 -- int division truncates toward zero
+      Math.floorDiv(7, 2); Math.floorMod(7, 2);  // 3, 1 -- floor semantics, matters for negatives
+      Math.pow(2, 10);  // 1024.0 -- returns a double, not an int
+      double inf = Double.POSITIVE_INFINITY;  // unbounded sentinel for "best so far"
     `],
     ["bitwise",`
-      5 & 3; 5 | 3; 5 ^ 3; ~5;     // AND, OR, XOR, NOT
-      5 << 1; 5 >> 1;                 // shift left/right (x2, /2)
-      Integer.toBinaryString(5);         // "101"
-      Integer.bitCount(5);                  // popcount: number of set bits
-      (5 & 1) == 1;                            // odd check
+      5 & 3; 5 | 3; 5 ^ 3; ~5;  // AND, OR, XOR, NOT
+      5 << 1; 5 >> 1;  // shift left/right (x2, /2)
+      Integer.toBinaryString(5);  // "101"
+      Integer.bitCount(5);  // popcount: number of set bits
+      (5 & 1) == 1;  // odd check
     `],
   ],
   scala:[
     [null,`
-      7 / 2; 7 % 2                       // 3, 1 -- int division truncates toward zero
-      Math.floorDiv(7, 2); Math.floorMod(7, 2)   // 3, 1 -- floor semantics
-      math.pow(2, 10)                        // 1024.0 -- returns a Double
-      Double.PositiveInfinity                  // unbounded sentinel for "best so far"
+      7 / 2; 7 % 2  // 3, 1 -- int division truncates toward zero
+      Math.floorDiv(7, 2); Math.floorMod(7, 2)  // 3, 1 -- floor semantics
+      math.pow(2, 10)  // 1024.0 -- returns a Double
+      Double.PositiveInfinity  // unbounded sentinel for "best so far"
     `],
     ["bitwise",`
-      5 & 3; 5 | 3; 5 ^ 3; ~5     // AND, OR, XOR, NOT
-      5 << 1; 5 >> 1                 // shift left/right (x2, /2)
-      Integer.toBinaryString(5)         // "101"
-      Integer.bitCount(5)                  // popcount: number of set bits
-      (5 & 1) == 1                            // odd check
+      5 & 3; 5 | 3; 5 ^ 3; ~5  // AND, OR, XOR, NOT
+      5 << 1; 5 >> 1  // shift left/right (x2, /2)
+      Integer.toBinaryString(5)  // "101"
+      Integer.bitCount(5)  // popcount: number of set bits
+      (5 & 1) == 1  // odd check
     `],
   ],
   go:[
     [null,`
-      7 / 2; 7 % 2                       // 3, 1 -- int division truncates toward zero
-      math.Floor(7.0 / 2.0)                  // floor division for floats
-      math.Pow(2, 10)                          // 1024 -- returns a float64
-      math.Inf(1); math.Inf(-1)                  // unbounded sentinels for "best so far"
+      7 / 2; 7 % 2  // 3, 1 -- int division truncates toward zero
+      math.Floor(7.0 / 2.0)  // floor division for floats
+      math.Pow(2, 10)  // 1024 -- returns a float64
+      math.Inf(1); math.Inf(-1)  // unbounded sentinels for "best so far"
     `],
     ["bitwise",`
-      5 & 3; 5 | 3; 5 ^ 3; ^5     // AND, OR, XOR, NOT (Go uses ^ as unary NOT too)
-      5 << 1; 5 >> 1                 // shift left/right (x2, /2)
-      strconv.FormatInt(5, 2)           // "101"
-      bits.OnesCount(5)                    // popcount: number of set bits
-      5&1 == 1                                // odd check
+      5 & 3; 5 | 3; 5 ^ 3; ^5  // AND, OR, XOR, NOT (Go uses ^ as unary NOT too)
+      5 << 1; 5 >> 1  // shift left/right (x2, /2)
+      strconv.FormatInt(5, 2)  // "101"
+      bits.OnesCount(5)  // popcount: number of set bits
+      5&1 == 1  // odd check
     `],
   ],
   cpp:[
     [null,`
-      7 / 2; 7 % 2;                       // 3, 1 -- int division truncates toward zero
-      div_t d = div(7, 2);                    // d.quot, d.rem -- 3, 1
-      __gcd(12, 18);                            // 6 -- <algorithm>, GCC/Clang builtin
-      pow(2, 10);                                  // 1024.0 -- returns a double, not an int
-      numeric_limits<double>::infinity();            // unbounded sentinel for "best so far"
+      7 / 2; 7 % 2;  // 3, 1 -- int division truncates toward zero
+      div_t d = div(7, 2);  // d.quot, d.rem -- 3, 1
+      __gcd(12, 18);  // 6 -- <algorithm>, GCC/Clang builtin
+      pow(2, 10);  // 1024.0 -- returns a double, not an int
+      numeric_limits<double>::infinity();  // unbounded sentinel for "best so far"
     `],
     ["bitwise",`
-      5 & 3; 5 | 3; 5 ^ 3; ~5;     // AND, OR, XOR, NOT
-      5 << 1; 5 >> 1;                 // shift left/right (x2, /2)
-      bitset<8>(5).to_string();          // "00000101"
-      __builtin_popcount(5);                // popcount: number of set bits (GCC/Clang builtin)
-      (5 & 1) == 1;                            // odd check
+      5 & 3; 5 | 3; 5 ^ 3; ~5;  // AND, OR, XOR, NOT
+      5 << 1; 5 >> 1;  // shift left/right (x2, /2)
+      bitset<8>(5).to_string();  // "00000101"
+      __builtin_popcount(5);  // popcount: number of set bits (GCC/Clang builtin)
+      (5 & 1) == 1;  // odd check
     `],
   ],
 }],
@@ -2490,25 +2500,25 @@ var CARDS=[
 ["itertools","Combinatorics","permutations, combinations, running totals",{
   python:[[null,`
     from itertools import permutations, combinations, product, accumulate
-    list(permutations([1,2,3], 2))    # ordered pairs: (1,2),(1,3),(2,1)...
-    list(combinations([1,2,3], 2))      # unordered pairs: (1,2),(1,3),(2,3)
-    list(product([0,1], repeat=2))        # (0,0),(0,1),(1,0),(1,1)
-    list(accumulate([1,2,3,4]))             # running total: [1,3,6,10]
+    list(permutations([1,2,3], 2))  # ordered pairs: (1,2),(1,3),(2,1)...
+    list(combinations([1,2,3], 2))  # unordered pairs: (1,2),(1,3),(2,3)
+    list(product([0,1], repeat=2))  # (0,0),(0,1),(1,0),(1,1)
+    list(accumulate([1,2,3,4]))  # running total: [1,3,6,10]
   `]],
   java:[[null,`
-    IntStream.rangeClosed(1, 4).boxed().toList();     // [1,2,3,4]
-    nums.stream().mapToInt(Integer::intValue).sum();    // reduce/sum
+    IntStream.rangeClosed(1, 4).boxed().toList();  // [1,2,3,4]
+    nums.stream().mapToInt(Integer::intValue).sum();  // reduce/sum
     IntStream.range(0, 4).mapToObj(i -> i * i).toList();  // map
     // no stdlib permutations/combinations/product -- write them by hand, or use a library
   `]],
   scala:[[null,`
-    List(1,2,3).permutations.toList        // built into every collection
-    List(1,2,3).combinations(2).toList        // unordered pairs
-    for a <- List(0,1); b <- List(0,1) yield (a, b)   // Cartesian product via a for-comprehension
-    List(1,2,3,4).scanLeft(0)(_ + _).tail        // running total: List(1,3,6,10)
+    List(1,2,3).permutations.toList  // built into every collection
+    List(1,2,3).combinations(2).toList  // unordered pairs
+    for a <- List(0,1); b <- List(0,1) yield (a, b)  // Cartesian product via a for-comprehension
+    List(1,2,3,4).scanLeft(0)(_ + _).tail  // running total: List(1,3,6,10)
   `]],
   go:[[null,`
-    func permutations(nums []int) [][]int {       // no stdlib helper -- write it yourself
+    func permutations(nums []int) [][]int {  // no stdlib helper -- write it yourself
         var out [][]int
         var backtrack func([]int, []int)
         backtrack = func(cur, remaining []int) {
@@ -2524,13 +2534,13 @@ var CARDS=[
   `]],
   cpp:[[null,`
     vector<int> nums = {1, 2, 3};
-    sort(nums.begin(), nums.end());               // next_permutation needs a sorted start to get ALL of them
+    sort(nums.begin(), nums.end());  // next_permutation needs a sorted start to get ALL of them
     do {
         // use nums here -- each iteration is the next permutation, in place
     } while (next_permutation(nums.begin(), nums.end()));
 
     vector<int> vals = {1, 2, 3, 4}, prefix(4);
-    partial_sum(vals.begin(), vals.end(), prefix.begin());   // running total: {1,3,6,10}
+    partial_sum(vals.begin(), vals.end(), prefix.begin());  // running total: {1,3,6,10}
     // no stdlib combinations/product -- write them by hand, same as Java
   `]],
 }],
@@ -2541,14 +2551,14 @@ var CARDS=[
       lo, hi = 0, len(nums) - 1
       while lo < hi:
           s = nums[lo] + nums[hi]
-          if s == target: ...          # found it
-          elif s < target: lo += 1        # sum too small -- move lo up
-          else: hi -= 1                      # sum too big -- move hi down
+          if s == target: ...  # found it
+          elif s < target: lo += 1  # sum too small -- move lo up
+          else: hi -= 1  # sum too big -- move hi down
     `],
     ["same-direction (fast/slow, in-place compaction)",`
       slow = 0
       for fast in range(len(nums)):
-          if keep(nums[fast]):                # condition for keeping this element
+          if keep(nums[fast]):  # condition for keeping this element
               nums[slow], nums[fast] = nums[fast], nums[slow]
               slow += 1
       # nums[:slow] is now the compacted result
@@ -2559,15 +2569,15 @@ var CARDS=[
       int lo = 0, hi = nums.length - 1;
       while (lo < hi) {
           int sum = nums[lo] + nums[hi];
-          if (sum == target) { ... }          // found it
-          else if (sum < target) lo++;           // sum too small -- move lo up
-          else hi--;                                // sum too big -- move hi down
+          if (sum == target) { ... }  // found it
+          else if (sum < target) lo++;  // sum too small -- move lo up
+          else hi--;  // sum too big -- move hi down
       }
     `],
     ["same-direction (fast/slow, in-place compaction)",`
       int slow = 0;
       for (int fast = 0; fast < nums.length; fast++) {
-          if (keep(nums[fast])) {                  // condition for keeping this element
+          if (keep(nums[fast])) {  // condition for keeping this element
               int tmp = nums[slow]; nums[slow] = nums[fast]; nums[fast] = tmp;
               slow++;
           }
@@ -2580,14 +2590,14 @@ var CARDS=[
       var lo = 0; var hi = nums.length - 1
       while lo < hi do
         val sum = nums(lo) + nums(hi)
-        if sum == target then ...             // found it
-        else if sum < target then lo += 1        // sum too small -- move lo up
-        else hi -= 1                                // sum too big -- move hi down
+        if sum == target then ...  // found it
+        else if sum < target then lo += 1  // sum too small -- move lo up
+        else hi -= 1  // sum too big -- move hi down
     `],
     ["same-direction (fast/slow, in-place compaction)",`
       var slow = 0
       for fast <- nums.indices do
-        if keep(nums(fast)) then                  // condition for keeping this element
+        if keep(nums(fast)) then  // condition for keeping this element
           val tmp = nums(slow); nums(slow) = nums(fast); nums(fast) = tmp
           slow += 1
       // nums.take(slow) is now the compacted result
@@ -2599,18 +2609,18 @@ var CARDS=[
       for lo < hi {
           sum := nums[lo] + nums[hi]
           if sum == target {
-              ...                      // found it
+              ...  // found it
           } else if sum < target {
-              lo++                        // sum too small -- move lo up
+              lo++  // sum too small -- move lo up
           } else {
-              hi--                           // sum too big -- move hi down
+              hi--  // sum too big -- move hi down
           }
       }
     `],
     ["same-direction (fast/slow, in-place compaction)",`
       slow := 0
       for fast := 0; fast < len(nums); fast++ {
-          if keep(nums[fast]) {                  // condition for keeping this element
+          if keep(nums[fast]) {  // condition for keeping this element
               nums[slow], nums[fast] = nums[fast], nums[slow]
               slow++
           }
@@ -2623,15 +2633,15 @@ var CARDS=[
       int lo = 0, hi = nums.size() - 1;
       while (lo < hi) {
           int sum = nums[lo] + nums[hi];
-          if (sum == target) { ... }          // found it
-          else if (sum < target) lo++;           // sum too small -- move lo up
-          else hi--;                                // sum too big -- move hi down
+          if (sum == target) { ... }  // found it
+          else if (sum < target) lo++;  // sum too small -- move lo up
+          else hi--;  // sum too big -- move hi down
       }
     `],
     ["same-direction (fast/slow, in-place compaction)",`
       int slow = 0;
       for (int fast = 0; fast < (int)nums.size(); fast++) {
-          if (keep(nums[fast])) {                  // condition for keeping this element
+          if (keep(nums[fast])) {  // condition for keeping this element
               int tmp = nums[slow]; nums[slow] = nums[fast]; nums[fast] = tmp;
               slow++;
           }
@@ -2647,15 +2657,15 @@ var CARDS=[
       window_sum = sum(nums[:k])
       best = window_sum
       for i in range(k, len(nums)):
-          window_sum += nums[i] - nums[i - k]   # add the new element, drop the oldest
+          window_sum += nums[i] - nums[i - k]  # add the new element, drop the oldest
           best = max(best, window_sum)
     `],
     ["variable-size window (grow/shrink)",`
       lo = 0
       for hi in range(len(nums)):
-          ...                                  # expand: fold nums[hi] into the window's running state
-          while window_is_invalid():              # shrink while the window breaks the constraint
-              ...                                     # remove nums[lo] from the running state
+          ...  # expand: fold nums[hi] into the window's running state
+          while window_is_invalid():  # shrink while the window breaks the constraint
+              ...  # remove nums[lo] from the running state
               lo += 1
           best = max(best, hi - lo + 1)
     `],
@@ -2666,16 +2676,16 @@ var CARDS=[
       for (int i = 0; i < k; i++) windowSum += nums[i];
       int best = windowSum;
       for (int i = k; i < nums.length; i++) {
-          windowSum += nums[i] - nums[i - k];      // add the new element, drop the oldest
+          windowSum += nums[i] - nums[i - k];  // add the new element, drop the oldest
           best = Math.max(best, windowSum);
       }
     `],
     ["variable-size window (grow/shrink)",`
       int lo = 0, best = 0;
       for (int hi = 0; hi < nums.length; hi++) {
-          ...                                        // expand: fold nums[hi] into the window's running state
-          while (windowIsInvalid()) {                   // shrink while the window breaks the constraint
-              ...                                          // remove nums[lo] from the running state
+          ...  // expand: fold nums[hi] into the window's running state
+          while (windowIsInvalid()) {  // shrink while the window breaks the constraint
+              ...  // remove nums[lo] from the running state
               lo++;
           }
           best = Math.max(best, hi - lo + 1);
@@ -2687,15 +2697,15 @@ var CARDS=[
       var windowSum = nums.take(k).sum
       var best = windowSum
       for i <- k until nums.length do
-        windowSum += nums(i) - nums(i - k)        // add the new element, drop the oldest
+        windowSum += nums(i) - nums(i - k)  // add the new element, drop the oldest
         best = math.max(best, windowSum)
     `],
     ["variable-size window (grow/shrink)",`
       var lo = 0; var best = 0
       for hi <- nums.indices do
-        ...                                        // expand: fold nums(hi) into the window's running state
-        while windowIsInvalid() do                    // shrink while the window breaks the constraint
-          ...                                             // remove nums(lo) from the running state
+        ...  // expand: fold nums(hi) into the window's running state
+        while windowIsInvalid() do  // shrink while the window breaks the constraint
+          ...  // remove nums(lo) from the running state
           lo += 1
         best = math.max(best, hi - lo + 1)
     `],
@@ -2706,7 +2716,7 @@ var CARDS=[
       for i := 0; i < k; i++ { windowSum += nums[i] }
       best := windowSum
       for i := k; i < len(nums); i++ {
-          windowSum += nums[i] - nums[i-k]      // add the new element, drop the oldest
+          windowSum += nums[i] - nums[i-k]  // add the new element, drop the oldest
           if windowSum > best { best = windowSum }
       }
     `],
@@ -2714,7 +2724,7 @@ var CARDS=[
       lo, best := 0, 0
       for hi := 0; hi < len(nums); hi++ {
           // expand: fold nums[hi] into the window's running state
-          for windowIsInvalid() {                    // shrink while the window breaks the constraint
+          for windowIsInvalid() {  // shrink while the window breaks the constraint
               // remove nums[lo] from the running state
               lo++
           }
@@ -2728,7 +2738,7 @@ var CARDS=[
       for (int i = 0; i < k; i++) windowSum += nums[i];
       int best = windowSum;
       for (int i = k; i < (int)nums.size(); i++) {
-          windowSum += nums[i] - nums[i - k];      // add the new element, drop the oldest
+          windowSum += nums[i] - nums[i - k];  // add the new element, drop the oldest
           best = max(best, windowSum);
       }
     `],
@@ -2736,7 +2746,7 @@ var CARDS=[
       int lo = 0, best = 0;
       for (int hi = 0; hi < (int)nums.size(); hi++) {
           // expand: fold nums[hi] into the window's running state
-          while (windowIsInvalid()) {                   // shrink while the window breaks the constraint
+          while (windowIsInvalid()) {  // shrink while the window breaks the constraint
               // remove nums[lo] from the running state
               lo++;
           }
@@ -2751,17 +2761,17 @@ var CARDS=[
     ["prefix array -> O(1) range sum",`
       nums = [1, 2, 3, 4]
       prefix = [0]
-      for x in nums: prefix.append(prefix[-1] + x)   # prefix[i] = sum(nums[:i])
+      for x in nums: prefix.append(prefix[-1] + x)  # prefix[i] = sum(nums[:i])
 
-      def range_sum(lo, hi):       # inclusive lo..hi
+      def range_sum(lo, hi):  # inclusive lo..hi
           return prefix[hi + 1] - prefix[lo]
     `],
     ["running sum + hashmap (count subarrays hitting a target)",`
-      counts = {0: 1}          # running sum 0 seen once (before the array starts)
+      counts = {0: 1}  # running sum 0 seen once (before the array starts)
       total = ans = 0
       for x in nums:
           total += x
-          ans += counts.get(total - k, 0)   # a previous running sum exactly k less means a subarray summing to k
+          ans += counts.get(total - k, 0)  # a previous running sum exactly k less means a subarray summing to k
           counts[total] = counts.get(total, 0) + 1
     `],
   ],
@@ -2771,15 +2781,15 @@ var CARDS=[
       int[] prefix = new int[nums.length + 1];
       for (int i = 0; i < nums.length; i++) prefix[i + 1] = prefix[i] + nums[i];
 
-      int rangeSum(int lo, int hi) { return prefix[hi + 1] - prefix[lo]; }   // inclusive lo..hi
+      int rangeSum(int lo, int hi) { return prefix[hi + 1] - prefix[lo]; }  // inclusive lo..hi
     `],
     ["running sum + hashmap (count subarrays hitting a target)",`
       Map<Integer, Integer> counts = new HashMap<>();
-      counts.put(0, 1);                     // running sum 0 seen once (before the array starts)
+      counts.put(0, 1);  // running sum 0 seen once (before the array starts)
       int total = 0, ans = 0;
       for (int x : nums) {
           total += x;
-          ans += counts.getOrDefault(total - k, 0);   // a previous running sum exactly k less means a subarray summing to k
+          ans += counts.getOrDefault(total - k, 0);  // a previous running sum exactly k less means a subarray summing to k
           counts.merge(total, 1, Integer::sum);
       }
     `],
@@ -2787,16 +2797,16 @@ var CARDS=[
   scala:[
     ["prefix array -> O(1) range sum",`
       val nums = List(1, 2, 3, 4)
-      val prefix = nums.scanLeft(0)(_ + _)      // prefix(i) = sum(nums.take(i))
+      val prefix = nums.scanLeft(0)(_ + _)  // prefix(i) = sum(nums.take(i))
 
-      def rangeSum(lo: Int, hi: Int): Int = prefix(hi + 1) - prefix(lo)   // inclusive lo..hi
+      def rangeSum(lo: Int, hi: Int): Int = prefix(hi + 1) - prefix(lo)  // inclusive lo..hi
     `],
     ["running sum + hashmap (count subarrays hitting a target)",`
-      val counts = mutable.Map(0 -> 1)         // running sum 0 seen once (before the array starts)
+      val counts = mutable.Map(0 -> 1)  // running sum 0 seen once (before the array starts)
       var total = 0; var ans = 0
       for x <- nums do
         total += x
-        ans += counts.getOrElse(total - k, 0)     // a previous running sum exactly k less means a subarray summing to k
+        ans += counts.getOrElse(total - k, 0)  // a previous running sum exactly k less means a subarray summing to k
         counts(total) = counts.getOrElse(total, 0) + 1
     `],
   ],
@@ -2806,14 +2816,14 @@ var CARDS=[
       prefix := make([]int, len(nums)+1)
       for i, x := range nums { prefix[i+1] = prefix[i] + x }
 
-      func rangeSum(lo, hi int) int { return prefix[hi+1] - prefix[lo] }   // inclusive lo..hi
+      func rangeSum(lo, hi int) int { return prefix[hi+1] - prefix[lo] }  // inclusive lo..hi
     `],
     ["running sum + hashmap (count subarrays hitting a target)",`
-      counts := map[int]int{0: 1}      // running sum 0 seen once (before the array starts)
+      counts := map[int]int{0: 1}  // running sum 0 seen once (before the array starts)
       total, ans := 0, 0
       for _, x := range nums {
           total += x
-          ans += counts[total-k]         // a previous running sum exactly k less means a subarray summing to k
+          ans += counts[total-k]  // a previous running sum exactly k less means a subarray summing to k
           counts[total]++
       }
     `],
@@ -2824,15 +2834,15 @@ var CARDS=[
       vector<int> prefix(nums.size() + 1, 0);
       for (int i = 0; i < (int)nums.size(); i++) prefix[i + 1] = prefix[i] + nums[i];
 
-      int rangeSum(int lo, int hi) { return prefix[hi + 1] - prefix[lo]; }   // inclusive lo..hi
+      int rangeSum(int lo, int hi) { return prefix[hi + 1] - prefix[lo]; }  // inclusive lo..hi
     `],
     ["running sum + hashmap (count subarrays hitting a target)",`
-      unordered_map<int, int> counts = {{0, 1}};      // running sum 0 seen once (before the array starts)
+      unordered_map<int, int> counts = {{0, 1}};  // running sum 0 seen once (before the array starts)
       int total = 0, ans = 0;
       for (int x : nums) {
           total += x;
           auto it = counts.find(total - k);
-          if (it != counts.end()) ans += it->second;   // a previous running sum exactly k less means a subarray summing to k
+          if (it != counts.end()) ans += it->second;  // a previous running sum exactly k less means a subarray summing to k
           counts[total]++;
       }
     `],
@@ -2841,97 +2851,97 @@ var CARDS=[
 ["bitmask","Bitmasking","bit tricks, an int as a set",{
   python:[
     ["bit tricks",`
-      n = 12                        # 0b1100
-      n & -n                          # 4  -- isolates the lowest set bit (0b0100)
-      n & (n - 1)                       # 8  -- clears the lowest set bit (0b1000)
-      n & (n - 1) == 0                    # False -- True only when n is a power of two (n != 0)
-      (n & -n).bit_length() - 1              # 2  -- index of the lowest set bit
+      n = 12  # 0b1100
+      n & -n  # 4  -- isolates the lowest set bit (0b0100)
+      n & (n - 1)  # 8  -- clears the lowest set bit (0b1000)
+      n & (n - 1) == 0  # False -- True only when n is a power of two (n != 0)
+      (n & -n).bit_length() - 1  # 2  -- index of the lowest set bit
     `],
     ["an int as a set",`
       mask = 0
-      mask |= (1 << 3)                # add element 3 to the set
-      mask &= ~(1 << 3)                  # remove element 3
-      mask ^= (1 << 3)                     # toggle element 3
-      mask & (1 << 3) != 0                    # membership check -- "is 3 in the set?"
+      mask |= (1 << 3)  # add element 3 to the set
+      mask &= ~(1 << 3)  # remove element 3
+      mask ^= (1 << 3)  # toggle element 3
+      mask & (1 << 3) != 0  # membership check -- "is 3 in the set?"
 
-      for i in range(4):                             # iterate elements 0..3
-          if mask & (1 << i): print(i)                  # print i if it's in the set
+      for i in range(4):  # iterate elements 0..3
+          if mask & (1 << i): print(i)  # print i if it's in the set
     `],
   ],
   java:[
     ["bit tricks",`
-      int n = 12;                       // 0b1100
-      n & -n;                             // 4  -- isolates the lowest set bit (0b0100)
-      n & (n - 1);                          // 8  -- clears the lowest set bit (0b1000)
-      (n & (n - 1)) == 0;                      // false -- true only when n is a power of two (n != 0)
-      Integer.numberOfTrailingZeros(n);           // 2  -- index of the lowest set bit
+      int n = 12;  // 0b1100
+      n & -n;  // 4  -- isolates the lowest set bit (0b0100)
+      n & (n - 1);  // 8  -- clears the lowest set bit (0b1000)
+      (n & (n - 1)) == 0;  // false -- true only when n is a power of two (n != 0)
+      Integer.numberOfTrailingZeros(n);  // 2  -- index of the lowest set bit
     `],
     ["an int as a set",`
       int mask = 0;
-      mask |= (1 << 3);                 // add element 3 to the set
-      mask &= ~(1 << 3);                   // remove element 3
-      mask ^= (1 << 3);                      // toggle element 3
-      (mask & (1 << 3)) != 0;                   // membership check -- "is 3 in the set?"
+      mask |= (1 << 3);  // add element 3 to the set
+      mask &= ~(1 << 3);  // remove element 3
+      mask ^= (1 << 3);  // toggle element 3
+      (mask & (1 << 3)) != 0;  // membership check -- "is 3 in the set?"
 
-      for (int i = 0; i < 4; i++)                      // iterate elements 0..3
+      for (int i = 0; i < 4; i++)  // iterate elements 0..3
           if ((mask & (1 << i)) != 0) System.out.println(i);  // print i if it's in the set
     `],
   ],
   scala:[
     ["bit tricks",`
-      val n = 12                       // 0b1100
-      n & -n                             // 4  -- isolates the lowest set bit (0b0100)
-      n & (n - 1)                          // 8  -- clears the lowest set bit (0b1000)
-      (n & (n - 1)) == 0                      // false -- true only when n is a power of two (n != 0)
-      Integer.numberOfTrailingZeros(n)           // 2  -- index of the lowest set bit
+      val n = 12  // 0b1100
+      n & -n  // 4  -- isolates the lowest set bit (0b0100)
+      n & (n - 1)  // 8  -- clears the lowest set bit (0b1000)
+      (n & (n - 1)) == 0  // false -- true only when n is a power of two (n != 0)
+      Integer.numberOfTrailingZeros(n)  // 2  -- index of the lowest set bit
     `],
     ["an int as a set",`
       var mask = 0
-      mask |= (1 << 3)                  // add element 3 to the set
-      mask &= ~(1 << 3)                    // remove element 3
-      mask ^= (1 << 3)                       // toggle element 3
-      (mask & (1 << 3)) != 0                    // membership check -- "is 3 in the set?"
+      mask |= (1 << 3)  // add element 3 to the set
+      mask &= ~(1 << 3)  // remove element 3
+      mask ^= (1 << 3)  // toggle element 3
+      (mask & (1 << 3)) != 0  // membership check -- "is 3 in the set?"
 
-      for i <- 0 until 4 if (mask & (1 << i)) != 0 do println(i)   // print i if it's in the set
+      for i <- 0 until 4 if (mask & (1 << i)) != 0 do println(i)  // print i if it's in the set
     `],
   ],
   go:[
     ["bit tricks",`
-      n := 12                          // 0b1100
-      n & -n                              // 4  -- isolates the lowest set bit (0b0100)
-      n & (n - 1)                           // 8  -- clears the lowest set bit (0b1000)
-      n&(n-1) == 0                             // false -- true only when n is a power of two (n != 0)
-      bits.TrailingZeros(uint(n))                 // 2  -- index of the lowest set bit
+      n := 12  // 0b1100
+      n & -n  // 4  -- isolates the lowest set bit (0b0100)
+      n & (n - 1)  // 8  -- clears the lowest set bit (0b1000)
+      n&(n-1) == 0  // false -- true only when n is a power of two (n != 0)
+      bits.TrailingZeros(uint(n))  // 2  -- index of the lowest set bit
     `],
     ["an int as a set",`
       mask := 0
-      mask |= (1 << 3)                   // add element 3 to the set
-      mask &= ^(1 << 3)                     // remove element 3 -- Go uses ^ for unary NOT
-      mask ^= (1 << 3)                        // toggle element 3
-      mask&(1<<3) != 0                           // membership check -- "is 3 in the set?"
+      mask |= (1 << 3)  // add element 3 to the set
+      mask &= ^(1 << 3)  // remove element 3 -- Go uses ^ for unary NOT
+      mask ^= (1 << 3)  // toggle element 3
+      mask&(1<<3) != 0  // membership check -- "is 3 in the set?"
 
-      for i := 0; i < 4; i++ {                           // iterate elements 0..3
-          if mask&(1<<i) != 0 { fmt.Println(i) }             // print i if it's in the set
+      for i := 0; i < 4; i++ {  // iterate elements 0..3
+          if mask&(1<<i) != 0 { fmt.Println(i) }  // print i if it's in the set
       }
     `],
   ],
   cpp:[
     ["bit tricks",`
-      int n = 12;                       // 0b1100
-      n & -n;                              // 4  -- isolates the lowest set bit (0b0100)
-      n & (n - 1);                           // 8  -- clears the lowest set bit (0b1000)
-      (n & (n - 1)) == 0;                       // false -- true only when n is a power of two (n != 0)
-      __builtin_ctz(n);                            // 2  -- index of the lowest set bit (count trailing zeros)
+      int n = 12;  // 0b1100
+      n & -n;  // 4  -- isolates the lowest set bit (0b0100)
+      n & (n - 1);  // 8  -- clears the lowest set bit (0b1000)
+      (n & (n - 1)) == 0;  // false -- true only when n is a power of two (n != 0)
+      __builtin_ctz(n);  // 2  -- index of the lowest set bit (count trailing zeros)
     `],
     ["an int as a set",`
       int mask = 0;
-      mask |= (1 << 3);                  // add element 3 to the set
-      mask &= ~(1 << 3);                    // remove element 3
-      mask ^= (1 << 3);                       // toggle element 3
-      (mask & (1 << 3)) != 0;                    // membership check -- "is 3 in the set?"
+      mask |= (1 << 3);  // add element 3 to the set
+      mask &= ~(1 << 3);  // remove element 3
+      mask ^= (1 << 3);  // toggle element 3
+      (mask & (1 << 3)) != 0;  // membership check -- "is 3 in the set?"
 
-      for (int i = 0; i < 4; i++)                         // iterate elements 0..3
-          if (mask & (1 << i)) cout << i << "\\n";            // print i if it's in the set
+      for (int i = 0; i < 4; i++)  // iterate elements 0..3
+          if (mask & (1 << i)) cout << i << "\\n";  // print i if it's in the set
     `],
   ],
 }],
@@ -3030,6 +3040,19 @@ document.getElementById("langs").addEventListener("click", function(e){
 document.getElementById("search").addEventListener("input", function(e){
   query=e.target.value.trim().toLowerCase();
   renderBoard(); renderJump();
+});
+
+var jumpToggle=document.getElementById("jumpToggle");
+var jumpNav=document.getElementById("jump");
+jumpToggle.addEventListener("click", function(){
+  var open=jumpNav.classList.toggle("open");
+  jumpToggle.setAttribute("aria-expanded", open?"true":"false");
+});
+jumpNav.addEventListener("click", function(e){
+  if(e.target.closest("a")){
+    jumpNav.classList.remove("open");
+    jumpToggle.setAttribute("aria-expanded","false");
+  }
 });
 
 renderLangs();
