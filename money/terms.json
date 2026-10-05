@@ -2562,6 +2562,206 @@
         "explanation": "The earlier you start, the more years compounding has to work, which tends to matter more than almost any other factor."
       },
       "relatedCategory": null
+    },
+    {
+      "id": "nri-status",
+      "category": "nri",
+      "order": 0,
+      "name": "NRI (Non-Resident Indian)",
+      "shortDefinition": "An Indian citizen who lives abroad, which changes which bank accounts and rules apply to them.",
+      "fullExplanation": "An NRI is an Indian citizen who lives outside India for work, business or an open-ended stay. Once you are classed as non-resident, you generally can't keep using your old resident savings account. Indian banks require you to convert it to an NRO account and let you open an NRE account. Also, 'non-resident' for banking and 'non-resident' for income tax are two separate tests with different rules, so check each one separately. Rules change, so confirm current details with your bank or a chartered accountant.",
+      "example": {
+        "scenario": "Someone moves from Hyderabad to Seattle for a job. Their old Indian savings account must be re-designated as an NRO account, and new savings from their US salary can go into an NRE account.",
+        "takeaway": "Moving abroad means telling your Indian bank, so your accounts are reclassified rather than left in the wrong category."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What usually happens to your old resident savings account after you become an NRI?",
+        "choices": [
+          "Nothing, it stays as it is forever",
+          "It has to be re-designated as an NRO account",
+          "It is closed and the money is taken by the government",
+          "It automatically becomes an NRE account"
+        ],
+        "correctIndex": 1,
+        "explanation": "A resident account has to be converted to an NRO account once you become non-resident; NRE accounts are opened separately."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "nre-account",
+      "category": "nri",
+      "order": 1,
+      "name": "NRE Account",
+      "shortDefinition": "An India bank account for moving your foreign earnings into India and, if you wish, back out again.",
+      "fullExplanation": "NRE stands for Non-Resident External. You fund it with money earned abroad, which is converted to Indian rupees. The principal and the interest can both be sent back overseas freely, and the interest is not taxed in India. Remember that India's tax-free treatment does not stop your country of residence from taxing the interest: for a U.S. person it is still reportable and taxable. The account is held in rupees, so you carry the exchange-rate risk. Note that when you move back to India permanently, the account must be converted.",
+      "example": {
+        "scenario": "A software engineer in the U.S. sends $10,000 to an NRE account and it becomes roughly ₹9 lakh, depending on that day's exchange rate. Interest builds up without Indian tax, and later the full balance can be sent back to the U.S.",
+        "takeaway": "NRE is for your foreign money: easy to bring in, easy to take out, tax-free in India."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Which is true of an NRE account?",
+        "choices": [
+          "It is only for income earned in India",
+          "Its principal and interest can be freely sent abroad",
+          "Its interest is taxed in India at a high TDS rate",
+          "It is held in U.S. dollars"
+        ],
+        "correctIndex": 1,
+        "explanation": "NRE funds come from abroad and can be freely repatriated; the interest is tax-free in India."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "nro-account",
+      "category": "nri",
+      "order": 2,
+      "name": "NRO Account",
+      "shortDefinition": "An India bank account for managing money you earn in India, like rent, dividends or a pension.",
+      "fullExplanation": "NRO stands for Non-Resident Ordinary. It is the account for Indian-sourced income: rent from a flat, dividends, a pension, or the proceeds of selling property. It is held in rupees and can also take money from abroad. Interest is taxable in India, with tax deducted at source (TDS) at a high flat rate that a tax treaty can sometimes reduce. Sending money abroad from an NRO account is capped (see Repatriation) and needs paperwork. A resident Indian can be a joint holder, which is useful for family.",
+      "example": {
+        "scenario": "Someone in London rents out their flat in Chennai for ₹30,000 a month. The rent arrives in their NRO account, tax is deducted on the interest, and they can later send a limited amount abroad each year.",
+        "takeaway": "NRO is for your Indian income: taxable in India, and with limits on sending the money out."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Where should rent from an Indian property normally be deposited?",
+        "choices": [
+          "NRE account",
+          "NRO account",
+          "FCNR(B) deposit",
+          "Any account, with no difference"
+        ],
+        "correctIndex": 1,
+        "explanation": "Income earned in India belongs in an NRO account; NRE is reserved for money coming from abroad."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "fcnr-b",
+      "category": "nri",
+      "order": 3,
+      "name": "FCNR(B) Deposit",
+      "shortDefinition": "A fixed deposit held in a foreign currency, so you don't carry the rupee's exchange-rate risk.",
+      "fullExplanation": "FCNR(B) stands for Foreign Currency Non-Resident (Bank). You deposit foreign currency (such as U.S. dollars) for one to five years and the money stays in that currency. Because it is never converted, falling rupee values don't reduce your balance in dollars. Interest is tax-free in India, and the money can be repatriated. It is the one NRI account that works like a fixed deposit in a foreign currency, with the usual penalty for early withdrawal.",
+      "example": {
+        "scenario": "An NRI puts $20,000 into a 3-year FCNR(B) deposit. If the rupee weakens over those years, they still get back their $20,000 plus interest in dollars.",
+        "takeaway": "FCNR(B) is a fixed deposit that protects you from rupee swings."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What is the main advantage of an FCNR(B) deposit?",
+        "choices": [
+          "It pays much higher interest than any other account",
+          "The money stays in foreign currency, avoiding rupee exchange risk",
+          "It can hold Indian rental income",
+          "It has no lock-in period"
+        ],
+        "correctIndex": 1,
+        "explanation": "FCNR(B) is held in foreign currency, so exchange-rate movements of the rupee don't affect your dollar balance."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "repatriation",
+      "category": "nri",
+      "order": 4,
+      "name": "Repatriation",
+      "shortDefinition": "Sending money from India back to your country of residence.",
+      "fullExplanation": "Repatriation means transferring money out of India to a foreign account. From an NRE account (and an FCNR(B) deposit) it is free of limits. From an NRO account it is capped, currently at USD 1 million per financial year (covering things like property sale proceeds or an inheritance), and only after Indian tax has been paid and the right forms (such as 15CA and 15CB) have been filed. Limits and forms are set by the Reserve Bank of India and can change, so check before you plan a transfer.",
+      "example": {
+        "scenario": "An NRI sells an inherited plot in India. The sale proceeds go to the NRO account, tax is settled with a CA's certificate, and then up to the annual limit can be sent to their foreign bank.",
+        "takeaway": "NRE money is free to leave; NRO money leaves with limits, taxes and forms."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Which is generally subject to the annual repatriation cap?",
+        "choices": [
+          "NRE account balances",
+          "FCNR(B) deposits",
+          "NRO account funds",
+          "None of them"
+        ],
+        "correctIndex": 2,
+        "explanation": "NRO funds have an annual cap and paperwork; NRE and FCNR(B) can be sent back freely."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "tds-nri",
+      "category": "nri",
+      "order": 5,
+      "name": "TDS on NRI Interest",
+      "shortDefinition": "Tax a bank deducts from your NRO interest before paying it to you.",
+      "fullExplanation": "TDS stands for Tax Deducted at Source: the bank withholds tax before the interest reaches you. For NRO accounts the rate is a high flat percentage (around 30% plus surcharge and cess), because the bank can't know your slab. NRE and FCNR(B) interest has no TDS in India. If your country has a tax treaty with India, you may qualify for a lower rate by giving the bank a tax residency certificate, and you can often claim credit for the Indian tax on your home-country return. The rates are set each year, so check the current ones.",
+      "example": {
+        "scenario": "An NRI earns ₹1,00,000 interest on an NRO account and the bank keeps about ₹30,000 as TDS. The same interest on an NRE account would have arrived without Indian tax.",
+        "takeaway": "The same interest costs you very different tax depending on whether it's in NRE or NRO."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "Why is TDS on NRO interest so high?",
+        "choices": [
+          "The bank charges a service fee",
+          "It is a flat withholding rate, since the bank doesn't know your actual slab",
+          "The government penalizes NRIs",
+          "It applies equally to NRE accounts"
+        ],
+        "correctIndex": 1,
+        "explanation": "NRO interest has a high flat TDS rate; NRE interest has none in India."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "dtaa",
+      "category": "nri",
+      "order": 6,
+      "name": "DTAA (Double Taxation Avoidance Agreement)",
+      "shortDefinition": "A treaty between two countries so the same income isn't fully taxed twice.",
+      "fullExplanation": "India has DTAA treaties with many countries, including the U.S. and U.K. They decide which country gets to tax which kind of income, and usually set a lower rate cap on things like interest and dividends. In practice, you give your Indian bank a tax residency certificate (and a form) to get the treaty rate on TDS, and you claim a foreign tax credit in your home-country return for the Indian tax you paid. Treaty terms differ by country and by income type, so confirm with a tax professional.",
+      "example": {
+        "scenario": "An NRI in the U.S. pays Indian tax on NRO interest. On their U.S. return, they claim a credit for that Indian tax so the same interest isn't taxed in full twice.",
+        "takeaway": "A DTAA doesn't make income tax-free; it prevents paying full tax in both countries."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What is the main purpose of a DTAA?",
+        "choices": [
+          "To make all foreign income tax-free",
+          "To prevent the same income being taxed in full by two countries",
+          "To let NRIs skip filing returns",
+          "To raise tax on NRIs"
+        ],
+        "correctIndex": 1,
+        "explanation": "A DTAA allocates taxing rights and provides credits, so the same income isn't fully taxed twice."
+      },
+      "relatedCategory": null
+    },
+    {
+      "id": "fatca-fbar",
+      "category": "nri",
+      "order": 7,
+      "name": "FATCA & FBAR (for U.S. persons)",
+      "shortDefinition": "U.S. reporting rules for foreign bank accounts, including NRE and NRO accounts.",
+      "fullExplanation": "If you are a U.S. citizen, green card holder or tax resident, the U.S. wants to know about your overseas accounts. FBAR (FinCEN Form 114) must be filed if the combined foreign accounts exceeded $10,000 at any time during the year. FATCA (Form 8938, filed with your tax return) has higher thresholds that depend on your filing status. Your NRE, NRO and FCNR(B) accounts all count, and their interest is taxable income in the U.S. even when India doesn't tax it. Penalties for missing these filings can be large, so talk to a U.S. tax professional.",
+      "example": {
+        "scenario": "A green card holder keeps $4,000 in an NRE account and $9,000 in an NRO account. Combined they pass $10,000, so an FBAR is required and the interest must be reported on the U.S. tax return.",
+        "takeaway": "In the U.S., 'tax-free in India' doesn't mean unreported: foreign accounts must be disclosed."
+      },
+      "chartScenario": null,
+      "quiz": {
+        "question": "What triggers an FBAR filing?",
+        "choices": [
+          "Owning any foreign account at all",
+          "Combined foreign accounts exceeding $10,000 at any time in the year",
+          "Earning interest above $100",
+          "Only holding accounts in India"
+        ],
+        "correctIndex": 1,
+        "explanation": "FBAR applies when combined foreign accounts exceed $10,000 at any point during the year."
+      },
+      "relatedCategory": null
     }
   ]
 }
