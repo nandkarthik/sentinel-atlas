@@ -97,7 +97,7 @@ footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;colo
 <div class="wrap">
   <div class="crumbs"><a href="../">&larr; Sentinel Atlas</a></div>
   <h1>Reasoning Test</h1>
-  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 40. Every answer comes with a short explanation.</p>
+  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 60. Every answer comes with a short explanation.</p>
 
   <section id="intro" class="panel" aria-labelledby="introH">
     <h2 id="introH">Before you start</h2>
@@ -201,7 +201,32 @@ var BANK = [
   ["math","Today is Wednesday. What day will it be 100 days from now?",["Thursday","Friday","Saturday","Sunday"],1,"100 = 14 weeks + 2 days, so it's two days after Wednesday: <b>Friday</b>."],
   ["math","Maya has 3 times as many books as Leo. Together they have 48. How many does Maya have?",["12","24","36","42"],2,"Leo has x and Maya 3x, so 4x = 48 and x = 12. Maya has 3 &times; 12 = <b>36</b>."],
   ["math","A bat and a ball cost $1.10 together. The bat costs $1.00 more than the ball. How much is the ball?",["$0.05","$0.10","$0.15","$0.50"],0,"If the ball is b, the bat is b + 1.00, so 2b + 1.00 = 1.10 and b = <b>$0.05</b>. (The tempting $0.10 would make the total $1.20.)"],
-  ["math","You flip two fair coins. What is the probability of at least one head?",["1/2","2/3","3/4","1/4"],2,"There are 4 equally likely outcomes (HH, HT, TH, TT) and 3 contain a head: <b>3/4</b>."]
+  ["math","You flip two fair coins. What is the probability of at least one head?",["1/2","2/3","3/4","1/4"],2,"There are 4 equally likely outcomes (HH, HT, TH, TT) and 3 contain a head: <b>3/4</b>."],
+  // ---- added: series
+  ["series","3, 5, 9, 17, 33, ?",["59","63","65","69"],2,"The gaps double each time: +2, +4, +8, +16, so the next gap is +32 and the answer is <b>65</b>."],
+  ["series","0, 1, 3, 7, 15, 31, ?",["47","55","63","64"],2,"Each term is double the previous one plus 1: 31 &times; 2 + 1 = <b>63</b>. (They are one less than the powers of 2.)"],
+  ["series","7, 10, 16, 28, 52, ?",["76","88","96","100"],3,"The gaps are +3, +6, +12, +24, doubling each time, so the next gap is +48 and the answer is <b>100</b>."],
+  ["series","1, 4, 10, 22, 46, ?",["82","92","94","96"],2,"Each term is double the previous one plus 2: 46 &times; 2 + 2 = <b>94</b>."],
+  ["series","AZ, BY, CX, DW, ?",["EU","EV","FV","FW"],1,"The first letter moves forward (A, B, C, D, E) while the second moves backward (Z, Y, X, W, V), giving <b>EV</b>."],
+  // ---- added: odd one out
+  ["odd","Which does not belong?\nMercury, Venus, Earth, Moon",["Mercury","Venus","Earth","Moon"],3,"Mercury, Venus and Earth are planets. The <b>Moon</b> is a satellite that orbits a planet."],
+  ["odd","Which does not belong?\nViolin, Cello, Flute, Harp",["Violin","Cello","Flute","Harp"],2,"Violin, cello and harp are string instruments. A <b>flute</b> is a wind instrument."],
+  ["odd","Which does not belong?\n12, 18, 24, 30, 35",["12","18","30","35"],3,"All except <b>35</b> are multiples of 6."],
+  // ---- added: analogies
+  ["analogy","Painter is to brush as writer is to:",["Book","Story","Pen","Library"],2,"A brush is the tool a painter works with, and a <b>pen</b> is the tool a writer works with."],
+  ["analogy","Thermometer is to temperature as compass is to:",["Distance","Direction","Map","Needle"],1,"A thermometer measures temperature, and a compass shows <b>direction</b>."],
+  ["analogy","Chapter is to book as scene is to:",["Actor","Stage","Play","Ticket"],2,"A chapter is one part of a book, and a scene is one part of a <b>play</b>."],
+  // ---- added: logic
+  ["logic","Vikram finished first in a race. Tej finished before Ravi. Ravi finished before Sita. Sita finished before Uma.\nWho finished third?",["Tej","Ravi","Sita","Uma"],1,"The order is Vikram, Tej, Ravi, Sita, Uma, so the third-place finisher is <b>Ravi</b>."],
+  ["logic","Each person either always tells the truth or always lies. A says: \"B is a liar.\" B says: \"A and I are both liars.\"\nWhat is true?",["Both tell the truth","A tells the truth, B lies","A lies, B tells the truth","Both lie"],1,"If B told the truth, B would be admitting to being a liar, which is impossible. So B lies, which means \"both are liars\" is false, so A is not a liar. <b>A tells the truth and B lies</b>, which fits A's claim."],
+  ["logic","Some artists are musicians. No musicians are accountants.\nWhich must be true?",["No artist is an accountant","Some artists are not accountants","Some accountants are artists","All musicians are artists"],1,"The artists who are musicians can't be accountants, so <b>some artists are not accountants</b>. We can't say anything certain about the other artists."],
+  ["logic","The day before yesterday was Thursday.\nWhat day is tomorrow?",["Friday","Saturday","Sunday","Monday"],2,"Yesterday was Friday, so today is Saturday and tomorrow is <b>Sunday</b>."],
+  // ---- added: quick math
+  ["math","A rectangle's length is twice its width. Its perimeter is 36 cm. What is its area?",["54 cm&sup2;","72 cm&sup2;","81 cm&sup2;","108 cm&sup2;"],1,"With width w and length 2w, the perimeter is 6w = 36, so w = 6 and the length is 12. The area is 6 &times; 12 = <b>72 cm&sup2;</b>."],
+  ["math","The average of five numbers is 12. Four of them are 8, 10, 14 and 16. What is the fifth?",["10","12","14","16"],1,"The total must be 5 &times; 12 = 60. The four known numbers add up to 48, so the fifth is 60 &minus; 48 = <b>12</b>."],
+  ["math","A $200 item is marked up 25%, then the new price is discounted 20%. What is the final price?",["$190","$200","$225","$250"],1,"$200 &times; 1.25 = $250, and $250 &times; 0.80 = <b>$200</b>. The 20% discount applies to a bigger number, so it cancels the markup exactly."],
+  ["math","6 workers build a wall in 10 days. At the same pace, how many days would 15 workers need?",["2","4","6","25"],1,"The job is 6 &times; 10 = 60 worker-days. With 15 workers it takes 60 &divide; 15 = <b>4 days</b>."],
+  ["math","You roll two fair six-sided dice. What is the probability that the total is 7?",["1/12","1/9","1/6","1/7"],2,"There are 36 equally likely outcomes, and 6 of them total 7 (1+6, 2+5, 3+4, 4+3, 5+2, 6+1). 6/36 = <b>1/6</b>."]
 ];
 
 var TIME_LIMIT = 20 * 60;
