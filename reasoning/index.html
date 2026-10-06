@@ -51,6 +51,17 @@ h2{font-family:var(--font-display);font-weight:400;font-size:1.35rem;margin:0 0 
 .small{font-size:.8rem;color:var(--ink-faint)}
 .opts{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;margin:.9rem 0 1.1rem;font-family:var(--font-mono);font-size:.8rem;color:var(--ink-soft)}
 .opts label{display:flex;align-items:center;gap:.45rem;cursor:pointer}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:0 0 1.1rem;padding:0;border:0}
+.modes legend{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);padding:0;margin:0 0 .4rem}
+.modes label{display:block;cursor:pointer}
+.modes input{position:absolute;opacity:0;pointer-events:none}
+.modes .m{display:block;border:1px solid var(--line);border-radius:6px;padding:.6rem .8rem;background:var(--bg)}
+.modes .m b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.1rem}
+.modes .m span{font-size:.86rem;color:var(--ink-soft)}
+.modes label:hover .m{border-color:var(--accent)}
+.modes input:checked + .m{border-color:var(--accent);background:var(--accent-soft)}
+.modes input:focus-visible + .m{outline:2px solid var(--accent);outline-offset:2px}
+.mode-tag{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);margin:0 0 .3rem}
 .btn{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:.6rem 1.3rem;border-radius:99px;cursor:pointer}
 .btn:hover{filter:brightness(1.08)}
 .btn.ghost{background:transparent;color:var(--accent)}
@@ -97,20 +108,19 @@ footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;colo
 <div class="wrap">
   <div class="crumbs"><a href="../">&larr; Sentinel Atlas</a></div>
   <h1>Reasoning Test</h1>
-  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 60. Every answer comes with a short explanation.</p>
+  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 60, plus a harder set in Hard mode. Every answer comes with a short explanation.</p>
 
   <section id="intro" class="panel" aria-labelledby="introH">
     <h2 id="introH">Before you start</h2>
-    <ul class="cats" aria-label="What the test covers">
-      <li>Number &amp; letter series &times;5</li>
-      <li>Odd one out &times;3</li>
-      <li>Analogies &times;4</li>
-      <li>Logic &times;4</li>
-      <li>Quick math &times;4</li>
-    </ul>
+    <fieldset class="modes">
+      <legend>Difficulty</legend>
+      <label><input type="radio" name="mode" value="standard" checked><span class="m"><b>Standard</b><span>60 questions in the bank, 20 per test</span></span></label>
+      <label><input type="radio" name="mode" value="hard"><span class="m"><b>Hard mode</b><span>Trickier patterns, multi-step logic and math</span></span></label>
+    </fieldset>
+    <ul class="cats" id="cats" aria-label="What the test covers"></ul>
     <p class="lede" style="margin-bottom:.4rem">No calculator or search. Choose the single best answer; you can't go back once you confirm. Different questions show up each time you retake it.</p>
     <div class="opts">
-      <label><input type="checkbox" id="timed"> Timed: 20 minutes in total</label>
+      <label><input type="checkbox" id="timed"> <span id="timedLabel">Timed: 20 minutes in total</span></label>
     </div>
     <button class="btn" id="start" type="button">Start the test</button>
     <p class="small" id="best" style="margin:.9rem 0 0" hidden></p>
@@ -131,6 +141,7 @@ footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;colo
 
   <section id="results" class="panel" hidden aria-labelledby="resH">
     <h2 id="resH">Your result</h2>
+    <p class="mode-tag" id="modeTag"></p>
     <div class="score"><span id="scoreNum"></span><small> / 20</small></div>
     <p class="level" id="level"></p>
     <p class="lede" id="summary" style="margin-bottom:.4rem"></p>
@@ -155,7 +166,10 @@ footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;colo
 var CATS = {
   series: "Series", odd: "Odd one out", analogy: "Analogies", logic: "Logic", math: "Quick math"
 };
-var QUOTA = { series: 5, odd: 3, analogy: 4, logic: 4, math: 4 };
+var MODES = {
+  standard: { name: "Standard", quota: { series: 5, odd: 3, analogy: 4, logic: 4, math: 4 }, minutes: 20, best: "reasoning-best" },
+  hard:     { name: "Hard mode", quota: { series: 5, odd: 2, analogy: 3, logic: 5, math: 5 }, minutes: 25, best: "reasoning-best-hard" }
+};
 var BANK = [
   // ---- series (12)
   ["series","2, 6, 12, 20, 30, ?",["36","40","42","44"],2,"The gaps grow by 2 each time: +4, +6, +8, +10, so the next gap is +12 and the answer is <b>42</b>. (Each term is n &times; (n+1).)"],
@@ -222,15 +236,54 @@ var BANK = [
   ["logic","Some artists are musicians. No musicians are accountants.\nWhich must be true?",["No artist is an accountant","Some artists are not accountants","Some accountants are artists","All musicians are artists"],1,"The artists who are musicians can't be accountants, so <b>some artists are not accountants</b>. We can't say anything certain about the other artists."],
   ["logic","The day before yesterday was Thursday.\nWhat day is tomorrow?",["Friday","Saturday","Sunday","Monday"],2,"Yesterday was Friday, so today is Saturday and tomorrow is <b>Sunday</b>."],
   // ---- added: quick math
-  ["math","A rectangle's length is twice its width. Its perimeter is 36 cm. What is its area?",["54 cm&sup2;","72 cm&sup2;","81 cm&sup2;","108 cm&sup2;"],1,"With width w and length 2w, the perimeter is 6w = 36, so w = 6 and the length is 12. The area is 6 &times; 12 = <b>72 cm&sup2;</b>."],
+  ["math","A rectangle's length is twice its width. Its perimeter is 36 cm. What is its area?",["54 cm²","72 cm²","81 cm²","108 cm²"],1,"With width w and length 2w, the perimeter is 6w = 36, so w = 6 and the length is 12. The area is 6 &times; 12 = <b>72 cm&sup2;</b>."],
   ["math","The average of five numbers is 12. Four of them are 8, 10, 14 and 16. What is the fifth?",["10","12","14","16"],1,"The total must be 5 &times; 12 = 60. The four known numbers add up to 48, so the fifth is 60 &minus; 48 = <b>12</b>."],
   ["math","A $200 item is marked up 25%, then the new price is discounted 20%. What is the final price?",["$190","$200","$225","$250"],1,"$200 &times; 1.25 = $250, and $250 &times; 0.80 = <b>$200</b>. The 20% discount applies to a bigger number, so it cancels the markup exactly."],
   ["math","6 workers build a wall in 10 days. At the same pace, how many days would 15 workers need?",["2","4","6","25"],1,"The job is 6 &times; 10 = 60 worker-days. With 15 workers it takes 60 &divide; 15 = <b>4 days</b>."],
   ["math","You roll two fair six-sided dice. What is the probability that the total is 7?",["1/12","1/9","1/6","1/7"],2,"There are 36 equally likely outcomes, and 6 of them total 7 (1+6, 2+5, 3+4, 4+3, 5+2, 6+1). 6/36 = <b>1/6</b>."]
 ];
 
-var TIME_LIMIT = 20 * 60;
-var BEST_KEY = "reasoning-best";
+// Hard mode: multi-step patterns, trickier deductions, longer calculations
+var HARD = [
+  // ---- series
+  ["series","1, 2, 4, 7, 12, 20, ?",["30","32","33","35"],2,"The gaps are 1, 2, 3, 5, 8, which is the Fibonacci sequence. The next gap is 13, so the answer is 20 + 13 = <b>33</b>."],
+  ["series","1, 2, 4, 8, 15, 26, ?",["40","41","42","44"],2,"The gaps are 1, 2, 4, 7, 11, and those gaps themselves grow by 1, 2, 3, 4. The next gap is 11 + 5 = 16, so the answer is 26 + 16 = <b>42</b>."],
+  ["series","2, 12, 36, 80, 150, ?",["216","240","252","260"],2,"Each term is n&sup2; &times; (n + 1): 1&times;2, 4&times;3, 9&times;4, 16&times;5, 25&times;6. The next is 36 &times; 7 = <b>252</b>."],
+  ["series","1, 4, 27, 256, ?",["625","1024","3125","3456"],2,"Each term is n raised to the power n: 1&sup1;, 2&sup2;, 3&sup3;, 4&#8308;. The next is 5&#8309; = <b>3125</b>."],
+  ["series","2, 3, 6, 7, 14, 15, 30, ?",["31","32","45","60"],0,"The rules alternate: +1, then &times;2, then +1, then &times;2, and so on. After &times;2 gave 30, the next step is +1, giving <b>31</b>."],
+  ["series","J, F, M, A, M, J, J, A, ?",["S","O","N","D"],0,"These are the first letters of the months January through August. The next month is September, so the answer is <b>S</b>."],
+  ["series","4, 6, 9, 14, 23, 40, ?",["63","69","73","79"],2,"The gaps are 2, 3, 5, 9, 17, and those grow by 1, 2, 4, 8. The next growth is 16, so the next gap is 33 and the answer is 40 + 33 = <b>73</b>."],
+  // ---- odd one out
+  ["odd","Which does not belong?\n2, 5, 10, 17, 26, 36",["5","17","26","36"],3,"The others are n&sup2; + 1 (1+1, 4+1, 9+1, 16+1, 25+1). The next in that pattern would be 37, so <b>36</b> doesn't fit."],
+  ["odd","Which does not belong?\nAcre, Hectare, Liter, Square mile",["Acre","Hectare","Liter","Square mile"],2,"Acre, hectare and square mile all measure area. A <b>liter</b> measures volume."],
+  ["odd","Which does not belong?\n3/4, 6/8, 9/12, 8/12",["3/4","6/8","8/12","9/12"],2,"3/4, 6/8 and 9/12 all equal 0.75. <b>8/12</b> equals 2/3."],
+  // ---- analogies
+  ["analogy","Ornithologist is to birds as entomologist is to:",["Insects","Rocks","Fish","Plants"],0,"An ornithologist studies birds, and an entomologist studies <b>insects</b>."],
+  ["analogy","Verbose is to concise as lavish is to:",["Rich","Generous","Wasteful","Frugal"],3,"Verbose and concise are opposites, and the opposite of lavish is <b>frugal</b>."],
+  ["analogy","Apex is to base as zenith is to:",["Summit","Horizon","Nadir","Orbit"],2,"Apex and base are opposite ends, as are the zenith (highest point) and the <b>nadir</b> (lowest point)."],
+  ["analogy","Prologue is to epilogue as overture is to:",["Chorus","Solo","Score","Finale"],3,"A prologue opens a story and an epilogue closes it. An overture opens a musical work, and a <b>finale</b> closes it."],
+  // ---- logic
+  ["logic","Three boxes are labeled Apples, Oranges and Mixed, but every label is wrong. You pull one fruit from the box labeled Mixed and it is an apple.\nWhat is in the box labeled Oranges?",["Apples","Oranges","Mixed fruit","It can't be determined"],2,"The Mixed label is wrong, so that box holds only apples. The Oranges box can't hold oranges (wrong label) and the apples are taken, so it must hold <b>mixed fruit</b>."],
+  ["logic","Asha, Bala, Chen and Dara each own one different pet: a cat, dog, fish or bird. Asha owns neither a cat nor a dog. Bala owns neither the fish nor the bird. Chen owns neither the fish nor the cat. Dara owns none of the fish, bird or dog.\nWho owns the dog?",["Asha","Bala","Chen","Dara"],1,"Dara can only have the cat. Chen can only have the dog or bird, and Asha only the fish or bird. Bala can only have the cat or dog, and the cat is Dara's, so <b>Bala</b> has the dog. That leaves Chen with the bird and Asha with the fish."],
+  ["logic","Rina has 3 brothers. Each of her brothers has exactly 2 sisters.\nHow many girls are in the family?",["2","3","5","6"],0,"Each brother's 2 sisters are all the girls in the family, and Rina is one of them. So there are <b>2</b> girls: Rina and one other sister."],
+  ["logic","If the alarm is triggered, the light turns red. The light is red.\nWhat follows?",["The alarm was triggered","The alarm was not triggered","Nothing certain: the light could be red for another reason","The light is broken"],2,"The rule only goes one way, from alarm to red light. A red light could have other causes, so <b>nothing certain follows</b> (this is the fallacy of affirming the consequent)."],
+  ["logic","You have 9 coins that look identical. One is slightly heavier. You have a balance scale.\nWhat is the fewest weighings that guarantees you find the heavy coin?",["1","2","3","4"],1,"Weigh 3 against 3. That tells you which group of 3 holds the heavy coin (or that it's the 3 left out). Then weigh 1 against 1 from that group. <b>Two</b> weighings are enough."],
+  ["logic","Knights always tell the truth and knaves always lie. A says: \"At least one of us is a knave.\"\nWhat are A and B?",["Both knights","A is a knight, B is a knave","A is a knave, B is a knight","Both knaves"],1,"If A were a knave, the statement would be true, but a knave can't say something true. So A is a knight, the statement is true, and since A isn't a knave, <b>B is a knave</b>."],
+  ["logic","All Zorks are Yips. Some Yips are Quats. No Quat is a Zork.\nWhich must be true?",["All Yips are Zorks","Some Yips are not Zorks","No Yips are Quats","Some Zorks are Quats"],1,"The Yips that are Quats can't be Zorks, so <b>some Yips are not Zorks</b>. The other options contradict the statements."],
+  ["logic","A drawer holds 10 black, 10 white and 10 blue socks, and the room is dark.\nHow many socks must you take out to guarantee a matching pair?",["3","4","11","21"],1,"With 3 colors, 3 socks could all differ. The 4th must match one of them, so <b>4</b> socks guarantee a pair."],
+  // ---- quick math
+  ["math","What is the angle between the hour and minute hands of a clock at 3:15?",["0°","7.5°","15°","22.5°"],1,"At 3:15 the minute hand is at 90&deg;. The hour hand has moved a quarter of the way from 3 to 4: 90&deg; + 7.5&deg; = 97.5&deg;. The gap is <b>7.5&deg;</b>."],
+  ["math","Pipe A fills a tank in 6 hours and pipe B fills it in 12 hours. How long do they take together?",["3 hours","4 hours","6 hours","9 hours"],1,"Per hour they fill 1/6 + 1/12 = 3/12 = 1/4 of the tank, so together they need <b>4 hours</b>."],
+  ["math","A boat goes 12 km downstream in 1 hour and returns the 12 km upstream in 2 hours. How fast is the current?",["2 km/h","3 km/h","4 km/h","6 km/h"],1,"Downstream speed is 12 km/h and upstream speed is 6 km/h. The current is half the difference: (12 &minus; 6) &divide; 2 = <b>3 km/h</b>."],
+  ["math","$1,000 earns 10% interest per year, compounded annually. What is it worth after 2 years?",["$1,200","$1,210","$1,220","$1,100"],1,"After year 1 it's $1,100. Year 2 earns 10% of $1,100 = $110, giving <b>$1,210</b>. (Simple interest would give only $1,200.)"],
+  ["math","How many different 4-digit numbers can be made using each of the digits 1, 2, 3 and 4 exactly once?",["12","16","24","256"],2,"There are 4 choices for the first digit, then 3, 2 and 1: 4 &times; 3 &times; 2 &times; 1 = <b>24</b>."],
+  ["math","Two trains 300 km apart travel toward each other at 60 km/h and 90 km/h. A bird flies back and forth between them at 150 km/h until they meet. How far does the bird fly?",["150 km","200 km","300 km","450 km"],2,"The trains close at 150 km/h, so they meet after 2 hours. The bird flies for those 2 hours at 150 km/h: <b>300 km</b>."],
+  ["math","What is the sum of the whole numbers from 1 to 40?",["780","800","820","840"],2,"Pair the numbers: 40 &times; 41 &divide; 2 = <b>820</b>."],
+  ["math","A bag has 3 red and 2 blue marbles. You draw two without replacing the first. What is the probability both are red?",["9/25","3/10","3/5","1/4"],1,"The first is red with probability 3/5, and then the second is red with probability 2/4. 3/5 &times; 2/4 = 6/20 = <b>3/10</b>."],
+  ["math","A number is increased by 50%, and then the result is decreased by 50%. The final value is what percent of the original?",["100%","75%","50%","125%"],1,"1.5 &times; 0.5 = 0.75, so the final value is <b>75%</b> of the original."]
+];
+
+var BANKS = { standard: BANK, hard: HARD };
 var state = null, timerId = null;
 
 function $(id){ return document.getElementById(id); }
@@ -244,11 +297,17 @@ function show(id){
   ["intro","quiz","results"].forEach(function(s){ $(s).hidden = (s !== id); });
 }
 
-function buildTest(){
+function currentMode(){
+  var r = document.querySelector('input[name="mode"]:checked');
+  return r ? r.value : "standard";
+}
+
+function buildTest(mode){
   var picked = [];
-  Object.keys(QUOTA).forEach(function(cat){
-    var pool = BANK.filter(function(q){ return q[0] === cat; });
-    shuffle(pool).slice(0, QUOTA[cat]).forEach(function(q){ picked.push(q); });
+  var quota = MODES[mode].quota;
+  Object.keys(quota).forEach(function(cat){
+    var pool = BANKS[mode].filter(function(q){ return q[0] === cat; });
+    shuffle(pool).slice(0, quota[cat]).forEach(function(q){ picked.push(q); });
   });
   return shuffle(picked).map(function(q){
     var order = shuffle(q[2].map(function(_, i){ return i; }));
@@ -268,7 +327,7 @@ function fmt(sec){
 function tick(){
   var el = Math.floor((Date.now() - state.t0) / 1000);
   if (state.timed){
-    var left = Math.max(0, TIME_LIMIT - el);
+    var left = Math.max(0, state.limit - el);
     $("clock").textContent = "Time left " + fmt(left);
     if (left === 0) finish(true);
   } else {
@@ -277,7 +336,8 @@ function tick(){
 }
 
 function start(){
-  state = { qs: buildTest(), i: 0, answered: false, timed: $("timed").checked, t0: Date.now(), expired: false };
+  var mode = currentMode();
+  state = { mode: mode, qs: buildTest(mode), i: 0, answered: false, timed: $("timed").checked, limit: MODES[mode].minutes * 60, t0: Date.now(), expired: false };
   show("quiz");
   tick();
   clearInterval(timerId);
@@ -354,7 +414,8 @@ function finish(expired){
 
   $("scoreNum").textContent = score;
   $("level").textContent = lv[0];
-  $("summary").textContent = (expired ? "Time ran out with " + unanswered + " unanswered. " : "") + lv[1] + " Finished in " + fmt(Math.min(elapsed, state.timed ? TIME_LIMIT : elapsed)) + ".";
+  $("summary").textContent = (expired ? "Time ran out with " + unanswered + " unanswered. " : "") + lv[1] + " Finished in " + fmt(Math.min(elapsed, state.timed ? state.limit : elapsed)) + ".";
+  $("modeTag").textContent = MODES[state.mode].name;
 
   var by = {};
   state.qs.forEach(function(q){
@@ -376,20 +437,28 @@ function finish(expired){
   }).join("");
 
   try {
-    var prev = JSON.parse(localStorage.getItem(BEST_KEY) || "null");
-    if (!prev || score > prev.score) localStorage.setItem(BEST_KEY, JSON.stringify({ score: score, date: new Date().toISOString() }));
+    var key = MODES[state.mode].best;
+    var prev = JSON.parse(localStorage.getItem(key) || "null");
+    if (!prev || score > prev.score) localStorage.setItem(key, JSON.stringify({ score: score, date: new Date().toISOString() }));
   } catch (e) {}
   showBest();
   show("results");
   window.scrollTo(0, 0);
 }
 
+function renderIntro(){
+  var mode = currentMode(), q = MODES[mode].quota;
+  $("cats").innerHTML = Object.keys(q).map(function(c){ return "<li>" + CATS[c] + " &times;" + q[c] + "</li>"; }).join("");
+  $("timedLabel").textContent = "Timed: " + MODES[mode].minutes + " minutes in total";
+  showBest();
+}
+
 function showBest(){
   var el = $("best");
   try {
-    var b = JSON.parse(localStorage.getItem(BEST_KEY) || "null");
+    var b = JSON.parse(localStorage.getItem(MODES[currentMode()].best) || "null");
     if (b){
-      el.textContent = "Your best on this device: " + b.score + " / 20 (" + new Date(b.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) + ")";
+      el.textContent = "Your best in " + MODES[currentMode()].name.toLowerCase() + " on this device: " + b.score + " / 20 (" + new Date(b.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) + ")";
       el.hidden = false;
       return;
     }
@@ -399,7 +468,8 @@ function showBest(){
 
 $("start").addEventListener("click", start);
 $("retake").addEventListener("click", start);
-$("toTop").addEventListener("click", function(){ show("intro"); showBest(); window.scrollTo(0, 0); });
+$("toTop").addEventListener("click", function(){ show("intro"); renderIntro(); window.scrollTo(0, 0); });
+Array.prototype.forEach.call(document.querySelectorAll('input[name="mode"]'), function(r){ r.addEventListener("change", renderIntro); });
 $("confirm").addEventListener("click", confirmAnswer);
 $("next").addEventListener("click", next);
 $("choices").addEventListener("click", function(e){
@@ -415,7 +485,7 @@ document.addEventListener("keydown", function(e){
     if (state.answered) next(); else confirmAnswer();
   }
 });
-showBest();
+renderIntro();
 </script>
 </body>
 </html>
