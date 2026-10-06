@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reasoning Test</title>
+<meta name="description" content="A 20-question reasoning test for adults: number and letter series, odd-one-out, analogies, logic and quick math. Untimed or timed, with explanations for every answer. A fun brain workout, not a clinical IQ test.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9e3cf; --surface:#ddd5b8; --card:#f2ecd9;
+  --ink:#231f15; --ink-soft:#5a5540; --ink-faint:#877f63;
+  --line:rgba(35,31,21,0.16);
+  --accent:#8a4b1f; --accent-soft:rgba(138,75,31,0.13); --accent-ink:#f2ecd9;
+  --good:#2f6b3e; --good-soft:rgba(47,107,62,0.14); --bad:#a23a2a; --bad-soft:rgba(162,58,42,0.13);
+  --shadow:0 6px 16px rgba(35,31,21,0.10);
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+    --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+    --line:rgba(236,229,207,0.16);
+    --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16); --accent-ink:#241f13;
+    --good:#8fbf9a; --good-soft:rgba(143,191,154,0.16); --bad:#e08a7a; --bad-soft:rgba(224,138,122,0.16);
+    --shadow:0 6px 16px rgba(0,0,0,0.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+  --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+  --line:rgba(236,229,207,0.16);
+  --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16); --accent-ink:#241f13;
+  --good:#8fbf9a; --good-soft:rgba(143,191,154,0.16); --bad:#e08a7a; --bad-soft:rgba(224,138,122,0.16);
+  --shadow:0 6px 16px rgba(0,0,0,0.45);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:1rem 16px 2.6rem}
+.crumbs{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 1.2rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+.crumbs a{color:var(--ink-faint);text-decoration:none}.crumbs a:hover{color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.08;margin:0 0 .5rem;text-wrap:balance}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.35rem;margin:0 0 .5rem}
+.lede{color:var(--ink-soft);margin:0 0 1.1rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:1.2rem 1.3rem;box-shadow:var(--shadow)}
+.mono{font-family:var(--font-mono)}
+.small{font-size:.8rem;color:var(--ink-faint)}
+.opts{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;margin:.9rem 0 1.1rem;font-family:var(--font-mono);font-size:.8rem;color:var(--ink-soft)}
+.opts label{display:flex;align-items:center;gap:.45rem;cursor:pointer}
+.btn{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:.6rem 1.3rem;border-radius:99px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn:focus-visible,.choice:focus-visible,.opts input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn[disabled]{opacity:.4;cursor:default;filter:none}
+.cats{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 1.1rem;padding:0;list-style:none}
+.cats li{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);color:var(--ink-soft);padding:.25rem .65rem;border-radius:99px}
+.bar{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:.74rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 .5rem}
+.track{height:5px;background:var(--line);border-radius:99px;overflow:hidden;margin:0 0 1rem}
+.fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+@media (prefers-reduced-motion: reduce){.fill{transition:none}}
+.cat-tag{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 .3rem}
+.q{font-size:1.2rem;line-height:1.4;margin:0 0 1rem;white-space:pre-line}
+.choices{display:grid;gap:.5rem;margin:0 0 1rem}
+.choice{display:flex;gap:.8rem;align-items:baseline;text-align:left;width:100%;font-family:var(--font-body);font-size:1.02rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:.65rem .85rem;cursor:pointer}
+.choice:hover:not([disabled]){border-color:var(--accent);background:var(--accent-soft)}
+.choice .k{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-faint);min-width:1.1rem}
+.choice.picked{border-color:var(--accent);background:var(--accent-soft)}
+.choice.right{border-color:var(--good);background:var(--good-soft)}
+.choice.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.choice[disabled]{cursor:default}
+.explain{border-left:3px solid var(--accent);padding:.1rem 0 .1rem .8rem;margin:0 0 1rem;color:var(--ink-soft);font-size:.96rem}
+.explain b{color:var(--ink)}
+.score{font-family:var(--font-display);font-size:clamp(2.6rem,9vw,4rem);line-height:1;margin:.2rem 0}
+.score small{font-size:.4em;color:var(--ink-faint)}
+.level{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem}
+table{width:100%;border-collapse:collapse;margin:.4rem 0 1rem;font-size:.95rem}
+th,td{text-align:left;padding:.4rem .3rem;border-bottom:1px solid var(--line)}
+th{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:500}
+td.n{font-family:var(--font-mono);text-align:right;white-space:nowrap}
+th.n{text-align:right}
+.review{margin:.4rem 0 0;padding:0;list-style:none;display:grid;gap:.8rem}
+.review li{border:1px solid var(--line);border-radius:6px;padding:.7rem .85rem;background:var(--bg)}
+.review .rq{white-space:pre-line;margin:0 0 .35rem}
+.review .ra{font-size:.92rem;color:var(--ink-soft);margin:0}
+.review .tag-bad{color:var(--bad)}.review .tag-good{color:var(--good)}
+.actions{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0 0}
+.disclaimer{margin:1.1rem 0 0;font-size:.82rem;color:var(--ink-faint)}
+footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;color:var(--ink-soft)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="../">&larr; Sentinel Atlas</a></div>
+  <h1>Reasoning Test</h1>
+  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 40. Every answer comes with a short explanation.</p>
+
+  <section id="intro" class="panel" aria-labelledby="introH">
+    <h2 id="introH">Before you start</h2>
+    <ul class="cats" aria-label="What the test covers">
+      <li>Number &amp; letter series &times;5</li>
+      <li>Odd one out &times;3</li>
+      <li>Analogies &times;4</li>
+      <li>Logic &times;4</li>
+      <li>Quick math &times;4</li>
+    </ul>
+    <p class="lede" style="margin-bottom:.4rem">No calculator or search. Choose the single best answer; you can't go back once you confirm. Different questions show up each time you retake it.</p>
+    <div class="opts">
+      <label><input type="checkbox" id="timed"> Timed: 20 minutes in total</label>
+    </div>
+    <button class="btn" id="start" type="button">Start the test</button>
+    <p class="small" id="best" style="margin:.9rem 0 0" hidden></p>
+    <p class="disclaimer">A fun brain workout, not a clinical IQ test. A real IQ score needs a standardized, age-normed test given by a qualified professional, so this page shows a score out of 20 and a band, never an IQ number.</p>
+  </section>
+
+  <section id="quiz" class="panel" hidden aria-live="polite">
+    <div class="bar"><span id="progress"></span><span id="clock"></span></div>
+    <div class="track" aria-hidden="true"><div class="fill" id="fill"></div></div>
+    <p class="cat-tag" id="cat"></p>
+    <p class="q" id="qtext"></p>
+    <div class="choices" id="choices" role="group" aria-label="Answer choices"></div>
+    <div class="explain" id="explain" hidden></div>
+    <button class="btn" id="next" type="button" hidden>Next</button>
+    <button class="btn" id="confirm" type="button" disabled>Confirm answer</button>
+    <p class="small" style="margin:.8rem 0 0">Tip: press 1&ndash;4 to choose, Enter to confirm or continue.</p>
+  </section>
+
+  <section id="results" class="panel" hidden aria-labelledby="resH">
+    <h2 id="resH">Your result</h2>
+    <div class="score"><span id="scoreNum"></span><small> / 20</small></div>
+    <p class="level" id="level"></p>
+    <p class="lede" id="summary" style="margin-bottom:.4rem"></p>
+    <table aria-label="Score by category">
+      <thead><tr><th>Category</th><th class="n">Correct</th></tr></thead>
+      <tbody id="catRows"></tbody>
+    </table>
+    <h2>Review</h2>
+    <ul class="review" id="review"></ul>
+    <div class="actions">
+      <button class="btn" id="retake" type="button">Take it again</button>
+      <button class="btn ghost" id="toTop" type="button">Back to start</button>
+    </div>
+    <p class="disclaimer">A fun brain workout, not a clinical IQ test. Scores vary with sleep, mood and familiarity with puzzle styles.</p>
+  </section>
+
+  <footer class="foot">Sentinel Atlas &middot; Plate XIII &middot; a personal reasoning workout, not a clinical or diagnostic tool.</footer>
+</div>
+
+<script>
+// Each question: [category, text, [choices], correctIndex, explanation]
+var CATS = {
+  series: "Series", odd: "Odd one out", analogy: "Analogies", logic: "Logic", math: "Quick math"
+};
+var QUOTA = { series: 5, odd: 3, analogy: 4, logic: 4, math: 4 };
+var BANK = [
+  // ---- series (12)
+  ["series","2, 6, 12, 20, 30, ?",["36","40","42","44"],2,"The gaps grow by 2 each time: +4, +6, +8, +10, so the next gap is +12 and the answer is <b>42</b>. (Each term is n &times; (n+1).)"],
+  ["series","3, 6, 11, 18, 27, ?",["36","38","40","45"],1,"The gaps are the odd numbers +3, +5, +7, +9, so the next gap is +11 and the answer is <b>38</b>."],
+  ["series","1, 1, 2, 3, 5, 8, ?",["11","12","13","15"],2,"Each term is the sum of the two before it (Fibonacci): 5 + 8 = <b>13</b>."],
+  ["series","2, 3, 5, 7, 11, 13, ?",["15","17","19","21"],1,"These are the prime numbers in order. The next prime after 13 is <b>17</b>."],
+  ["series","2, 4, 8, 14, 22, ?",["30","32","34","36"],1,"The gaps are +2, +4, +6, +8, so the next gap is +10 and the answer is <b>32</b>."],
+  ["series","1, 2, 6, 24, 120, ?",["480","600","720","840"],2,"Each term is the previous one multiplied by 2, 3, 4, 5, then 6: 120 &times; 6 = <b>720</b> (factorials)."],
+  ["series","4, 9, 19, 39, ?",["69","78","79","81"],2,"Each term is double the previous one plus 1: 39 &times; 2 + 1 = <b>79</b>."],
+  ["series","2, 5, 4, 10, 6, 15, 8, ?",["18","20","22","25"],1,"Two interleaved series: 2, 4, 6, 8 (+2) in the odd positions and 5, 10, 15 (+5) in the even ones. The next is <b>20</b>."],
+  ["series","1, 8, 27, 64, ?",["100","121","125","216"],2,"These are the cubes 1&sup3;, 2&sup3;, 3&sup3;, 4&sup3;, so the next is 5&sup3; = <b>125</b>."],
+  ["series","100, 91, 83, 76, 70, ?",["63","64","65","66"],2,"The drops shrink by 1 each time: &minus;9, &minus;8, &minus;7, &minus;6, so the next is &minus;5 and the answer is <b>65</b>."],
+  ["series","A, C, F, J, O, ?",["T","U","V","W"],1,"Counting alphabet positions: 1, 3, 6, 10, 15 have gaps +2, +3, +4, +5. The next gap is +6, giving position 21, which is <b>U</b>."],
+  ["series","Z, X, U, Q, ?",["K","L","M","N"],1,"Alphabet positions 26, 24, 21, 17 drop by 2, 3, 4. The next drop is 5, giving position 12, which is <b>L</b>."],
+  // ---- odd one out (6)
+  ["odd","Which does not belong?\nTriangle, Square, Pentagon, Circle",["Triangle","Square","Pentagon","Circle"],3,"The first three are polygons made of straight sides. The <b>circle</b> has none."],
+  ["odd","Which does not belong?\n17, 23, 29, 33, 41",["17","23","33","41"],2,"All except <b>33</b> are prime numbers; 33 = 3 &times; 11."],
+  ["odd","Which does not belong?\nWhale, Dolphin, Shark, Seal",["Whale","Dolphin","Shark","Seal"],2,"Whales, dolphins and seals are mammals. A <b>shark</b> is a fish."],
+  ["odd","Which does not belong?\nOak, Maple, Pine, Birch",["Oak","Maple","Pine","Birch"],2,"Oak, maple and birch are broadleaf trees. <b>Pine</b> is a conifer with needles."],
+  ["odd","Which does not belong?\n16, 25, 36, 48, 64",["16","36","48","64"],2,"All except <b>48</b> are perfect squares (4&sup2;, 5&sup2;, 6&sup2;, 8&sup2;)."],
+  ["odd","Which does not belong?\nAnaconda, Cobra, Gecko, Viper",["Anaconda","Cobra","Gecko","Viper"],2,"Anaconda, cobra and viper are snakes. A <b>gecko</b> is a lizard."],
+  // ---- analogies (8)
+  ["analogy","Hand is to glove as head is to:",["Hat","Hair","Face","Brain"],0,"A glove covers a hand, and a <b>hat</b> covers a head."],
+  ["analogy","Doctor is to hospital as teacher is to:",["Student","School","Book","Exam"],1,"A doctor works in a hospital, and a teacher works in a <b>school</b>."],
+  ["analogy","Knife is to cut as pen is to:",["Paper","Ink","Write","Cap"],2,"A knife is used to cut, and a pen is used to <b>write</b>."],
+  ["analogy","Kilometer is to distance as kilogram is to:",["Speed","Weight","Volume","Time"],1,"A kilometer measures distance, and a kilogram measures <b>weight</b> (mass)."],
+  ["analogy","Second is to minute as minute is to:",["Day","Hour","Week","Clock"],1,"Sixty seconds make a minute, and sixty minutes make an <b>hour</b>."],
+  ["analogy","Fish is to school as wolf is to:",["Herd","Flock","Pack","Swarm"],2,"A group of fish is a school, and a group of wolves is a <b>pack</b>."],
+  ["analogy","Seed is to tree as egg is to:",["Nest","Bird","Shell","Feather"],1,"A seed grows into a tree, and an egg develops into a <b>bird</b>."],
+  ["analogy","Brave is to coward as generous is to:",["Kind","Wealthy","Stingy","Polite"],2,"Brave and coward are opposites, and the opposite of generous is <b>stingy</b>."],
+  // ---- logic (6)
+  ["logic","All bloops are razzies. All razzies are lazzies.\nWhich statement must be true?",["All lazzies are bloops","All bloops are lazzies","Some lazzies are not razzies","No razzies are bloops"],1,"Bloops sit inside razzies, which sit inside lazzies, so <b>all bloops are lazzies</b>. The reverse doesn't follow."],
+  ["logic","Anil is older than Beena. Chitra is younger than Beena. Dev is older than Anil.\nWho is the second oldest?",["Dev","Anil","Beena","Chitra"],1,"The order from oldest is Dev, Anil, Beena, Chitra, so the second oldest is <b>Anil</b>."],
+  ["logic","No reptiles have fur. Some pets are reptiles.\nWhich must be true?",["Some pets have fur","Some pets do not have fur","All pets are reptiles","No pets have fur"],1,"The pets that are reptiles have no fur, so <b>some pets do not have fur</b>. We can't say anything certain about the other pets."],
+  ["logic","If it rains, the match is cancelled. The match was not cancelled.\nWhat follows?",["It rained","It did not rain","The weather was cold","Nothing can be concluded"],1,"If rain always cancels the match, then no cancellation means <b>it did not rain</b> (the contrapositive)."],
+  ["logic","Some doctors are writers. All writers are readers.\nWhich must be true?",["All doctors are readers","Some doctors are readers","No writer is a doctor","All readers are writers"],1,"The doctors who are writers are also readers, so <b>some doctors are readers</b>. Not all doctors are necessarily writers."],
+  ["logic","A farmer has 17 sheep. All but 9 die.\nHow many are left?",["8","9","17","26"],1,"\"All but 9\" means 9 survive, so <b>9</b> are left."],
+  // ---- quick math (8)
+  ["math","A shirt costs $80 after a 20% discount. What was the original price?",["$96","$100","$104","$90"],1,"$80 is 80% of the original, so the original is 80 &divide; 0.8 = <b>$100</b>."],
+  ["math","A train travels 60 km in 45 minutes. What is its speed in km/h?",["70","75","80","90"],2,"45 minutes is 0.75 hours, and 60 &divide; 0.75 = <b>80 km/h</b>."],
+  ["math","3 pens cost $4.50. How much do 8 pens cost?",["$10.50","$12.00","$13.50","$14.00"],1,"One pen costs $1.50, so 8 pens cost 8 &times; 1.50 = <b>$12.00</b>."],
+  ["math","It takes 5 machines 5 minutes to make 5 widgets. How long would 100 machines take to make 100 widgets?",["1 minute","5 minutes","20 minutes","100 minutes"],1,"Each machine makes one widget in 5 minutes, so 100 machines make 100 widgets in the same <b>5 minutes</b>."],
+  ["math","Today is Wednesday. What day will it be 100 days from now?",["Thursday","Friday","Saturday","Sunday"],1,"100 = 14 weeks + 2 days, so it's two days after Wednesday: <b>Friday</b>."],
+  ["math","Maya has 3 times as many books as Leo. Together they have 48. How many does Maya have?",["12","24","36","42"],2,"Leo has x and Maya 3x, so 4x = 48 and x = 12. Maya has 3 &times; 12 = <b>36</b>."],
+  ["math","A bat and a ball cost $1.10 together. The bat costs $1.00 more than the ball. How much is the ball?",["$0.05","$0.10","$0.15","$0.50"],0,"If the ball is b, the bat is b + 1.00, so 2b + 1.00 = 1.10 and b = <b>$0.05</b>. (The tempting $0.10 would make the total $1.20.)"],
+  ["math","You flip two fair coins. What is the probability of at least one head?",["1/2","2/3","3/4","1/4"],2,"There are 4 equally likely outcomes (HH, HT, TH, TT) and 3 contain a head: <b>3/4</b>."]
+];
+
+var TIME_LIMIT = 20 * 60;
+var BEST_KEY = "reasoning-best";
+var state = null, timerId = null;
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function shuffle(a){
+  a = a.slice();
+  for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+function show(id){
+  ["intro","quiz","results"].forEach(function(s){ $(s).hidden = (s !== id); });
+}
+
+function buildTest(){
+  var picked = [];
+  Object.keys(QUOTA).forEach(function(cat){
+    var pool = BANK.filter(function(q){ return q[0] === cat; });
+    shuffle(pool).slice(0, QUOTA[cat]).forEach(function(q){ picked.push(q); });
+  });
+  return shuffle(picked).map(function(q){
+    var order = shuffle(q[2].map(function(_, i){ return i; }));
+    return {
+      cat: q[0], text: q[1], explain: q[4],
+      choices: order.map(function(i){ return q[2][i]; }),
+      correct: order.indexOf(q[3]),
+      picked: null
+    };
+  });
+}
+
+function fmt(sec){
+  var m = Math.floor(sec / 60), s = sec % 60;
+  return m + ":" + (s < 10 ? "0" : "") + s;
+}
+function tick(){
+  var el = Math.floor((Date.now() - state.t0) / 1000);
+  if (state.timed){
+    var left = Math.max(0, TIME_LIMIT - el);
+    $("clock").textContent = "Time left " + fmt(left);
+    if (left === 0) finish(true);
+  } else {
+    $("clock").textContent = "Elapsed " + fmt(el);
+  }
+}
+
+function start(){
+  state = { qs: buildTest(), i: 0, answered: false, timed: $("timed").checked, t0: Date.now(), expired: false };
+  show("quiz");
+  tick();
+  clearInterval(timerId);
+  timerId = setInterval(tick, 1000);
+  renderQ();
+}
+
+function renderQ(){
+  var q = state.qs[state.i];
+  state.answered = false;
+  state.sel = null;
+  $("progress").textContent = "Question " + (state.i + 1) + " of " + state.qs.length;
+  $("fill").style.width = (state.i / state.qs.length * 100) + "%";
+  $("cat").textContent = CATS[q.cat];
+  $("qtext").textContent = q.text;
+  $("choices").innerHTML = q.choices.map(function(c, i){
+    return '<button type="button" class="choice" data-i="' + i + '"><span class="k">' + (i + 1) + '</span><span>' + esc(c) + '</span></button>';
+  }).join("");
+  $("explain").hidden = true;
+  $("next").hidden = true;
+  $("confirm").hidden = false;
+  $("confirm").disabled = true;
+}
+
+function select(i){
+  if (state.answered) return;
+  state.sel = i;
+  Array.prototype.forEach.call($("choices").children, function(b, k){
+    b.classList.toggle("picked", k === i);
+  });
+  $("confirm").disabled = false;
+}
+
+function confirmAnswer(){
+  if (state.answered || state.sel === null) return;
+  var q = state.qs[state.i];
+  q.picked = state.sel;
+  state.answered = true;
+  Array.prototype.forEach.call($("choices").children, function(b, k){
+    b.disabled = true;
+    b.classList.remove("picked");
+    if (k === q.correct) b.classList.add("right");
+    else if (k === q.picked) b.classList.add("wrong");
+  });
+  $("explain").innerHTML = (q.picked === q.correct ? "<b>Correct.</b> " : "<b>Not quite.</b> ") + q.explain;
+  $("explain").hidden = false;
+  $("confirm").hidden = true;
+  $("next").hidden = false;
+  $("next").textContent = state.i === state.qs.length - 1 ? "See results" : "Next";
+  $("next").focus();
+}
+
+function next(){
+  if (!state.answered) return;
+  if (state.i === state.qs.length - 1) finish(false);
+  else { state.i++; renderQ(); }
+}
+
+function levelFor(n){
+  if (n >= 18) return ["Exceptional", "Almost everything landed. Sharp pattern recognition and clean logic."];
+  if (n >= 15) return ["Strong", "A strong result. Most patterns and deductions came easily."];
+  if (n >= 11) return ["Solid", "A solid result with room to sharpen on the questions you missed."];
+  if (n >= 7) return ["Developing", "A reasonable start. Reviewing the explanations below is the quickest way to improve."];
+  return ["Warming up", "These puzzle styles take practice. Review the explanations and try again with fresh questions."];
+}
+
+function finish(expired){
+  clearInterval(timerId);
+  var elapsed = Math.floor((Date.now() - state.t0) / 1000);
+  var total = state.qs.length;
+  var score = state.qs.filter(function(q){ return q.picked === q.correct; }).length;
+  var unanswered = state.qs.filter(function(q){ return q.picked === null; }).length;
+  var lv = levelFor(score);
+
+  $("scoreNum").textContent = score;
+  $("level").textContent = lv[0];
+  $("summary").textContent = (expired ? "Time ran out with " + unanswered + " unanswered. " : "") + lv[1] + " Finished in " + fmt(Math.min(elapsed, state.timed ? TIME_LIMIT : elapsed)) + ".";
+
+  var by = {};
+  state.qs.forEach(function(q){
+    by[q.cat] = by[q.cat] || [0, 0];
+    by[q.cat][1]++;
+    if (q.picked === q.correct) by[q.cat][0]++;
+  });
+  $("catRows").innerHTML = Object.keys(CATS).map(function(c){
+    return '<tr><td>' + CATS[c] + '</td><td class="n">' + by[c][0] + ' / ' + by[c][1] + '</td></tr>';
+  }).join("");
+
+  $("review").innerHTML = state.qs.map(function(q, n){
+    var ok = q.picked === q.correct;
+    var yours = q.picked === null ? "No answer" : esc(q.choices[q.picked]);
+    return '<li><p class="rq"><span class="mono small">' + (n + 1) + '. ' + CATS[q.cat] + '</span><br>' + esc(q.text) + '</p>' +
+      '<p class="ra"><span class="' + (ok ? "tag-good" : "tag-bad") + '">' + (ok ? "Correct" : "Missed") + '</span>' +
+      (ok ? "" : ' &mdash; you chose: ' + yours + '; answer: <b>' + esc(q.choices[q.correct]) + '</b>') + '</p>' +
+      '<p class="ra">' + q.explain + '</p></li>';
+  }).join("");
+
+  try {
+    var prev = JSON.parse(localStorage.getItem(BEST_KEY) || "null");
+    if (!prev || score > prev.score) localStorage.setItem(BEST_KEY, JSON.stringify({ score: score, date: new Date().toISOString() }));
+  } catch (e) {}
+  showBest();
+  show("results");
+  window.scrollTo(0, 0);
+}
+
+function showBest(){
+  var el = $("best");
+  try {
+    var b = JSON.parse(localStorage.getItem(BEST_KEY) || "null");
+    if (b){
+      el.textContent = "Your best on this device: " + b.score + " / 20 (" + new Date(b.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) + ")";
+      el.hidden = false;
+      return;
+    }
+  } catch (e) {}
+  el.hidden = true;
+}
+
+$("start").addEventListener("click", start);
+$("retake").addEventListener("click", start);
+$("toTop").addEventListener("click", function(){ show("intro"); showBest(); window.scrollTo(0, 0); });
+$("confirm").addEventListener("click", confirmAnswer);
+$("next").addEventListener("click", next);
+$("choices").addEventListener("click", function(e){
+  var b = e.target.closest("button[data-i]");
+  if (b) select(parseInt(b.getAttribute("data-i"), 10));
+});
+document.addEventListener("keydown", function(e){
+  if ($("quiz").hidden || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key >= "1" && e.key <= "4"){ select(parseInt(e.key, 10) - 1); }
+  else if (e.key === "Enter"){
+    if (e.target.tagName === "BUTTON" && (e.target.id === "confirm" || e.target.id === "next")) return;
+    e.preventDefault();
+    if (state.answered) next(); else confirmAnswer();
+  }
+});
+showBest();
+</script>
+</body>
+</html>
