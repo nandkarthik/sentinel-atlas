@@ -380,7 +380,32 @@ var HARD = [
   ["math","A 200 m train passes a pole in 8 seconds. How long does it take to completely cross a 300 m platform at the same speed?",["12 seconds","20 seconds","24 seconds","32 seconds"],1,"Its speed is 200 &divide; 8 = 25 m/s. To clear the platform it must cover 200 + 300 = 500 m, which takes 500 &divide; 25 = <b>20 seconds</b>."],
   ["math","How many zeros are at the end of 25! (25 factorial)?",["5","6","7","10"],1,"Each trailing zero comes from a factor of 5. There are 5 multiples of 5 up to 25, and 25 contributes one extra, so the total is 5 + 1 = <b>6</b>."],
   ["math","How many kilograms of rice at $2 per kg must be mixed with 10 kg of rice at $5 per kg to make a blend worth $3 per kg?",["10 kg","15 kg","20 kg","25 kg"],2,"With x kg of the cheaper rice: 2x + 50 = 3(x + 10), so x = <b>20 kg</b>."],
-  ["math","What is the sum of the interior angles of a hexagon?",["540°","720°","900°","1080°"],1,"A hexagon splits into 4 triangles, and 4 &times; 180&deg; = <b>720&deg;</b>."]
+  ["math","What is the sum of the interior angles of a hexagon?",["540°","720°","900°","1080°"],1,"A hexagon splits into 4 triangles, and 4 &times; 180&deg; = <b>720&deg;</b>."],
+  // ---- hard set, round 4: series
+  ["series","3, 7, 16, 35, 74, ?",["148","151","153","157"],2,"Each term is double the previous one plus an increasing number: &times;2 + 1, &times;2 + 2, &times;2 + 3, &times;2 + 4, so the next is 74 &times; 2 + 5 = <b>153</b>."],
+  ["series","4, 5, 7, 11, 19, 35, ?",["59","63","67","71"],2,"The gaps are 1, 2, 4, 8, 16, doubling each time. The next gap is 32, so the answer is 35 + 32 = <b>67</b>."],
+  ["series","2, 6, 30, 210, 2310, ?",["25410","27720","30030","32340"],2,"Each term multiplies the previous one by the next prime: &times;3, &times;5, &times;7, &times;11, then &times;13. So 2310 &times; 13 = <b>30030</b>."],
+  ["series","Z, Y, W, T, P, ?",["J","K","L","M"],1,"The alphabet positions are 26, 25, 23, 20, 16, falling by 1, 2, 3, 4. The next fall is 5, giving 11, which is <b>K</b>."],
+  // ---- odd one out
+  ["odd","Which does not belong?\n8, 27, 64, 100, 125",["8","27","100","125"],2,"8, 27, 64 and 125 are perfect cubes (2&sup3;, 3&sup3;, 4&sup3;, 5&sup3;). <b>100</b> is a perfect square but not a cube."],
+  ["odd","Which does not belong?\nCopper, Brass, Iron, Gold",["Copper","Brass","Iron","Gold"],1,"Copper, iron and gold are pure elements. <b>Brass</b> is an alloy of copper and zinc."],
+  // ---- analogies
+  ["analogy","Cartographer is to map as architect is to:",["Building","Blueprint","Contractor","Skyscraper"],1,"A cartographer produces a map, and an architect produces a <b>blueprint</b> (the design, not the finished building)."],
+  ["analogy","Benevolent is to malevolent as generous is to:",["Kind","Stingy","Wealthy","Careful"],1,"Benevolent (well-meaning) is the opposite of malevolent (ill-meaning), and generous is the opposite of <b>stingy</b>."],
+  ["analogy","Thermometer is to temperature as seismograph is to:",["Rainfall","Earthquakes","Wind","Pressure"],1,"A thermometer measures temperature, and a seismograph measures <b>earthquakes</b> (ground motion)."],
+  // ---- logic
+  ["logic","Three boxes are labeled \"Apples\", \"Oranges\" and \"Mixed\". One holds only apples, one only oranges, one both, but every label is wrong.\nFrom which box should you take one fruit to work out all three?",["The box labeled Apples","The box labeled Oranges","The box labeled Mixed","Any box works equally well"],2,"The \"Mixed\" label is wrong, so that box holds only one kind. If you draw an apple, it is the apples box. The other two labels must also be wrong, which fixes the rest. So take from <b>the box labeled Mixed</b>."],
+  ["logic","On an island, knights always tell the truth and knaves always lie. A says: \"B is a knave.\" B says: \"A and I are the same type.\"\nWhat are A and B?",["A is a knight, B is a knave","Both are knights","Both are knaves","A is a knave, B is a knight"],0,"If A were a knave, B would be a knight, but then B's claim \"we are the same type\" would be false, which a knight can't say. So A is a knight, B is a knave, and B's false claim fits. The answer is <b>A is a knight, B is a knave</b>."],
+  ["logic","Five people stand in a line. Mia is ahead of Noor. Omar is behind Noor. Pia is between Mia and Noor. Quin is last.\nWho is third in line?",["Pia","Noor","Omar","Mia"],1,"The order from the front is Mia, Pia, Noor, Omar, Quin, so <b>Noor</b> is third."],
+  ["logic","A drawer holds 10 black socks and 10 white socks, and you pull them out in the dark.\nWhat is the smallest number you must pull to be certain of a matching pair?",["2","3","11","12"],1,"With 3 socks, two colors can't cover all three, so two must match. Two socks could be one of each, so <b>3</b> is the minimum."],
+  ["logic","You have 8 coins that look identical, but one is slightly heavier. You have a balance scale.\nWhat is the fewest weighings that always finds the heavy coin?",["1","2","3","4"],1,"Weigh 3 against 3. If they balance, the heavy coin is among the other 2, and one more weighing finds it. If one side is heavier, weigh 2 of its 3 coins against each other, which finds it or leaves the third. So <b>2</b> weighings always suffice."],
+  // ---- quick math
+  ["math","$1,000 is invested at 10% interest per year, compounded annually. What is it worth after 2 years?",["$1,200","$1,210","$1,220","$1,100"],1,"Year 1: $1,000 &times; 1.1 = $1,100. Year 2: $1,100 &times; 1.1 = <b>$1,210</b>. (Simple interest would give only $1,200.)"],
+  ["math","A fair coin is flipped 3 times. What is the probability of exactly 2 heads?",["1/8","1/4","3/8","1/2"],2,"There are 8 equally likely outcomes, and 3 of them (HHT, HTH, THH) have exactly 2 heads, so the probability is <b>3/8</b>."],
+  ["math","Ana can paint a fence in 10 days and Ben can do it in 15 days. Working together, how many days will it take?",["5 days","6 days","7.5 days","12.5 days"],1,"Together they do 1/10 + 1/15 = 1/6 of the fence per day, so it takes <b>6 days</b>."],
+  ["math","What is the sum of all whole numbers from 1 to 50?",["1,225","1,250","1,275","1,300"],2,"Pair the numbers: 50 &times; 51 &divide; 2 = <b>1,275</b>."],
+  ["math","A father is 3 times as old as his son. In 12 years, he will be twice as old as his son. How old is the son now?",["8","10","12","15"],2,"If the son is x now, then 3x + 12 = 2(x + 12), so x = <b>12</b>. (Father 36, son 12; in 12 years they are 48 and 24.)"],
+  ["math","Two fair six-sided dice are rolled. What is the probability that the sum is 9?",["1/12","1/9","1/6","5/36"],1,"Four of the 36 outcomes sum to 9: (3,6), (4,5), (5,4), (6,3). That is 4/36 = <b>1/9</b>."]
 ];
 
 var BANKS = { standard: BANK, hard: HARD };
