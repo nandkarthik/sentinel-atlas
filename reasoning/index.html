@@ -108,13 +108,13 @@ footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;colo
 <div class="wrap">
   <div class="crumbs"><a href="../">&larr; Sentinel Atlas</a></div>
   <h1>Reasoning Test</h1>
-  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 80, plus a harder set in Hard mode. Every answer comes with a short explanation.</p>
+  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 80, plus a harder set in Hard mode. Many number questions are generated fresh each time, so no two tests are quite the same. Every answer comes with a short explanation.</p>
 
   <section id="intro" class="panel" aria-labelledby="introH">
     <h2 id="introH">Before you start</h2>
     <fieldset class="modes">
       <legend>Difficulty</legend>
-      <label><input type="radio" name="mode" value="standard" checked><span class="m"><b>Standard</b><span>80 questions in the bank, 20 per test</span></span></label>
+      <label><input type="radio" name="mode" value="standard" checked><span class="m"><b>Standard</b><span>80 questions in the bank plus fresh generated ones, 20 per test</span></span></label>
       <label><input type="radio" name="mode" value="hard"><span class="m"><b>Hard mode</b><span>Trickier patterns, multi-step logic and math</span></span></label>
     </fieldset>
     <ul class="cats" id="cats" aria-label="What the test covers"></ul>
@@ -359,6 +359,166 @@ var HARD = [
 ];
 
 var BANKS = { standard: BANK, hard: HARD };
+
+/* ---- Dynamic questions: generators build fresh numbers on every test.
+   Each returns the same tuple shape as the bank, with the correct answer first
+   (buildTest shuffles the choices). ---- */
+function ri(a, b){ return a + Math.floor(Math.random() * (b - a + 1)); }
+function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+function gcd(a, b){ return b ? gcd(b, a % b) : a; }
+
+// Correct answer plus plausible wrong ones; wrong ones are de-duplicated, kept positive,
+// and topped up with nearby values so there are always four unique choices.
+function opts(correct, wrongs, fmt){
+  fmt = fmt || String;
+  var seen = {}, out = [correct];
+  seen[correct] = true;
+  wrongs.forEach(function(w){
+    if (w > 0 && w === Math.floor(w) && !seen[w]){ seen[w] = true; out.push(w); }
+  });
+  var step = 1;
+  while (out.length < 4){
+    [correct + step, correct - step].forEach(function(w){
+      if (out.length < 4 && w > 0 && !seen[w]){ seen[w] = true; out.push(w); }
+    });
+    step++;
+  }
+  return out.slice(0, 4).map(fmt);
+}
+function seriesQ(terms, next, wrongs, why){
+  return ["series", terms.join(", ") + ", ?", opts(next, wrongs), 0, why];
+}
+
+var GEN = {
+  standard: {
+    series: [
+      function(){ // arithmetic
+        var a = ri(2, 30), d = ri(3, 12), t = [0,1,2,3,4].map(function(i){ return a + d * i; }), n = a + d * 5;
+        return seriesQ(t, n, [n + d, n - 1, n + 2, n + d + 1], "Add " + d + " each time, so the next term is " + t[4] + " + " + d + " = <b>" + n + "</b>.");
+      },
+      function(){ // geometric
+        var a = ri(1, 5), r = pick([2, 3, 4]), t = [0,1,2,3,4].map(function(i){ return a * Math.pow(r, i); }), n = t[4] * r;
+        return seriesQ(t.slice(0, 5), n, [t[4] + r, t[4] * (r + 1), n - t[4] / 2, t[4] * 2], "Multiply by " + r + " each time, so the next term is " + t[4] + " &times; " + r + " = <b>" + n + "</b>.");
+      },
+      function(){ // growing gaps
+        var a = ri(1, 12), g = ri(1, 4), k = ri(1, 3), t = [a], gap = g;
+        for (var i = 0; i < 4; i++){ t.push(t[i] + gap); gap += k; }
+        var n = t[4] + gap;
+        return seriesQ(t, n, [n + k, n - k, t[4] + gap - k, n + 1], "The gaps are " + [g, g + k, g + 2 * k, g + 3 * k].join(", ") + ", growing by " + k + " each time. The next gap is " + gap + ", so the answer is <b>" + n + "</b>.");
+      },
+      function(){ // Fibonacci-style
+        var a = ri(1, 6), b = ri(2, 8), t = [a, b];
+        for (var i = 2; i < 6; i++) t.push(t[i - 1] + t[i - 2]);
+        var n = t[5] + t[4];
+        return seriesQ(t, n, [n + 1, n - 1, t[5] * 2, n + 3], "Each term is the sum of the two before it: " + t[4] + " + " + t[5] + " = <b>" + n + "</b>.");
+      },
+      function(){ // two interleaved sequences
+        var a = ri(1, 9), d = ri(2, 5), b = ri(20, 40), e = ri(2, 6);
+        var t = [a, b, a + d, b - e, a + 2 * d, b - 2 * e], n = a + 3 * d;
+        return seriesQ(t, n, [b - 3 * e, n + 1, n - 1, a + 4 * d], "Two sequences alternate. Positions 1, 3, 5 go up by " + d + ", and positions 2, 4, 6 go down by " + e + ". The next term is in the first sequence: " + t[4] + " + " + d + " = <b>" + n + "</b>.");
+      }
+    ],
+    math: [
+      function(){ // percent of
+        var p = pick([10, 15, 20, 25, 30, 40, 60, 75]), base = pick([40, 60, 80, 120, 160, 200, 240, 360, 400]);
+        var c = p * base / 100;
+        return ["math", "What is " + p + "% of " + base + "?", opts(c, [c * 2, base - c, c + 10, c / 2 | 0]), 0, p + "% of " + base + " = " + p + " &divide; 100 &times; " + base + " = <b>" + c + "</b>."];
+      },
+      function(){ // speed, distance, time
+        var s = pick([40, 45, 50, 60, 72, 80]), h = pick([2, 3, 4, 5]), d = s * h;
+        return ["math", "A car travels " + d + " km at a steady " + s + " km/h. How many hours does the trip take?", opts(h, [h + 1, h - 1, h * 2, h + 2], function(x){ return x + " hours"; }), 0, "Time = distance &divide; speed = " + d + " &divide; " + s + " = <b>" + h + " hours</b>."];
+      },
+      function(){ // discount
+        var d = pick([10, 20, 25, 30, 40]), p = pick([40, 60, 80, 120, 200]);
+        var c = p * (100 - d) / 100;
+        return ["math", "A jacket priced at $" + p + " is on sale for " + d + "% off. What is the sale price?", opts(c, [p * d / 100, p - d, c + 5, p + p * d / 100], function(x){ return "$" + x; }), 0, d + "% of $" + p + " is $" + (p * d / 100) + ", so the sale price is $" + p + " &minus; $" + (p * d / 100) + " = <b>$" + c + "</b>."];
+      },
+      function(){ // missing value for a given average
+        var avg = ri(12, 30), n = pick([4, 5]), vals = [], sum = 0;
+        for (var i = 0; i < n - 1; i++){ var v = avg + ri(-6, 6); vals.push(v); sum += v; }
+        var miss = avg * n - sum;
+        if (miss < 1) return GEN.standard.math[3]();
+        return ["math", "The average of " + n + " numbers is " + avg + ". " + (n === 4 ? "Three" : "Four") + " of them are " + vals.slice(0, n - 1).join(", ") + ". What is the last number?", opts(miss, [miss + n, miss - n, avg, miss + 2]), 0, "The total must be " + n + " &times; " + avg + " = " + avg * n + ". The known numbers add up to " + sum + ", so the missing one is " + avg * n + " &minus; " + sum + " = <b>" + miss + "</b>."];
+      },
+      function(){ // ratio split
+        var a = ri(2, 5), b = ri(a + 1, 7), unit = pick([4, 5, 6, 8, 10]), tot = (a + b) * unit;
+        return ["math", "A prize of $" + tot + " is shared between two people in the ratio " + a + ":" + b + ". How much does the person with the larger share get?", opts(b * unit, [a * unit, tot / 2, b * unit + unit, (b - 1) * unit], function(x){ return "$" + x; }), 0, "There are " + a + " + " + b + " = " + (a + b) + " parts, and each part is $" + tot + " &divide; " + (a + b) + " = $" + unit + ". The larger share is " + b + " &times; $" + unit + " = <b>$" + b * unit + "</b>."];
+      }
+    ]
+  },
+  hard: {
+    series: [
+      function(){ // x*a + b
+        var a = pick([2, 3, 4]), b = ri(1, 5) * pick([1, -1]), s = ri(2, 5), t = [s];
+        for (var i = 0; i < 4; i++) t.push(t[i] * a + b);
+        var n = t[4] * a + b;
+        if (t.some(function(x){ return x < 1; })) return GEN.hard.series[0]();
+        return seriesQ(t, n, [t[4] * a, n + a, n - b * 2, t[4] * (a + 1) + b], "Each term is " + a + " times the previous one " + (b > 0 ? "plus " + b : "minus " + (-b)) + ": " + t[4] + " &times; " + a + (b > 0 ? " + " : " &minus; ") + Math.abs(b) + " = <b>" + n + "</b>.");
+      },
+      function(){ // squares plus constant
+        var c = ri(-3, 5), t = [1,2,3,4,5].map(function(i){ return i * i + c; }), n = 36 + c;
+        if (t[0] < 1) return GEN.hard.series[1]();
+        return seriesQ(t, n, [n + 2, n - 2, 7 * 7 + c - 12, 6 * 6 + c + 2], "The terms are n&sup2; " + (c >= 0 ? "+ " + c : "&minus; " + (-c)) + ": the next is 6&sup2; " + (c >= 0 ? "+ " : "&minus; ") + Math.abs(c) + " = <b>" + n + "</b>.");
+      },
+      function(){ // cubes
+        var c = pick([0, 1, -1, 2]), t = [1,2,3,4,5].map(function(i){ return i * i * i + c; }), n = 216 + c;
+        return seriesQ(t, n, [n - 8, n + 16, 6 * 6 * 6 + c - 24 + 3, 6 * 6 * 6 + c + 25], "The terms are n&sup3; " + (c > 0 ? "+ " + c : c < 0 ? "&minus; " + (-c) : "") + ". The next is 6&sup3; " + (c > 0 ? "+ " + c + " " : c < 0 ? "&minus; " + (-c) + " " : "") + "= <b>" + n + "</b>.");
+      },
+      function(){ // gaps that multiply
+        var a = ri(1, 6), g = ri(1, 3), r = pick([2, 3]), t = [a], gap = g;
+        for (var i = 0; i < 4; i++){ t.push(t[i] + gap); gap *= r; }
+        var n = t[4] + gap;
+        return seriesQ(t, n, [t[4] + gap / r * (r + 1), n - g, n + r, t[4] + gap - 1], "The gaps are " + [g, g * r, g * r * r, g * r * r * r].join(", ") + ", each " + r + " times the last. The next gap is " + gap + ", so the answer is <b>" + n + "</b>.");
+      },
+      function(){ // interleaved: one adds, one multiplies
+        var a = ri(2, 9), d = ri(3, 7), b = ri(1, 3), r = pick([2, 3]);
+        var t = [a, b, a + d, b * r, a + 2 * d, b * r * r], n = a + 3 * d;
+        return seriesQ(t, n, [b * r * r * r, n + d, n - 1, t[5] + d], "Two sequences alternate. Positions 1, 3, 5 go up by " + d + ", and positions 2, 4, 6 are multiplied by " + r + ". The next term continues the first: " + t[4] + " + " + d + " = <b>" + n + "</b>.");
+      }
+    ],
+    math: [
+      function(){ // two taps
+        var a = pick([6, 8, 10, 12]), b = pick([12, 15, 20, 24, 30]);
+        if (a >= b) return GEN.hard.math[0]();
+        var t = a * b / (b - a);
+        if (t !== Math.floor(t)) return GEN.hard.math[0]();
+        return ["math", "A pool fills in " + a + " hours with the inlet pipe open, and a drain alone empties the full pool in " + b + " hours. How long to fill an empty pool with both open?", opts(t, [a + b, (a + b) / 2 | 0, t + 2, a * 2], function(x){ return x + " hours"; }), 0, "Net rate = 1/" + a + " &minus; 1/" + b + " = " + (b - a) + "/" + (a * b) + " of the pool per hour, so it takes " + (a * b) + "/" + (b - a) + " = <b>" + t + " hours</b>."];
+      },
+      function(){ // successive discounts
+        var p1 = pick([10, 20, 25, 30]), p2 = pick([10, 20, 40, 50]);
+        var eff = 100 - (100 - p1) * (100 - p2) / 100, shown = eff % 1 ? eff.toFixed(1) : String(eff);
+        var wrong = [p1 + p2, Math.abs(p1 - p2) || 5, (p1 + p2) / 2, eff + 5];
+        var o = opts(eff, wrong, function(x){ return (x % 1 ? x.toFixed(1) : x) + "%"; });
+        return ["math", "A shop gives " + p1 + "% off, then a further " + p2 + "% off the reduced price. What is the single equivalent discount?", o, 0, "The customer pays " + (100 - p1) + "% &times; " + (100 - p2) + "% = " + ((100 - p1) * (100 - p2) / 100) + "% of the original price, so the total discount is <b>" + shown + "%</b>, not " + (p1 + p2) + "%."];
+      },
+      function(){ // handshakes
+        var n = ri(6, 14), c = n * (n - 1) / 2;
+        return ["math", "At a meeting, " + n + " people each shake hands with every other person exactly once. How many handshakes happen?", opts(c, [n * (n - 1), n * n, c + n, c - n]), 0, "Each pair shakes once: " + n + " &times; " + (n - 1) + " &divide; 2 = <b>" + c + "</b>."];
+      },
+      function(){ // train and platform
+        var L = pick([100, 150, 200, 250]), t = pick([5, 6, 8, 10]), P = pick([200, 250, 300, 350, 400]);
+        var v = L / t, T = (L + P) / v;
+        if (T !== Math.floor(T)) return GEN.hard.math[3]();
+        return ["math", "A " + L + " m train passes a pole in " + t + " seconds. How long does it take to completely cross a " + P + " m platform at the same speed?", opts(T, [P / v, T + t, T - t, (L + P) / v * 2], function(x){ return (Math.round(x * 10) / 10) + " seconds"; }), 0, "Its speed is " + L + " &divide; " + t + " = " + v + " m/s. To clear the platform it covers " + L + " + " + P + " = " + (L + P) + " m, which takes " + (L + P) + " &divide; " + v + " = <b>" + T + " seconds</b>."];
+      },
+      function(){ // meeting trains / catch-up
+        var a = pick([40, 50, 60]), b = pick([30, 40, 50, 70]), h = pick([2, 3, 4]), d = (a + b) * h;
+        return ["math", "Two cities are " + d + " km apart. A car leaves each at the same time and they drive towards each other at " + a + " km/h and " + b + " km/h. After how many hours do they meet?", opts(h, [h + 1, h - 1, h * 2, h + 2], function(x){ return x + " hours"; }), 0, "They close the gap at " + a + " + " + b + " = " + (a + b) + " km/h, so they meet after " + d + " &divide; " + (a + b) + " = <b>" + h + " hours</b>."];
+      },
+      function(){ // mixture
+        var cheap = ri(1, 3), dear = cheap + ri(2, 4), kg = pick([5, 10]);
+        // choose target so that the cheap amount is an integer: x*cheap + kg*dear = m*(x+kg)
+        var x = pick([10, 15, 20, 30]); var tot = x * cheap + kg * dear, m = tot / (x + kg);
+        if (m !== Math.floor(m)) return GEN.hard.math[5]();
+        return ["math", "How many kilograms of rice at $" + cheap + " per kg must be mixed with " + kg + " kg of rice at $" + dear + " per kg to make a blend worth $" + m + " per kg?", opts(x, [x + 5, x - 5, x * 2, kg], function(v){ return v + " kg"; }), 0, "With x kg of the cheaper rice: " + cheap + "x + " + (kg * dear) + " = " + m + "(x + " + kg + "), so x = <b>" + x + " kg</b>."];
+      }
+    ]
+  }
+};
+
+// How many of a category's slots come from generators (the rest come from the fixed bank).
+function genCount(cat, quota){ return GEN_SHARE[cat] ? Math.ceil(quota * GEN_SHARE[cat]) : 0; }
+var GEN_SHARE = { series: 0.4, math: 0.5 };
 var state = null, timerId = null;
 
 function $(id){ return document.getElementById(id); }
@@ -382,7 +542,11 @@ function buildTest(mode){
   var quota = MODES[mode].quota;
   Object.keys(quota).forEach(function(cat){
     var pool = BANKS[mode].filter(function(q){ return q[0] === cat; });
-    shuffle(pool).slice(0, quota[cat]).forEach(function(q){ picked.push(q); });
+    var gens = (GEN[mode] && GEN[mode][cat]) || [];
+    var g = gens.length ? Math.min(genCount(cat, quota[cat]), quota[cat]) : 0;
+    var order = shuffle(gens);
+    for (var k = 0; k < g; k++) picked.push(order[k % order.length]());
+    shuffle(pool).slice(0, quota[cat] - g).forEach(function(q){ picked.push(q); });
   });
   return shuffle(picked).map(function(q){
     var order = shuffle(q[2].map(function(_, i){ return i; }));
