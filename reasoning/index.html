@@ -108,13 +108,13 @@ footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;colo
 <div class="wrap">
   <div class="crumbs"><a href="../">&larr; Sentinel Atlas</a></div>
   <h1>Reasoning Test</h1>
-  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 80, plus a harder set in Hard mode. Many number questions are generated fresh each time, so no two tests are quite the same. Every answer comes with a short explanation.</p>
+  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 100, plus a harder set in Hard mode. Many number questions are generated fresh each time, so no two tests are quite the same. Every answer comes with a short explanation.</p>
 
   <section id="intro" class="panel" aria-labelledby="introH">
     <h2 id="introH">Before you start</h2>
     <fieldset class="modes">
       <legend>Difficulty</legend>
-      <label><input type="radio" name="mode" value="standard" checked><span class="m"><b>Standard</b><span>80 questions in the bank plus fresh generated ones, 20 per test</span></span></label>
+      <label><input type="radio" name="mode" value="standard" checked><span class="m"><b>Standard</b><span>100 questions in the bank plus fresh generated ones, 20 per test</span></span></label>
       <label><input type="radio" name="mode" value="hard"><span class="m"><b>Hard mode</b><span>Trickier patterns, multi-step logic and math</span></span></label>
     </fieldset>
     <ul class="cats" id="cats" aria-label="What the test covers"></ul>
@@ -265,7 +265,32 @@ var BANK = [
   ["math","A recipe uses 3 cups of flour for 12 cookies. How many cups are needed for 30 cookies?",["6","7","7.5","9"],2,"That's 1/4 cup per cookie, so 30 cookies need 30 &divide; 4 = <b>7.5 cups</b>."],
   ["math","A car uses 10 liters of fuel to travel 150 km. How much fuel does it need for 360 km?",["20 liters","24 liters","30 liters","36 liters"],1,"The car uses 1 liter per 15 km, so 360 km needs 360 &divide; 15 = <b>24 liters</b>."],
   ["math","The sum of three consecutive whole numbers is 72. What is the largest?",["24","25","26","27"],1,"The middle number is the average, 72 &divide; 3 = 24. So the numbers are 23, 24 and 25, and the largest is <b>25</b>."],
-  ["math","What is the simple interest on $500 at 6% per year for 3 years?",["$30","$90","$93","$180"],1,"Each year earns 6% of $500 = $30, so 3 years earn 3 &times; $30 = <b>$90</b>."]
+  ["math","What is the simple interest on $500 at 6% per year for 3 years?",["$30","$90","$93","$180"],1,"Each year earns 6% of $500 = $30, so 3 years earn 3 &times; $30 = <b>$90</b>."],
+  // ---- round 5: series
+  ["series","100, 91, 82, 73, 64, ?",["53","54","55","56"],2,"Subtract 9 each time: 64 &minus; 9 = <b>55</b>."],
+  ["series","Z, X, V, T, R, ?",["Q","P","O","N"],1,"The letters step back by two: Z, X, V, T, R, then <b>P</b>."],
+  ["series","2, 5, 11, 23, 47, ?",["71","91","94","95"],3,"Each term is double the previous one plus 1: 47 &times; 2 + 1 = <b>95</b>."],
+  ["series","J, F, M, A, M, J, ?",["J","A","S","O"],0,"These are the first letters of the months: January, February, March, April, May, June, then July, which is <b>J</b>."],
+  // ---- odd one out
+  ["odd","Which does not belong?\nMercury, Venus, Moon, Mars",["Mercury","Venus","Moon","Mars"],2,"Mercury, Venus and Mars are planets. The <b>Moon</b> orbits the Earth and is not a planet."],
+  ["odd","Which does not belong?\nPen, Pencil, Marker, Eraser",["Pen","Pencil","Marker","Eraser"],3,"Pens, pencils and markers are used to write or draw. An <b>eraser</b> removes marks."],
+  ["odd","Which does not belong?\n2, 4, 6, 9, 10",["2","4","9","10"],2,"All except <b>9</b> are even numbers."],
+  // ---- analogies
+  ["analogy","Pilot is to airplane as captain is to:",["Ship","Road","Station","Wheel"],0,"A pilot commands an airplane, and a captain commands a <b>ship</b>."],
+  ["analogy","Warm is to hot as cool is to:",["Cold","Mild","Damp","Dry"],0,"Hot is a stronger degree of warm, and <b>cold</b> is a stronger degree of cool."],
+  ["analogy","Author is to book as composer is to:",["Orchestra","Symphony","Audience","Piano"],1,"An author creates a book, and a composer creates a <b>symphony</b> (or other piece of music)."],
+  ["analogy","Doctor is to patient as teacher is to:",["School","Lesson","Student","Book"],2,"A doctor cares for a patient, and a teacher instructs a <b>student</b>."],
+  // ---- logic
+  ["logic","If it rains, the match is cancelled. The match was not cancelled.\nWhat must be true?",["It rained","It did not rain","The match was moved","It will rain tomorrow"],1,"If it had rained, the match would have been cancelled. It was not, so <b>it did not rain</b>."],
+  ["logic","Ana is older than Ben. Cara is younger than Ben. Dev is older than Ana.\nWho is the youngest?",["Ana","Ben","Cara","Dev"],2,"The order from oldest to youngest is Dev, Ana, Ben, Cara, so <b>Cara</b> is the youngest."],
+  ["logic","Today is Wednesday.\nWhat day of the week was it 10 days ago?",["Friday","Saturday","Sunday","Monday"],2,"Ten days is one week plus 3 days. Three days before Wednesday is <b>Sunday</b>."],
+  ["logic","A farmer has 17 sheep. All but 9 run away.\nHow many sheep does the farmer have left?",["8","9","17","26"],1,"\"All but 9\" means 9 stay behind, so <b>9</b> are left."],
+  // ---- quick math
+  ["math","What is 7 × 8 − 6 ÷ 2?",["25","50","53","59"],2,"Division comes before subtraction: 6 &divide; 2 = 3, and 56 &minus; 3 = <b>53</b>."],
+  ["math","A rectangle is 12 m long and 7 m wide. What is its perimeter?",["19 m","38 m","84 m","76 m"],1,"Perimeter = 2 &times; (12 + 7) = <b>38 m</b>. (84 would be the area in square meters.)"],
+  ["math","Three notebooks cost $2.50 each and two pens cost $1.25 each. You pay with a $20 bill. How much change do you get?",["$7.50","$10.00","$12.50","$15.00"],1,"The notebooks cost $7.50 and the pens $2.50, so the total is $10. Change = $20 &minus; $10 = <b>$10.00</b>."],
+  ["math","A train travels for 3 hours at 80 km/h, then 2 hours at 60 km/h. What is its average speed for the whole trip?",["68 km/h","70 km/h","72 km/h","75 km/h"],2,"The distance is 240 + 120 = 360 km in 5 hours, so the average is 360 &divide; 5 = <b>72 km/h</b>."],
+  ["math","What is 3/4 of 80, plus 1/5 of 50?",["60","65","70","75"],2,"3/4 of 80 is 60, and 1/5 of 50 is 10, so the total is <b>70</b>."]
 ];
 
 // Hard mode: multi-step patterns, trickier deductions, longer calculations
