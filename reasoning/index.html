@@ -455,7 +455,32 @@ var HARD = [
   ["math","A fair die is rolled 3 times. What is the probability of getting at least one six?",["1/2","91/216","1/6","125/216"],1,"The chance of no six in 3 rolls is (5/6)&sup3; = 125/216, so at least one six has probability 1 &minus; 125/216 = <b>91/216</b>."],
   ["math","How many different arrangements are there of the letters in LEVEL?",["20","30","60","120"],1,"There are 5 letters with L repeated twice and E repeated twice: 5! &divide; (2! &times; 2!) = 120 &divide; 4 = <b>30</b>."],
   ["math","A cyclist rides up a hill at 30 km/h and returns down the same road at 60 km/h. What is the average speed for the round trip?",["40 km/h","45 km/h","50 km/h","90 km/h"],0,"Take a one-way distance of 60 km: up takes 2 hours, down takes 1 hour. That is 120 km in 3 hours, so the average is <b>40 km/h</b>, not 45."],
-  ["math","A price rises by 25%, then falls by 20%. How does the final price compare with the original?",["5% higher","The same","5% lower","45% higher"],1,"1.25 &times; 0.80 = 1.00, so the price <b>ends where it started</b>."]
+  ["math","A price rises by 25%, then falls by 20%. How does the final price compare with the original?",["5% higher","The same","5% lower","45% higher"],1,"1.25 &times; 0.80 = 1.00, so the price <b>ends where it started</b>."],
+  // ---- hard set, round 6: series
+  ["series","1, 2, 3, 6, 11, 20, ?",["31","34","37","40"],2,"Each term is the sum of the three before it: 6 + 11 + 20 = <b>37</b>."],
+  ["series","3, 6, 4, 8, 6, 12, ?",["8","10","12","24"],1,"The operations alternate between doubling and subtracting 2: &times;2, &minus;2, &times;2, &minus;2, &times;2, so the next is 12 &minus; 2 = <b>10</b>."],
+  ["series","1, 5, 14, 30, 55, ?",["81","91","95","100"],1,"Each term adds the next square to the previous one: 1, 1+4, 5+9, 14+16, 30+25. The next is 55 + 36 = <b>91</b>."],
+  ["series","2, 10, 30, 68, 130, ?",["210","216","222","230"],2,"The terms are n&sup3; + n: 1+1, 8+2, 27+3, 64+4, 125+5. The next is 216 + 6 = <b>222</b>."],
+  // ---- odd one out
+  ["odd","Which does not belong?\n2, 8, 18, 32, 50, 70",["8","32","50","70"],3,"The terms follow 2n&sup2;: 2, 8, 18, 32, 50, and the next would be 72. So <b>70</b> breaks the pattern."],
+  ["odd","Which does not belong?\nMitochondria, Nucleus, Ribosome, Neuron",["Mitochondria","Nucleus","Ribosome","Neuron"],3,"Mitochondria, the nucleus and ribosomes are structures inside a cell. A <b>neuron</b> is a whole cell."],
+  // ---- analogies
+  ["analogy","Antibiotic is to bacteria as antiviral is to:",["Fungi","Viruses","Parasites","Toxins"],1,"Antibiotics are used against bacteria, and antivirals are used against <b>viruses</b>."],
+  ["analogy","Cell is to tissue as tissue is to:",["Organ","Molecule","Body","Blood"],0,"Cells make up tissues, and tissues make up an <b>organ</b>."],
+  ["analogy","Verdict is to trial as conclusion is to:",["Debate","Evidence","Argument","Premise"],2,"A verdict is the result of a trial, and a conclusion is the result of an <b>argument</b>."],
+  // ---- logic
+  ["logic","Three switches outside a closed room control one light bulb inside. You may flip the switches as often as you like, but you may enter the room only once.\nWhich plan lets you identify the right switch?",["Turn one on for a few minutes, turn it off, turn a second one on, then enter. Lit means the second, warm and off means the first, cold and off means the third","Turn all three on, enter, then switch them off one at a time","Turn one on and enter to check the bulb","Turn two on, enter, and see which one is off"],0,"Heat gives a second clue besides light. The switch left on is lit, the switch turned off a few minutes earlier is <b>warm</b>, and the switch never used is cold. One entry then identifies all three."],
+  ["logic","No fish are mammals. All dolphins are mammals.\nWhich must be true?",["No dolphin is a fish","Some dolphins are fish","All fish are dolphins","All mammals are dolphins"],0,"Dolphins are mammals, and no mammal is a fish, so <b>no dolphin is a fish</b>."],
+  ["logic","One of three boxes holds a prize. Box A's sign says: \"The prize is in this box.\" Box B's sign says: \"The prize is not in this box.\" Box C's sign says: \"The prize is not in box A.\" Exactly one sign is true.\nWhich box holds the prize?",["Box A","Box B","Box C","It can't be determined"],1,"If the prize is in A, signs A and B are true. If it is in C, signs B and C are true. Only if the prize is in <b>Box B</b> is exactly one sign true (Box C's)."],
+  ["logic","Two coins add up to 30 cents, and one of them is not a nickel.\nWhat are the coins?",["A quarter and a nickel","A dime and a quarter","Two dimes","A nickel and a dime"],0,"\"One of them is not a nickel\" doesn't say the other isn't. A quarter (25) and a nickel (5) make 30, so it is <b>a quarter and a nickel</b>."],
+  ["logic","Each of three sisters has exactly one brother.\nHow many children are in the family?",["3","4","5","6"],1,"The three sisters all share the same one brother, so there are 3 + 1 = <b>4</b> children."],
+  // ---- quick math
+  ["math","You pick one of three doors, one hiding a prize. The host, who knows where it is, opens another door with no prize. If you now switch to the remaining closed door, what is the probability you win?",["1/3","1/2","2/3","1"],2,"Your first pick wins 1/3 of the time. The host's reveal never changes that, so the other door wins the remaining <b>2/3</b>."],
+  ["math","What is the remainder when 2 to the power of 100 is divided by 3?",["0","1","2","4"],1,"Powers of 2 alternate between remainders 2 and 1 when divided by 3 (2, 1, 2, 1, ...). Even powers leave remainder <b>1</b>."],
+  ["math","Two numbers add up to 20 and multiply to 96. What is the difference between them?",["2","4","6","8"],1,"The numbers are 12 and 8 (12 + 8 = 20, 12 &times; 8 = 96), so the difference is <b>4</b>."],
+  ["math","10 liters of a 20% saline solution is diluted with plain water to make a 10% solution. How much water is added?",["5 liters","10 liters","15 liters","20 liters"],1,"The 10 liters contain 2 liters of salt. For that to be 10%, the total must be 20 liters, so add <b>10 liters</b> of water."],
+  ["math","How many diagonals does a decagon (10 sides) have?",["30","35","40","45"],1,"A polygon with n sides has n(n &minus; 3) &divide; 2 diagonals: 10 &times; 7 &divide; 2 = <b>35</b>."],
+  ["math","A colony of 100 bacteria doubles every 3 hours. How many are there after 12 hours?",["800","1,200","1,600","2,400"],2,"12 hours is 4 doublings, and 100 &times; 2<sup>4</sup> = <b>1,600</b>."]
 ];
 
 var BANKS = { standard: BANK, hard: HARD };
