@@ -108,13 +108,13 @@ footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;colo
 <div class="wrap">
   <div class="crumbs"><a href="../">&larr; Sentinel Atlas</a></div>
   <h1>Reasoning Test</h1>
-  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 100, plus a harder set in Hard mode. Many number and logic questions are generated fresh each time, so no two tests are quite the same. Every answer comes with a short explanation.</p>
+  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 120, plus a harder set in Hard mode. Many number and logic questions are generated fresh each time, so no two tests are quite the same. Every answer comes with a short explanation.</p>
 
   <section id="intro" class="panel" aria-labelledby="introH">
     <h2 id="introH">Before you start</h2>
     <fieldset class="modes">
       <legend>Difficulty</legend>
-      <label><input type="radio" name="mode" value="standard" checked><span class="m"><b>Standard</b><span>100 questions in the bank plus fresh generated ones, 20 per test</span></span></label>
+      <label><input type="radio" name="mode" value="standard" checked><span class="m"><b>Standard</b><span>120 questions in the bank plus fresh generated ones, 20 per test</span></span></label>
       <label><input type="radio" name="mode" value="hard"><span class="m"><b>Hard mode</b><span>Trickier patterns, multi-step logic and math</span></span></label>
     </fieldset>
     <ul class="cats" id="cats" aria-label="What the test covers"></ul>
@@ -290,7 +290,32 @@ var BANK = [
   ["math","A rectangle is 12 m long and 7 m wide. What is its perimeter?",["19 m","38 m","84 m","76 m"],1,"Perimeter = 2 &times; (12 + 7) = <b>38 m</b>. (84 would be the area in square meters.)"],
   ["math","Three notebooks cost $2.50 each and two pens cost $1.25 each. You pay with a $20 bill. How much change do you get?",["$7.50","$10.00","$12.50","$15.00"],1,"The notebooks cost $7.50 and the pens $2.50, so the total is $10. Change = $20 &minus; $10 = <b>$10.00</b>."],
   ["math","A train travels for 3 hours at 80 km/h, then 2 hours at 60 km/h. What is its average speed for the whole trip?",["68 km/h","70 km/h","72 km/h","75 km/h"],2,"The distance is 240 + 120 = 360 km in 5 hours, so the average is 360 &divide; 5 = <b>72 km/h</b>."],
-  ["math","What is 3/4 of 80, plus 1/5 of 50?",["60","65","70","75"],2,"3/4 of 80 is 60, and 1/5 of 50 is 10, so the total is <b>70</b>."]
+  ["math","What is 3/4 of 80, plus 1/5 of 50?",["60","65","70","75"],2,"3/4 of 80 is 60, and 1/5 of 50 is 10, so the total is <b>70</b>."],
+  // ---- round 6: series
+  ["series","2, 5, 10, 17, 26, ?",["35","36","37","38"],2,"The terms are n&sup2; + 1: 1+1, 4+1, 9+1, 16+1, 25+1. The next is 36 + 1 = <b>37</b>."],
+  ["series","96, 48, 24, 12, 6, ?",["2","3","4","0"],1,"Each term is half of the previous one: 6 &divide; 2 = <b>3</b>."],
+  ["series","4, 7, 11, 16, 22, ?",["27","28","29","30"],2,"The gaps grow by 1 each time: +3, +4, +5, +6, so the next gap is +7 and the answer is <b>29</b>."],
+  ["series","C, F, I, L, O, ?",["Q","R","S","T"],1,"The letters step forward by three: C, F, I, L, O, then <b>R</b>."],
+  // ---- odd one out
+  ["odd","Which does not belong?\nCat, Dog, Rabbit, Sparrow",["Cat","Dog","Rabbit","Sparrow"],3,"Cats, dogs and rabbits are mammals. A <b>sparrow</b> is a bird."],
+  ["odd","Which does not belong?\n12, 18, 24, 31, 36",["12","24","31","36"],2,"All except <b>31</b> are multiples of 6."],
+  ["odd","Which does not belong?\nKilometer, Kilogram, Mile, Meter",["Kilometer","Kilogram","Mile","Meter"],1,"Kilometer, mile and meter measure length. A <b>kilogram</b> measures mass."],
+  // ---- analogies
+  ["analogy","Hand is to glove as foot is to:",["Shoe","Sock","Toe","Leg"],1,"A glove covers a hand, and a <b>sock</b> covers a foot. (A shoe goes over the sock, so sock is the closer match.)"],
+  ["analogy","Fish is to school as bird is to:",["Nest","Flock","Sky","Wing"],1,"A group of fish is a school, and a group of birds is a <b>flock</b>."],
+  ["analogy","Chef is to kitchen as lawyer is to:",["Court","Client","Law","Judge"],0,"A chef works in a kitchen, and a lawyer works in a <b>court</b> (or courtroom)."],
+  ["analogy","Early is to late as ascend is to:",["Climb","Descend","Rise","Arrive"],1,"Early and late are opposites, and ascend and <b>descend</b> are opposites."],
+  // ---- logic
+  ["logic","Town A is north of Town B. Town B is north of Town C.\nWhich town is farthest south?",["Town A","Town B","Town C","It can't be told"],2,"From north to south the order is A, B, C, so <b>Town C</b> is farthest south."],
+  ["logic","Today is Friday.\nWhat day was it three days before yesterday?",["Sunday","Monday","Tuesday","Wednesday"],1,"Yesterday was Thursday, and three days before Thursday is <b>Monday</b>."],
+  ["logic","Jack's mother has three children. The first is named April, the second is named May.\nWhat is the third child's name?",["June","Jack","Mother","It can't be told"],1,"The question starts with \"Jack's mother has three children\", so the third child is <b>Jack</b>."],
+  ["logic","Nina has twice as many marbles as Omar. Omar has 3 more than Pia. Pia has 5 marbles.\nHow many marbles does Nina have?",["8","13","16","26"],2,"Omar has 5 + 3 = 8, and Nina has 2 &times; 8 = <b>16</b>."],
+  // ---- quick math
+  ["math","What is 15 × 12?",["160","170","180","190"],2,"15 &times; 12 = 15 &times; 10 + 15 &times; 2 = 150 + 30 = <b>180</b>."],
+  ["math","A shirt costs $24 after a 20% discount. What was its original price?",["$28","$30","$32","$36"],1,"The sale price is 80% of the original, so the original is $24 &divide; 0.8 = <b>$30</b>."],
+  ["math","If 5 pencils cost $2, how much do 20 pencils cost?",["$6","$8","$10","$12"],1,"20 pencils is 4 times as many as 5, so the cost is 4 &times; $2 = <b>$8</b>."],
+  ["math","What is the average of 12, 15, 18, 21 and 24?",["17","18","19","20"],1,"The numbers add up to 90, and 90 &divide; 5 = <b>18</b>. (It's also the middle number of an evenly spaced list.)"],
+  ["math","A rectangle has an area of 72 square meters and a width of 6 m. What is its length?",["10 m","12 m","14 m","66 m"],1,"Length = area &divide; width = 72 &divide; 6 = <b>12 m</b>."]
 ];
 
 // Hard mode: multi-step patterns, trickier deductions, longer calculations
