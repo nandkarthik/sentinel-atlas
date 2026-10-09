@@ -405,7 +405,32 @@ var HARD = [
   ["math","Ana can paint a fence in 10 days and Ben can do it in 15 days. Working together, how many days will it take?",["5 days","6 days","7.5 days","12.5 days"],1,"Together they do 1/10 + 1/15 = 1/6 of the fence per day, so it takes <b>6 days</b>."],
   ["math","What is the sum of all whole numbers from 1 to 50?",["1,225","1,250","1,275","1,300"],2,"Pair the numbers: 50 &times; 51 &divide; 2 = <b>1,275</b>."],
   ["math","A father is 3 times as old as his son. In 12 years, he will be twice as old as his son. How old is the son now?",["8","10","12","15"],2,"If the son is x now, then 3x + 12 = 2(x + 12), so x = <b>12</b>. (Father 36, son 12; in 12 years they are 48 and 24.)"],
-  ["math","Two fair six-sided dice are rolled. What is the probability that the sum is 9?",["1/12","1/9","1/6","5/36"],1,"Four of the 36 outcomes sum to 9: (3,6), (4,5), (5,4), (6,3). That is 4/36 = <b>1/9</b>."]
+  ["math","Two fair six-sided dice are rolled. What is the probability that the sum is 9?",["1/12","1/9","1/6","5/36"],1,"Four of the 36 outcomes sum to 9: (3,6), (4,5), (5,4), (6,3). That is 4/36 = <b>1/9</b>."],
+  // ---- hard set, round 5: series
+  ["series","1, 3, 8, 21, 55, ?",["89","132","144","150"],2,"Each term is 3 times the previous one minus the one before: 55 &times; 3 &minus; 21 = <b>144</b>. (These are every other Fibonacci number.)"],
+  ["series","0, 3, 8, 15, 24, 35, ?",["46","47","48","49"],2,"The terms are n&sup2; &minus; 1 for n = 1, 2, 3, ...: the next is 7&sup2; &minus; 1 = <b>48</b>. (The gaps are the odd numbers 3, 5, 7, 9, 11, so the next gap is 13.)"],
+  ["series","1, 11, 21, 1211, 111221, ?",["211231","312211","312221","1321"],1,"Each term describes the one before it aloud: 111221 is \"three 1s, two 2s, one 1\", which is written <b>312211</b>."],
+  ["series","Z, A, Y, B, X, C, ?",["D","W","V","Y"],1,"Two sequences alternate: Z, Y, X going backward and A, B, C going forward. The next term continues the backward one: <b>W</b>."],
+  // ---- odd one out
+  ["odd","Which does not belong?\n1, 8, 27, 64, 121",["1","8","64","121"],3,"1, 8, 27 and 64 are perfect cubes (1&sup3;, 2&sup3;, 3&sup3;, 4&sup3;). <b>121</b> is 11&sup2; and not a cube."],
+  ["odd","Which does not belong?\nViolin, Cello, Harp, Flute",["Violin","Cello","Harp","Flute"],3,"Violin, cello and harp make sound with strings. A <b>flute</b> is a wind instrument."],
+  // ---- analogies
+  ["analogy","Ascent is to descent as inflation is to:",["Recession","Deflation","Stagnation","Growth"],1,"Ascent and descent are opposite movements, and inflation (rising prices) is opposed by <b>deflation</b> (falling prices)."],
+  ["analogy","Sculptor is to chisel as surgeon is to:",["Hospital","Scalpel","Patient","Gloves"],1,"A sculptor shapes stone with a chisel, and a surgeon cuts with a <b>scalpel</b>."],
+  ["analogy","Pedometer is to steps as odometer is to:",["Speed","Distance","Fuel","Time"],1,"A pedometer counts steps taken, and an odometer records <b>distance</b> traveled."],
+  // ---- logic
+  ["logic","Lily pads on a pond double in area every day. They cover the whole pond on day 48.\nOn which day was the pond half covered?",["Day 24","Day 46","Day 47","Day 40"],2,"If the area doubles each day, the day before it is full it is half full, which is <b>day 47</b>."],
+  ["logic","Every member of a club is either a doctor or a lawyer. No lawyer in the club plays chess. Sam is a member and plays chess.\nWhat is Sam?",["A doctor","A lawyer","Both","It can't be determined"],0,"Sam isn't a lawyer, because no lawyer plays chess. Every member is one or the other, so Sam is <b>a doctor</b>."],
+  ["logic","Ana, Ben and Cara each have a different pet: a cat, a dog or a fish. Ana doesn't have the dog. Ben has neither the cat nor the dog.\nWho has the dog?",["Ana","Ben","Cara","It can't be determined"],2,"Ben has neither cat nor dog, so Ben has the fish. Ana has no dog and the fish is taken, so Ana has the cat. That leaves the dog for <b>Cara</b>."],
+  ["logic","What is the greatest number of pieces you can cut a round cake into with 3 straight cuts (all cuts vertical, through the top)?",["6","7","8","9"],1,"Each new cut can cross all earlier cuts, adding as many pieces as the cuts it crosses plus one: 1, then 2, 4, 7. So <b>7</b> pieces."],
+  ["logic","You have an empty 3-liter jug, an empty 5-liter jug and a tap. Each fill, empty or pour counts as one step.\nWhat is the fewest steps to measure exactly 4 liters in one jug?",["4","5","6","8"],2,"Fill the 5, pour into the 3 (2 left in the 5), empty the 3, pour the 2 across, fill the 5, then top up the 3 (it needs 1). That leaves 4 in the 5-liter jug in <b>6</b> steps."],
+  // ---- quick math
+  ["math","A bat and a ball cost $1.10 together. The bat costs $1.00 more than the ball. How much does the ball cost?",["$0.05","$0.10","$0.15","$0.20"],0,"If the ball costs b, the bat costs b + 1.00, so 2b + 1.00 = 1.10 and b = <b>$0.05</b>. (The tempting answer of $0.10 would make the total $1.20.)"],
+  ["math","What is the angle between the hour and minute hands of a clock at 3:40?",["120°","130°","140°","150°"],1,"At 3:40 the minute hand is at 40 &times; 6 = 240&deg;. The hour hand is at 3 &times; 30 + 40 &times; 0.5 = 110&deg;. The angle is 240&deg; &minus; 110&deg; = <b>130&deg;</b>."],
+  ["math","A fair die is rolled 3 times. What is the probability of getting at least one six?",["1/2","91/216","1/6","125/216"],1,"The chance of no six in 3 rolls is (5/6)&sup3; = 125/216, so at least one six has probability 1 &minus; 125/216 = <b>91/216</b>."],
+  ["math","How many different arrangements are there of the letters in LEVEL?",["20","30","60","120"],1,"There are 5 letters with L repeated twice and E repeated twice: 5! &divide; (2! &times; 2!) = 120 &divide; 4 = <b>30</b>."],
+  ["math","A cyclist rides up a hill at 30 km/h and returns down the same road at 60 km/h. What is the average speed for the round trip?",["40 km/h","45 km/h","50 km/h","90 km/h"],0,"Take a one-way distance of 60 km: up takes 2 hours, down takes 1 hour. That is 120 km in 3 hours, so the average is <b>40 km/h</b>, not 45."],
+  ["math","A price rises by 25%, then falls by 20%. How does the final price compare with the original?",["5% higher","The same","5% lower","45% higher"],1,"1.25 &times; 0.80 = 1.00, so the price <b>ends where it started</b>."]
 ];
 
 var BANKS = { standard: BANK, hard: HARD };
