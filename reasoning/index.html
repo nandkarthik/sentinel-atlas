@@ -108,7 +108,7 @@ footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;colo
 <div class="wrap">
   <div class="crumbs"><a href="../">&larr; Sentinel Atlas</a></div>
   <h1>Reasoning Test</h1>
-  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 100, plus a harder set in Hard mode. Many number questions are generated fresh each time, so no two tests are quite the same. Every answer comes with a short explanation.</p>
+  <p class="lede">Twenty questions on pattern spotting, logic and quick thinking, drawn at random from a bank of 100, plus a harder set in Hard mode. Many number and logic questions are generated fresh each time, so no two tests are quite the same. Every answer comes with a short explanation.</p>
 
   <section id="intro" class="panel" aria-labelledby="introH">
     <h2 id="introH">Before you start</h2>
@@ -566,9 +566,108 @@ var GEN = {
   }
 };
 
+/* ---- Dynamic logic questions ---- */
+var NAMES = ["Ana","Ben","Cara","Dev","Elin","Femi","Gus","Hana","Ivo","Jun","Kai","Lena","Milo","Nia","Omar","Pia"];
+var DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+var ORD = ["", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th"];
+
+// Correct answer first, then three others from the pool (plain strings).
+function strOpts(correct, pool){
+  var others = shuffle(pool.filter(function(x){ return x !== correct; }));
+  return [correct].concat(others.slice(0, 3));
+}
+function dayOpts(idx){
+  return [DAYS[idx], DAYS[(idx + 1) % 7], DAYS[(idx + 6) % 7], DAYS[(idx + 2) % 7]];
+}
+function mod7(n){ return ((n % 7) + 7) % 7; }
+
+// A ranking of n people, described by shuffled neighbor comparisons.
+function orderQ(n, askMiddle){
+  var p = shuffle(NAMES).slice(0, n), dims = pick([["taller","shorter","tallest","shortest"],["older","younger","oldest","youngest"],["faster","slower","fastest","slowest"]]);
+  var lines = [];
+  for (var i = 0; i < n - 1; i++){
+    lines.push(Math.random() < 0.5 ? p[i] + " is " + dims[0] + " than " + p[i + 1] + "." : p[i + 1] + " is " + dims[1] + " than " + p[i] + ".");
+  }
+  var kind = askMiddle && n === 5 ? "mid" : pick(["top", "bottom"]), ans, ask, ranking = p.join(", ");
+  if (kind === "mid"){ ans = p[2]; ask = "Who is in the middle, ranking " + dims[2] + " to " + dims[3] + "?"; }
+  else if (kind === "top"){ ans = p[0]; ask = "Who is the " + dims[2] + "?"; }
+  else { ans = p[n - 1]; ask = "Who is the " + dims[3] + "?"; }
+  return ["logic", shuffle(lines).join(" ") + "\n" + ask, strOpts(ans, p.concat(shuffle(NAMES).filter(function(x){ return p.indexOf(x) < 0; }).slice(0, 1))), 0,
+    "Chaining the comparisons gives this order, from " + dims[2] + " to " + dims[3] + ": " + ranking + ". The answer is <b>" + ans + "</b>."];
+}
+
+GEN.standard.logic = [
+  function(){ return orderQ(4, false); },
+  function(){ // day of the week, short offset
+    var d = ri(0, 6), n = pick([9, 10, 11, 12, 16, 17, 18, 19, 23, 24, 25, 30, 31, 33, 38]), fwd = Math.random() < 0.5;
+    var idx = mod7(d + (fwd ? n : -n));
+    return ["logic", "Today is " + DAYS[d] + ".\nWhat day of the week " + (fwd ? "will it be in " + n + " days?" : "was it " + n + " days ago?"), dayOpts(idx), 0, "Only the remainder after whole weeks matters: " + n + " = " + Math.floor(n / 7) + " weeks and " + n % 7 + " days. Moving " + (fwd ? "forward " : "back ") + n % 7 + " days from " + DAYS[d] + " lands on <b>" + DAYS[idx] + "</b>."];
+  },
+  function(){ // syllogism with invented words
+    var w = shuffle(["bloops", "razzies", "glorbs", "wuggles", "zims", "fendles"]), A = w[0], B = w[1], C = w[2];
+    if (Math.random() < 0.5){
+      return ["logic", "All " + A + " are " + B + ". All " + B + " are " + C + ".\nWhich must be true?", ["All " + A + " are " + C, "All " + C + " are " + A, "All " + B + " are " + A, "No " + A + " are " + C], 0, "Every " + A.replace(/s$/, "") + " is a " + B.replace(/s$/, "") + ", and every " + B.replace(/s$/, "") + " is a " + C.replace(/s$/, "") + ", so <b>all " + A + " are " + C + "</b>. The reverse does not follow."];
+    }
+    return ["logic", "All " + A + " are " + B + ". No " + B + " are " + C + ".\nWhich must be true?", ["No " + A + " are " + C, "All " + C + " are " + A, "Some " + A + " are " + C, "All " + B + " are " + A], 0, "Everything in " + A + " is in " + B + ", and nothing in " + B + " is in " + C + ", so <b>no " + A + " are " + C + "</b>."];
+  },
+  function(){ // contrapositive
+    var t = pick([
+      ["If it snows, school is closed. School was open.", "It did not snow", ["It snowed", "It will snow tomorrow", "Nothing can be concluded"]],
+      ["If the battery is dead, the car will not start. The car started.", "The battery is not dead", ["The battery is dead", "The fuel tank is full", "Nothing can be concluded"]],
+      ["If the alarm is armed, the red light is on. The red light is off.", "The alarm is not armed", ["The alarm is armed", "The light is broken", "Nothing can be concluded"]],
+      ["If a number is divisible by 6, it is even. The number is odd.", "The number is not divisible by 6", ["The number is divisible by 6", "The number is divisible by 3", "Nothing can be concluded"]],
+      ["If the store is open, the lights are on. The lights are off.", "The store is not open", ["The store is open", "The store has closed for good", "Nothing can be concluded"]]
+    ]);
+    return ["logic", t[0] + "\nWhat must be true?", [t[1]].concat(t[2]), 0, "If the first part were true, the second would have to follow. The second part failed, so the first part must be false: <b>" + t[1].toLowerCase() + "</b>."];
+  },
+  function(){ // race position
+    var k = ri(2, 5), ords = [k, k - 1, k + 1, k + 2].map(function(x){ return ORD[x]; });
+    return ["logic", "In a race, you overtake the runner in " + ORD[k] + " place.\nWhat place are you in now?", ords, 0, "You take the position of the runner you passed, so you are now in <b>" + ORD[k] + "</b> place."];
+  }
+];
+
+GEN.hard.logic = [
+  function(){ return orderQ(5, true); },
+  function(){ // knights and knaves
+    var names = shuffle(NAMES), A = names[0], B = names[1];
+    var combos = [A + " is a knight, " + B + " is a knave", A + " is a knave, " + B + " is a knight", "Both are knights", "Both are knaves"];
+    var t = pick([
+      [A + " says: \"We are both knaves.\"", 1, "If " + A + " were a knight, the claim \"we are both knaves\" would be true, but a knight can't call themselves a knave. So " + A + " is a knave, the claim is false, and " + B + " must be a knight."],
+      [A + " says: \"At least one of us is a knave.\"", 0, "If " + A + " were a knave, the claim would be true, which a knave can't say. So " + A + " is a knight, the claim is true, and since " + A + " is not a knave, " + B + " must be the knave."],
+      [A + " says: \"" + B + " is a knave.\" " + B + " says: \"We are both knights.\"", 0, "If " + A + " were a knave, " + B + " would be a knight, but then \"we are both knights\" would be false, which a knight can't say. So " + A + " is a knight, " + B + " is a knave, and " + B + "'s false claim fits."]
+    ]);
+    return ["logic", "On an island, knights always tell the truth and knaves always lie. " + t[0] + "\nWhat are " + A + " and " + B + "?", combos, t[1], "<b>" + combos[t[1]] + "</b>. " + t[2]];
+  },
+  function(){ // day of the week, two steps
+    var d = ri(0, 6), n = pick([20, 26, 30, 38, 45, 52, 59, 60, 100]), idx, text;
+    if (Math.random() < 0.5){
+      idx = mod7(d + 3 + n);
+      text = "The day before yesterday was " + DAYS[d] + ".\nWhat day of the week will it be " + n + " days after tomorrow?";
+    } else {
+      idx = mod7(d - 3 - n);
+      text = "The day after tomorrow is " + DAYS[d] + ".\nWhat day of the week was it " + n + " days before yesterday?";
+    }
+    return ["logic", text, dayOpts(idx), 0, "Work out today first, then move by " + n + " mod 7 = " + n % 7 + " days. The result is <b>" + DAYS[idx] + "</b>."];
+  },
+  function(){ // fencepost cuts
+    var k = ri(4, 8), t = ri(3, 6), a = (k - 1) * t;
+    return ["logic", "A log is cut into " + k + " equal pieces. Each cut takes " + t + " minutes.\nHow long does the sawing take?", opts(a, [k * t, (k + 1) * t, (k - 2) * t, a + t], function(x){ return x + " minutes"; }), 0, "Cutting into " + k + " pieces needs only " + (k - 1) + " cuts, so the time is " + (k - 1) + " &times; " + t + " = <b>" + a + " minutes</b>."];
+  },
+  function(){ // exactly-k-liars
+    var n = ri(4, 5), names = shuffle(NAMES).slice(0, n), claims = [], word = ["zero", "one", "two", "three", "four", "five"];
+    for (var i = 1; i <= n; i++) claims.push(names[i - 1] + " says: \"Exactly " + word[i] + " of us " + (i === 1 ? "is" : "are") + " lying.\"");
+    var ans = names[n - 2];
+    return ["logic", claims.join(" ") + "\nWho is telling the truth?", strOpts(ans, names), 0, "At most one of these claims can be true, because each names a different number of liars. If none were true, all " + n + " would be lying, which would make the last claim true, a contradiction. So exactly one is true, " + (n - 1) + " are lying, and the truthful one is <b>" + ans + "</b>, who said \"exactly " + word[n - 1] + "\"."];
+  },
+  function(){ // pigeonhole
+    var c = ri(3, 6), a = c + 1;
+    return ["logic", "A drawer holds many socks in " + c + " different colors, and you pull them out in the dark.\nWhat is the smallest number you must pull to be certain of a matching pair?", opts(a, [c, c * 2, c + 2, c * 2 + 1], String), 0, "With " + c + " socks you could have one of each color. The next sock must match one of them, so the answer is <b>" + a + "</b>."];
+  }
+];
+
 // How many of a category's slots come from generators (the rest come from the fixed bank).
 function genCount(cat, quota){ return GEN_SHARE[cat] ? Math.ceil(quota * GEN_SHARE[cat]) : 0; }
-var GEN_SHARE = { series: 0.4, math: 0.5 };
+var GEN_SHARE = { series: 0.4, math: 0.5, logic: 0.4 };
 var state = null, timerId = null;
 
 function $(id){ return document.getElementById(id); }
