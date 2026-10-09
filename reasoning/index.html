@@ -587,17 +587,34 @@ function currentMode(){
   return r ? r.value : "standard";
 }
 
+// Remember which bank questions were shown recently (per mode, this browser only), so the
+// next test favors questions you haven't seen. Falls back quietly if storage is unavailable.
+function seenKey(mode){ return "reasoning-seen-" + mode; }
+function loadSeen(mode){
+  try { var a = JSON.parse(localStorage.getItem(seenKey(mode)) || "[]"); return Array.isArray(a) ? a : []; }
+  catch (e) { return []; }
+}
+function saveSeen(mode, list){
+  try { localStorage.setItem(seenKey(mode), JSON.stringify(list.slice(-BANKS[mode].length))); } catch (e) {}
+}
+
 function buildTest(mode){
-  var picked = [];
+  var picked = [], fixed = [];
   var quota = MODES[mode].quota;
+  var seen = loadSeen(mode);
   Object.keys(quota).forEach(function(cat){
     var pool = BANKS[mode].filter(function(q){ return q[0] === cat; });
     var gens = (GEN[mode] && GEN[mode][cat]) || [];
     var g = gens.length ? Math.min(genCount(cat, quota[cat]), quota[cat]) : 0;
     var order = shuffle(gens);
     for (var k = 0; k < g; k++) picked.push(order[k % order.length]());
-    shuffle(pool).slice(0, quota[cat] - g).forEach(function(q){ picked.push(q); });
+    // unseen questions first (random order), then seen ones, least recently shown first
+    var fresh = shuffle(pool.filter(function(q){ return seen.indexOf(q[1]) === -1; }));
+    var stale = pool.filter(function(q){ return seen.indexOf(q[1]) !== -1; })
+      .sort(function(a, b){ return seen.indexOf(a[1]) - seen.indexOf(b[1]); });
+    fresh.concat(stale).slice(0, quota[cat] - g).forEach(function(q){ picked.push(q); fixed.push(q[1]); });
   });
+  saveSeen(mode, seen.filter(function(t){ return fixed.indexOf(t) === -1; }).concat(fixed));
   return shuffle(picked).map(function(q){
     var order = shuffle(q[2].map(function(_, i){ return i; }));
     return {
