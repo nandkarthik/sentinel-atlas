@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hair Care Regimen</title>
+<meta name="description" content="A reference for a minoxidil 5% and finasteride 1 mg hair-loss routine: how to apply, daily schedule, what to expect month by month, side effects and when to call a doctor. General information, not medical advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9e3cf; --surface:#ddd5b8; --card:#f2ecd9;
+  --ink:#231f15; --ink-soft:#5a5540; --ink-faint:#877f63;
+  --line:rgba(35,31,21,0.16);
+  --accent:#8a4b1f; --accent-soft:rgba(138,75,31,0.13); --accent-ink:#f2ecd9;
+  --good:#2f6b3e; --good-soft:rgba(47,107,62,0.14); --bad:#a23a2a; --bad-soft:rgba(162,58,42,0.13);
+  --shadow:0 6px 16px rgba(35,31,21,0.10);
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+    --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+    --line:rgba(236,229,207,0.16);
+    --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16); --accent-ink:#241f13;
+    --good:#8fbf9a; --good-soft:rgba(143,191,154,0.16); --bad:#e08a7a; --bad-soft:rgba(224,138,122,0.16);
+    --shadow:0 6px 16px rgba(0,0,0,0.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+  --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+  --line:rgba(236,229,207,0.16);
+  --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16); --accent-ink:#241f13;
+  --good:#8fbf9a; --good-soft:rgba(143,191,154,0.16); --bad:#e08a7a; --bad-soft:rgba(224,138,122,0.16);
+  --shadow:0 6px 16px rgba(0,0,0,0.45);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:1rem 16px 2.6rem}
+.crumbs{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 1.2rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+.crumbs a{color:var(--ink-faint);text-decoration:none}.crumbs a:hover{color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.08;margin:0 0 .5rem;text-wrap:balance}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.35rem;margin:0 0 .6rem;text-wrap:balance}
+h3{font-family:var(--font-display);font-weight:400;font-size:1.12rem;margin:0 0 .25rem}
+.lede{color:var(--ink-soft);margin:0 0 1.1rem}
+.stack{display:grid;gap:1.1rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:1.2rem 1.3rem;box-shadow:var(--shadow)}
+.notice{border:1px solid var(--accent);background:var(--accent-soft);border-radius:8px;padding:.8rem 1rem;font-size:.95rem;color:var(--ink)}
+.notice b{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);display:block;margin:0 0 .15rem;font-weight:500}
+.tag{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);margin:0 0 .3rem}
+.drugs{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.drugs .panel{display:flex;flex-direction:column}
+dl.facts{margin:.6rem 0 0;display:grid;grid-template-columns:auto 1fr;gap:.35rem .9rem;font-size:.96rem}
+dl.facts dt{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);padding-top:.25rem}
+dl.facts dd{margin:0;color:var(--ink-soft)}
+dl.facts dd b{color:var(--ink);font-weight:600}
+ul.plain,ol.plain{margin:.4rem 0 0;padding-left:1.15rem;color:var(--ink-soft);font-size:.96rem}
+ul.plain li,ol.plain li{margin:0 0 .3rem}
+ul.plain b,ol.plain b{color:var(--ink)}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin:.3rem 0 0;font-size:.95rem}
+th,td{text-align:left;padding:.5rem .4rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:500}
+td.when{font-family:var(--font-mono);font-size:.8rem;white-space:nowrap;color:var(--accent)}
+tr:last-child td{border-bottom:0}
+.day{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.5rem 0 0}
+.slot{border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:.7rem .85rem}
+.slot .t{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 .35rem}
+.slot ul{margin:0;padding-left:1.1rem;font-size:.95rem;color:var(--ink-soft)}
+.slot li{margin:0 0 .2rem}
+.slot li b{color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.stop{border-left:3px solid var(--bad);padding:.1rem 0 .1rem .8rem;margin:.7rem 0 0;color:var(--ink-soft);font-size:.95rem}
+.stop b{color:var(--bad)}
+.disclaimer{margin:1.1rem 0 0;font-size:.82rem;color:var(--ink-faint)}
+footer.foot{margin-top:1.6rem;font-family:var(--font-mono);font-size:.74rem;color:var(--ink-soft)}
+@media (max-width:620px){
+  .drugs,.two,.day{grid-template-columns:1fr}
+  td.when{white-space:normal}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="../">&larr; Sentinel Atlas</a></div>
+  <h1>Hair Care Regimen</h1>
+  <p class="lede">A reference for the standard routine with minoxidil 5% and finasteride 1 mg: how to use each, what a day looks like, what to expect month by month, and what to watch for. Nothing here is tracked or saved.</p>
+
+  <div class="stack">
+
+    <div class="notice"><b>General information</b>This is typical labeled use for male pattern hair loss, not medical advice. Confirm the plan, especially finasteride, with the doctor or dermatologist who prescribed it, and follow their dose if it differs.</div>
+
+    <section class="drugs" aria-label="The two medicines">
+      <div class="panel">
+        <p class="tag">Topical · on the scalp</p>
+        <h2>Minoxidil 5%</h2>
+        <p class="lede" style="margin-bottom:.2rem">Stimulates follicles and lengthens the growth phase.</p>
+        <dl class="facts">
+          <dt>Dose</dt><dd><b>1 mL liquid, twice daily</b> (foam: half a capful, twice daily)</dd>
+          <dt>Where</dt><dd>Thinning areas of a <b>dry</b> scalp, not the whole head</dd>
+          <dt>Spacing</dt><dd>About 12 hours apart, morning and evening</dd>
+          <dt>Duration</dt><dd>Ongoing. Gains fade a few months after stopping</dd>
+        </dl>
+      </div>
+      <div class="panel">
+        <p class="tag">Tablet · by mouth</p>
+        <h2>Finasteride 1 mg</h2>
+        <p class="lede" style="margin-bottom:.2rem">Lowers DHT, the hormone that miniaturizes follicles.</p>
+        <dl class="facts">
+          <dt>Dose</dt><dd><b>1 tablet once daily</b>, same time each day</dd>
+          <dt>With food</dt><dd>Either way is fine</dd>
+          <dt>Missed dose</dt><dd>Skip it and carry on. Never double up</dd>
+          <dt>Duration</dt><dd>Ongoing. Loss resumes after stopping</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="dayH">
+      <h2 id="dayH">A day on the routine</h2>
+      <p class="lede" style="margin:0">Minoxidil twice daily is the usual schedule for the 5% strength. More does not work faster.</p>
+      <div class="day">
+        <div class="slot">
+          <p class="t">Morning</p>
+          <ul>
+            <li><b>Finasteride</b>, 1 tablet</li>
+            <li><b>Minoxidil</b>, 1 mL on a dry scalp</li>
+          </ul>
+        </div>
+        <div class="slot">
+          <p class="t">Evening, about 12 hours later</p>
+          <ul>
+            <li><b>Minoxidil</b>, 1 mL on a dry scalp</li>
+            <li>Ideally at least 4 hours before bed so it dries</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="two" aria-label="Application and washing">
+      <div class="panel">
+        <h2>Applying minoxidil</h2>
+        <ol class="plain">
+          <li>Start with a <b>dry scalp and dry hair</b>.</li>
+          <li>Part the hair so the liquid reaches <b>skin</b>, not strands.</li>
+          <li>Apply the dose across the thinning area and spread it with fingertips.</li>
+          <li><b>Wash your hands</b> straight afterward.</li>
+          <li>Let it dry fully before a hat, pillow or styling product.</li>
+          <li>Leave it on at least <b>4 hours</b> before washing.</li>
+        </ol>
+      </div>
+      <div class="panel">
+        <h2>Helpful extras</h2>
+        <ul class="plain">
+          <li><b>Ketoconazole 2% shampoo</b> two or three times a week. It calms scalp irritation and may help a little itself.</li>
+          <li><b>Monthly photos</b> in the same light, same angle, wet or dry hair kept consistent. Memory is a poor judge of slow change.</li>
+          <li><b>Microneedling</b> is optional, about weekly at a short depth. Leave a day before minoxidil, or it can sting and absorb more.</li>
+          <li>Skip the dose if the scalp is broken or sunburned.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="tlH">
+      <h2 id="tlH">What to expect, and when</h2>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>When</th><th>What is normal</th></tr></thead>
+          <tbody>
+            <tr><td class="when">Weeks 2&ndash;8</td><td><b>Shedding.</b> Weak hairs fall as follicles reset. It looks like the treatment is failing, and it is not. Keep going.</td></tr>
+            <tr><td class="when">Months 3&ndash;4</td><td>Shedding settles. Finasteride starts to show as less hair in the brush and shower.</td></tr>
+            <tr><td class="when">Months 4&ndash;6</td><td>Minoxidil regrowth begins: fine, short hairs first, then thicker.</td></tr>
+            <tr><td class="when">Months 6&ndash;12</td><td>Best visible improvement builds. Finasteride reaches full effect at about 12 months.</td></tr>
+            <tr><td class="when">After 1 year</td><td>The result is maintained, not climbed further. Stopping either medicine lets the gains fade over a few months.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small" style="font-size:.85rem;color:var(--ink-faint);margin:.7rem 0 0">Individual results vary. Photos at 6 and 12 months are the fair test, so judge it then and not by the first few weeks.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="whyH">
+      <h2 id="whyH">Why the two together</h2>
+      <p class="lede" style="margin:0">Finasteride acts on the cause by blocking the conversion of testosterone to DHT, which slows and often stops further loss. Minoxidil acts on the follicles directly to encourage regrowth. They work by different routes, and studies show the pair outperforms either alone.</p>
+    </section>
+
+    <section class="two" aria-label="Safety">
+      <div class="panel">
+        <h2>Finasteride: know this</h2>
+        <ul class="plain">
+          <li>A small percentage report <b>lower libido, erection problems or low mood</b>. Most resolve; a few report persistence after stopping.</li>
+          <li>It <b>roughly halves PSA</b>. Tell any doctor doing prostate screening that you take it.</li>
+          <li>Women who are or may become pregnant must <b>not handle crushed or broken tablets</b>.</li>
+          <li>Do not donate blood while taking it, and for a period after, per local blood-bank rules.</li>
+        </ul>
+        <p class="stop"><b>Call your doctor</b> for any mood change, breast lumps or discharge, or sexual side effects that bother you.</p>
+      </div>
+      <div class="panel">
+        <h2>Minoxidil: know this</h2>
+        <ul class="plain">
+          <li><b>Scalp irritation</b>, dryness and flaking are common. Foam is gentler than liquid.</li>
+          <li>Unwanted <b>facial or body hair</b> can appear if it drips or is touched. Wash hands and keep it off the forehead.</li>
+          <li><b>Toxic to cats</b> if they lick the scalp, pillow or your hands.</li>
+          <li>Keep it away from eyes and broken skin.</li>
+        </ul>
+        <p class="stop"><b>Stop and see a doctor</b> for dizziness, a racing or irregular heartbeat, chest pain, sudden swelling of hands, feet or face, or sudden weight gain.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <p class="disclaimer">Written as a plain reference from standard labeling and published guidance on androgenetic alopecia. It does not diagnose hair loss, and other causes (thyroid, iron, stress, scalp conditions) need a doctor. If you are female, pregnant, planning a pregnancy or take other medicines, ask a doctor before using either one.</p>
+  <footer class="foot">Plate XIV · Sentinel Atlas</footer>
+</div>
+</body>
+</html>
