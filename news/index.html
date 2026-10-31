@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly News Digest</title>
+<meta name="description" content="Headlines from the past seven days: world news, Andhra Pradesh, Telangana and Telugu-language news, collected automatically from public feeds with a link to each original story.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Noto+Sans+Telugu:wght@400;600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9e3cf; --surface:#ddd5b8; --card:#f2ecd9;
+  --ink:#231f15; --ink-soft:#5a5540; --ink-faint:#877f63;
+  --line:rgba(35,31,21,0.16);
+  --accent:#8a4b1f; --accent-soft:rgba(138,75,31,0.13); --accent-ink:#f2ecd9;
+  --good:#2f6b3e; --good-soft:rgba(47,107,62,0.14); --bad:#a23a2a; --bad-soft:rgba(162,58,42,0.13);
+  --shadow:0 6px 16px rgba(35,31,21,0.10);
+  --font-display:'Marcellus', Georgia, serif;
+  --font-body:'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+    --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+    --line:rgba(236,229,207,0.16);
+    --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16); --accent-ink:#241f13;
+    --good:#8fbf9a; --good-soft:rgba(143,191,154,0.16); --bad:#e08a7a; --bad-soft:rgba(224,138,122,0.16);
+    --shadow:0 6px 16px rgba(0,0,0,0.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15120b; --surface:#1e1a10; --card:#241f13;
+  --ink:#ece5cf; --ink-soft:#b5ad93; --ink-faint:#7f7860;
+  --line:rgba(236,229,207,0.16);
+  --accent:#e0a56b; --accent-soft:rgba(224,165,107,0.16); --accent-ink:#241f13;
+  --good:#8fbf9a; --good-soft:rgba(143,191,154,0.16); --bad:#e08a7a; --bad-soft:rgba(224,138,122,0.16);
+  --shadow:0 6px 16px rgba(0,0,0,0.45);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.5}
+.wrap{max-width:820px;margin:0 auto;padding:1rem 16px 2.6rem}
+.crumbs{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 1.2rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+.crumbs a{color:var(--ink-faint);text-decoration:none}.crumbs a:hover{color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.08;margin:0 0 .5rem;text-wrap:balance}
+.lede{color:var(--ink-soft);margin:0 0 .8rem}
+.stamp{font-family:var(--font-mono);font-size:.74rem;color:var(--ink-faint);margin:0 0 1rem}
+.stale{border:1px solid var(--bad);background:var(--bad-soft);border-radius:6px;padding:.6rem .85rem;font-size:.92rem;margin:0 0 1rem}
+.top{position:sticky;top:0;z-index:2;background:var(--bg);padding:.5rem 0 .6rem;margin:0 0 .8rem;border-bottom:1px solid var(--line);display:grid;gap:.5rem}
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem}
+.tabs button{font-family:var(--font-mono);font-size:.78rem;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);padding:.4rem .95rem;border-radius:99px;cursor:pointer}
+.tabs button:hover{border-color:var(--accent);color:var(--ink)}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tabs button i{font-style:normal;opacity:.7;margin-left:.35rem}
+.tabs .te{font-family:'Noto Sans Telugu',var(--font-mono)}
+.tools{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.search{flex:1 1 220px;font-family:var(--font-mono);font-size:.84rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:.5rem .7rem}
+.search:focus-visible,.tabs button:focus-visible,.src button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.src{display:flex;gap:.35rem;flex-wrap:wrap}
+.src button{font-family:var(--font-mono);font-size:.7rem;border:1px solid var(--line);background:none;color:var(--ink-soft);padding:.28rem .7rem;border-radius:99px;cursor:pointer}
+.src button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
+.day{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:1.4rem 0 .4rem;padding:0 0 .3rem;border-bottom:1px solid var(--line);font-weight:500}
+.list{list-style:none;margin:0;padding:0}
+.list li{padding:.55rem 0;border-bottom:1px solid var(--line)}
+.list li:last-child{border-bottom:0}
+.list a{color:var(--ink);text-decoration:none;font-size:1.04rem;line-height:1.35}
+.list a:hover{color:var(--accent);text-decoration:underline}
+.list a:visited{color:var(--ink-soft)}
+.list a[lang="te"]{font-family:'Noto Sans Telugu',var(--font-body);font-size:.98rem;line-height:1.6}
+.meta{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-faint);margin:.15rem 0 0}
+mark{background:var(--accent-soft);color:inherit;box-shadow:0 0 0 1px var(--accent);border-radius:2px}
+.empty,.err{color:var(--ink-soft);padding:1rem 0}
+.more{margin:1rem 0 0;font-family:var(--font-mono);font-size:.76rem;border:1px solid var(--accent);background:none;color:var(--accent);padding:.5rem 1.2rem;border-radius:99px;cursor:pointer}
+.disclaimer{margin:1.6rem 0 0;font-size:.82rem;color:var(--ink-faint)}
+.disclaimer a{color:var(--accent)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs"><a href="../">&larr; Sentinel Atlas</a></div>
+  <h1>Weekly News Digest</h1>
+  <p class="lede">The past seven days of headlines: world news, Andhra Pradesh, Telangana, and Telugu-language news. Each one links to the original story.</p>
+  <p class="stamp" id="stamp">Loading headlines&hellip;</p>
+  <div class="stale" id="stale" hidden></div>
+
+  <div class="top">
+    <div class="tabs" id="tabs" role="tablist" aria-label="News section"></div>
+    <div class="tools">
+      <input type="search" class="search" id="q" placeholder="Search these headlines" aria-label="Search headlines" autocomplete="off">
+      <div class="src" id="src" role="group" aria-label="Filter by source"></div>
+    </div>
+  </div>
+
+  <main id="main" aria-live="polite"></main>
+
+  <p class="disclaimer">Headlines, source names and links only, gathered automatically from each publisher&rsquo;s public RSS feed, so every story belongs to and opens on the original site. Nothing here is written, edited or summarized by this page, and a headline&rsquo;s appearance is not an endorsement. Times are shown in India Standard Time.</p>
+</div>
+
+<script>
+(function(){
+"use strict";
+var SECTIONS=[["world","World"],["ap","Andhra Pradesh"],["ts","Telangana"],["te","తెలుగు"]];
+var PAGE=40;
+var data=null,sec="world",srcSel="",query="",shown=PAGE;
+var IST="Asia/Kolkata";
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function fmtDay(d){return new Intl.DateTimeFormat("en-IN",{timeZone:IST,weekday:"short",day:"numeric",month:"short"}).format(d)}
+function dayKey(d){return new Intl.DateTimeFormat("en-CA",{timeZone:IST}).format(d)}
+function fmtTime(d){return new Intl.DateTimeFormat("en-IN",{timeZone:IST,hour:"numeric",minute:"2-digit",hour12:true}).format(d).toUpperCase()}
+function hi(text,terms){
+  var h=esc(text);
+  if(!terms.length) return h;
+  var re=new RegExp("("+terms.map(function(t){return esc(t).replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}).join("|")+")","gi");
+  return h.replace(/(&[a-z#0-9]+;)|([^&]+|&)/gi,function(m,ent,txt){return ent?ent:txt.replace(re,"<mark>$1</mark>")});
+}
+function rows(){
+  var terms=query.toLowerCase().split(/\s+/).filter(Boolean);
+  return (data.sections[sec]||[]).filter(function(it){
+    if(srcSel&&it.source!==srcSel) return false;
+    var t=it.title.toLowerCase();
+    return terms.every(function(x){return t.indexOf(x)!==-1});
+  });
+}
+function renderTabs(){
+  document.getElementById("tabs").innerHTML=SECTIONS.map(function(s){
+    var n=(data.sections[s[0]]||[]).length;
+    return '<button type="button" role="tab" data-sec="'+s[0]+'" aria-selected="'+(s[0]===sec)+'"'+(s[0]==="te"?' class="te" lang="te"':'')+'>'+s[1]+'<i>'+n+'</i></button>';
+  }).join("");
+}
+function renderSrc(){
+  var names=[];
+  (data.sections[sec]||[]).forEach(function(it){if(names.indexOf(it.source)===-1) names.push(it.source)});
+  var el=document.getElementById("src");
+  if(names.length<2){el.innerHTML="";return}
+  el.innerHTML=['']
+    .concat(names).map(function(n){return '<button type="button" data-src="'+esc(n)+'" aria-pressed="'+(n===srcSel)+'">'+(n||"All sources")+'</button>'}).join("");
+}
+function renderList(){
+  var list=rows(),terms=query.toLowerCase().split(/\s+/).filter(Boolean),main=document.getElementById("main");
+  if(!list.length){main.innerHTML='<p class="empty">'+(query||srcSel?'No headlines match. Clear the search or source filter.':'No headlines in the past week.')+'</p>';return}
+  var h="",cur="",open=false,lang=sec==="te"?' lang="te"':'';
+  list.slice(0,shown).forEach(function(it){
+    var d=new Date(it.date),k=dayKey(d);
+    if(k!==cur){
+      if(open) h+="</ul>";
+      cur=k;open=true;
+      h+='<h2 class="day">'+fmtDay(d)+'</h2><ul class="list">';
+    }
+    h+='<li><a href="'+esc(it.link)+'" target="_blank" rel="noopener noreferrer"'+lang+'>'+hi(it.title,terms)+'</a><p class="meta">'+esc(it.source)+' &middot; '+fmtTime(d)+'</p></li>';
+  });
+  if(open) h+="</ul>";
+  if(list.length>shown) h+='<button type="button" class="more" id="more">Show more ('+(list.length-shown)+' left)</button>';
+  main.innerHTML=h;
+}
+function renderAll(){renderTabs();renderSrc();renderList()}
+function stamp(){
+  var g=new Date(data.generated),age=(Date.now()-g.getTime())/864e5;
+  document.getElementById("stamp").textContent="Updated "+fmtDay(g)+", "+fmtTime(g)+" IST · rolling "+data.windowDays+" days · collected daily";
+  if(age>3){
+    var el=document.getElementById("stale");
+    el.hidden=false;
+    el.textContent="These headlines were last collected "+Math.floor(age)+" days ago, so the automatic update may have stopped. Treat them as old.";
+  }
+}
+document.getElementById("tabs").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-sec]");
+  if(!b) return;
+  sec=b.getAttribute("data-sec");srcSel="";shown=PAGE;
+  history.replaceState(null,"","#"+sec);
+  renderAll();
+});
+document.getElementById("src").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-src]");
+  if(!b) return;
+  srcSel=b.getAttribute("data-src");shown=PAGE;renderSrc();renderList();
+});
+document.getElementById("q").addEventListener("input",function(e){query=e.target.value.trim();shown=PAGE;renderList()});
+document.getElementById("main").addEventListener("click",function(e){
+  if(e.target.id==="more"){shown+=PAGE;renderList()}
+});
+var h=location.hash.replace("#","");
+if(SECTIONS.some(function(s){return s[0]===h})) sec=h;
+fetch("news.json",{cache:"no-cache"}).then(function(r){if(!r.ok) throw new Error(r.status);return r.json()}).then(function(d){
+  data=d;stamp();renderAll();
+}).catch(function(){
+  document.getElementById("stamp").textContent="";
+  document.getElementById("main").innerHTML='<p class="err">Couldn&rsquo;t load the headlines. Check your connection and reload.</p>';
+});
+})();
+</script>
+</body>
+</html>
