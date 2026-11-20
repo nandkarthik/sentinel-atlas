@@ -3546,6 +3546,8 @@ var DOCS=[
 ]],
 
 ["sd-classics","Classic designs at a glance","the core idea behind each common question",[
+  ["Class-design (low-level) questions",
+    ul(["<a href='#sd-l-approach'>How to approach LLD</a> &middot; <a href='#sd-l-solid'>SOLID</a> &middot; <a href='#sd-l-parking'>Parking lot</a> &middot; <a href='#sd-l-elevator'>Elevator</a> &middot; <a href='#sd-l-vending'>Vending machine</a> &middot; <a href='#sd-l-lru'>LRU cache</a> &middot; <a href='#sd-l-atm'>ATM</a> &middot; <a href='#sd-l-tictactoe'>Tic-tac-toe</a> &middot; <a href='#sd-l-splitwise'>Splitwise</a> &middot; <a href='#sd-l-logger'>Logger</a>"])],
   ["Full walkthroughs (open these first)",
     ul([
       "<a href='#sd-w-url'>URL shortener</a> &middot; <a href='#sd-w-feed'>News feed</a> &middot; <a href='#sd-w-chat'>Chat</a> &middot; <a href='#sd-w-notify'>Notification system</a> &middot; <a href='#sd-w-crawler'>Web crawler</a>",
@@ -4113,6 +4115,138 @@ VIS.chat=function(){
   b+=gt(T(20,282,"3  It forwards to Bob's gateway, which pushes it down his socket.","s"),36,98,P);
   b+=gt(T(20,298,"4  If Bob is offline: keep it stored and send a push notification.","s"),52,98,P);
   return SV(310,"Chat message path: sender gateway, chat service with session lookup and storage, recipient gateway",b);
+};
+
+VIS.classes=function(){
+  var P=10;
+  var b=B(250,20,140,50,"Order","has many items")+B(40,150,150,50,"OrderItem","owned by Order")+B(450,150,150,50,"Discount","interface")+B(250,150,140,50,"Checkout","uses Discount");
+  b+=L("M290 70 L130 150")+L("M350 70 L350 110 L525 110 L525 150","d")+L("M390 175 L450 175","d");
+  b+=seg("M290 70 L130 150",4,26,P,"")+seg("M390 175 L450 175",40,58,P,"acc");
+  b+=T(20,236,"Solid line: Order owns its items (composition).","s")+T(20,252,"Dashed line: uses or depends on (association).","s");
+  return SV(266,"Class diagram: Order owns OrderItem, Checkout uses the Discount interface",b);
+};
+VIS.solid=function(){
+  var P=10,w=["Single job","Extend","Substitute","Small APIs","Invert"],l=["S","O","L","I","D"],b="";
+  for(var i=0;i<5;i++){
+    var x=20+i*120;
+    b+=B(x,60,100,70,l[i],w[i]);
+    b+=gt(B(x,60,100,70,l[i],w[i],"acc"),i*20,i*20+20,P);
+  }
+  b+=T(20,170,"Five habits that keep a class easy to change.","s");
+  return SV(190,"SOLID: single responsibility, open/closed, Liskov, interface segregation, dependency inversion",b);
+};
+VIS.factory=function(){
+  var P=12;
+  var b=B(20,95,100,50,"Client","make('sms')")+B(220,95,130,50,"Factory","picks the class");
+  var ys=[25,95,165],n=["Email","Sms","Push"],p=[];
+  for(var i=0;i<3;i++){b+=B(470,ys[i],110,40,n[i]);p[i]="M350 120 L410 120 L410 "+(ys[i]+20)+" L470 "+(ys[i]+20);b+=L(p[i]);}
+  b+=L("M120 120 L220 120")+seg("M120 120 L220 120",2,10,P,"");
+  b+=seg(p[0],14,26,P,"ok")+seg(p[1],42,54,P,"ok")+seg(p[2],70,82,P,"ok");
+  b+=T(20,236,"The client names a kind. Only the factory knows the concrete classes.","s");
+  return SV(250,"Factory: the client asks for a kind and the factory returns the right class",b);
+};
+VIS.wrap=function(){
+  var P=10;
+  var b='<rect class="nd" x="40" y="20" width="560" height="170" rx="8"/><rect class="nd acc" x="130" y="55" width="380" height="100" rx="8"/><rect class="nd ok" x="230" y="85" width="180" height="40" rx="6"/>';
+  b+=T(60,42,"Sugar","b")+T(150,76,"Milk","b")+T(320,110,"Coffee","b","middle");
+  b+=L("M10 105 L230 105")+seg("M10 105 L230 105",4,40,P,"")+seg("M410 105 L630 105",54,90,P,"ok");
+  b+=T(20,222,"Each wrapper adds a little and passes the call inward.","s")+T(20,238,"Sugar(Milk(Coffee())).cost() adds up on the way back.","s");
+  return SV(252,"Decorator: Sugar wraps Milk wraps Coffee, each adding to the cost",b);
+};
+VIS.observer=function(){
+  var P=10;
+  var b=B(20,95,110,50,"Subject","orders")+B(480,20,120,44,"Email")+B(480,98,120,44,"Metrics")+B(480,176,120,44,"Audit log");
+  var ys=[42,120,198],p=[];
+  for(var i=0;i<3;i++){p[i]="M130 120 L300 120 L300 "+ys[i]+" L480 "+ys[i];b+=L(p[i]);}
+  b+=seg("M130 120 L300 120",4,16,P,"acc");
+  b+=seg(p[0],20,40,P,"ok")+seg(p[1],20,40,P,"ok")+seg(p[2],20,40,P,"ok");
+  b+=gt(T(20,250,"1  publish(event) on the subject.","s"),0,98,P)+gt(T(20,266,"2  Every subscriber is called. The subject does not know who they are.","s"),20,98,P);
+  return SV(280,"Observer: one published event is delivered to every subscriber",b);
+};
+VIS.threads=function(){
+  var P=12;
+  var b=B(20,30,100,44,"Thread A")+B(20,166,100,44,"Thread B")+B(270,98,120,50,"Lock","one holder");
+  b+=L("M120 52 L270 115")+L("M120 188 L270 132")+L("M390 123 L560 123");
+  b+=seg("M120 52 L270 115",2,14,P,"")+seg("M270 115 L390 123 L560 123",16,34,P,"ok");
+  b+=seg("M120 188 L270 132",30,42,P,"bad")+seg("M270 132 L390 123 L560 123",58,76,P,"ok");
+  b+=gt(T(20,246,"1  A takes the lock and works on the shared data.","s"),4,98,P);
+  b+=gt(T(20,262,"2  B arrives, finds it held, and waits.","s"),32,98,P);
+  b+=gt(T(20,278,"3  A releases; B gets its turn. No two at once.","s"),58,98,P);
+  return SV(292,"Two threads and one lock: B waits until A releases",b);
+};
+VIS.lot=function(){
+  var P=10,b="",i,x,y;
+  for(i=0;i<8;i++){x=40+(i%4)*130;y=30+Math.floor(i/4)*90;b+='<rect class="nd '+(i==1||i==4?"bad":"")+'" x="'+x+'" y="'+y+'" width="110" height="60" rx="6"/>';}
+  b+=T(95,66,"S","b","middle")+T(225,66,"M","b","middle")+T(355,66,"M","b","middle")+T(485,66,"L","b","middle")+T(95,156,"S","b","middle")+T(225,156,"M","b","middle")+T(355,156,"L","b","middle")+T(485,156,"L","b","middle");
+  b+=L("M10 108 L630 108","d")+seg("M10 108 L350 108 L350 60",6,40,P,"acc");
+  b+=gt('<rect class="nd ok" x="300" y="30" width="110" height="60" rx="6"/>',40,98,P);
+  b+=T(20,222,"Red = taken. A medium car takes the smallest free spot that fits.","s");
+  return SV(236,"Parking lot: a car drives to the smallest free spot that fits it",b);
+};
+VIS.elev=function(){
+  var P=12,b="",i;
+  for(i=0;i<4;i++)b+='<rect class="nd" x="250" y="'+(20+i*55)+'" width="140" height="45" rx="4"/>'+T(230,48+i*55,"F"+(3-i),"s","end");
+  b+=seg("M320 187 L320 42",4,30,P,"acc")+seg("M320 42 L320 187",50,76,P,"acc");
+  b+=gt(T(420,60,"calls: 2, 3","s"),0,40,P)+gt(T(420,170,"serving down","s"),50,98,P);
+  b+=T(20,252,"SCAN: keep going the same way, serving stops, reverse only when none are ahead.","s");
+  return SV(266,"Elevator: the car travels up serving stops, then reverses and serves downward stops",b);
+};
+VIS.state=function(){
+  var P=12;
+  var b=B(20,70,120,50,"Idle","waiting")+B(260,70,120,50,"HasMoney","balance &gt; 0")+B(500,70,120,50,"Dispensing","item + change");
+  b+=L("M140 95 L260 95")+L("M380 95 L500 95")+L("M560 120 L560 170 L80 170 L80 120","d");
+  b+=T(200,86,"insert","s","middle")+T(440,86,"select","s","middle")+T(320,188,"done","s","middle");
+  b+=seg("M140 95 L260 95",18,30,P,"")+seg("M380 95 L500 95",50,62,P,"ok")+seg("M560 120 L560 170 L80 170 L80 120",72,92,P,"");
+  b+=gt(T(80,60,"&#9679; current","s","middle"),0,16,P)+gt(T(320,60,"&#9679; current","s","middle"),30,50,P)+gt(T(560,60,"&#9679; current","s","middle"),62,76,P);
+  b+=T(20,222,"Each state decides what insert and select mean.","s")+T(20,238,"The machine just delegates to its current state.","s");
+  return SV(250,"Vending machine states: Idle, HasMoney, Dispensing, and back to Idle",b);
+};
+VIS.lrulist=function(){
+  var P=12;
+  var b=B(20,95,90,50,"Map","key to node")+B(165,95,85,50,"head")+B(285,95,85,50,"A","newest")+B(405,95,85,50,"B")+B(525,95,85,50,"C","oldest");
+  b+=L("M110 120 L165 120","d")+L("M250 120 L285 120")+L("M370 120 L405 120")+L("M490 120 L525 120");
+  b+=seg("M567 95 L567 55 L327 55 L327 95",6,40,P,"acc")+gt(T(447,46,"get(C): move to front","s","middle"),6,50,P);
+  b+=gt(T(20,196,"On put with a full cache: drop the node at the back, add the new one at the front.","s"),56,98,P)+seg("M567 145 L567 175",60,78,P,"bad");
+  b+=T(20,222,"Map finds the node in O(1). The list order is recency.","s");
+  return SV(236,"LRU cache: hash map plus doubly linked list; a read moves its node to the front",b);
+};
+VIS.chain=function(){
+  var P=12;
+  var b=B(20,90,100,50,"Atm","withdraw 270")+B(190,90,120,50,"100 notes","has 2")+B(350,90,120,50,"50 notes","has 5")+B(510,90,110,50,"20 notes","has 10");
+  b+=L("M120 115 L190 115")+L("M310 115 L350 115")+L("M470 115 L510 115");
+  b+=seg("M120 115 L190 115",2,10,P,"")+seg("M310 115 L350 115",30,38,P,"")+seg("M470 115 L510 115",58,66,P,"");
+  b+=gt(T(250,80,"2 x 100","s","middle"),12,98,P)+gt(T(410,80,"1 x 50","s","middle"),40,98,P)+gt(T(565,80,"1 x 20","s","middle"),68,98,P);
+  b+=T(20,196,"Each link takes what it can, passes the rest on.","s")+T(20,212,"Plan first. Debit the account. Then commit the cash.","s");
+  return SV(226,"ATM chain: 270 becomes two 100s, one 50 and one 20",b);
+};
+VIS.ttt=function(){
+  var P=12,b="",i,j;
+  for(i=0;i<3;i++)for(j=0;j<3;j++)b+='<rect class="nd" x="'+(200+j*80)+'" y="'+(20+i*80)+'" width="76" height="76" rx="4"/>';
+  function X(r,c,a){var x=200+c*80+20,y=20+r*80+20;return gt(L("M"+x+" "+y+" L"+(x+36)+" "+(y+36))+L("M"+(x+36)+" "+y+" L"+x+" "+(y+36)),a,98,P)}
+  function O(r,c,a){return gt('<circle class="nd acc" cx="'+(200+c*80+38)+'" cy="'+(20+r*80+38)+'" r="20"/>',a,98,P)}
+  b+=X(0,0,6)+O(1,0,22)+X(0,1,38)+O(1,1,54)+X(0,2,70)+gt(L("M210 58 L430 58","acc"),76,98,P);
+  b+=T(20,276,"Row 0 counter hits 3 for X: win in O(1), no board scan.","s");
+  return SV(290,"Tic-tac-toe: X wins when the row counter reaches 3",b);
+};
+VIS.ledger=function(){
+  var P=12;
+  var b=B(250,20,140,50,"Ann","paid 300; +200")+B(40,150,140,50,"Raj","owes 100")+B(460,150,140,50,"Mia","owes 100");
+  b+=L("M110 150 L270 70")+L("M530 150 L370 70");
+  b+=seg("M110 150 L270 70",6,30,P,"ok")+seg("M530 150 L370 70",40,64,P,"ok");
+  b+=gt(T(160,128,"100","s"),6,98,P)+gt(T(480,128,"100","s"),40,98,P);
+  b+=T(20,236,"Net balance per person, in cents. They always add up to zero.","s")+T(20,252,"Settle up: biggest debtor pays biggest creditor.","s");
+  return SV(266,"Expense sharing: Raj and Mia each pay Ann 100",b);
+};
+VIS.logs=function(){
+  var P=10;
+  var b=B(20,95,100,50,"Logger","level INFO")+B(190,95,90,50,"Filter","level check")+B(470,20,130,44,"Console")+B(470,98,130,44,"File")+B(470,176,130,44,"Memory");
+  var ys=[42,120,198],p=[];
+  b+=L("M120 120 L190 120");
+  for(var i=0;i<3;i++){p[i]="M280 120 L370 120 L370 "+ys[i]+" L470 "+ys[i];b+=L(p[i]);}
+  b+=seg("M120 120 L190 120",4,16,P,"")+seg(p[0],22,42,P,"ok")+seg(p[1],22,42,P,"ok")+seg(p[2],22,42,P,"ok");
+  b+=seg("M150 145 L150 200",56,70,P,"bad")+gt(T(170,196,"DEBUG dropped","s"),56,98,P);
+  b+=T(20,252,"Cheap filter first, then every handler gets the line.","s");
+  return SV(266,"Logger: filter by level, then send each line to every handler",b);
 };
 
 function vis(n){return '<div class="vis" data-vis="'+n+'"></div>'}
@@ -5209,6 +5343,309 @@ DOCS.push(
 ]]
 );
 DOCS.push(
+["sd-l-approach","LLD: how to approach it","steps, UML in one table, which pattern when","classes",[
+  ["Steps (say them out loud)",
+    ol(["<b>Clarify</b> requirements and scope. Ask what is out of scope. Write 3 to 5 use cases (&ldquo;park a car&rdquo;, &ldquo;pay and exit&rdquo;).","<b>Find the nouns</b>: they become classes (<code>Vehicle</code>, <code>Spot</code>, <code>Ticket</code>). <b>Find the verbs</b>: they become methods.","<b>Draw relationships</b> (table below). Prefer composition over inheritance.","<b>Pick patterns only where they remove an <code>if/else</code> on a type</b> (price rules, states, notification channels).","<b>Write the core method first</b> (<code>park()</code>), then the edge cases.","<b>Say what you would add next</b>: concurrency, persistence, extension points."])],
+  ["UML relationships in one table",
+    table(["Relationship","Meaning","Example","In code"],[
+      ["Inheritance (is-a)","Subtype can stand in for the base","<code>Car</code> is a <code>Vehicle</code>","<code>class Car(Vehicle)</code>"],
+      ["Implements","Class fulfils an interface","<code>Email</code> implements <code>Notifier</code>","subclass of an abstract base"],
+      ["Composition (owns)","Part dies with the whole","<code>Order</code> owns its <code>OrderItem</code>s","created and stored inside"],
+      ["Aggregation (has)","Part lives on its own","<code>Team</code> has <code>Player</code>s","passed in, stored"],
+      ["Association / uses","Calls it, does not own it","<code>Checkout</code> uses <code>Discount</code>","held reference or argument"]
+    ])],
+  ["Which pattern when",
+    table(["You see&hellip;","Reach for","Why"],[
+      ["<code>if type == &hellip;</code> choosing an algorithm","Strategy","Swap behavior without touching callers"],
+      ["Behavior changes with a status field","State","One class per state; no giant switch"],
+      ["Creating objects by a name or config","Factory","One place knows the concrete classes"],
+      ["Many optional constructor arguments","Builder","Readable, step by step, validates at <code>build()</code>"],
+      ["Add features without subclass explosion","Decorator","Wrap and stack"],
+      ["Old API does not match the new interface","Adapter","Translate at the boundary"],
+      ["One event, many interested parties","Observer","Publisher does not know subscribers"],
+      ["Undo, queue or log actions","Command","Action becomes an object"],
+      ["Exactly one shared instance","Singleton","Use sparingly; hurts testing"]
+    ])],
+  ["Rules of thumb",
+    ul(["Small classes with one reason to change. Many small beats one big.","Depend on interfaces, build objects in one place (constructor injection).","Money in integer cents, time from an injected clock: both make tests easy.","Start with the simplest design that works, then add one extension point if asked.","Name classes after the domain (<code>Ticket</code>), not the pattern (<code>TicketFactoryManager</code>)."])],
+  ["Common mistakes",
+    ul(["Drawing classes before asking requirements.","Patterns for show: a Strategy with one implementation is just indirection.","A <code>Manager</code> or <code>Util</code> class that does everything.","Forgetting concurrency when two users can act at once (two cars, one spot).","Public mutable fields; any caller can break an invariant."])],
+  ["Say it",
+    ul(["&ldquo;Nouns become classes, verbs become methods; I will use patterns only to remove type checks.&rdquo;","&ldquo;Composition over inheritance, depend on interfaces, inject dependencies.&rdquo;","&ldquo;Core flow first, then edge cases, then what I would extend.&rdquo;"])]
+]],
+
+["sd-l-solid","SOLID and design principles","five rules, the smell each fixes, and code","solid",[
+  ["The five, with the smell and the fix",
+    table(["Principle","Rule","Smell","Fix"],[
+      ["<b>S</b> Single responsibility","A class has one reason to change","One class does pricing, saving and emailing","Split by responsibility"],
+      ["<b>O</b> Open / closed","Open to extension, closed to modification","Editing an <code>if/elif</code> chain for every new case","Add a new class behind an interface"],
+      ["<b>L</b> Liskov substitution","A subtype works anywhere its base does","Subclass throws &ldquo;not supported&rdquo; or breaks callers","Fix the hierarchy; prefer composition"],
+      ["<b>I</b> Interface segregation","Many small interfaces beat one fat one","Implementers leave methods empty","Split into focused interfaces"],
+      ["<b>D</b> Dependency inversion","Depend on abstractions, not concrete classes","<code>new MySqlDb()</code> inside business logic","Pass the dependency in (injection)"]
+    ])],
+  ["Open / closed and dependency inversion in code",
+    'codeBlk(["# Open/closed + dependency inversion: add a discount without editing Checkout", "class Discount:                                  # abstraction", "    def apply(self, total): raise NotImplementedError", "", "class NoDiscount(Discount):", "    def apply(self, total): return total", "", "class Percent(Discount):", "    def __init__(self, pct): self.pct = pct", "    def apply(self, total): return total * (1 - self.pct / 100)", "", "class Checkout:", "    def __init__(self, discount: Discount):      # depends on the abstraction", "        self.discount = discount", "    def total(self, prices): return self.discount.apply(sum(prices))"])'+'<p>A new discount is a new class. <code>Checkout</code> never changes, and tests pass a fake <code>Discount</code>.</p>'],
+  ["Liskov: the classic trap",
+    ul(["<code>Square</code> as a subclass of <code>Rectangle</code>: setting width also changes height, so code that sets width then height gets a wrong area.","A subtype may not demand more (stricter inputs) or promise less (weaker results) than its base.","Fix: do not model it as is-a; make both implement a <code>Shape</code> with <code>area()</code>."])],
+  ["Interface segregation",
+    ul(["A <code>Worker</code> interface with <code>work()</code> and <code>eat()</code> forces a robot to implement <code>eat()</code>.","Split into <code>Workable</code> and <code>Feedable</code>; classes take only what they use.","In Python this is small abstract bases or duck typing with a <code>Protocol</code>."])],
+  ["Other principles worth naming",
+    table(["Principle","One line"],[
+      ["DRY","One source of truth for each rule. But two similar things are not always duplicates."],
+      ["KISS","Simplest design that meets the requirements."],
+      ["YAGNI","Do not build what nobody asked for yet."],
+      ["Law of Demeter","Talk to friends only: <code>a.b.c.d()</code> chains mean a leaky design."],
+      ["Composition over inheritance","Hold a collaborator and delegate; inherit only for real is-a."],
+      ["Tell, don&rsquo;t ask","Ask an object to do the work instead of reading its fields and deciding."]
+    ])],
+  ["Say it",
+    ul(["&ldquo;Single job per class; extend by adding classes, not editing; subtypes must be substitutable.&rdquo;","&ldquo;Small interfaces, and depend on abstractions that are injected.&rdquo;","&ldquo;I apply these when I see a smell, not up front.&rdquo;"])]
+]],
+
+["sd-l-creational","Creational patterns","Singleton, Factory, Abstract Factory, Builder, Prototype","factory",[
+  ["At a glance",
+    table(["Pattern","Use when","Idea","Watch out"],[
+      ["Singleton","Exactly one shared instance (config, registry)","Class holds its only instance","Global state; hard to test; make it thread-safe"],
+      ["Factory Method / simple factory","Caller should not name concrete classes","One function or method returns the right subtype","Do not add one for a single class"],
+      ["Abstract Factory","Create families of related objects (light and dark widgets)","Factory of factories","Heavy; only for real families"],
+      ["Builder","Many optional parts, step by step","Fluent setters then <code>build()</code>","Overkill for 3 fields; a dataclass is enough"],
+      ["Prototype","Copying is cheaper than creating","<code>copy.deepcopy(obj)</code>","Shallow versus deep copy"]
+    ])],
+  ["Factory",
+    'codeBlk(["class Notifier:", "    def send(self, msg): raise NotImplementedError", "", "class Email(Notifier):", "    def send(self, msg): return \"email:\" + msg", "", "class Sms(Notifier):", "    def send(self, msg): return \"sms:\" + msg", "", "def make_notifier(kind):                         # simple factory", "    return {\"email\": Email, \"sms\": Sms}[kind]()  # add a type = add one entry"])'+'<p>New channel: add one dictionary entry. Callers ask for <code>"sms"</code> and get a <code>Notifier</code>.</p>'],
+  ["Builder",
+    'codeBlk(["class Pizza:", "    def __init__(self, size, toppings, cheese):", "        self.size, self.toppings, self.cheese = size, toppings, cheese", "", "class PizzaBuilder:", "    def __init__(self):", "        self._size, self._toppings, self._cheese = \"M\", [], True", "    def size(self, s):      self._size = s; return self", "    def topping(self, t):   self._toppings.append(t); return self", "    def no_cheese(self):    self._cheese = False; return self", "    def build(self):        return Pizza(self._size, list(self._toppings), self._cheese)", "", "# PizzaBuilder().size(\"L\").topping(\"olives\").no_cheese().build()"])'+'<p>Each setter returns <code>self</code>, so calls chain. <code>build()</code> is the place to validate.</p>'],
+  ["Singleton (thread-safe)",
+    'codeBlk(["import threading", "", "class Config:", "    _inst = None", "    _lock = threading.Lock()", "", "    def __new__(cls):", "        if cls._inst is None:                    # fast path, no lock", "            with cls._lock:", "                if cls._inst is None:            # double-checked", "                    cls._inst = super().__new__(cls)", "        return cls._inst"])'+'<p>The lock is only taken on the first call. In Python, a module-level object is often simpler and just as global.</p>'],
+  ["Say it",
+    ul(["&ldquo;Factory when callers should not know concrete types; builder for many optional parts.&rdquo;","&ldquo;Singleton only for truly shared state, thread-safe, and I prefer injecting it.&rdquo;"])]
+]],
+
+["sd-l-structural","Structural patterns","Adapter, Decorator, Facade, Proxy, Composite, Bridge, Flyweight","wrap",[
+  ["At a glance",
+    table(["Pattern","Use when","Idea","Example"],[
+      ["Adapter","An existing class has the wrong interface","Wrap it and translate calls","Old printer API behind your <code>print()</code>"],
+      ["Decorator","Add behavior dynamically, stackable","Wrapper with the same interface as the thing it wraps","Coffee + milk + sugar; logging or caching around a service"],
+      ["Facade","Hide a messy subsystem behind one simple API","One class with a few friendly methods","<code>VideoConverter.convert(file)</code>"],
+      ["Proxy","Control access to an object","Same interface, adds lazy load, cache, auth or remote call","Lazy image loader; remote stub"],
+      ["Composite","Treat one and many alike (tree)","Leaf and group share an interface","Folder contains files and folders; total size"],
+      ["Bridge","Two dimensions vary independently","Abstraction holds an implementation","Shape &times; renderer"],
+      ["Flyweight","Millions of similar objects","Share the common part, keep the rest outside","Characters in a text editor"]
+    ])],
+  ["Decorator",
+    'codeBlk(["class Coffee:", "    def cost(self): return 3.0", "", "class Milk:                                      # wraps any drink", "    def __init__(self, inner): self.inner = inner", "    def cost(self): return self.inner.cost() + 0.5", "", "class Sugar:", "    def __init__(self, inner): self.inner = inner", "    def cost(self): return self.inner.cost() + 0.2", "", "# Sugar(Milk(Coffee())).cost()  ->  3.7"])'+'<p>Wrappers stack in any order. Compare: a subclass for every combination would be 2<sup>n</sup> classes.</p>'],
+  ["Adapter",
+    'codeBlk(["class LegacyPrinter:                             # cannot change this class", "    def print_text(self, s): return s.upper()", "", "class PrinterAdapter:                            # the interface your code expects", "    def __init__(self, legacy): self.legacy = legacy", "    def print(self, text): return self.legacy.print_text(text)"])'+'<p>You cannot change the legacy class, so translate at the boundary. The rest of your code only sees <code>print()</code>.</p>'],
+  ["Telling the lookalikes apart",
+    table(["Pattern","Interface compared with the wrapped object","Intent"],[
+      ["Adapter","Different","Make it fit"],
+      ["Decorator","Same","Add behavior"],
+      ["Proxy","Same","Control access"],
+      ["Facade","New, simpler","Hide complexity"]
+    ])],
+  ["Say it",
+    ul(["&ldquo;Adapter changes the interface, decorator adds behavior, proxy controls access, facade simplifies.&rdquo;","&ldquo;Composite when the data is a tree and callers should not care whether it is one item or many.&rdquo;"])]
+]],
+
+["sd-l-behavioral","Behavioral patterns","Strategy, Observer, State, Command, Template, Chain, Iterator and more","observer",[
+  ["At a glance",
+    table(["Pattern","Use when","Idea","Example"],[
+      ["Strategy","Swap an algorithm at runtime","Interface + interchangeable classes, injected","Peak versus normal pricing"],
+      ["Observer","One change, many listeners","Subject keeps a list and notifies","Order placed: email, metrics, audit"],
+      ["State","Behavior depends on status","One class per state, context delegates","Vending machine, order status, traffic light"],
+      ["Command","Undo, redo, queue, log actions","Action becomes an object with <code>do</code> and <code>undo</code>","Text editor, task queue"],
+      ["Template Method","Same steps, a few differ","Base class defines the skeleton; subclasses fill steps","Data import: read, parse, save"],
+      ["Chain of Responsibility","Pass a request along until handled","Each handler decides or passes on","Support levels, ATM notes, middleware"],
+      ["Iterator","Walk a collection without exposing it","<code>__iter__</code> and <code>__next__</code> or a generator","Paging through results"],
+      ["Mediator","Many objects talk to each other","One hub; others only know the hub","Chat room, air traffic control"],
+      ["Memento","Save and restore state","Snapshot object","Editor undo snapshots"],
+      ["Visitor","New operations on a stable class tree","Operation lives outside, each node accepts it","Compiler passes over a syntax tree"]
+    ])],
+  ["Strategy",
+    'codeBlk(["class Regular:", "    def price(self, km): return km * 10", "", "class Peak:", "    def price(self, km): return km * 10 * 1.5", "", "class Ride:", "    def __init__(self, pricing): self.pricing = pricing    # injected behavior", "    def fare(self, km): return self.pricing.price(km)", "", "# Ride(Peak()).fare(4) -> 60.0 ; swap the strategy at runtime, no if/else"])'+'<p>The <code>if peak: &hellip; else: &hellip;</code> disappears. A weekend or surge price is one new class.</p>'],
+  ["Observer",
+    vis("observer")+'codeBlk(["class Subject:", "    def __init__(self): self._observers = []", "    def subscribe(self, fn): self._observers.append(fn)", "    def unsubscribe(self, fn): self._observers.remove(fn)", "    def publish(self, event):", "        for fn in list(self._observers):         # copy: observers may unsubscribe", "            fn(event)", "", "# orders = Subject(); orders.subscribe(send_email); orders.publish({\"id\": 7})"])'+'<p>Iterate a <em>copy</em> of the list, because a listener may unsubscribe while being called. For async, put events on a queue instead.</p>'],
+  ["Command",
+    'codeBlk(["class Editor:", "    def __init__(self): self.text, self.history = \"\", []", "    def run(self, cmd):", "        cmd.do(self); self.history.append(cmd)", "    def undo(self):", "        if self.history: self.history.pop().undo(self)", "", "class Append:                                    # a command = action + its undo", "    def __init__(self, s): self.s = s", "    def do(self, ed):   ed.text += self.s", "    def undo(self, ed): ed.text = ed.text[:-len(self.s)]"])'+'<p>The history list is the undo stack. For redo, keep a second stack.</p>'],
+  ["State versus Strategy",
+    table(["","Strategy","State"],[
+      ["Who chooses","The caller, from outside","The object itself, on events"],
+      ["Changes over time","Rarely","Constantly, by transitions"],
+      ["Classes know each other","No","Yes: each state names the next"]
+    ])],
+  ["Say it",
+    ul(["&ldquo;Strategy removes type checks; State models a lifecycle; Observer decouples publisher from subscribers.&rdquo;","&ldquo;Command makes an action an object, so it can be undone, queued or logged.&rdquo;"])]
+]],
+
+["sd-l-concurrency","Concurrency in class design","races, locks, deadlock, producer and consumer","threads",[
+  ["The words",
+    table(["Term","Meaning","Fix"],[
+      ["Race condition","Result depends on thread timing (<code>count += 1</code> is read, add, write)","Lock, atomic type, or avoid shared state"],
+      ["Deadlock","A holds X wants Y; B holds Y wants X","Always take locks in the same order; use timeouts"],
+      ["Starvation","One thread never gets a turn","Fair locks, bounded queues"],
+      ["Thread-safe","Safe if called from many threads","Immutable data, locks, thread-safe collections"],
+      ["Semaphore","Allows N holders","Limit connections or concurrent jobs"],
+      ["Reader-writer lock","Many readers or one writer","Read-heavy shared data"]
+    ])],
+  ["When it matters in LLD",
+    ul(["Two cars choose the same parking spot.","Two users buy the last seat or the last item.","Two withdrawals read the same balance.","A cache evicts while another thread reads."])],
+  ["Pattern: lock the critical section, keep it small",
+    ul(["Take the lock, check, change, release. Never hold it during a slow call (network, disk).","Prefer immutable objects and passing messages over sharing and locking.","For cross-process or multi-machine safety a lock in memory is not enough: use a database transaction, a conditional update, or a distributed lock."])],
+  ["Producer and consumer (bounded queue)",
+    'codeBlk(["import queue, threading", "", "buf = queue.Queue(maxsize=100)                   # bounded, thread-safe buffer", "", "def producer(items):", "    for x in items:", "        buf.put(x)                               # blocks when full (back pressure)", "    buf.put(None)                                # poison pill: tell consumer to stop", "", "def consumer(handle):", "    while (x := buf.get()) is not None:          # blocks when empty", "        handle(x)", "", "lock = threading.Lock()", "count = 0", "def increment():", "    global count", "    with lock:                                   # read-modify-write must be atomic", "        count += 1"])'+'<p>A full queue slows the producer down (back pressure). The <code>None</code> poison pill ends the consumer cleanly.</p>'],
+  ["Python note",
+    ul(["The GIL stops two threads running Python bytecode at once, but <code>count += 1</code> is still not atomic. Use a lock.","Threads help with waiting (I/O); for CPU-heavy work use processes.","Use <code>queue.Queue</code>, <code>threading.Lock</code>, <code>concurrent.futures.ThreadPoolExecutor</code>."])],
+  ["Say it",
+    ul(["&ldquo;Shared mutable state needs a lock around check-and-change; keep it short and ordered to avoid deadlock.&rdquo;","&ldquo;A bounded queue between producer and consumer gives back pressure.&rdquo;","&ldquo;Across machines I would use a transaction or conditional write, not an in-memory lock.&rdquo;"])]
+]]
+);
+DOCS.push(
+["sd-l-parking","LLD: parking lot","classic first LLD question","lot",[
+  ["1 Requirements",
+    REQ(["Several spot sizes (small, medium, large); a vehicle takes the smallest free spot that fits.","Park returns a ticket; unpark takes the ticket and returns the fee.","Fee by time (hourly, rounded up)."],
+        ["Two cars must never get the same spot.","Pricing rules can change without touching the lot code."])],
+  ["2 Classes",
+    table(["Class","Holds","Does"],[
+      ["<code>Vehicle</code>","plate, size","&mdash;"],
+      ["<code>Spot</code>","id, size, vehicle","<code>fits(vehicle)</code>"],
+      ["<code>Ticket</code>","id, spot, vehicle, entry time","&mdash;"],
+      ["<code>HourlyPricing</code> (a strategy)","rate","<code>fee(seconds)</code>"],
+      ["<code>ParkingLot</code>","spots, tickets, pricing, lock","<code>park()</code>, <code>unpark()</code>"]
+    ])],
+  ["3 Code",'codeBlk(["import math, threading, time", "from enum import IntEnum", "", "class Size(IntEnum):", "    SMALL = 1; MEDIUM = 2; LARGE = 3", "", "class Vehicle:", "    def __init__(self, plate, size): self.plate, self.size = plate, size", "", "class Spot:", "    def __init__(self, spot_id, size):", "        self.id, self.size, self.vehicle = spot_id, size, None", "    def fits(self, v): return self.vehicle is None and self.size >= v.size", "", "class Ticket:", "    def __init__(self, tid, spot, vehicle):", "        self.id, self.spot, self.vehicle, self.entry = tid, spot, vehicle, time.time()", "", "class HourlyPricing:                             # strategy: swap for weekend, EV...", "    def __init__(self, rate): self.rate = rate", "    def fee(self, seconds): return max(1, math.ceil(seconds / 3600)) * self.rate", "", "class ParkingLot:", "    def __init__(self, spots, pricing):", "        self.spots, self.pricing = spots, pricing", "        self.tickets, self.lock, self._next = {}, threading.Lock(), 1", "", "    def park(self, v):", "        with self.lock:                          # two cars must not get one spot", "            fits = [s for s in self.spots if s.fits(v)]", "            if not fits: raise RuntimeError(\"lot full\")", "            spot = min(fits, key=lambda s: s.size)      # smallest spot that fits", "            spot.vehicle = v", "            t = Ticket(self._next, spot, v); self._next += 1", "            self.tickets[t.id] = t", "            return t", "", "    def unpark(self, ticket_id, now=None):", "        with self.lock:", "            t = self.tickets.pop(ticket_id)      # KeyError = invalid or reused ticket", "            t.spot.vehicle = None", "            return self.pricing.fee((now or time.time()) - t.entry)"])'],
+  ["4 Patterns used",
+    ul(["<b>Strategy</b>: pricing is injected; add weekend or EV pricing as a new class.","<b>Lock</b>: <code>park</code> checks and assigns inside one critical section.","Enum <code>Size</code> with ordering gives &ldquo;fits&rdquo; as a simple comparison."])],
+  ["5 Edge cases and extensions",
+    ul(["Lot full: raise or return a clear error.","Lost or reused ticket: <code>pop</code> fails on the second use.","Many floors or gates: group spots by floor; keep a free-spot set per size to avoid scanning (O(1) park).","Reservations, EV chargers, handicapped spots: extra spot types and a filter.","Persist tickets in a database; payments as a separate service."])],
+  ["Say it",
+    ul(["&ldquo;Vehicle, Spot, Ticket, ParkingLot, with pricing as an injected strategy.&rdquo;","&ldquo;Smallest fitting spot, assigned under a lock, so two cars never share one.&rdquo;","&ldquo;To scale I keep free spots per size in a set.&rdquo;"])]
+]],
+
+["sd-l-elevator","LLD: elevator system","state, scheduling and dispatch","elev",[
+  ["1 Requirements",
+    REQ(["N elevators, F floors; hall buttons (up, down) and cabin buttons (floor).","Each car moves, opens its doors, and serves stops in a sensible order.","A controller picks which car answers a hall call."],
+        ["Few direction changes (do not zig-zag).","Add a new scheduling rule without rewriting the cars."])],
+  ["2 Classes",
+    table(["Class","Holds","Does"],[
+      ["<code>Elevator</code>","floor, direction (up, down, idle), set of stops","<code>add_stop()</code>, <code>step()</code>"],
+      ["<code>Controller</code>","list of elevators","<code>request(floor, direction)</code> picks a car"],
+      ["Request","floor, direction","&mdash;"]
+    ])],
+  ["3 Code",'codeBlk(["class Elevator:", "    def __init__(self, eid):", "        self.id, self.floor, self.dir, self.stops = eid, 0, 0, set()   # dir: 1 up, -1 down, 0 idle", "", "    def add_stop(self, floor): self.stops.add(floor)", "", "    def step(self):                              # one tick = move one floor", "        self.stops.discard(self.floor)           # doors open for this floor", "        if not self.stops:", "            self.dir = 0; return", "        ahead = [f for f in self.stops if (f - self.floor) * self.dir > 0]", "        if not ahead:                            # nothing ahead: turn toward nearest", "            nearest = min(self.stops, key=lambda f: abs(f - self.floor))", "            self.dir = 1 if nearest > self.floor else -1", "        self.floor += self.dir                   # keeps going until stops run out (SCAN)", "", "class Controller:", "    def __init__(self, n): self.cars = [Elevator(i) for i in range(n)]", "", "    def request(self, floor, direction):         # hall button press", "        def cost(e):", "            dist = abs(e.floor - floor)", "            on_the_way = e.dir == 0 or (e.dir == direction and (floor - e.floor) * e.dir >= 0)", "            return dist if on_the_way else dist + 100", "        car = min(self.cars, key=cost)", "        car.add_stop(floor)", "        return car.id"])'],
+  ["4 Algorithm in words",
+    ul(["<b>SCAN (the &ldquo;elevator algorithm&rdquo;)</b>: keep going in the current direction, serving stops on the way, reverse only when nothing is ahead.","<b>Dispatch</b>: cost = distance, plus a big penalty if the car is moving away or in the wrong direction; choose the cheapest.","Idle cars take the nearest request."])],
+  ["5 Patterns used",
+    ul(["<b>Strategy</b>: the dispatch rule (<code>cost</code>) is swappable (nearest car, zoning, least loaded).","<b>State</b>: moving up, moving down, idle, doors open (here a direction field; use state classes if behavior grows).","<b>Observer</b>: floor displays subscribe to a car&rsquo;s position."])],
+  ["6 Edge cases and extensions",
+    ul(["Overload and emergency stop: reject stops when full; a stop-all command.","Maintenance mode: the controller skips that car.","Peak hours: park idle cars at the lobby; zone cars to floor ranges.","Concurrency: one thread per car; requests arrive on a thread-safe queue."])],
+  ["Say it",
+    ul(["&ldquo;Elevator holds a set of stops and a direction; each step moves one floor and serves stops on the way (SCAN).&rdquo;","&ldquo;Controller dispatches by cost, with the rule swappable as a strategy.&rdquo;"])]
+]],
+
+["sd-l-vending","LLD: vending machine","State pattern in action","state",[
+  ["1 Requirements",
+    REQ(["Insert money, choose an item, get the item and change.","Refuse when money is short or the item is sold out.","Operator can restock."],
+        ["Adding a state (maintenance, out of order) should not mean editing every method."])],
+  ["2 Animation: the states",vis("state")],
+  ["3 Classes",
+    table(["Class","Holds","Does"],[
+      ["<code>VendingMachine</code> (context)","stock, prices, balance, current state","delegates <code>insert</code> and <code>select</code> to the state"],
+      ["<code>Idle</code> (state)","&mdash;","insert &rarr; go to HasMoney; select &rarr; &ldquo;insert money first&rdquo;"],
+      ["<code>HasMoney</code> (state)","&mdash;","insert adds; select checks stock and price, dispenses, returns to Idle"]
+    ])],
+  ["4 Code",'codeBlk(["class Idle:", "    def insert(self, m, cents):", "        m.balance += cents; m.state = HasMoney(); return \"ok\"", "    def select(self, m, item):", "        return \"insert money first\"", "", "class HasMoney:", "    def insert(self, m, cents):", "        m.balance += cents; return \"ok\"", "    def select(self, m, item):", "        if m.stock.get(item, 0) == 0: return \"sold out\"", "        price = m.prices[item]", "        if m.balance < price: return \"need %d more\" % (price - m.balance)", "        m.stock[item] -= 1", "        change, m.balance, m.state = m.balance - price, 0, Idle()", "        return \"dispensed %s, change %d\" % (item, change)", "", "class VendingMachine:", "    def __init__(self, stock, prices):", "        self.stock, self.prices, self.balance, self.state = stock, prices, 0, Idle()", "    def insert(self, cents): return self.state.insert(self, cents)   # delegate", "    def select(self, item):  return self.state.select(self, item)"])'+'<p>Each state decides what an action means. No <code>if state == &hellip;</code> anywhere in the machine.</p>'],
+  ["5 Edge cases and extensions",
+    ul(["Exact change, refunds, cancel button: a <code>cancel</code> method on each state.","Money in integer cents (never floats).","Sold out: check before taking the money, or refund.","Add <code>OutOfOrder</code> as one new class; existing states stay untouched.","Payment methods (cash, card) as a strategy."])],
+  ["Say it",
+    ul(["&ldquo;State pattern: the machine delegates to a current state object; states transition by replacing it.&rdquo;","&ldquo;Adding a state is adding a class, not editing conditionals.&rdquo;"])]
+]],
+
+["sd-l-lru","LLD: LRU cache","hash map + doubly linked list, O(1) get and put","lrulist",[
+  ["1 Requirements",
+    REQ(["<code>get(key)</code> and <code>put(key, value)</code>, both O(1).","Fixed capacity; evict the <b>least recently used</b> entry when full.","Reading a key makes it most recent."],
+        ["Thread-safe if shared."])],
+  ["2 Idea",
+    ul(["<b>Hash map</b> from key to node: find any entry in O(1).","<b>Doubly linked list</b> ordered by recency: front = newest, back = oldest. Move to front or remove from the back in O(1) because we hold the node.","<b>Sentinel</b> head and tail nodes remove all the empty and one-element special cases."])],
+  ["3 Animation",vis("lrulist")],
+  ["4 Code",'codeBlk(["class Node:", "    def __init__(self, k=None, v=None):", "        self.k, self.v, self.prev, self.next = k, v, None, None", "", "class LRUCache:", "    def __init__(self, capacity):", "        self.cap, self.map = capacity, {}", "        self.head, self.tail = Node(), Node()    # sentinels: no edge cases", "        self.head.next, self.tail.prev = self.tail, self.head", "", "    def _unlink(self, n):", "        n.prev.next, n.next.prev = n.next, n.prev", "", "    def _push_front(self, n):                    # front = most recently used", "        n.next, n.prev = self.head.next, self.head", "        self.head.next.prev = n", "        self.head.next = n", "", "    def get(self, k):", "        if k not in self.map: return -1", "        n = self.map[k]", "        self._unlink(n); self._push_front(n)", "        return n.v", "", "    def put(self, k, v):", "        if k in self.map:", "            n = self.map[k]; n.v = v", "            self._unlink(n)", "        else:", "            if len(self.map) == self.cap:", "                lru = self.tail.prev             # least recently used", "                self._unlink(lru); del self.map[lru.k]", "            n = self.map[k] = Node(k, v)", "        self._push_front(n)"])'],
+  ["5 Edge cases and extensions",
+    ul(["Capacity 0 or 1; updating an existing key (does not grow the cache).","Thread safety: wrap <code>get</code> and <code>put</code> in one lock (get also mutates the list).","TTL expiry: store a timestamp; drop on read or with a sweep.","Other policies (LFU, FIFO): make the eviction policy a strategy.","Python shortcut: <code>collections.OrderedDict</code> with <code>move_to_end</code> and <code>popitem(last=False)</code>; say you know it, but write the list in an interview."])],
+  ["Say it",
+    ul(["&ldquo;A hash map for lookup plus a doubly linked list for recency; both operations are O(1).&rdquo;","&ldquo;Sentinel nodes avoid edge cases; one lock makes it thread-safe.&rdquo;"])]
+]],
+
+["sd-l-atm","LLD: ATM","Chain of Responsibility, plan then commit","chain",[
+  ["1 Requirements",
+    REQ(["Check the PIN, withdraw an amount in notes (100, 50, 20), debit the account.","Dispense using the largest notes first; fail if the exact amount cannot be made.","Track cash left in the machine."],
+        ["Never debit money without dispensing it, or dispense without debiting.","Add a new denomination without rewriting the logic."])],
+  ["2 Classes",
+    table(["Class","Holds","Does"],[
+      ["<code>Atm</code>","dispenser chain, bank","<code>withdraw(account, pin, amount)</code>"],
+      ["<code>Dispenser</code> (chain link)","denomination, count, next","<code>plan()</code> decides notes, <code>commit()</code> removes them"],
+      ["Bank (interface)","&mdash;","<code>check_pin</code>, <code>debit</code>"]
+    ])],
+  ["3 Animation",vis("chain")],
+  ["4 Code",'codeBlk(["class Dispenser:                                 # chain: 100 -> 50 -> 20", "    def __init__(self, denom, count, nxt=None):", "        self.denom, self.count, self.nxt = denom, count, nxt", "", "    def plan(self, amount, out):                 # decide, do not change stock yet", "        n = min(amount // self.denom, self.count)", "        if n: out[self.denom] = n", "        amount -= n * self.denom", "        return self.nxt.plan(amount, out) if self.nxt else amount", "", "    def commit(self, out):", "        self.count -= out.get(self.denom, 0)", "        if self.nxt: self.nxt.commit(out)", "", "class Atm:", "    def __init__(self, chain, bank):             # bank: object with check_pin, debit", "        self.chain, self.bank = chain, bank", "", "    def withdraw(self, account, pin, amount):", "        if not self.bank.check_pin(account, pin): raise PermissionError(\"bad pin\")", "        notes = {}", "        if self.chain.plan(amount, notes) != 0:", "            raise ValueError(\"cannot dispense that amount\")", "        self.bank.debit(account, amount)         # fails if balance too low", "        self.chain.commit(notes)                 # only now touch the cash", "        return notes"])'+'<p>Order matters: <b>plan</b> the notes (no change), <b>debit</b> the account, then <b>commit</b> the cash. A failure early on leaves everything untouched.</p>'],
+  ["5 Edge cases and extensions",
+    ul(["Amount not payable with the notes left: report it, do not debit.","Card state: idle, card inserted, authenticated (a State machine); lock the card after 3 wrong PINs.","Daily limit and fraud checks as extra steps before the debit.","Concurrency: the bank&rsquo;s debit must be atomic (a conditional update); the ATM serves one customer at a time.","Greedy works for 100/50/20; unusual note sets may need dynamic programming."])],
+  ["Say it",
+    ul(["&ldquo;A chain of dispensers, largest note first; plan, then debit, then commit.&rdquo;","&ldquo;Bank is an interface so it is easy to fake in tests.&rdquo;"])]
+]],
+
+["sd-l-tictactoe","LLD: tic-tac-toe","O(1) win check, extends to N&times;N","ttt",[
+  ["1 Requirements",
+    REQ(["Two players alternate on an N&times;N board; three-in-a-row (N in a row) wins.","Reject moves on a taken cell or after the game is over.","Detect a draw."],
+        ["Win check should not scan the board every move."])],
+  ["2 Idea",
+    ul(["Keep a counter per row, per column and for both diagonals.","Player 1 adds +1, player 2 adds &minus;1 to the counters their cell touches.","If any counter reaches &plusmn;N, that player has N in a line. That is O(1) per move."])],
+  ["3 Animation",vis("ttt")],
+  ["4 Code",'codeBlk(["class TicTacToe:", "    def __init__(self, n=3):", "        self.n = n", "        self.rows, self.cols = [0] * n, [0] * n", "        self.diag = self.anti = 0", "        self.turn, self.winner, self.moves, self.taken = 1, 0, 0, set()", "", "    def move(self, r, c):", "        if self.winner or (r, c) in self.taken: raise ValueError(\"invalid move\")", "        self.taken.add((r, c)); self.moves += 1", "        d = 1 if self.turn == 1 else -1          # player 1 = +1, player 2 = -1", "        self.rows[r] += d; self.cols[c] += d", "        if r == c: self.diag += d", "        if r + c == self.n - 1: self.anti += d", "        if self.n in (abs(self.rows[r]), abs(self.cols[c]),", "                      abs(self.diag), abs(self.anti)):", "            self.winner = self.turn              # O(1) check, no board scan", "        self.turn = 2 if self.turn == 1 else 1", "        return self.winner", "", "    def is_draw(self): return not self.winner and self.moves == self.n * self.n"])'],
+  ["5 Edge cases and extensions",
+    ul(["Out-of-range coordinates: validate and raise.","Draw: <code>moves == N*N</code> with no winner.","Undo: keep a move stack (Command pattern) and reverse the counters.","Computer opponent: minimax (3&times;3) or a heuristic; the player is a strategy.","UI separate from rules: the board class has no printing."])],
+  ["Say it",
+    ul(["&ldquo;Counters per row, column and diagonal; win when one reaches N in magnitude.&rdquo;","&ldquo;Constant work per move, and it generalizes to any board size.&rdquo;"])]
+]],
+
+["sd-l-splitwise","LLD: expense sharing (Splitwise)","ledger, splits, settling up","ledger",[
+  ["1 Requirements",
+    REQ(["Add an expense: who paid, how much, who shares it (equal, exact amounts, or percentages).","Show each person&rsquo;s balance.","Settle up with as few payments as practical."],
+        ["Money must be exact: no lost cents.","Adding a split type should not change the ledger."])],
+  ["2 Classes",
+    table(["Class","Holds","Does"],[
+      ["<code>Ledger</code>","net balance per person in cents","<code>add_expense()</code>, <code>settle_up()</code>"],
+      ["Split strategy (equal, exact, percent)","&mdash;","returns an amount per person"],
+      ["Expense (optional record)","payer, total, shares, date","for history and audit"]
+    ])],
+  ["3 Animation",vis("ledger")],
+  ["4 Code",'codeBlk(["from collections import defaultdict", "", "class Ledger:", "    def __init__(self): self.net = defaultdict(int)   # cents; + is owed to them", "", "    def add_expense(self, payer, cents, people):      # equal split, no lost cents", "        base, extra = divmod(cents, len(people))", "        for i, p in enumerate(people):", "            self.net[p] -= base + (1 if i < extra else 0)", "        self.net[payer] += cents", "", "    def settle_up(self):                              # fewest-ish transfers", "        cred = sorted(([v, p] for p, v in self.net.items() if v > 0), reverse=True)", "        debt = sorted(([-v, p] for p, v in self.net.items() if v < 0), reverse=True)", "        out, i, j = [], 0, 0", "        while i < len(debt) and j < len(cred):", "            pay = min(debt[i][0], cred[j][0])", "            out.append((debt[i][1], cred[j][1], pay))   # (from, to, cents)", "            debt[i][0] -= pay; cred[j][0] -= pay", "            if debt[i][0] == 0: i += 1", "            if cred[j][0] == 0: j += 1", "        return out"])'+'<p>Balances: positive means others owe them; negative means they owe. They always sum to zero. <code>divmod</code> hands the leftover cents to the first few people, so shares add up exactly.</p>'],
+  ["5 Edge cases and extensions",
+    ul(["Never use floats for money: integer cents.","Rounding: spread the remainder (as above) so the total is exact.","Groups: one ledger per group; a person-to-person balance matrix if the app needs it.","Settle-up algorithm: match the biggest debtor with the biggest creditor; it is simple and good enough. The true minimum is NP-hard, so say &ldquo;at most N&minus;1 payments&rdquo;.","Currencies, recurring expenses, deleting an expense (reverse its entries)."])],
+  ["Say it",
+    ul(["&ldquo;Keep one net balance per person in cents; positive means owed, and they sum to zero.&rdquo;","&ldquo;Split types are strategies; settling matches biggest debtor with biggest creditor.&rdquo;"])]
+]],
+
+["sd-l-logger","LLD: logging library","levels, handlers, a registry","logs",[
+  ["1 Requirements",
+    REQ(["Log levels: DEBUG, INFO, WARN, ERROR; messages below the threshold are dropped.","Send lines to one or more destinations (console, file, memory).","Get a named logger from anywhere."],
+        ["Cheap when disabled.","Add a destination without changing the logger."])],
+  ["2 Classes",
+    table(["Class","Holds","Does"],[
+      ["<code>Level</code> (enum)","ordered numbers","compare with <code>&lt;</code>"],
+      ["<code>Handler</code> (interface)","own minimum level","<code>emit(line)</code>"],
+      ["<code>ConsoleHandler</code>, <code>MemoryHandler</code>","&mdash;","where lines go"],
+      ["<code>Logger</code>","name, level, handlers","<code>log()</code>, <code>info()</code>, <code>error()</code>; registry by name"]
+    ])],
+  ["3 Animation",vis("logs")],
+  ["4 Code",'codeBlk(["from enum import IntEnum", "", "class Level(IntEnum):", "    DEBUG = 10; INFO = 20; WARN = 30; ERROR = 40", "", "class Handler:                                   # strategy: where lines go", "    def __init__(self, level=Level.DEBUG): self.level = level", "    def emit(self, line): raise NotImplementedError", "", "class ConsoleHandler(Handler):", "    def emit(self, line): print(line)", "", "class MemoryHandler(Handler):", "    def __init__(self, level=Level.DEBUG): super().__init__(level); self.lines = []", "    def emit(self, line): self.lines.append(line)", "", "class Logger:", "    _registry = {}                               # one logger per name", "", "    @classmethod", "    def get(cls, name):", "        if name not in cls._registry: cls._registry[name] = Logger(name)", "        return cls._registry[name]", "", "    def __init__(self, name):", "        self.name, self.level, self.handlers = name, Level.INFO, []", "", "    def log(self, level, msg):", "        if level < self.level: return            # cheap filter first", "        line = \"%s %s: %s\" % (level.name, self.name, msg)", "        for h in self.handlers:", "            if level >= h.level: h.emit(line)", "", "    def info(self, msg):  self.log(Level.INFO, msg)", "    def error(self, msg): self.log(Level.ERROR, msg)"])'],
+  ["5 Patterns used",
+    ul(["<b>Strategy / Observer</b>: handlers are interchangeable destinations that every line is sent to.","<b>Registry (a kind of singleton)</b>: <code>Logger.get(name)</code> returns the same instance.","<b>Chain</b> (optional): logger &rarr; parent logger, as in real libraries."])],
+  ["6 Edge cases and extensions",
+    ul(["Thread safety: lock inside file handlers so lines do not interleave.","Async logging: handler puts lines on a queue; a background thread writes (do not block the request).","Formatters (JSON, timestamps) as another strategy.","File rotation by size or day; lazy message formatting to skip work when disabled."])],
+  ["Say it",
+    ul(["&ldquo;Logger filters by level, then hands the line to each handler; handlers are strategies.&rdquo;","&ldquo;A registry gives one logger per name; async handlers keep logging off the hot path.&rdquo;"])]
+]]
+);
+DOCS.push(
 ["sd-web","Browser storage & cookies","cookies, localStorage, IndexedDB, flags, headers","",[
   ["Where a browser can keep data",
     table(["Place","Size","Lifetime","Sent to server?","Use for"],[
@@ -5665,10 +6102,12 @@ var DGROUPS=[
   ["Reliability & deployment",["sd-reliability","sd-retry","sd-v-fault","sd-v-region","sd-v-bg","sd-v-eks","sd-arch","sd-v-qps"]],
   ["Specialised systems",["sd-geo","sd-video","sd-upload"]],
   ["Full walkthroughs",["sd-w-url","sd-w-feed","sd-w-chat","sd-w-notify","sd-w-crawler","sd-w-drive","sd-w-ride","sd-w-pay","sd-w-ticket","sd-w-kv"]],
+  ["Low-level design: toolkit",["sd-l-approach","sd-l-solid","sd-l-creational","sd-l-structural","sd-l-behavioral","sd-l-concurrency"]],
+  ["Low-level design: problems",["sd-l-parking","sd-l-elevator","sd-l-vending","sd-l-lru","sd-l-atm","sd-l-tictactoe","sd-l-splitwise","sd-l-logger"]],
   ["Put it together",["sd-structures","sd-classics"]]
 ];
 var SUGGEST=["binary search","reverse a string","hash map","sort by key","closure","try catch","bfs","heap","two pointers","type check"];
-var DSUGGEST=["URL shortener","news feed","chat","CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
+var DSUGGEST=["URL shortener","news feed","chat","SOLID","design patterns","parking lot","LRU cache","CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
 var GIST={
 "sd-approach":["Clarify requirements and scale first","Estimate QPS, storage and bandwidth","Draw boxes, then deep-dive the bottleneck"],
 "sd-numbers":["Memory 100 ns · SSD 100 \u00b5s · same-zone hop 0.5 ms","Disk seek 10 ms · cross-continent 150 ms","1 M requests a day is about 12 QPS"],
@@ -5712,6 +6151,20 @@ var GIST={
 "sd-w-pay":["Idempotency key on every request","State machine + double-entry ledger, integer cents","Outbox, signed webhooks, nightly reconciliation"],
 "sd-w-ticket":["Seat: AVAILABLE, HELD (TTL), SOLD","Hold = atomic conditional update; unique constraint backstop","Waiting room throttles the flash crowd"],
 "sd-w-kv":["Consistent hashing, N=3 replicas, quorum R+W>N","Hinted handoff, read repair, Merkle-tree repair","Node = LSM tree: log, memtable, SSTables, Bloom filters"],
+"sd-l-approach":["Nouns become classes, verbs become methods","UML relationships and which pattern when","Core flow first, then edge cases"],
+"sd-l-solid":["Five principles, each with a smell and a fix","Open/closed + dependency inversion in code","DRY, KISS, YAGNI, Demeter, composition"],
+"sd-l-creational":["Factory when callers should not name classes","Builder for many optional parts","Singleton: thread-safe, and sparingly"],
+"sd-l-structural":["Adapter changes the interface, decorator adds behavior","Facade simplifies, proxy controls access","Composite for trees"],
+"sd-l-behavioral":["Strategy swaps algorithms, State models a lifecycle","Observer: one event, many listeners","Command makes undo and queues possible"],
+"sd-l-concurrency":["Lock the check-and-change, keep it short","Same lock order avoids deadlock","Bounded queue gives back pressure"],
+"sd-l-parking":["Smallest fitting spot, assigned under a lock","Pricing is an injected strategy","Scale: free-spot sets per size"],
+"sd-l-elevator":["SCAN: keep going, serve stops, reverse when none ahead","Dispatch by cost; rule is swappable","Per-car state: direction + set of stops"],
+"sd-l-vending":["State pattern: Idle, HasMoney, Dispensing","Machine delegates to the current state","New state = new class, no edits"],
+"sd-l-lru":["Hash map + doubly linked list, O(1) both","Sentinel head and tail remove edge cases","One lock for thread safety"],
+"sd-l-atm":["Chain of dispensers, largest note first","Plan, debit, then commit cash","Bank is an interface for testing"],
+"sd-l-tictactoe":["Counters per row, column, diagonal","Win when a counter reaches N in magnitude","O(1) per move, any board size"],
+"sd-l-splitwise":["One net balance per person, in cents","Remainder cents spread so totals match","Settle: biggest debtor pays biggest creditor"],
+"sd-l-logger":["Filter by level, then fan out to handlers","Handlers are strategies; registry by name","Async handler keeps logging off the hot path"],
 "sd-reliability":["Timeouts, retries with backoff, circuit breakers","Rate limit and shed load","Backups, failover, test the restore"],
 "sd-v-fault":["Spread over 3 zones; no single point of failure","Health checks remove bad servers","Size so two zones can carry everything"],
 "sd-v-region":["Pick the pattern by RTO and RPO","Latency or failover routing in Route 53","Replicate data across regions"],
