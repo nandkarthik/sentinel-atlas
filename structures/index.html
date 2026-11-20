@@ -3546,6 +3546,13 @@ var DOCS=[
 ]],
 
 ["sd-classics","Classic designs at a glance","the core idea behind each common question",[
+  ["Full walkthroughs (open these first)",
+    ul([
+      "<a href='#sd-w-url'>URL shortener</a> &middot; <a href='#sd-w-feed'>News feed</a> &middot; <a href='#sd-w-chat'>Chat</a> &middot; <a href='#sd-w-notify'>Notification system</a> &middot; <a href='#sd-w-crawler'>Web crawler</a>",
+      "<a href='#sd-w-drive'>File sync (Dropbox)</a> &middot; <a href='#sd-w-ride'>Ride hailing</a> &middot; <a href='#sd-w-pay'>Payment system</a> &middot; <a href='#sd-w-ticket'>Ticket booking</a> &middot; <a href='#sd-w-kv'>Key-value store</a>",
+      "Also covered elsewhere: <a href='#sd-v-rate'>Rate limiter</a>, <a href='#sd-search'>Typeahead</a>, <a href='#sd-video'>Video streaming</a>, <a href='#sd-geo'>Maps and nearby search</a>, <a href='#sd-upload'>Large uploads</a>.",
+      "Every walkthrough uses the same steps: requirements, estimates, API, data, design, deep dives, say-it summary."
+    ])],
   ["Problem, core idea, key pieces",
     table(["Design","Core idea","Key components and techniques"],[
       ["URL shortener","Map a short code to a long URL","Base62 of a unique ID (7 chars &asymp; 3.5 trillion codes), key-value store, cache, 301 (cached) vs 302 (countable) redirect"],
@@ -4066,6 +4073,46 @@ VIS.auth=function(){
   b+=gt(T(535,222,"checks the signature","s","middle")+T(535,236,"itself: no lookup","s","middle"),58,98,P);
   b+=T(20,258,"Short-lived JWT (minutes); the refresh token gets a new one.","s");
   return SV(272,"Login returns a short-lived JWT; the client sends it to the API, which verifies the signature without a database lookup",b);
+};
+
+VIS.url=function(){
+  var P=12;
+  var b=B(20,95,90,50,"Client")+B(190,95,100,50,"App servers")+B(380,35,120,44,"Redis cache","code to URL")+B(380,160,120,44,"Database","code, URL, expiry")+B(190,190,100,40,"Kafka","click events");
+  b+=L("M110 110 L190 110")+L("M190 130 L110 130")+L("M290 105 L335 105 L335 57 L380 57")+L("M290 135 L335 135 L335 182 L380 182")+L("M240 145 L240 190");
+  b+=seg("M110 110 L190 110",2,10,P,"")+seg("M290 105 L335 105 L335 57 L380 57",14,24,P,"")+seg("M290 135 L335 135 L335 182 L380 182",30,40,P,"")+seg("M190 130 L110 130",50,60,P,"ok")+seg("M240 145 L240 190",64,74,P,"");
+  b+=gt(T(20,250,"1  App checks the cache for the code.","s"),12,98,P);
+  b+=gt(T(20,266,"2  Miss: read the database, then fill the cache.","s"),28,98,P);
+  b+=gt(T(20,282,"3  Reply 302 with the long URL in the Location header.","s"),48,98,P);
+  b+=gt(T(20,298,"4  Click event goes to Kafka, off the redirect path.","s"),62,98,P);
+  return SV(312,"URL shortener redirect: check the cache, read the database on a miss, reply 302, record the click through Kafka",b);
+};
+
+VIS.feed=function(){
+  var P=12;
+  var b=B(20,95,80,50,"Author")+B(130,95,100,50,"Post service")+B(130,175,100,36,"Post store")+B(260,95,80,50,"Queue")+B(370,95,100,50,"Fan-out","workers");
+  b+=B(520,25,100,40,"Feed: Ann")+B(520,100,100,40,"Feed: Raj")+B(520,175,100,40,"Feed: Mia");
+  var p1="M100 120 L130 120",p2="M230 120 L260 120",p3="M340 120 L370 120",p4="M470 120 L495 120 L495 45 L520 45",p5="M470 120 L520 120",p6="M470 120 L495 120 L495 195 L520 195";
+  b+=L(p1)+L(p2)+L(p3)+L(p4)+L(p5)+L(p6)+L("M180 145 L180 175");
+  b+=seg(p1,2,8,P,"")+seg(p2,10,16,P,"")+seg(p3,18,24,P,"")+seg(p4,28,40,P,"ok")+seg(p5,28,40,P,"ok")+seg(p6,28,40,P,"ok");
+  b+=gt(T(20,246,"1  The post is saved, then an event goes on the queue.","s"),10,98,P);
+  b+=gt(T(20,262,"2  Workers look up the author's followers.","s"),18,98,P);
+  b+=gt(T(20,278,"3  Each follower's feed list gets the post ID (push).","s"),28,98,P);
+  b+=gt(T(20,294,"4  Celebrities skip this step; readers pull their posts.","s"),44,98,P);
+  return SV(306,"News feed fan-out on write: a post is saved, queued, and its ID pushed into each follower's feed list",b);
+};
+
+VIS.chat=function(){
+  var P=12;
+  var b=B(20,95,80,50,"Alice")+B(130,95,90,50,"Gateway","server A")+B(255,95,100,50,"Chat service")+B(390,95,90,50,"Gateway","server B")+B(520,95,80,50,"Bob");
+  b+=B(255,20,100,40,"Session map")+B(245,190,120,40,"Message store");
+  var a="M100 120 L130 120",c="M220 120 L255 120",s1="M305 95 L305 60",d="M305 145 L305 190",e="M355 120 L390 120",f="M480 120 L520 120";
+  b+=L(a)+L(c)+L(s1)+L(d)+L(e)+L(f);
+  b+=seg(a,2,8,P,"")+seg(c,10,16,P,"")+seg(s1,18,24,P,"")+seg(d,26,32,P,"")+seg(e,36,42,P,"ok")+seg(f,44,50,P,"ok");
+  b+=gt(T(20,250,"1  Alice's message travels over her WebSocket.","s"),4,98,P);
+  b+=gt(T(20,266,"2  Chat service saves it, then asks the session map where Bob is.","s"),12,98,P);
+  b+=gt(T(20,282,"3  It forwards to Bob's gateway, which pushes it down his socket.","s"),36,98,P);
+  b+=gt(T(20,298,"4  If Bob is offline: keep it stored and send a push notification.","s"),52,98,P);
+  return SV(310,"Chat message path: sender gateway, chat service with session lookup and storage, recipient gateway",b);
 };
 
 function vis(n){return '<div class="vis" data-vis="'+n+'"></div>'}
@@ -4819,6 +4866,348 @@ DOCS.push(
 );
 
 function codeBlk(lines){return '<pre><code>'+esc(lines.join("\n"))+'</code></pre>'}
+function REQ(f,n){return '<p><b>Functional</b></p>'+ul(f)+'<p><b>Non-functional</b></p>'+ul(n)}
+DOCS.push(
+["sd-w-url","Walkthrough: URL shortener","short codes, redirects, ID generation, caching, analytics","url",[
+  ["Animation: a redirect",vis("url")],
+  ["1 Requirements",
+    REQ(["Create a short link for a long URL (optional custom alias and expiry).","Open the short link and redirect to the long URL.","Optional: click counts per link."],
+        ["Redirects are fast and almost never down (reads matter most).","Reads are about 100 times more than writes.","Codes are unique and hard to guess; links are never lost."])],
+  ["2 Estimates",
+    table(["Item","Math","Result"],[
+      ["New links","100 M a month &divide; 2.6 M seconds","about 40 writes/s"],
+      ["Redirects","100 &times; writes","about 4,000/s; peak about 10,000/s"],
+      ["Links in 5 years","100 M &times; 60 months","6 billion"],
+      ["Storage","6 B &times; about 500 bytes","about 3 TB (fits a sharded key-value store)"],
+      ["Code length","62 characters (a&ndash;z, A&ndash;Z, 0&ndash;9); 62<sup>7</sup> &asymp; 3.5 trillion","7 characters is plenty"]
+    ])],
+  ["3 API",
+    codeBlk([
+      "POST /v1/urls          {longUrl, alias?, expiresAt?}",
+      "  -> 201 {shortUrl: \"https://sho.rt/aZ3kP9x\"}",
+      "GET  /{code}",
+      "  -> 302 Location: <long url>      (404 if unknown, 410 if expired)",
+      "GET  /v1/urls/{code}/stats  -> clicks by day, country, referrer"
+    ])+ul(["<b>301</b> is cached by browsers: fewer hits on you, but no click counts and no way to change the target.","<b>302</b> reaches you every time: use it when you need analytics, expiry or edits."])],
+  ["4 Data model",
+    table(["Table","Columns","Notes"],[
+      ["urls","<b>code</b> (key), long_url, user_id, created_at, expires_at","Pure key-value lookup by code: DynamoDB, Cassandra, or SQL sharded by code"],
+      ["clicks","code, time, country, referrer","Written through a queue, aggregated by day (ClickHouse, Druid)"]
+    ])],
+  ["5 How to make the code",
+    table(["Method","How","Problem"],[
+      ["Hash the long URL","MD5 or SHA, keep the first 7 characters","Collisions; needs a check and a retry"],
+      ["Random code","Pick 7 random characters; insert only if absent","A retry on collision; fine at this scale"],
+      ["Counter + base62","Number 1, 2, 3&hellip; written in base 62","No collisions; guessable, and needs a shared counter"],
+      ["Counter ranges (pick this)","Each app server takes a block of 1,000 IDs from a counter store (ZooKeeper, DynamoDB), encodes them, optionally scrambles the bits","Unique, no per-request coordination; a crash wastes a block, which is fine"]
+    ])+'<p>Custom alias: insert with a <b>conditional write</b> (&ldquo;only if the code does not exist&rdquo;); a conflict returns 409.</p>'],
+  ["6 Design, step by step",
+    ol(["Client &rarr; CDN or load balancer &rarr; stateless app servers.","<b>Create</b>: take the next ID from the local block, encode as base62, write the row, return the short URL.","<b>Redirect</b>: look in Redis; on a miss read the database and fill the cache (with TTL); reply 302.","<b>Analytics</b>: publish a click event to Kafka; never block the redirect on it.","Scale reads with the cache and read replicas; scale storage by sharding on <code>code</code>."])],
+  ["7 Deep dives",
+    ul(["<b>Caching</b>: a small share of links gets most clicks, so hot codes fit in memory. LRU eviction, TTL with jitter.","<b>Expiry</b>: check <code>expires_at</code> on read (lazy), plus a background job or a database TTL to delete old rows.","<b>Abuse</b>: rate limit creation per user and IP; scan targets for malware and phishing; reserve words such as <code>admin</code>.","<b>Multi-region</b>: replicate the store; give each region its own ID ranges so IDs never collide.","<b>Same long URL twice</b>: either give a new code each time (simple; per-user analytics) or look up a hash index to reuse the code."])],
+  ["Say it",
+    ul(["&ldquo;Read-heavy key-value problem: about 4,000 redirects a second from a cache in front of a sharded store keyed by code.&rdquo;","&ldquo;Codes come from per-server ID ranges encoded in base62, so no collision checks.&rdquo;","&ldquo;302 so I can count clicks; clicks go through Kafka so they never slow the redirect.&rdquo;"])]
+]],
+["sd-w-feed","Walkthrough: news feed","fan-out on write vs read, celebrities, ranking, caching","feed",[
+  ["Animation: fan-out on write",vis("feed")],
+  ["1 Requirements",
+    REQ(["Publish a post (text, images, video).","Follow and unfollow users.","See a home feed of posts from people you follow, newest or ranked first."],
+        ["Open the feed in under 200 ms.","Eventual consistency is fine: a post may show up a few seconds late.","A user may follow thousands; one account may have tens of millions of followers."])],
+  ["2 Estimates",
+    table(["Item","Math","Result"],[
+      ["Feed reads","100 M daily users &times; 10 opens &divide; 86,400","about 11,600/s; peak about 35,000/s"],
+      ["Posts","100 M &times; 0.5 a day &divide; 86,400","about 580/s"],
+      ["Fan-out writes","580 posts/s &times; 200 followers","about 116,000 feed inserts/s"],
+      ["Feed cache","800 post IDs &times; 8 bytes &times; 100 M users","about 640 GB in Redis (sharded)"]
+    ])+'<p>Reads dominate, so do the work when the post is written.</p>'],
+  ["3 API",
+    codeBlk([
+      "POST /v1/posts            {text, mediaIds[]}   -> 201 {postId}",
+      "POST /v1/follow           {userId}",
+      "GET  /v1/feed?cursor=<id>&limit=20",
+      "  -> {posts: [...], nextCursor}"
+    ])+'<p>Use a <b>cursor</b> (last post ID), not an offset, so new posts do not shift pages.</p>'],
+  ["4 Data model",
+    table(["Store","Holds","Choice"],[
+      ["Posts","post_id, author_id, text, media URL, time","Sharded by post_id or author; cached"],
+      ["Follows","follower &rarr; followee, stored both ways","Two tables (who I follow, who follows me) or a graph store"],
+      ["Feed lists","Per user: newest post IDs only","Redis list or sorted set, capped (about 800)"],
+      ["Media","Images and video","Object store + CDN"]
+    ])],
+  ["5 Fan-out: push, pull or both",
+    table(["Approach","How","Good","Bad"],[
+      ["Push (fan-out on write)","On post, add the ID to every follower&rsquo;s feed list","Reading is one cache lookup","A celebrity post = millions of writes; wasted for inactive users"],
+      ["Pull (fan-out on read)","On read, fetch recent posts of everyone you follow and merge","No write cost; always fresh","Slow read: many lookups per request"],
+      ["Hybrid (pick this)","Push for normal users; for celebrities (say over 100,000 followers) do not push, merge their posts at read time","Fast reads, bounded writes","More moving parts"]
+    ])],
+  ["6 Design, step by step",
+    ol(["Post service saves the post, then publishes an event to Kafka.","Fan-out workers read the author&rsquo;s follower list and push the post ID into each follower&rsquo;s feed list (skip celebrities and users inactive for 30 days).","<b>Read</b>: feed service takes the ID list from Redis, adds recent posts from followed celebrities, ranks, then <b>hydrates</b> the IDs into full posts from a post cache.","Return the page with a cursor; images come from the CDN."])],
+  ["7 Deep dives",
+    ul(["<b>Ranking</b>: start with recency; add affinity (how close you are to the author), engagement and post type. Score a few hundred candidates, return the top.","<b>Hot keys</b>: a viral post is read by millions; cache it in several copies or at the edge.","<b>Cold users</b>: rebuild a feed on demand with the pull path when they return.","<b>Deletes and edits</b>: store IDs only, so a deleted post disappears at hydration.","<b>Unfollow</b>: filter at read time; clean the list later.","<b>Counts</b> (likes, comments): approximate counters, updated asynchronously."])],
+  ["Say it",
+    ul(["&ldquo;Read-heavy, so precompute: push post IDs into per-user Redis lists through Kafka workers.&rdquo;","&ldquo;Celebrities would explode the fan-out, so their posts are pulled and merged at read time.&rdquo;","&ldquo;Feeds store IDs; hydration and ranking happen on read.&rdquo;"])]
+]],
+["sd-w-chat","Walkthrough: chat","WebSocket gateways, ordering, delivery, presence, groups","chat",[
+  ["Animation: sending a message",vis("chat")],
+  ["1 Requirements",
+    REQ(["One-to-one and group chat (groups up to a few hundred).","Delivery and read receipts; online status.","Message history and sync across a user&rsquo;s devices; images and files.","Push notification when the user is offline."],
+        ["Low latency (under a second end to end).","Messages in a chat arrive in order, none lost.","Highly available; millions of open connections."])],
+  ["2 Estimates",
+    table(["Item","Math","Result"],[
+      ["Messages","100 M daily users &times; 40 &divide; 86,400","about 46,000/s; peak about 150,000/s"],
+      ["Storage","4 B messages a day &times; 100 bytes","about 400 GB a day, about 146 TB a year"],
+      ["Connections","50 M online at once &divide; 200,000 per gateway","about 250 gateway servers"]
+    ])],
+  ["3 Protocol and API",
+    ul(["<b>WebSocket</b> for live messages in both directions (fallback: long polling). One connection per device.","<b>REST</b> for history and settings: <code>GET /chats/{id}/messages?before=&lt;msgId&gt;&amp;limit=50</code>."])
+    +codeBlk([
+      "client -> server: {type:\"send\", chatId, clientMsgId, text}",
+      "server -> client: {type:\"ack\",  clientMsgId, msgId, ts}",
+      "server -> client: {type:\"msg\",  chatId, msgId, from, text, ts}",
+      "client -> server: {type:\"read\", chatId, upToMsgId}"
+    ])],
+  ["4 Data model",
+    table(["Store","Holds","Choice"],[
+      ["Messages","Partition key <b>chat_id</b>, sort key <b>msg_id</b> (time-ordered ID)","Cassandra or DynamoDB: fast append, range read of latest messages"],
+      ["Chats / members","Who is in each chat, last read position","SQL or key-value"],
+      ["Session map","user &rarr; which gateway holds their connection","Redis, entry with TTL"],
+      ["Presence","Last heartbeat time","Redis with TTL"],
+      ["Media","Files","Object store + CDN; the message holds a URL"]
+    ])+'<p><b>Ordering</b>: one chat is handled in order by one partition; <code>msg_id</code> is increasing per chat. <b>Dedup</b>: the client sends <code>clientMsgId</code>, so a retry is not stored twice.</p>'],
+  ["5 Design, step by step",
+    ol(["Client keeps a WebSocket to a <b>gateway</b>; the gateway registers the user in the session map.","A sent message goes to the <b>chat service</b>, which checks permission, assigns <code>msg_id</code>, stores it, and acks the sender.","The chat service finds each recipient&rsquo;s gateway in the session map and forwards the message; the gateway pushes it down the socket.","<b>Offline recipient</b>: skip the push, send a mobile push notification (APNs / FCM); they fetch missed messages on reconnect.","On reconnect the client says &ldquo;my last message is X&rdquo; and the server sends everything after X."])],
+  ["6 Deep dives",
+    table(["Topic","Answer"],[
+      ["Delivery guarantee","At least once: keep retrying until acked, dedupe by ID. States: sent, delivered, read"],
+      ["Groups","Small group: fan out to each member&rsquo;s gateway. Very large channel: members pull from the channel log instead of fan-out"],
+      ["Presence","Heartbeat every few seconds into Redis with a TTL of about 15 s. Tell only the contacts who are looking, not everyone"],
+      ["Multiple devices","Each device has its own connection and its own last-seen ID"],
+      ["Gateway failure","Clients reconnect (with jittered backoff) to another gateway and sync from last-seen"],
+      ["Encryption","TLS in transit; end-to-end (Signal protocol) means the server stores only ciphertext and cannot search it"],
+      ["Scaling the queue","Partition by chat_id in Kafka so a chat stays ordered while chats run in parallel"]
+    ])],
+  ["Say it",
+    ul(["&ldquo;Stateful WebSocket gateways plus a Redis session map; stateless chat services in the middle.&rdquo;","&ldquo;Messages live in a store partitioned by chat ID and sorted by a time-ordered message ID, so history is a range read.&rdquo;","&ldquo;At-least-once delivery with client message IDs for dedup; offline users get a push and sync on reconnect.&rdquo;"])]
+]],
+["sd-w-notify","Walkthrough: notification system","push, SMS, email, priorities, retries, preferences","",[
+  ["1 Requirements",
+    REQ(["Send push, SMS, email and in-app notifications from many services.","Templates, user preferences and opt-out, scheduled sends.","Delivery status and basic analytics."],
+        ["Urgent messages (login codes) arrive in seconds, even during a marketing blast.","At-least-once delivery without visible duplicates.","Survive provider outages."])],
+  ["2 Estimates",
+    table(["Item","Math","Result"],[
+      ["Steady load","10 M a day &divide; 86,400","about 115/s"],
+      ["Blast","10 M messages in 10 minutes","about 16,700/s (design for the blast, not the average)"]
+    ])],
+  ["3 API",
+    codeBlk([
+      "POST /v1/notifications",
+      "  {eventId, userId, type:\"order_shipped\", channels?:[\"push\",\"email\"],",
+      "   data:{orderId:981}, priority:\"high\", sendAt?}",
+      "  -> 202 Accepted   (queued, not yet delivered)",
+      "GET  /v1/notifications/{id}  -> status per channel"
+    ])+'<p><code>eventId</code> is the idempotency key: the same event never sends twice.</p>'],
+  ["4 Design, step by step",
+    ol(["Services call the <b>notification API</b>. It validates, checks <b>user preferences</b> and quiet hours, and drops duplicates (by <code>eventId + user + channel</code>).","It renders the <b>template</b> (language, variables) and writes to <b>Kafka</b>, with a separate topic for each channel <b>and</b> priority (OTP never waits behind marketing).","<b>Channel workers</b> read the topic, rate limit per provider and per user, and call the provider: APNs / FCM (push), SES (email), an SMS gateway.","Providers report results by webhook (delivered, bounced, invalid token); store the status and remove dead device tokens or addresses.","Failures retry with backoff, then go to a <b>dead-letter queue</b>; a second provider takes over if the first is down."])],
+  ["5 Deep dives",
+    table(["Topic","Answer"],[
+      ["Priorities","Separate queues and worker pools: transactional (high), social, marketing (low, throttled)"],
+      ["Scheduling","Store <code>sendAt</code>; a scheduler scans time buckets and enqueues due items (or a delay queue)"],
+      ["Duplicates","Idempotency key at the API; workers record &ldquo;sent&rdquo; before and after the provider call; some duplicates are still possible, so keep messages harmless"],
+      ["Preferences","Per channel and category opt-in; unsubscribe link is required for email; always honor it"],
+      ["Bulk sends","Fan out in batches from a campaign job; spread over time so providers do not throttle you"],
+      ["Rate limits","Respect each provider&rsquo;s limit; back off on 429; cap per user (no more than N a day)"],
+      ["Observability","Queue lag, send rate, delivery rate, bounce rate, time to deliver"]
+    ])],
+  ["Say it",
+    ul(["&ldquo;An API that accepts and queues; channel and priority specific Kafka topics; stateless workers per provider.&rdquo;","&ldquo;Idempotency key against duplicates, retries with backoff, a dead-letter queue, and a fallback provider.&rdquo;","&ldquo;Preferences are checked before queueing, so opt-outs are never sent.&rdquo;"])]
+]],
+["sd-w-crawler","Walkthrough: web crawler","URL frontier, politeness, dedup, Bloom filter, freshness","",[
+  ["1 Requirements",
+    REQ(["Start from seed URLs, fetch pages, extract links, repeat.","Store page content for a search index or analysis.","Re-crawl pages to keep them fresh."],
+        ["Polite: obey <code>robots.txt</code> and never hammer one site.","Scalable to billions of pages; robust against broken pages and crawler traps.","No duplicate work."])],
+  ["2 Estimates",
+    table(["Item","Math","Result"],[
+      ["Fetch rate","1 B pages a month &divide; 2.6 M seconds","about 390 pages/s"],
+      ["Bandwidth","390/s &times; 100 KB","about 39 MB/s (about 310 Mbit/s)"],
+      ["Storage","1 B &times; 100 KB","about 100 TB a month raw (compress it)"],
+      ["Seen-URL filter","1 B URLs, 1% false positives, about 9.6 bits each","about 1.2 GB as a Bloom filter"]
+    ])],
+  ["3 Design, step by step",
+    ol(["<b>URL frontier</b> holds URLs still to fetch (see below).","<b>Fetchers</b> take URLs, look up the IP in a local <b>DNS cache</b> (DNS is a bottleneck), check the cached <b>robots.txt</b>, then download.","Store the raw page in object storage (S3) with metadata (URL, time, hash).","<b>Parser</b> extracts text and links.","<b>Normalize</b> each link (lowercase host, remove fragments, resolve relative paths) and <b>filter</b> (allowed domains, depth, length).","<b>Dedup</b>: skip URLs seen before (Bloom filter + store) and pages with a content hash already stored.","Send new URLs back to the frontier."])],
+  ["4 The URL frontier",
+    ul(["<b>Front queues</b> by priority: important or fast-changing sites first (PageRank-like score, change rate).","<b>Back queues</b>, one per host, so you fetch one page at a time from a host and wait between requests (politeness). A heap holds &ldquo;next time this host may be fetched&rdquo;.","<b>Distribute</b> by hashing the host name (consistent hashing): one node owns a host, so politeness is a local decision.","Persist the frontier on disk; keep a hot slice in memory. A crash must not lose it."])],
+  ["5 Deep dives",
+    table(["Problem","Answer"],[
+      ["Crawler traps (endless calendars, session IDs in URLs)","Max depth and URL length, strip tracking parameters, limit pages per host"],
+      ["Duplicate content","Exact: hash the content. Near-duplicate: SimHash or MinHash"],
+      ["Freshness","Re-crawl by observed change rate; send <code>If-Modified-Since</code> or <code>ETag</code>; read sitemaps"],
+      ["JavaScript pages","Render in a pool of headless browsers, only when plain HTML has no content"],
+      ["Slow or dead hosts","Timeouts, retry limit, back off per host, blacklist repeat offenders"],
+      ["robots.txt","Fetch and cache per host (refresh daily); respect <code>Crawl-delay</code> and disallow rules"],
+      ["Extensibility","Plug-in processors after download: images, PDFs, malware scan"]
+    ])],
+  ["Say it",
+    ul(["&ldquo;A frontier with priority queues in front and one queue per host behind, so it is both smart and polite.&rdquo;","&ldquo;Hash by host so one worker owns each site; Bloom filter for seen URLs; content hash for duplicate pages.&rdquo;","&ldquo;Pages go to object storage; a separate pipeline parses and indexes.&rdquo;"])]
+]],
+["sd-w-drive","Walkthrough: file sync (Dropbox)","chunking, dedup, metadata, sync, conflicts","",[
+  ["1 Requirements",
+    REQ(["Upload and download files from any device.","Automatic sync across devices; works offline and syncs later.","Share files and folders; keep version history."],
+        ["Never lose a file; resume interrupted uploads.","Save bandwidth: send only what changed.","Strong consistency for file metadata."])],
+  ["2 Estimates",
+    table(["Item","Math","Result"],[
+      ["Storage","50 M users &times; 2 GB","100 PB before dedup and replication"],
+      ["Block size","4 MB chunks","a 1 GB file is about 250 blocks"]
+    ])+'<p>Storage cost dominates, so dedup, compression and cold tiers matter.</p>'],
+  ["3 The core idea: blocks and metadata",
+    ul(["Split every file into <b>blocks</b> (about 4 MB) and hash each (SHA-256).","<b>Block store</b> (S3): content-addressed, key = hash. Identical blocks are stored once, across all users.","<b>Metadata service</b> (SQL, strongly consistent): file path, version, and the <b>ordered list of block hashes</b>. Sharded by user or namespace.","To change a file, upload only the blocks whose hash is new, then commit a new version in metadata."])],
+  ["4 Design, step by step",
+    ol(["The desktop client <b>watches</b> the folder, chunks a changed file, hashes the blocks.","It asks the server which hashes are missing, then uploads <b>only those blocks</b> (in parallel, resumable).","It commits the new file version to the metadata service (atomic).","A <b>notification service</b> tells the user&rsquo;s other devices (long poll or WebSocket): &ldquo;namespace changed&rdquo;.","Other devices fetch the metadata diff, download the blocks they lack, and rebuild the file."])],
+  ["5 Deep dives",
+    table(["Topic","Answer"],[
+      ["Conflicts","Two devices edited the same base version: keep both, name one &ldquo;file (conflicted copy)&rdquo;"],
+      ["Sharing","An ACL table: file or folder, user, permission; check on every request; share links with a random token"],
+      ["Versions","Old versions are just old block lists; keep 30 days or N versions; move old blocks to cold storage (S3 Infrequent Access or Glacier)"],
+      ["Bandwidth","Chunk dedup, compression, and optionally rsync-style delta inside a changed block"],
+      ["Large files","Resumable multipart upload; see Large file uploads"],
+      ["Security","TLS in transit, encryption at rest per block; deleting a file only drops a reference, and a block is removed when no file references it"],
+      ["Large folders","Sync metadata first (small), then blocks lazily; clients keep a local database of what they have"]
+    ])],
+  ["Say it",
+    ul(["&ldquo;Files are lists of content-addressed blocks: dedup and delta sync come for free.&rdquo;","&ldquo;Blocks in S3, metadata in a strongly consistent SQL store, a notifier to wake the other devices.&rdquo;","&ldquo;Concurrent edits make a conflicted copy instead of losing data.&rdquo;"])]
+]],
+["sd-w-ride","Walkthrough: ride hailing (Uber)","driver locations, matching, trip state, surge","",[
+  ["1 Requirements",
+    REQ(["Drivers share their location; riders see nearby cars.","Rider requests a ride; the system matches a driver, who accepts or declines.","Live trip tracking, ETA and fare; payment at the end."],
+        ["Match in seconds.","Location data is huge but disposable; trip and payment data must be exact.","Available in every city, even during peaks."])],
+  ["2 Estimates",
+    table(["Item","Math","Result"],[
+      ["Location updates","1 M online drivers &divide; one update every 4 s","250,000 writes/s"],
+      ["Ride requests","20 M a day &divide; 86,400","about 230/s"]
+    ])+'<p>Location writes are 1,000&times; ride requests. Keep them in memory; store only the latest position.</p>'],
+  ["3 Design, step by step",
+    ol(["Driver app sends its position every few seconds to a <b>location service</b>, which updates an in-memory <b>geo index</b>: city cell (geohash or H3) &rarr; set of drivers, each entry with a TTL.","Rider requests a ride. The <b>ride service</b> creates the trip (state REQUESTED).","<b>Matching</b>: query the rider&rsquo;s cell plus its neighbors, get candidate drivers, compute <b>ETA by road</b> (routing service), rank by ETA and rating.","<b>Offer</b> to the best driver; wait about 10&ndash;15 s; on decline or timeout offer to the next.","Driver accepts: trip becomes MATCHED; both apps stream location over WebSocket.","Trip runs through the states below; payment runs asynchronously at the end."])],
+  ["4 Trip state machine",
+    table(["State","Next"],[
+      ["REQUESTED","MATCHED, CANCELLED, NO_DRIVERS"],
+      ["MATCHED","ARRIVED, CANCELLED"],
+      ["ARRIVED","ONGOING, CANCELLED"],
+      ["ONGOING","COMPLETED"],
+      ["COMPLETED","PAID, PAYMENT_FAILED (retry)"]
+    ])+'<p>Store the trip in a strongly consistent database sharded by city; each transition is a conditional update, so duplicate or racing events are harmless.</p>'],
+  ["5 Deep dives",
+    table(["Topic","Answer"],[
+      ["Nearby search","Geohash or H3 cells: look in the cell and its ring of neighbors; widen the ring if empty (see Maps)"],
+      ["One driver, two offers","Lock the driver while an offer is open: Redis <code>SET driver:id NX EX 15</code> or a state flag in the database"],
+      ["Surge pricing","Per cell: demand (requests) vs supply (free drivers) over a short window; price multiplier from a table"],
+      ["Disconnected driver","The TTL expires and the driver drops out of the index"],
+      ["Location history","Also publish to Kafka for analytics, ETA models and safety; not on the matching path"],
+      ["Routing and ETA","Road graph with contraction hierarchies or A*; live traffic from driver pings"],
+      ["Consistency","Locations: eventual. Trips and payments: strong, exactly once via idempotency keys"],
+      ["Scale","Shard by city or region; each city is mostly independent"]
+    ])],
+  ["Say it",
+    ul(["&ldquo;Locations are a write firehose, so I keep them in a TTL geo index in memory, keyed by H3 cell.&rdquo;","&ldquo;Matching queries a cell and its neighbors, ranks by road ETA, and offers one driver at a time with a lock.&rdquo;","&ldquo;Trips are a state machine in a strongly consistent store, sharded by city.&rdquo;"])]
+]],
+["sd-w-pay","Walkthrough: payment system","idempotency, ledger, state machine, PSP, reconciliation","",[
+  ["1 Requirements",
+    REQ(["Charge a customer for an order; pay out to merchants; refunds.","Support cards and wallets through a payment provider (PSP).","Record every money movement."],
+        ["<b>Never charge twice and never lose money.</b>","Strong consistency and a full audit trail.","Availability matters, correctness matters more. Card data must stay out of your systems (PCI)."])],
+  ["2 Estimates",
+    table(["Item","Math","Result"],[
+      ["Payments","10 M a day &divide; 86,400","about 115/s; peak about 500/s"]
+    ])+'<p>The scale is modest. The difficulty is correctness: duplicates, timeouts and partial failures.</p>'],
+  ["3 Design, step by step",
+    ol(["Client sends a card through the PSP&rsquo;s hosted form or SDK and gets a <b>token</b>. Your servers never see the card number.","Client calls <code>POST /payments</code> with an <b>Idempotency-Key</b>. The payment service checks for that key first; if found, it returns the saved result.","In one database transaction: insert the payment (CREATED) and an <b>outbox</b> row.","Call the PSP with the same idempotency key. Authorize, then capture.","Update the state; publish an event (via outbox) so the order service can ship.","The PSP also sends a <b>webhook</b> with the final result. Verify its signature, handle it idempotently, update the state.","A nightly <b>reconciliation</b> job compares your records with the PSP and bank files and flags differences."])],
+  ["4 State machine and ledger",
+    table(["Payment state","Meaning"],[
+      ["CREATED","Recorded, nothing sent yet"],
+      ["AUTHORIZED","Funds held on the card"],
+      ["CAPTURED","Money claimed"],
+      ["SETTLED","Money reached your bank"],
+      ["FAILED / REFUNDED","End states; refunds are new entries, not edits"]
+    ])+ul(["<b>Double-entry ledger</b>: every movement is a debit and a credit that sum to zero (customer &rarr; platform &rarr; merchant). Append only; fix errors with a reversing entry.","Money is an <b>integer in the smallest unit</b> (cents) plus a currency code. Never a float.","The ledger is the truth; balances are derived from it."])],
+  ["5 Deep dives",
+    table(["Topic","Answer"],[
+      ["Timeout from the PSP","The result is unknown. Do <b>not</b> blindly charge again: retry with the same idempotency key, or query the PSP for that key"],
+      ["Atomic DB write + event","Outbox pattern: write the event in the same transaction, a relay publishes it (see Consistency)"],
+      ["Multi-step flows (reserve, charge, ship)","Saga with compensations: refund if shipping fails"],
+      ["Fraud","Score each payment (rules + ML) before capture; hold or challenge (3-D Secure) risky ones"],
+      ["Webhooks","Can arrive twice, late or out of order: compare state versions, ignore stale ones"],
+      ["Reconciliation","Daily, three-way: your ledger, PSP report, bank statement"],
+      ["Compliance (PCI DSS)","Tokenization, TLS, encryption, access logs; use the PSP&rsquo;s hosted fields to stay in the lightest scope"],
+      ["Multiple PSPs","A routing layer picks by cost, region and health; fail over on outage"],
+      ["Database","Relational with transactions (PostgreSQL, Aurora), synchronous replica for durability"]
+    ])],
+  ["Say it",
+    ul(["&ldquo;Idempotency key on every request, saved with the result, so retries never double-charge.&rdquo;","&ldquo;A payment state machine plus an append-only double-entry ledger, money as integer cents.&rdquo;","&ldquo;Outbox for events, signed idempotent webhooks, and nightly reconciliation to catch what everything else missed.&rdquo;"])]
+]],
+["sd-w-ticket","Walkthrough: ticket booking","seat holds, contention, waiting room, no double-selling","",[
+  ["1 Requirements",
+    REQ(["Browse events and view a seat map.","Pick seats, hold them while paying, then confirm.","Cancel and refund."],
+        ["<b>Never sell a seat twice.</b>","Survive a flash sale: for example 500,000 people for 50,000 seats.","Fair: first come, first served; hard on bots."])],
+  ["2 Estimates",
+    table(["Item","Math","Result"],[
+      ["Flash sale","500,000 users &times; a few requests each in minutes","tens of thousands of requests per second for one event"],
+      ["Seats","50,000 per event","Tiny data; the problem is contention, not size"]
+    ])],
+  ["3 Seat states and the hold",
+    table(["State","Meaning"],[
+      ["AVAILABLE","Free to pick"],
+      ["HELD","Reserved for one user for 5&ndash;10 minutes (<code>held_by</code>, <code>hold_until</code>)"],
+      ["SOLD","Payment confirmed"]
+    ])+codeBlk([
+      "UPDATE seats",
+      "   SET status='HELD', held_by=:user, hold_until=now()+interval '10 min'",
+      " WHERE event_id=:e AND seat_id=:s",
+      "   AND (status='AVAILABLE' OR hold_until < now());",
+      "-- 1 row updated = you got the seat; 0 rows = someone else did"
+    ])+'<p>The conditional update is atomic: of many users clicking one seat, exactly one gets &ldquo;1 row updated&rdquo;. A Redis <code>SET seat:e:s user NX EX 600</code> works the same way.</p>'],
+  ["4 Design, step by step",
+    ol(["Event page and seat map come from the <b>CDN and cache</b> (slightly stale is fine).","In a flash sale, users enter a <b>waiting room</b>: a queue that lets in a few thousand at a time with a signed token.","User selects seats; the booking service tries the conditional hold. On success, return a countdown.","User pays (payment system, with an idempotency key). On success, in one transaction set the seats to SOLD and create the booking.","If the hold expires or payment fails, the seats return to AVAILABLE (TTL, or a sweeper job)."])],
+  ["5 Deep dives",
+    table(["Topic","Answer"],[
+      ["Locking style","Pessimistic (<code>SELECT ... FOR UPDATE</code>): simple, blocks others. Optimistic (version column, retry): better when conflicts are rare. Conditional update or Redis lock: best for hot seats"],
+      ["Last line of defense","A unique constraint on <code>(event_id, seat_id)</code> in the bookings table makes a double sale impossible even if code is wrong"],
+      ["Hot event","Shard by event ID; one leader per event handles writes; read replicas and cache serve the seat map"],
+      ["Waiting room","Admission rate = what the booking service can sustain; fair order by arrival (with randomization for ties)"],
+      ["Bots","CAPTCHA, per-account and per-IP limits, ticket limits per person, verified accounts"],
+      ["Payment timeout","Extend the hold briefly while payment is pending; release if it fails"],
+      ["Consistency","Seat state: strong. Seat map shown to browsers: eventually consistent, and the hold call is the real check"]
+    ])],
+  ["Say it",
+    ul(["&ldquo;Seats are AVAILABLE, HELD with a TTL, then SOLD. The hold is an atomic conditional update, so one user wins each seat.&rdquo;","&ldquo;A waiting room throttles the flash crowd; the CDN serves everything static.&rdquo;","&ldquo;A unique constraint on event and seat is the final guard against double-selling.&rdquo;"])]
+]],
+["sd-w-kv","Walkthrough: key-value store","partitioning, replication, quorum, LSM tree, repair","",[
+  ["1 Requirements",
+    REQ(["<code>put(key, value)</code>, <code>get(key)</code>, <code>delete(key)</code>.","Values up to a few hundred KB.","Add and remove nodes without downtime."],
+        ["Millisecond latency; scales to many nodes.","Highly available: writes keep working during failures (Dynamo-style).","Tunable consistency."])],
+  ["2 Estimates",
+    table(["Item","Math","Result"],[
+      ["Data","100 TB &times; 3 copies","300 TB"],
+      ["Nodes","300 TB &divide; 2 TB of SSD per node","about 150 nodes"]
+    ])],
+  ["3 Partitioning and replication",
+    ul(["<b>Consistent hashing</b>: nodes sit on a ring (each with many <b>virtual nodes</b> for even load); a key belongs to the next node clockwise. Adding a node moves only a small share of keys.","<b>Replication</b>: store each key on the next <b>N = 3</b> distinct nodes (in different zones).","Any node can be the <b>coordinator</b> for a request; the client library or a router knows the ring."])],
+  ["4 Consistency",
+    table(["Setting","Behavior"],[
+      ["W = 1, R = 1","Fastest; may read stale data"],
+      ["W = 2, R = 2 (N = 3)","<b>Quorum</b>: R + W &gt; N, so a read overlaps the latest write"],
+      ["W = 3 or R = 3","Strongest; slower; a single node failure blocks it"]
+    ])+ul(["<b>Conflicts</b> (two writers, network split): last-write-wins by timestamp (simple, can lose a write), or <b>vector clocks</b> to detect concurrent versions and let the app or a CRDT merge them.","See CAP: this design chooses availability and repairs later."])],
+  ["5 Handling failures",
+    table(["Mechanism","What it does"],[
+      ["Gossip","Nodes exchange membership and health every second; no central master"],
+      ["Sloppy quorum + hinted handoff","If a replica is down, another node takes the write with a hint and hands it back when the node returns"],
+      ["Read repair","A read that sees different versions writes the newest back to stale replicas"],
+      ["Anti-entropy with Merkle trees","Replicas compare hash trees, find differing key ranges quickly, and sync only those"],
+      ["Failure detection","Mark a node down after several missed heartbeats (not one)"]
+    ])],
+  ["6 Storage engine on each node (LSM tree)",
+    ol(["<b>Write</b>: append to a commit log (durable), then insert into an in-memory sorted <b>memtable</b>.","When the memtable is full, flush it to disk as an immutable sorted <b>SSTable</b>.","<b>Read</b>: check the memtable, then SSTables newest first; a <b>Bloom filter</b> per SSTable skips files that cannot hold the key.","<b>Compaction</b> merges SSTables in the background, drops overwritten values and removes deleted keys (tombstones)."])+'<p>Writes are sequential, so they are very fast. Reads may touch several files, which Bloom filters and caching make cheap. Compare with a B-tree: better for reads and in-place updates, slower for heavy writes.</p>'],
+  ["Say it",
+    ul(["&ldquo;Consistent hashing with virtual nodes, N = 3 replicas, tunable quorum (R + W &gt; N for strong reads).&rdquo;","&ldquo;Available under failure: hinted handoff, read repair and Merkle-tree anti-entropy bring replicas back together.&rdquo;","&ldquo;Each node is an LSM tree: commit log, memtable, SSTables, Bloom filters, compaction.&rdquo;"])]
+]]
+);
 DOCS.push(
 ["sd-web","Browser storage & cookies","cookies, localStorage, IndexedDB, flags, headers","",[
   ["Where a browser can keep data",
@@ -5275,10 +5664,11 @@ var DGROUPS=[
   ["Web, auth & network",["sd-web","sd-auth","sd-tls","sd-netdesign","sd-security"]],
   ["Reliability & deployment",["sd-reliability","sd-retry","sd-v-fault","sd-v-region","sd-v-bg","sd-v-eks","sd-arch","sd-v-qps"]],
   ["Specialised systems",["sd-geo","sd-video","sd-upload"]],
+  ["Full walkthroughs",["sd-w-url","sd-w-feed","sd-w-chat","sd-w-notify","sd-w-crawler","sd-w-drive","sd-w-ride","sd-w-pay","sd-w-ticket","sd-w-kv"]],
   ["Put it together",["sd-structures","sd-classics"]]
 ];
 var SUGGEST=["binary search","reverse a string","hash map","sort by key","closure","try catch","bfs","heap","two pointers","type check"];
-var DSUGGEST=["CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
+var DSUGGEST=["URL shortener","news feed","chat","CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
 var GIST={
 "sd-approach":["Clarify requirements and scale first","Estimate QPS, storage and bandwidth","Draw boxes, then deep-dive the bottleneck"],
 "sd-numbers":["Memory 100 ns · SSD 100 \u00b5s · same-zone hop 0.5 ms","Disk seek 10 ms · cross-continent 150 ms","1 M requests a day is about 12 QPS"],
@@ -5312,6 +5702,16 @@ var GIST={
 "sd-auth":["Session cookie: easy revoke. JWT: stateless, short-lived","Verify signature, exp, iss, aud; rotate refresh tokens","OAuth code + PKCE; OIDC for identity; passkeys"],
 "sd-tls":["TLS 1.3: 1 round trip, forward secrecy","Certificate chain, SAN, auto-renew (expiry is the top outage)","Terminate at the LB; mTLS between services"],
 "sd-netdesign":["Public subnet: LB. Private: apps and databases","L7 for HTTP routing, L4 for raw speed","Backend keep-alive must outlast the LB idle timeout"],
+"sd-w-url":["Read-heavy key-value lookup: cache + sharded store","Code = base62 of an ID from per-server ranges","302 for click counts; analytics via Kafka"],
+"sd-w-feed":["Push post IDs into per-user Redis lists","Celebrities: pull and merge at read time","Feeds hold IDs; hydrate and rank on read"],
+"sd-w-chat":["WebSocket gateways + session map in Redis","Store by chat_id, sort by time-ordered msg_id","At-least-once + client IDs; offline gets push"],
+"sd-w-notify":["Accept, queue, then send; topic per channel and priority","Idempotency key, retries, dead-letter, fallback provider","Check preferences before queueing"],
+"sd-w-crawler":["Frontier: priority queues in front, one per host behind","Hash by host; Bloom filter for seen URLs","Content hash for duplicates; recrawl by change rate"],
+"sd-w-drive":["Files = lists of content-addressed 4 MB blocks","Upload only new blocks; metadata in SQL","Notify other devices; conflicts make a copy"],
+"sd-w-ride":["Driver locations: TTL geo index in memory (H3 cell)","Match in cell + neighbors, rank by road ETA, lock driver","Trip = state machine in a strong store per city"],
+"sd-w-pay":["Idempotency key on every request","State machine + double-entry ledger, integer cents","Outbox, signed webhooks, nightly reconciliation"],
+"sd-w-ticket":["Seat: AVAILABLE, HELD (TTL), SOLD","Hold = atomic conditional update; unique constraint backstop","Waiting room throttles the flash crowd"],
+"sd-w-kv":["Consistent hashing, N=3 replicas, quorum R+W>N","Hinted handoff, read repair, Merkle-tree repair","Node = LSM tree: log, memtable, SSTables, Bloom filters"],
 "sd-reliability":["Timeouts, retries with backoff, circuit breakers","Rate limit and shed load","Backups, failover, test the restore"],
 "sd-v-fault":["Spread over 3 zones; no single point of failure","Health checks remove bad servers","Size so two zones can carry everything"],
 "sd-v-region":["Pick the pattern by RTO and RPO","Latency or failover routing in Route 53","Replicate data across regions"],
