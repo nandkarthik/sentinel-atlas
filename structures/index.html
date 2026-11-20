@@ -651,6 +651,222 @@ var CARDS=[
     `],
   ],
 }],
+["functools","functools &amp; operator","memoize, reduce, partial, custom sort",{
+  python:[
+    ["Which one do I need?",`
+      from functools import cache, reduce, partial, cmp_to_key, wraps, total_ordering, cached_property, singledispatch
+      # repeated subproblems (recursion, DP)    -> @cache
+      # fold a list into one value              -> reduce(func, xs, start)
+      # fix some arguments ahead of time        -> partial(f, a, key=b)
+      # custom compare function for sorting     -> sorted(xs, key=cmp_to_key(cmp))
+      # sort / max by a field                   -> operator.itemgetter / attrgetter
+      # keep the name and docstring in a decorator -> @wraps(fn)
+      # get <=, >, >= from == and <             -> @total_ordering
+      # compute once per object, then store     -> @cached_property
+      # different behavior by argument type     -> @singledispatch
+    `],
+    ["cache: memoize recursion",`
+      from functools import cache, lru_cache
+      @cache  # remembers every result, keyed by the arguments (3.9+)
+      def fib(n):
+          return n if n < 2 else fib(n - 1) + fib(n - 2)
+      fib(80)  # 23416728348467685 -- instant; without @cache this would never finish
+
+      @cache
+      def paths(r, c):  # unique paths in a grid, moving right or down
+          if r == 0 or c == 0: return 1
+          return paths(r - 1, c) + paths(r, c - 1)
+      paths(17, 17)  # 2333606220
+
+      @lru_cache(maxsize=128)  # bounded: evicts the least recently used. maxsize=None means unbounded
+      def slow(x): return x * x
+      fib.cache_info()  # CacheInfo(hits=..., misses=..., maxsize=None, currsize=...)
+      fib.cache_clear()  # empty it -- do this between test cases if the function reads global state
+      # arguments must be hashable: ints, strings, tuples. A list raises TypeError -- pass tuple(xs)
+      # deep recursion still hits the recursion limit (~1000): sys.setrecursionlimit(10**6) or go bottom-up
+    `],
+    ["reduce: fold a list into one value",`
+      from functools import reduce
+      import operator, math
+      reduce(operator.add, [1,2,3,4])  # 10 -- ((1+2)+3)+4
+      reduce(lambda a, b: a * b, [1,2,3,4], 1)  # 24 -- the last argument is the start value
+      reduce(math.gcd, [12, 18, 24])  # 6 -- gcd of a whole list
+      reduce(operator.xor, [4,1,2,1,2])  # 4 -- pairs cancel out, the single number is left
+      reduce(lambda acc, d: acc * 10 + d, [1,2,3], 0)  # 123 -- digits to a number
+      reduce(operator.or_, [{1,2}, {2,3}, {5}])  # {1,2,3,5} -- union of many sets
+      reduce(operator.add, [], 0)  # 0 -- with a start value an empty list is fine
+      # reduce(operator.add, []) with NO start value raises TypeError
+      # for sums, products and joins prefer sum(), math.prod(), "".join(): clearer and faster
+    `],
+    ["partial: pre-fill arguments",`
+      from functools import partial
+      def power(base, exp): return base ** exp
+      square = partial(power, exp=2)  # fix exp now, supply base later
+      square(7)  # 49
+      twoTo = partial(power, 2)  # positional: fixes the FIRST argument, base = 2
+      twoTo(10)  # 1024
+      from_binary = partial(int, base=2)
+      from_binary("101")  # 5
+      list(map(partial(power, 2), range(5)))  # [1,2,4,8,16]
+      # handy where an API wants a callable with fewer arguments: key=, map(), callbacks, threads
+    `],
+    ["cmp_to_key: custom sort order",`
+      from functools import cmp_to_key
+      # a comparator returns negative (a first), positive (b first) or 0 (tie)
+      def by_concat(a, b):
+          if a + b > b + a: return -1  # "9" + "5" beats "5" + "9", so 9 goes first
+          if a + b < b + a: return 1
+          return 0
+      nums = ["3", "30", "34", "5", "9"]
+      "".join(sorted(nums, key=cmp_to_key(by_concat)))  # "9534330" -- largest number from the pieces
+      sorted([3,1,2], key=cmp_to_key(lambda a, b: b - a))  # [3,2,1] -- descending
+      # (a > b) - (a < b) is the classic compare: -1, 0 or 1
+      # try a plain key= first (tuples, negation); cmp_to_key is for orders defined by PAIRS
+    `],
+    ["operator: itemgetter, attrgetter",`
+      from operator import itemgetter, attrgetter, methodcaller
+      sorted(pairs, key=itemgetter(1))  # sort tuples by their 2nd element
+      sorted(pairs, key=itemgetter(1, 0))  # by 2nd, ties by 1st
+      max(d.items(), key=itemgetter(1))  # the (key, value) with the biggest value: ('a', 2)
+      sorted(people, key=attrgetter("age"))  # objects by an attribute
+      sorted(people, key=attrgetter("age", "name"))
+      list(map(methodcaller("upper"), ["a", "b"]))  # ['A','B'] -- call a method by name
+      # faster and shorter than lambda x: x[1]; works with groupby, min, max, heapq.nlargest
+    `],
+    ["total_ordering, cached_property, singledispatch",`
+      from functools import total_ordering, cached_property, singledispatch
+      @total_ordering  # define == and one of < > <= >=; the rest are filled in
+      class Version:
+          def __init__(self, n): self.n = n
+          def __eq__(self, o): return self.n == o.n
+          def __lt__(self, o): return self.n < o.n
+      Version(1) <= Version(2)  # True, though only < and == were written
+
+      class Circle:
+          def __init__(self, r): self.r = r
+          @cached_property  # runs once per object, then stored as a plain attribute
+          def area(self): return 3.14159 * self.r ** 2
+
+      @singledispatch  # choose the implementation by the type of the first argument
+      def show(x): return "other"
+      @show.register(int)
+      def _(x): return "int"
+      @show.register(list)
+      def _(x): return "list"
+      show(3), show([1]), show("s")  # ('int', 'list', 'other')
+    `],
+  ],
+  java:[
+    ["memoize",`
+      static Map<Integer, Long> memo = new HashMap<>();
+      static long fib(int n) {
+          if (n < 2) return n;
+          Long hit = memo.get(n);
+          if (hit != null) return hit;
+          long r = fib(n - 1) + fib(n - 2);
+          memo.put(n, r);  // get, compute, put. computeIfAbsent with a recursive call throws ConcurrentModificationException
+          return r;
+      }
+      // no @cache: write the map yourself. For a two-argument state use a key like r + "," + c, or List.of(r, c)
+    `],
+    ["reduce, partial, compose, comparator",`
+      nums.stream().reduce(1, (a, b) -> a * b);  // identity first: product, 1 for an empty list
+      nums.stream().reduce(Integer::sum);  // Optional<Integer>, empty for an empty list
+
+      BiFunction<Integer, Integer, Integer> power = (b, e) -> (int) Math.pow(b, e);
+      Function<Integer, Integer> square = b -> power.apply(b, 2);  // "partial": fix the exponent
+      Function<Integer, Integer> inc = x -> x + 1;
+      inc.andThen(square).apply(3);  // square(inc(3)) = 16
+      inc.compose(square).apply(3);  // inc(square(3)) = 10
+
+      Comparator<String> byConcat = (a, b) -> (b + a).compareTo(a + b);  // "9" before "5": "95" > "59"
+      Collections.sort(strs, byConcat);  // largest number from the pieces (join the result)
+      Comparator.comparing(Person::getAge).thenComparing(Person::getName);  // sort by a field, then another
+    `],
+  ],
+  scala:[
+    ["memoize",`
+      import scala.collection.mutable
+      val memo = mutable.Map[Int, Long]()
+      def fib(n: Int): Long =
+        if (n < 2) n
+        else memo.get(n) match {
+          case Some(v) => v
+          case None =>
+            val r = fib(n - 1) + fib(n - 2)
+            memo(n) = r
+            r
+        }
+      // getOrElseUpdate with a recursive call has been unreliable on some Scala versions: use get / update
+    `],
+    ["fold, partial, compose, sortWith",`
+      nums.foldLeft(1)(_ * _)  // fold with a start value: product
+      nums.reduce(_ + _)  // no start value: throws on an empty list (reduceOption is safe)
+      def power(b: Int, e: Int) = math.pow(b, e).toInt
+      val square = power(_: Int, 2)  // partial application: fix the exponent
+      def add(a: Int)(b: Int) = a + b  // curried: add(2) _ is already a function
+      val add2 = add(2) _
+      val inc = (x: Int) => x + 1
+      (inc andThen square)(3)  // square(inc(3)) = 16
+      (inc compose square)(3)  // inc(square(3)) = 10
+      strs.sortWith((a, b) => a + b > b + a)  // custom comparator: "9" before "5"
+      people.sortBy(p => (p.age, p.name))  // sort by a tuple of fields
+    `],
+  ],
+  go:[
+    ["memoize, reduce, partial",`
+      memo := map[int]int{}
+      var fib func(int) int  // declare first so the closure can call itself
+      fib = func(n int) int {
+          if n < 2 { return n }
+          if v, ok := memo[n]; ok { return v }
+          r := fib(n-1) + fib(n-2)
+          memo[n] = r
+          return r
+      }
+
+      func Reduce[T, A any](xs []T, init A, f func(A, T) A) A {  // generics (1.18+): no stdlib reduce
+          acc := init
+          for _, x := range xs { acc = f(acc, x) }
+          return acc
+      }
+      Reduce(nums, 1, func(a, x int) int { return a * x })  // product
+
+      func partial(f func(int, int) int, b int) func(int) int {  // fix the first argument
+          return func(x int) int { return f(b, x) }
+      }
+    `],
+    ["custom sort order",`
+      sort.Slice(strs, func(i, j int) bool { return strs[i]+strs[j] > strs[j]+strs[i] })  // "9" before "5"
+      slices.SortFunc(people, func(a, b Person) int { return cmp.Compare(a.Age, b.Age) })  // 1.21+: returns -1, 0, 1
+      // the comparator is the whole story: no cmp_to_key, no itemgetter -- write the closure
+    `],
+  ],
+  cpp:[
+    ["memoize, accumulate, bind_front, sort",`
+      unordered_map<int, long long> memo;
+      long long fib(int n) {
+          if (n < 2) return n;
+          auto it = memo.find(n);
+          if (it != memo.end()) return it->second;
+          long long r = fib(n - 1) + fib(n - 2);
+          memo[n] = r;
+          return r;
+      }
+
+      accumulate(nums.begin(), nums.end(), 1, multiplies<>());  // fold: product (start value 1)
+      accumulate(nums.begin(), nums.end(), 0);  // sum
+
+      int power(int base, int exp);
+      auto twoTo = bind_front(power, 2);  // C++20: fix the first argument
+      twoTo(10);  // 1024
+
+      sort(strs.begin(), strs.end(), [](const string& a, const string& b) { return a + b > b + a; });  // custom order
+      // a lambda comparator is the equivalent of cmp_to_key
+    `],
+  ],
+}],
+
 ["generators","Generators &amp; yield","lazy sequences, yield, pipelines",{
   python:[
     ["yield basics",`
@@ -3152,7 +3368,7 @@ var CARDS=[
   ],
 }],
 
-["itertools","Combinatorics &amp; itertools","permutations, chaining, grouping, slicing",{
+["itertools","itertools","combinatorics, chaining, grouping, slicing, recipes",{
   python:[
     ["Combinatorics",`
       from itertools import permutations, combinations, combinations_with_replacement, product
@@ -3225,6 +3441,58 @@ var CARDS=[
       list(chain.from_iterable(matrix))  # flatten a matrix to one list
       list(dict.fromkeys([3,1,3,2,1]))  # dedupe, keep order: [3,1,2]
       next((x for x in xs if x > 2), None)  # first match or None
+    `],
+
+    ["Which one do I need?",`
+      from itertools import *
+      # all orderings, order matters          -> permutations(xs, r)
+      # pick r, order ignored                 -> combinations(xs, r)
+      # nested loops / every combo of lists   -> product(a, b)  |  product(xs, repeat=n)
+      # running sum / max / product           -> accumulate(xs, func)
+      # glue lists together                   -> chain(a, b)  |  chain.from_iterable(lists)
+      # first k of anything                   -> islice(it, k)
+      # group equal neighbors                 -> groupby(sorted_xs, key)
+      # stop when a condition fails           -> takewhile / dropwhile
+      # pad uneven lists when zipping         -> zip_longest(a, b, fillvalue=0)
+      # endless counter / repeat              -> count() / cycle() / repeat()  (islice them!)
+    `],
+    ["More recipes: sums, runs, windows",`
+      from itertools import accumulate, groupby, islice, product, combinations
+      from collections import deque
+      P = [0, *accumulate([3,1,4,1,5])]  # prefix sums: [0,3,4,8,9,14]
+      P[4] - P[1]  # sum of nums[1:4] in O(1): 6
+
+      [(k, len(list(g))) for k, g in groupby("aaabcc")]  # run-length encode: [('a',3),('b',1),('c',2)]
+      max(len(list(g)) for _, g in groupby("aabbbc"))  # longest run: 3
+
+      # split sorted numbers into consecutive runs: the (value - index) is constant inside a run
+      runs = [[v for _, v in g] for _, g in groupby(enumerate([1,2,3,7,8,10]), lambda t: t[1] - t[0])]
+      # [[1,2,3],[7,8],[10]]
+
+      def windows(seq, k):  # sliding windows of size k
+          it = iter(seq)
+          w = deque(islice(it, k), maxlen=k)
+          if len(w) == k: yield tuple(w)
+          for x in it:
+              w.append(x)  # maxlen drops the oldest automatically
+              yield tuple(w)
+      list(windows([1,2,3,4], 2))  # [(1,2),(2,3),(3,4)]
+
+      list(product(range(2), range(3)))  # every (row, col) of a 2x3 grid
+      any(sum(c) == 10 for c in combinations([1,4,5,9], 3))  # does some triple hit 10? True (1+4+5)
+    `],
+    ["Gotchas",`
+      from itertools import permutations, groupby, tee, islice, count
+      it = iter([1,2,3])
+      list(it); list(it)  # second list is [] -- an iterator is used up after one pass
+      list(permutations([1,1,2]))  # equal values count as different items: 6 tuples, repeats included
+      set(permutations([1,1,2]))  # dedupe: 3 unique orderings
+      [(k, len(list(g))) for k, g in groupby([1,2,1,1])]  # [(1,1),(2,1),(1,2)] -- 1 shows up twice: only NEIGHBORS merge
+      # so sort first (or use a Counter) when you want one group per key
+      # count() / cycle() / repeat() never stop: wrap in islice or break out of the loop
+      # tee buffers whatever one copy is ahead of the other, so it costs memory
+      # product(a, b) reads the inputs fully up front, so don't feed it an infinite iterator
+      # all of these return tuples, not lists: list(combinations(xs, 2))[0] == (a, b)
     `],
   ],
   java:[[null,`
@@ -6695,9 +6963,10 @@ DOCS.push(
 
 var LANGS=[["python","Python"],["java","Java"],["scala","Scala"],["go","Go"],["cpp","C++"]];
 var CGROUPS=[
-  ["Language basics",["vartypes","controlflow","functions","lambdas","closures","decorators","generators","errors","classes","generics","imports","basics","concurrency"]],
+  ["Language basics",["vartypes","controlflow","functions","errors","classes","generics","imports","basics","concurrency"]],
+  ["Iterators &amp; functional tools",["itertools","functools","generators","decorators","lambdas","closures"]],
   ["Data structures",["list","matrix","linkedlist","stack","queue","heap","map","set","tree","graph"]],
-  ["Strings, math & algorithms",["strings","sorting","math","itertools","twoptr","window","prefix","bitmask"]],
+  ["Strings, math & algorithms",["strings","sorting","math","twoptr","window","prefix","bitmask"]],
   ["Quick tables",["gotchas","complexity"]]
 ];
 var DGROUPS=[
@@ -6713,7 +6982,7 @@ var DGROUPS=[
   ["Low-level design: problems",["sd-l-parking","sd-l-elevator","sd-l-vending","sd-l-lru","sd-l-atm","sd-l-tictactoe","sd-l-splitwise","sd-l-logger"]],
   ["Put it together",["sd-structures","sd-classics"]]
 ];
-var SUGGEST=["binary search","reverse a string","hash map","sort by key","closure","decorator","generator","itertools","lambda","try catch","bfs","heap","two pointers","type check"];
+var SUGGEST=["binary search","reverse a string","hash map","sort by key","itertools","functools","lru_cache","closure","decorator","generator","lambda","try catch","bfs","heap","two pointers","type check"];
 var DSUGGEST=["URL shortener","news feed","chat","SOLID","design patterns","parking lot","LRU cache","CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
 var GIST={
 "sd-approach":["Clarify requirements and scale first","Estimate QPS, storage and bandwidth","Draw boxes, then deep-dive the bottleneck"],
