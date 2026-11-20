@@ -158,6 +158,8 @@ td code{font-family:var(--font-mono);font-size:.85em;background:var(--code-bg);p
 .ln{fill:none;stroke:var(--ink-faint);stroke-width:1.4}
 .ln.d{stroke-dasharray:5 4}
 .ln.bad{stroke:var(--bad)}
+.ln.ok{stroke:var(--ok);stroke-width:2}
+.ah{fill:var(--ink-faint);stroke:none}.ah.acc{fill:var(--accent)}.ah.ok{fill:var(--ok)}.ah.bad{fill:var(--bad)}
 .ln.acc{stroke:var(--accent);stroke-width:2}
 .pipe{fill:var(--surface);stroke:var(--line)}
 .dot{fill:var(--ink-faint)}.ptok{fill:var(--ok)}.tok{fill:var(--accent)}.user{fill:var(--accent)}
@@ -5003,6 +5005,258 @@ VIS.modules=function(){
   b+=T(20,226,"Modules talk only through public interfaces (dashed).","s")+T(20,242,"Each module owns its tables. No one else reads them.","s");
   return SV(256,"Modular monolith: modules call each other through interfaces and own their own tables",b);
 };
+/* ---- Data-structure animations: each is a list of frames [svg, caption] cross-faded in a loop ---- */
+function FR(fr,sec,h,label){
+  var n=fr.length,P=n*sec,b="";
+  fr.forEach(function(f,i){
+    var a=Math.floor(i*100/n),z=Math.floor((i+1)*100/n);
+    b+=gt(f[0]+T(20,h-12,f[1],"s"),a,z,P);
+  });
+  return SV(h,label,b);
+}
+function CL(x,y,w,h,t,c){return '<rect class="nd '+(c||"")+'" x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4"/>'+((t===""||t==null)?"":T(x+w/2,y+h/2+4,t,"b","middle"))}
+function IX(x,y,w,t){return T(x+w/2,y,t,"s","middle")}
+function ND(cx,cy,t,c){return '<circle class="nd '+(c||"")+'" cx="'+cx+'" cy="'+cy+'" r="17"/>'+((t===""||t==null)?"":T(cx,cy+4,t,"b","middle"))}
+function ED(x1,y1,x2,y2,c){return L("M"+x1+" "+y1+" L"+x2+" "+y2,c)}
+function AR(x1,y1,x2,y2,c){
+  var a=Math.atan2(y2-y1,x2-x1),s=8,p1=[x2-s*Math.cos(a-0.4),y2-s*Math.sin(a-0.4)],p2=[x2-s*Math.cos(a+0.4),y2-s*Math.sin(a+0.4)];
+  return '<path class="ln '+(c||"")+'" d="M'+x1+' '+y1+' L'+x2+' '+y2+'"/><path class="ah '+(c||"")+'" d="M'+x2+' '+y2+' L'+p1[0].toFixed(1)+' '+p1[1].toFixed(1)+' L'+p2[0].toFixed(1)+' '+p2[1].toFixed(1)+' Z"/>';
+}
+function KN(cx,y,keys,c){var w=keys.length*34+14,s='<rect class="nd '+(c||"")+'" x="'+(cx-w/2)+'" y="'+y+'" width="'+w+'" height="34" rx="5"/>';keys.forEach(function(k,i){s+=T(cx-w/2+7+i*34+17,y+21,k,"b","middle")});return s}
+function bt(v,l,r){return {v:v,l:l||null,r:r||null}}
+function BT(t,hi,cx,y0,dx,dy){
+  var cnt=0,idx=0,items=[],e="",nd="";
+  (function c(n){if(n){cnt++;c(n.l);c(n.r)}})(t);
+  var x0=cx-(cnt-1)*dx/2;
+  function walk(n,d){if(!n)return null;var l=walk(n.l,d+1),m={n:n,x:x0+idx*dx,y:y0+d*dy};idx++;var r=walk(n.r,d+1);m.l=l;m.r=r;items.push(m);return m}
+  walk(t,0);
+  items.forEach(function(m){if(m.l)e+=ED(m.x,m.y,m.l.x,m.l.y);if(m.r)e+=ED(m.x,m.y,m.r.x,m.r.y)});
+  items.forEach(function(m){nd+=ND(m.x,m.y,m.n.v,hi[m.n.v]||"")});
+  return e+nd;
+}
+function HP(a,hi,top,dy,w,showArr){
+  var e="",nd="",pos=[],s="";
+  a.forEach(function(v,i){var lv=Math.floor(Math.log(i+1)/Math.LN2+1e-9),cnt=Math.pow(2,lv),j=i-(cnt-1);pos[i]={x:320-w/2+(j+0.5)*w/cnt,y:top+lv*dy}});
+  a.forEach(function(v,i){if(i){var p=pos[Math.floor((i-1)/2)];e+=ED(p.x,p.y,pos[i].x,pos[i].y)}});
+  a.forEach(function(v,i){nd+=ND(pos[i].x,pos[i].y,v,hi[i]||"")});
+  if(showArr){var ay=top+3*dy-8,cw=38,x0=320-a.length*cw/2;a.forEach(function(v,i){s+=CL(x0+i*cw,ay,cw,28,v,hi[i]||"")+IX(x0+i*cw,ay+42,cw,i)})}
+  return e+nd+s;
+}
+function arrRow(vals,x,y,w,hi,idx){var s="";vals.forEach(function(v,i){s+=CL(x+i*w,y,w,34,v,hi[i]||"")+(idx===false?"":IX(x+i*w,y+50,w,i))});return s}
+
+VIS.dsarray=function(){
+  var x=145,y=26,w=70,F=[];
+  F.push([arrRow([1,2,3,4,""],x,y,w,{2:"acc"}),"arr[2] is instant: start address + 2 slots. Slots sit side by side."]);
+  F.push([arrRow([1,2,3,4,""],x,y,w,{1:"acc"}),"Insert 9 at index 1. Everything from index 1 on must move right, last item first."]);
+  F.push([arrRow([1,2,3,4,4],x,y,w,{4:"ok"}),"4 moves into the free slot."]);
+  F.push([arrRow([1,2,3,3,4],x,y,w,{3:"ok"}),"3 moves."]);
+  F.push([arrRow([1,2,2,3,4],x,y,w,{2:"ok"}),"2 moves."]);
+  F.push([arrRow([1,9,2,3,4],x,y,w,{1:"ok"}),"9 drops in. n items shifted: O(n). Appending at the end is O(1)."]);
+  return FR(F,2.2,120,"Array: index in O(1), insert in the middle shifts items in O(n)");
+};
+VIS.dslist=function(){
+  var F=[],y=30;
+  function nd(x,v,c){return CL(x,y,90,34,v,c)}
+  var base=nd(40,"A")+nd(210,"B")+nd(380,"C")+AR(130,y+17,210,y+17)+AR(300,y+17,380,y+17)+AR(470,y+17,520,y+17)+T(530,y+21,"null","s");
+  F.push([base,"Linked list: each node holds a value and a pointer to the next node."]);
+  F.push([base+CL(125,110,90,34,"X","acc"),"New node X. It is not linked in yet."]);
+  F.push([base+CL(125,110,90,34,"X","acc")+AR(190,110,255,64,"acc"),"1. X.next = B  (first make X point at the rest of the list)."]);
+  F.push([nd(40,"A")+nd(210,"B")+nd(380,"C")+AR(300,y+17,380,y+17)+AR(470,y+17,520,y+17)+T(530,y+21,"null","s")+CL(125,110,90,34,"X","ok")+AR(190,110,255,64,"ok")+AR(110,64,150,110,"ok"),"2. A.next = X. Two pointer writes. Nothing else moved."]);
+  F.push([nd(20,"A")+nd(160,"X","ok")+nd(300,"B")+nd(440,"C")+AR(110,y+17,160,y+17)+AR(250,y+17,300,y+17)+AR(390,y+17,440,y+17)+AR(530,y+17,570,y+17)+T(578,y+21,"null","s"),"Insert after a known node: O(1). Finding that node: O(n). No jumping to index i."]);
+  return FR(F,2.4,170,"Linked list: inserting a node rewires two pointers");
+};
+VIS.dsstack=function(){
+  var F=[],bx=270,cw=100,base=176;
+  function stk(items,pop){var s="",i;for(i=0;i<items.length;i++){s+=CL(bx,base-34*(i+1),cw,32,items[i],i==items.length-1?"acc":"")}
+    if(items.length)s+=T(bx-14,base-34*items.length+20,"top","s","end");
+    if(pop)s+=CL(bx+190,base-34*(items.length+1)-6,cw,32,pop,"ok")+AR(bx+cw+14,base-34*(items.length+1)+10,bx+186,base-34*(items.length+1)-6+16,"ok");
+    return s+'<path class="ln" d="M'+(bx-10)+' '+(base+2)+' L'+(bx+cw+10)+' '+(base+2)+'"/>'}
+  F.push([stk([]),"Empty stack. Last in, first out."]);
+  F.push([stk([1]),"push(1): add on top. O(1)."]);
+  F.push([stk([1,2]),"push(2)."]);
+  F.push([stk([1,2,3]),"push(3). The top is the newest item."]);
+  F.push([stk([1,2,3]),"peek(): read the top (3) without removing it. O(1)."]);
+  F.push([stk([1,2],3),"pop(): remove and return the top, 3. Undo, DFS and bracket matching all use this."]);
+  return FR(F,2,214,"Stack: push and pop at the same end");
+};
+VIS.dsqueue=function(){
+  var F=[],x0=190,w=64,y=60;
+  function q(items,out,lab){var s="",i;items.forEach(function(v,i){s+=CL(x0+i*w,y,w,34,v,i==0&&lab=="deq"?"acc":"")});
+    if(items.length){s+=T(x0+w/2,y-10,"front","s","middle")+T(x0+(items.length-1)*w+w/2,y-10,"back","s","middle")}
+    if(out)s+=CL(60,y,w,34,out,"ok")+AR(128,y+17,186,y+17,"ok")+T(92,y+52,"left the queue","s","middle");
+    return s}
+  F.push([q([]),"Empty queue. First in, first out."]);
+  F.push([q(["A"]),"enqueue(A): join at the back. O(1)."]);
+  F.push([q(["A","B"]),"enqueue(B)."]);
+  F.push([q(["A","B","C"],null,"deq"),"enqueue(C). A has waited longest, so A leaves first."]);
+  F.push([q(["B","C"],"A"),"dequeue(): remove from the front. A is returned. O(1) with a real queue or deque."]);
+  F.push([q(["B","C","D"]),"enqueue(D). BFS and task schedulers run on this."]);
+  return FR(F,2,146,"Queue: enqueue at the back, dequeue from the front");
+};
+VIS.dshash=function(){
+  var F=[],x=70,w=70;
+  function tbl(ch,hi){var s="",i;for(i=0;i<5;i++){s+=CL(x,12+i*34,40,30,i,hi[i]||"")+"";
+      var c=ch[i]||[];c.forEach(function(it,j){s+=CL(x+60+j*92,12+i*34,80,30,it[0]+":"+it[1],it[2]||"");if(j==0)s+=ED(x+40,27+i*34,x+60,27+i*34);else s+=AR(x+60+(j-1)*92+80,27+i*34,x+60+j*92,27+i*34)})}
+    return s}
+  F.push([tbl({},{}),"Hash map: an array of buckets. A hash function turns a key into a bucket number."]);
+  F.push([tbl({3:[["cat",1,"ok"]]},{3:"acc"})+T(380,60,"put(cat, 1)","b")+T(380,80,"hash(cat) % 5 = 3","s"),"put(cat, 1): hash the key, take it mod 5, store in bucket 3."]);
+  F.push([tbl({1:[["dog",2,"ok"]],3:[["cat",1]]},{1:"acc"})+T(380,60,"put(dog, 2)","b")+T(380,80,"hash(dog) % 5 = 1","s"),"put(dog, 2): different bucket."]);
+  F.push([tbl({1:[["dog",2]],3:[["cat",1],["emu",3,"ok"]]},{3:"bad"})+T(420,60,"put(emu, 3)","b")+T(420,80,"hash % 5 = 3: collision","s"),"Collision: emu lands in bucket 3 too, so it is chained after cat."]);
+  F.push([tbl({1:[["dog",2]],3:[["cat",1,"acc"],["emu",3,"ok"]]},{3:"acc"})+T(420,60,"get(emu)","b")+T(420,80,"bucket 3, walk the chain","s"),"get(emu): jump to bucket 3, compare keys along the chain. O(1) on average."]);
+  return FR(F,2.4,206,"Hash map: put hashes into a bucket, collisions chain, get jumps to the bucket");
+};
+VIS.dsheappush=function(){
+  var F=[],t=24,dy=46,w=300;
+  F.push([HP([1,3,2,6,5],{},t,dy,w,true),"A min-heap: every parent is smaller than its children. The smallest is the root."]);
+  F.push([HP([1,3,2,6,5,0],{5:"acc"},t,dy,w,true),"push(0): add at the end of the array (the next free slot in the tree)."]);
+  F.push([HP([1,3,0,6,5,2],{2:"acc",5:"ok"},t,dy,w,true),"Sift up: 0 is smaller than its parent 2, so swap."]);
+  F.push([HP([0,3,1,6,5,2],{0:"acc",2:"ok"},t,dy,w,true),"0 is smaller than its parent 1, so swap again. It reached the root."]);
+  F.push([HP([0,3,1,6,5,2],{0:"ok"},t,dy,w,true),"Done. At most one swap per level: O(log n). Parent of i is (i-1)//2."]);
+  return FR(F,2.4,230,"Heap push: add at the end, then sift up");
+};
+VIS.dsheappop=function(){
+  var F=[],t=24,dy=46,w=300;
+  F.push([HP([0,3,1,6,5,2],{0:"acc"},t,dy,w,true),"pop(): the minimum is always the root. Return 0."]);
+  F.push([HP([2,3,1,6,5],{0:"acc"},t,dy,w,true),"Move the last item (2) to the root so the array stays packed."]);
+  F.push([HP([1,3,2,6,5],{0:"ok",2:"acc"},t,dy,w,true),"Sift down: swap with the smaller child (1, not 3)."]);
+  F.push([HP([1,3,2,6,5],{},t,dy,w,true),"No children left to compare: heap restored. O(log n). peek() is just a[0]: O(1)."]);
+  return FR(F,2.4,230,"Heap pop: take the root, move the last item up top, sift down");
+};
+VIS.dsbst=function(){
+  var F=[],cx=320,y0=26,dx=56,dy=44;
+  var base=bt(5,bt(3,bt(1),bt(4)),bt(8,bt(7),bt(9)));
+  F.push([BT(base,{},cx,y0,dx,dy),"Binary search tree: left is smaller, right is larger. In-order walk gives sorted order."]);
+  F.push([BT(base,{5:"acc",3:"acc",4:"ok"},cx,y0,dx,dy),"search(4): 5 go left, 3 go right, found. One comparison per level."]);
+  F.push([BT(base,{5:"acc",8:"acc",7:"acc"},cx,y0,dx,dy),"insert(6): 5 go right, 8 go left, 7 go left: that spot is empty."]);
+  var t2=bt(5,bt(3,bt(1),bt(4)),bt(8,bt(7,bt(6)),bt(9)));
+  F.push([BT(t2,{6:"ok"},cx,y0,dx,dy),"6 becomes a new leaf. Cost = the height of the tree. Balanced: O(log n)."]);
+  var ch=bt(1,null,bt(2,null,bt(3,null,bt(4,null,bt(5)))));
+  F.push([BT(ch,{1:"bad",2:"bad",3:"bad",4:"bad",5:"bad"},cx,y0,64,32),"Insert 1,2,3,4,5 in order: the tree is a list. Height n, so every operation is O(n)."]);
+  return FR(F,2.6,214,"BST: search and insert walk one path; sorted input degenerates into a list");
+};
+VIS.dsavl=function(){
+  var F=[],cx=320,y0=30,dx=70,dy=50;
+  F.push([BT(bt(10),{10:"ok"},cx,y0,dx,dy),"AVL tree = BST that keeps every node balanced. Insert 10."]);
+  F.push([BT(bt(10,null,bt(20)),{20:"ok"},cx,y0,dx,dy),"Insert 20 (right of 10)."]);
+  F.push([BT(bt(10,null,bt(20,null,bt(30))),{10:"bad",20:"acc",30:"ok"},cx,y0,dx,dy)+T(226,y0+4,"balance -2","s","end"),"Insert 30: node 10 is right-heavy (right height 2, left 0). Out of balance."]);
+  F.push([BT(bt(20,bt(10),bt(30)),{20:"ok"},cx,y0,dx,dy),"Rotate left at 10: 20 becomes the root. Balanced again, heights 1 and 1."]);
+  return FR(F,2.6,160,"AVL: inserting 10, 20, 30 triggers a left rotation");
+};
+VIS.dsavl2=function(){
+  var F=[],cx=320,y0=30,dx=64,dy=48;
+  F.push([BT(bt(30,bt(10,null,bt(20))),{30:"bad",10:"acc",20:"ok"},cx,y0,dx,dy),"Insert 30, 10, 20: 30 is left-heavy, but its left child leans right (a zig-zag)."]);
+  F.push([BT(bt(30,bt(20,bt(10))),{10:"ok",20:"acc",30:"bad"},cx,y0,dx,dy),"Step 1: rotate left at 10. The zig-zag becomes a straight line."]);
+  F.push([BT(bt(20,bt(10),bt(30)),{20:"ok"},cx,y0,dx,dy),"Step 2: rotate right at 30. Balanced. This is the left-right (double rotation) case."]);
+  return FR(F,2.8,160,"AVL double rotation: left at the child, then right at the root");
+};
+VIS.dsbtree=function(){
+  var F=[],y=26;
+  function lines(r,cs,c){var s="";cs.forEach(function(x){s+=ED(r,y+34,x,y+84,c||"")});return s}
+  F.push([KN(320,y,[10,20,30]),"B-tree, up to 3 keys per node: the keys sit sorted inside one node (one disk page)."]);
+  F.push([KN(320,y,[10,20,30,40],"bad"),"insert(40): the node would hold 4 keys. Overflow."]);
+  F.push([lines(320,[180,460])+KN(320,y,[20],"ok")+KN(180,y+84,[10])+KN(460,y+84,[30,40]),"Split in the middle; 20 moves up into a new root. The tree grows at the top."]);
+  F.push([lines(320,[180,460])+KN(320,y,[20])+KN(180,y+84,[10])+KN(460,y+84,[30,40,50],"acc"),"insert(50): goes to the right leaf. It still fits (3 keys)."]);
+  F.push([lines(320,[180,460])+KN(320,y,[20])+KN(180,y+84,[10])+KN(460,y+84,[30,40,50,60],"bad"),"insert(60): that leaf overflows."]);
+  F.push([lines(320,[110,320,530])+KN(320,y,[20,40],"ok")+KN(110,y+84,[10])+KN(320,y+84,[30])+KN(530,y+84,[50,60]),"Split again: 40 moves up into the parent, which has room."]);
+  return FR(F,2.8,176,"B-tree insert: overflow, split in the middle, push the median up");
+};
+VIS.dsbplus=function(){
+  var F=[],y=24,ly=106;
+  function base(rc,l1,l2,l3,k){
+    return ED(320,y+34,110,ly)+ED(320,y+34,320,ly)+ED(320,y+34,530,ly)+KN(320,y,[30,60],rc)+KN(110,ly,[10,20],l1)+KN(320,ly,[30,40,50],l2)+KN(530,ly,[60,70,80],l3)
+      +AR(153,ly+17,258,ly+17,k[0]||"d")+AR(382,ly+17,468,ly+17,k[1]||"d");}
+  F.push([base("","","","",["d","d"]),"B+ tree: inner nodes hold only keys. Values live in the leaves, which are chained."]);
+  F.push([base("acc","","","",["d","d"]),"Range 35 to 65. Start at the root: 35 is between 30 and 60, go to the middle child."]);
+  F.push([base("","","acc","",["d","d"]),"Land in the leaf where 35 would be. Read 40 and 50."]);
+  F.push([base("","","ok","acc",["d","acc"]),"Follow the leaf link: no climbing back up. Read 60."]);
+  F.push([base("","","ok","ok",["d","acc"])+T(320,ly+66,"result: 40, 50, 60","b","middle"),"Next key is 70, above 65: stop. One descent plus a short walk. Great for range scans."]);
+  return FR(F,2.8,200,"B+ tree range scan: one descent, then follow the leaf links");
+};
+VIS.dstrie=function(){
+  var F=[],P={root:[320,28],c:[320,76],a:[320,124],r:[220,176],t:[320,176],p:[420,176]};
+  var E=[["root","c"],["c","a"],["a","r"],["a","t"],["a","p"]],L1={root:"",c:"c",a:"a",r:"r",t:"t",p:"p"};
+  function tr(show,hi,end){var s="",i;E.forEach(function(e){if(show.indexOf(e[0])>=0&&show.indexOf(e[1])>=0)s+=ED(P[e[0]][0],P[e[0]][1],P[e[1]][0],P[e[1]][1],(hi.indexOf(e[1])>=0&&hi.indexOf(e[0])>=0)?"acc":"")});
+    show.forEach(function(k){s+=ND(P[k][0],P[k][1],L1[k],end.indexOf(k)>=0?"ok":(hi.indexOf(k)>=0?"acc":""))});return s}
+  F.push([tr(["root"],[],[]),"Trie: one node per letter. A path from the root spells a word."]);
+  F.push([tr(["root","c","a","r"],["root","c","a","r"],["r"]),"insert(car): create c, a, r. The last node is marked as a word end."]);
+  F.push([tr(["root","c","a","r","t"],["root","c","a","t"],["r","t"]),"insert(cat): reuse c and a, add only t. Shared prefixes are stored once."]);
+  F.push([tr(["root","c","a","r","t","p"],["root","c","a","p"],["r","t","p"]),"insert(cap): one more branch under a."]);
+  F.push([tr(["root","c","a","r","t","p"],["root","c","a"],["r","t","p"]),"startsWith(ca): walk 2 nodes. Cost is the prefix length, not the number of words."]);
+  F.push([tr(["root","c","a","r","t","p"],["root","c","a","r","t","p"],["r","t","p"])+T(320,214,"all words under ca:  car   cat   cap","b","middle"),"Autocomplete: collect every word end below the prefix node."]);
+  return FR(F,2.4,242,"Trie: insert words, share prefixes, search by prefix");
+};
+function FOREST(par,hi,top,dy,w){
+  var n=par.length,kids=[],roots=[],pos=[],slot=0,e="",nd="",i;
+  for(i=0;i<n;i++)kids[i]=[];
+  for(i=0;i<n;i++){if(par[i]==i)roots.push(i);else kids[par[i]].push(i)}
+  function lay(v,d){var ch=kids[v],x;if(!ch.length){x=slot++}else{var xs=ch.map(function(c){return lay(c,d+1)});x=(xs[0]+xs[xs.length-1])/2}pos[v]={s:x,y:top+d*dy};return x}
+  roots.forEach(function(r){lay(r,0)});
+  var gap=w/Math.max(slot,1),x0=320-w/2+gap/2;
+  for(i=0;i<n;i++){pos[i].x=x0+pos[i].s*gap}
+  for(i=0;i<n;i++){if(par[i]!=i)e+=AR(pos[i].x,pos[i].y-17,pos[par[i]].x,pos[par[i]].y+19,hi[i]=="ok"?"ok":"")}
+  for(i=0;i<n;i++){nd+=ND(pos[i].x,pos[i].y,i,hi[i]||"")+(par[i]==i&&kids[i].length?T(pos[i].x+24,pos[i].y+4,"root","s"):"")}
+  return e+nd;
+}
+VIS.dsuf=function(){
+  var F=[],t=30,dy=50,w=420;
+  F.push([FOREST([0,1,2,3,4,5],{},t,dy,w),"Union-find: 6 items, 6 sets. Each item starts as its own parent."]);
+  F.push([FOREST([1,1,2,3,4,5],{0:"acc",1:"ok"},t,dy,w),"union(0, 1): point root 0 at root 1. Now {0,1} is one set."]);
+  F.push([FOREST([1,1,3,3,4,5],{2:"acc",3:"ok"},t,dy,w),"union(2, 3): {2,3} is a set."]);
+  F.push([FOREST([1,3,3,3,4,5],{1:"acc",3:"ok"},t,dy,w),"union(1, 3): find the two roots (1 and 3) and attach one under the other."]);
+  F.push([FOREST([3,3,3,3,4,5],{0:"ok",3:"ok"},t,dy,w),"find(0): climb 0, 1, 3 to the root; then point 0 straight at 3 (path compression)."]);
+  F.push([FOREST([3,3,3,3,4,5],{0:"ok",3:"ok"},t,dy,w)+T(320,170,"same set?  find(0) == find(2)  →  true","b","middle"),"connected(a, b) is find(a) == find(b). Almost O(1) with compression and union by size."]);
+  return FR(F,2.6,212,"Union-find: union merges sets, find climbs to the root and compresses the path");
+};
+VIS.dsseg=function(){
+  var F=[],top=24,dy=44,w=520;
+  function seg(t,hi){
+    var e="",nd="",pos=[],i;
+    for(i=1;i<16;i++){var lv=Math.floor(Math.log(i)/Math.LN2+1e-9),cnt=Math.pow(2,lv),j=i-cnt;pos[i]={x:320-w/2+(j+0.5)*w/cnt,y:top+lv*dy}}
+    for(i=2;i<16;i++){var p=pos[Math.floor(i/2)];e+=ED(p.x,p.y,pos[i].x,pos[i].y)}
+    for(i=1;i<16;i++)nd+=ND(pos[i].x,pos[i].y,t[i],hi[i]||"");
+    for(i=8;i<16;i++)nd+=IX(pos[i].x-20,pos[i].y+34,40,i-8);
+    return e+nd;
+  }
+  var t0=[0,24,11,13,3,8,6,7,2,1,5,3,4,2,6,1];
+  var t1=t0.slice();t1[11]=10;t1[5]=15;t1[2]=18;t1[1]=31;
+  F.push([seg(t0,{}),"Segment tree: each node stores the sum of its range. The bottom row is the array."]);
+  F.push([seg(t0,{5:"ok",6:"ok"}),"sum(2..5): the range splits into two stored nodes, 8 + 6 = 14. About log n nodes, not n."]);
+  F.push([seg(t1,{11:"acc",5:"acc",2:"acc",1:"acc"}),"update arr[3] = 10: change the leaf, then fix each ancestor on the way up. O(log n)."]);
+  F.push([seg(t1,{5:"ok",6:"ok"}),"sum(2..5) again: 15 + 6 = 21. Queries and updates both stay O(log n)."]);
+  return FR(F,2.8,252,"Segment tree: range sum from a few stored nodes, point update walks up");
+};
+function GR(vis,cur,seq,qlabel,q,h){
+  var P={A:[90,80],B:[220,36],C:[220,124],D:[370,36],E:[370,124],F:[500,80]},E=[["A","B"],["A","C"],["B","D"],["C","E"],["D","F"],["E","F"]],s="",k;
+  E.forEach(function(e){s+=ED(P[e[0]][0],P[e[0]][1],P[e[1]][0],P[e[1]][1])});
+  for(k in P){s+=ND(P[k][0],P[k][1],k,k==cur?"acc":(vis.indexOf(k)>=0?"ok":""))}
+  s+=T(20,h-52,qlabel,"b");
+  q.forEach(function(v,i){s+=CL(110+i*46,h-72,42,30,v,i==(qlabel=="queue:"?0:q.length-1)?"acc":"")});
+  s+=T(500,h-52,seq,"s","middle");
+  return s;
+}
+VIS.dsbfs=function(){
+  var F=[],h=240;
+  F.push([GR([],"A","","queue:",["A"],h),"BFS: put the start node in a queue. Visit level by level."]);
+  F.push([GR(["A"],"A","order: A","queue:",["B","C"],h),"Take A out; queue its unvisited neighbors B and C (one step away)."]);
+  F.push([GR(["A","B"],"B","order: A B","queue:",["C","D"],h),"Take B; queue its neighbor D."]);
+  F.push([GR(["A","B","C"],"C","order: A B C","queue:",["D","E"],h),"Take C; queue E."]);
+  F.push([GR(["A","B","C","D"],"D","order: A B C D","queue:",["E","F"],h),"Take D; queue F (three steps from A)."]);
+  F.push([GR(["A","B","C","D","E"],"E","order: A B C D E","queue:",["F"],h),"Take E. Its neighbor F is already queued, so skip it."]);
+  F.push([GR(["A","B","C","D","E","F"],"F","order: A B C D E F","queue:",[],h),"Queue empty. First arrival = shortest path in an unweighted graph."]);
+  return FR(F,2.4,h,"Breadth-first search: a queue visits the graph level by level");
+};
+VIS.dsdfs=function(){
+  var F=[],h=240;
+  F.push([GR([],"A","","stack:",["A"],h),"DFS: go deep first. The stack holds the path taken so far."]);
+  F.push([GR(["A"],"B","order: A B","stack:",["A","B"],h),"From A step to B (the first unvisited neighbor)."]);
+  F.push([GR(["A","B"],"D","order: A B D","stack:",["A","B","D"],h),"B to D."]);
+  F.push([GR(["A","B","D"],"F","order: A B D F","stack:",["A","B","D","F"],h),"D to F."]);
+  F.push([GR(["A","B","D","F"],"E","order: A B D F E","stack:",["A","B","D","F","E"],h),"F to E."]);
+  F.push([GR(["A","B","D","F","E"],"C","order: A B D F E C","stack:",["A","B","D","F","E","C"],h),"E to C. C has no unvisited neighbors: a dead end, so backtrack."]);
+  F.push([GR(["A","B","C","D","E","F"],"","order: A B D F E C","stack:",[],h),"Backtracking pops the stack back to A. Used for cycles, components, topological sort."]);
+  return FR(F,2.4,h,"Depth-first search: a stack follows one path as deep as it goes, then backtracks");
+};
+
 VIS.strangler=function(){
   var P=12;
   var b=B(20,95,100,50,"Clients")+B(190,95,130,50,"Proxy","routes by rule","acc")+B(440,20,170,56,"Monolith","old orders code")+B(440,164,170,56,"Orders service","new","ok");
@@ -6017,6 +6271,283 @@ DOCS.push(
 function codeBlk(lines){return '<pre><code>'+esc(lines.join("\n"))+'</code></pre>'}
 function REQ(f,n){return '<p><b>Functional</b></p>'+ul(f)+'<p><b>Non-functional</b></p>'+ul(n)}
 DOCS.push(
+["sd-ds-linear","Arrays, lists, stacks, queues","index vs insert, pointers, LIFO, FIFO","dslist",[
+  ["Animation: array",vis("dsarray")],
+  ["Animation: linked list",vis("dslist")],
+  ["Animation: stack",vis("dsstack")],
+  ["Animation: queue",vis("dsqueue")],
+  ["What you can do",
+    table(["Structure","Fast (O(1))","Slow (O(n))","Use it for"],[
+      ["Array / Python list","Index, append, pop at end","Insert or delete in the middle or at the front, search","Default sequence; random access; sorting; binary search when sorted"],
+      ["Linked list","Insert or delete at a known node, add at head","Index, search","LRU caches (with a hash map), splicing, no-resize growth"],
+      ["Stack (LIFO)","push, pop, peek on top","Search","Undo, DFS, bracket matching, expression parsing, call stack"],
+      ["Queue (FIFO)","enqueue at back, dequeue from front","Search","BFS, task queues, rate-limit windows, buffering"],
+      ["Deque","Add and remove at both ends","Index into the middle","Queue, sliding window maximum, palindrome checks"]
+    ])],
+  ["Code",codeBlk(["from collections import deque", "", "a = [1, 2, 3]", "a.append(4)          # O(1) amortized: add at the end", "a.insert(1, 9)       # O(n): shifts everything after index 1", "a.pop()              # O(1): remove the end", "a.pop(0)             # O(n): shifts everything left -- avoid", "", "stack = []           # push / pop at the same end", "stack.append(1); stack.append(2)", "top = stack[-1]      # peek", "stack.pop()", "", "q = deque()          # real queue: O(1) at both ends", "q.append(\"A\"); q.append(\"B\")   # enqueue at the back", "q.popleft()                    # dequeue from the front"])],
+  ["Say it",
+    ul([
+      "&ldquo;Arrays win on reads and cache locality; I avoid inserting at the front.&rdquo;",
+      "&ldquo;A linked list only wins when I already hold the node, as in an LRU cache.&rdquo;",
+      "&ldquo;In Python a list is the stack, <code>deque</code> is the queue. <code>list.pop(0)</code> is O(n).&rdquo;"
+    ])]
+]],
+
+["sd-ds-hash","Hash maps & sets","buckets, collisions, resize, what to key on","dshash",[
+  ["Animation",vis("dshash")],
+  ["What you can do",
+    table(["Operation","Cost","Notes"],[
+      ["put / get / delete / contains","O(1) average, O(n) worst","Worst case is many keys in one bucket"],
+      ["Count things (frequency)","O(n) total","<code>Counter</code>, or <code>m[k] = m.get(k, 0) + 1</code>"],
+      ["Group by a key","O(n) total","Anagram groups, group by user: key is a sorted tuple or an ID"],
+      ["Dedupe and membership","O(1) per check","A set is a hash map with keys only"],
+      ["Two-sum style lookup","O(n) instead of O(n&sup2;)","Store what you have seen, check for the complement"],
+      ["Ordered keys, min, max, range","Not supported","Use a sorted structure: tree, heap, or sort the keys"]
+    ])],
+  ["How it works",
+    ul([
+      "<b>Hash</b> the key to an integer, take it modulo the bucket count, go to that slot.",
+      "<b>Collision</b> (two keys, one slot): chaining keeps a small list per slot; open addressing probes the next free slot. Python uses open addressing.",
+      "<b>Resize</b>: when the table is about two-thirds full, double it and re-insert every key. One resize is O(n), but amortized over all inserts it is O(1).",
+      "Keys must be <b>hashable and unchanging</b>: numbers, strings, tuples. A list as a key raises <code>TypeError</code>.",
+      "Equal keys must give equal hashes. Change <code>__eq__</code> and you must change <code>__hash__</code>."
+    ])],
+  ["Code",codeBlk(["from collections import Counter, defaultdict", "", "m = {}", "m[\"cat\"] = 1                 # put, O(1) average", "m.get(\"dog\", 0)              # get with a default", "\"cat\" in m                   # membership, O(1)", "del m[\"cat\"]                 # delete", "", "count = Counter(\"banana\")    # {'a': 3, 'n': 2, 'b': 1}", "groups = defaultdict(list)", "for w in [\"eat\", \"tea\", \"tan\"]:", "    groups[tuple(sorted(w))].append(w)   # group anagrams", "", "seen = set()                 # same hashing, keys only", "for x in [3, 1, 3]:", "    if x in seen:", "        print(\"duplicate\", x)", "    seen.add(x)"])],
+  ["Say it",
+    ul([
+      "&ldquo;A hash map trades ordering for O(1) lookups; I reach for it first to count, group, dedupe or look up complements.&rdquo;",
+      "&ldquo;Worst case is O(n), but resizing and a good hash keep the average at O(1).&rdquo;",
+      "&ldquo;At scale, <a href='#sd-v-dynamo'>consistent hashing</a> spreads the same idea across machines.&rdquo;"
+    ])]
+]],
+
+["sd-ds-heap","Heaps & priority queues","min-heap, sift up and down, top-k, scheduling","dsheappush",[
+  ["Animation: push",vis("dsheappush")],
+  ["Animation: pop",vis("dsheappop")],
+  ["What you can do",
+    table(["Operation","Cost","Notes"],[
+      ["peek (min or max)","O(1)","The root, <code>h[0]</code>"],
+      ["push","O(log n)","Add at the end, sift up"],
+      ["pop","O(log n)","Take the root, move the last item up, sift down"],
+      ["heapify a list","O(n)","Faster than n pushes; builds in place"],
+      ["Top-k of a stream","O(n log k)","Keep a heap of size k; its root is the cutoff"],
+      ["Merge k sorted lists","O(N log k)","Heap holds the next item from each list"],
+      ["Delete an arbitrary item","O(n)","Prefer lazy deletion: mark it and skip it on pop"],
+      ["Search for a value, sorted order","Not supported","A heap only orders the root against the rest"]
+    ])],
+  ["Layout in an array",
+    ul([
+      "A complete binary tree stored in a plain array: no pointers.",
+      "Node <code>i</code>: children <code>2i+1</code> and <code>2i+2</code>; parent <code>(i-1)//2</code>.",
+      "Min-heap: parent &le; children. Max-heap: parent &ge; children. Python&rsquo;s <code>heapq</code> is a min-heap, so push negatives for max."
+    ])],
+  ["Use it for",
+    ul([
+      "<b>Priority queue</b>: schedulers, event simulation, retry timers, the next job to run.",
+      "<b>Dijkstra</b> and A*: always expand the closest unvisited node.",
+      "<b>Top-k</b> and running median (two heaps: a max-heap for the low half, a min-heap for the high half).",
+      "<b>Heap sort</b>: n pops, O(n log n), in place."
+    ])],
+  ["Code",codeBlk(["import heapq", "", "h = []", "heapq.heappush(h, 5)         # O(log n)", "heapq.heappush(h, 1)", "heapq.heappush(h, 3)", "h[0]                         # peek the min: 1, O(1)", "heapq.heappop(h)             # remove and return the min: 1, O(log n)", "", "nums = [9, 4, 7, 1]", "heapq.heapify(nums)          # O(n), in place", "heapq.nlargest(2, [9, 4, 7, 1])   # [9, 7]", "", "heapq.heappush(h, -10)       # max-heap trick: push negatives", "-heapq.heappop(h)            # 10", "", "jobs = []                    # priority queue of (priority, item)", "heapq.heappush(jobs, (2, \"email\"))", "heapq.heappush(jobs, (1, \"page oncall\"))", "heapq.heappop(jobs)          # (1, 'page oncall')", "", "def k_largest(stream, k):    # min-heap of size k keeps the k largest", "    top = []", "    for x in stream:", "        heapq.heappush(top, x)", "        if len(top) > k:", "            heapq.heappop(top)", "    return sorted(top, reverse=True)"])],
+  ["Say it",
+    ul([
+      "&ldquo;A heap gives me the min or max in O(1) and updates in O(log n); it does not keep everything sorted.&rdquo;",
+      "&ldquo;For top-k I keep a min-heap of size k, so memory stays O(k).&rdquo;"
+    ])]
+]],
+
+["sd-ds-bst","BST & AVL trees","ordered map, rotations, balanced trees","dsavl",[
+  ["Animation: BST search and insert",vis("dsbst")],
+  ["Animation: AVL single rotation",vis("dsavl")],
+  ["Animation: AVL double rotation",vis("dsavl2")],
+  ["What you can do",
+    table(["Operation","Balanced tree","Plain BST, bad luck","Hash map"],[
+      ["search / insert / delete","O(log n)","O(n)","O(1) average"],
+      ["min / max","O(log n)","O(n)","O(n)"],
+      ["Sorted iteration (in-order)","O(n)","O(n)","O(n log n) after sorting"],
+      ["Predecessor / successor, floor / ceiling","O(log n)","O(n)","Not supported"],
+      ["Range query (all keys in [a, b])","O(log n + k)","O(n)","Not supported"],
+      ["k-th smallest","O(log n) with subtree sizes","O(n)","Not supported"]
+    ])+'<p>Pick a balanced tree over a hash map when you need <b>order</b>: sorted keys, ranges, nearest neighbor, floor and ceiling.</p>'],
+  ["Rules",
+    ul([
+      "<b>BST</b>: every key in the left subtree is smaller, every key in the right is larger. Sorted insertions make it a list.",
+      "<b>AVL</b>: the heights of a node&rsquo;s two subtrees differ by at most 1. After each insert, walk back up; where the difference becomes 2, rotate.",
+      "Four cases: <b>left-left</b> and <b>right-right</b> need one rotation; <b>left-right</b> and <b>right-left</b> need two (the animation above).",
+      "Height stays under about 1.44 &middot; log&#8322;(n). Strict balance means fast lookups, a few more rotations on writes.",
+      "<b>Red-black</b> trees balance more loosely (height up to 2 &middot; log&#8322; n), so inserts and deletes rotate less. Java <code>TreeMap</code> and C++ <code>std::map</code> use them.",
+      "Python has no built-in balanced tree. Use <code>bisect</code> on a sorted list, or the <code>sortedcontainers</code> library."
+    ])],
+  ["Code: BST",codeBlk(["class Node:", "    def __init__(self, key):", "        self.key, self.left, self.right = key, None, None", "", "def insert(node, key):", "    if node is None:", "        return Node(key)", "    if key < node.key:", "        node.left = insert(node.left, key)", "    elif key > node.key:", "        node.right = insert(node.right, key)", "    return node", "", "def search(node, key):", "    while node and node.key != key:", "        node = node.left if key < node.key else node.right", "    return node", "", "def inorder(node):           # sorted order", "    if node:", "        yield from inorder(node.left)", "        yield node.key", "        yield from inorder(node.right)"])],
+  ["Code: AVL insert",codeBlk(["class Node:", "    def __init__(self, key):", "        self.key, self.left, self.right, self.h = key, None, None, 1", "", "def h(n): return n.h if n else 0", "def fix(n): n.h = 1 + max(h(n.left), h(n.right))", "def balance(n): return h(n.left) - h(n.right)", "", "def rot_right(y):", "    x = y.left", "    y.left, x.right = x.right, y", "    fix(y); fix(x)", "    return x", "", "def rot_left(x):", "    y = x.right", "    x.right, y.left = y.left, x", "    fix(x); fix(y)", "    return y", "", "def insert(n, key):", "    if n is None:", "        return Node(key)", "    if key < n.key:", "        n.left = insert(n.left, key)", "    elif key > n.key:", "        n.right = insert(n.right, key)", "    else:", "        return n", "    fix(n)", "    b = balance(n)", "    if b > 1 and key < n.left.key:       # left-left", "        return rot_right(n)", "    if b < -1 and key > n.right.key:     # right-right", "        return rot_left(n)", "    if b > 1:                            # left-right", "        n.left = rot_left(n.left)", "        return rot_right(n)", "    if b < -1:                           # right-left", "        n.right = rot_right(n.right)", "        return rot_left(n)", "    return n"])],
+  ["Say it",
+    ul([
+      "&ldquo;A plain BST is O(height), so sorted input breaks it. AVL and red-black trees rotate to keep height at O(log n).&rdquo;",
+      "&ldquo;I use an ordered tree when I need ranges or nearest-key lookups; otherwise a hash map.&rdquo;"
+    ])]
+]],
+
+["sd-ds-btree","B-trees & B+ trees","wide nodes, page splits, database indexes, range scans","dsbtree",[
+  ["Animation: B-tree insert and split",vis("dsbtree")],
+  ["Animation: B+ tree range scan",vis("dsbplus")],
+  ["Why databases use them",
+    ul([
+      "A disk read is slow, so the tree is <b>short and wide</b>: one node = one page (8 KB in Postgres, 16 KB in InnoDB).",
+      "Each page holds hundreds of keys. With about 500 per page, 3 levels reach 500&sup3; = 125,000,000 rows and 4 levels reach 62.5 billion. A lookup is 3 or 4 page reads.",
+      "The top levels stay in memory, so most lookups touch the disk once or twice.",
+      "Binary trees would need about 27 levels for the same 125 million rows."
+    ])],
+  ["What you can do",
+    table(["Operation","Cost","How"],[
+      ["Point lookup","O(log n) page reads","Binary search inside each page, follow one child"],
+      ["Insert","O(log n)","Add to a leaf; on overflow split in the middle and push the median up. The tree grows at the root, so all leaves stay at one depth"],
+      ["Delete","O(log n)","Remove from a leaf; if it becomes too empty, borrow from a sibling or merge two pages"],
+      ["Range scan","O(log n + k)","B+ tree: one descent, then follow the leaf chain"],
+      ["Sorted order, min, max","Cheap","Leaves are already sorted"],
+      ["Full scan","O(n)","Walk the leaf chain; no tree climbing"]
+    ])],
+  ["B-tree vs B+ tree",
+    table(["","B-tree","B+ tree"],[
+      ["Where values live","In every node","Only in the leaves"],
+      ["Inner nodes hold","Keys and values","Keys only, so more fit per page: higher fan-out, shorter tree"],
+      ["Leaves linked?","No","Yes, left to right"],
+      ["Range scans","Climb up and down","Walk the leaf chain"],
+      ["Used by","Some file systems","Most SQL indexes (Postgres, MySQL InnoDB), file systems like NTFS"]
+    ])],
+  ["Index behavior to know",
+    ul([
+      "<b>Clustered index</b> (InnoDB primary key): the leaves are the table rows. A <b>secondary index</b> stores the primary key, so a lookup is two tree walks.",
+      "<b>Composite index</b> <code>(a, b)</code> works for filters on <code>a</code> or on <code>a</code> and <code>b</code>, not on <code>b</code> alone (leftmost-prefix rule).",
+      "<b>Random keys</b> (UUIDv4) insert into random pages, causing splits and cache misses. Sequential IDs append to the right-most leaf.",
+      "<b>Write cost</b>: every index is another tree to update on each insert. Index what you query.",
+      "<b>B+ tree vs LSM tree</b>: B+ trees update in place and read fast; LSM trees (Cassandra, RocksDB) buffer writes in memory and merge sorted files, so writes are faster and reads may check several files. See <a href='#sd-data'>data stores</a>."
+    ])],
+  ["Code: search in a B-tree page",codeBlk(["from bisect import bisect_left", "", "class Page:                      # one B-tree node = one disk page", "    def __init__(self, keys, kids=None):", "        self.keys = keys         # sorted", "        self.kids = kids         # None for a leaf, else len(keys)+1 pages", "", "def search(page, key):", "    i = bisect_left(page.keys, key)           # binary search inside the page", "    if i < len(page.keys) and page.keys[i] == key:", "        return True", "    if page.kids is None:                     # leaf: nowhere left to look", "        return False", "    return search(page.kids[i], key)          # one page read per level", "", "root = Page([30, 60], [Page([10, 20]), Page([40, 50]), Page([70, 80])])", "search(root, 45)     # False: root, then the middle leaf", "search(root, 70)     # True"])],
+  ["SQL: how it shows up",codeBlk(["-- the B+ tree behind a normal index", "CREATE INDEX idx_orders_user_created ON orders (user_id, created_at);", "", "-- point lookup: descend once", "SELECT * FROM orders WHERE user_id = 42 AND created_at = '2026-11-01';", "-- range scan: descend once, then walk the leaf chain (already sorted)", "SELECT * FROM orders WHERE user_id = 42 AND created_at >= '2026-11-01';", "-- ORDER BY on the index columns needs no sort step", "SELECT * FROM orders WHERE user_id = 42 ORDER BY created_at DESC LIMIT 20;", "-- leftmost prefix rule: this cannot use the index well (skips user_id)", "SELECT * FROM orders WHERE created_at >= '2026-11-01';"])],
+  ["Say it",
+    ul([
+      "&ldquo;A B+ tree is a wide, shallow tree sized to a disk page; 3 or 4 reads find any row among hundreds of millions.&rdquo;",
+      "&ldquo;Leaves are linked, so range scans and ORDER BY are one descent plus a sequential walk.&rdquo;",
+      "&ldquo;Writes split pages; sequential keys split less than random UUIDs.&rdquo;"
+    ])]
+]],
+
+["sd-ds-trie","Tries","prefix search, autocomplete, shared prefixes","dstrie",[
+  ["Animation",vis("dstrie")],
+  ["What you can do",
+    table(["Operation","Cost","Notes"],[
+      ["insert word","O(L)","L = word length, independent of how many words are stored"],
+      ["contains word","O(L)","Walk the path, check the word-end flag"],
+      ["starts-with prefix","O(L)","Walk the path; no flag needed"],
+      ["Autocomplete (all words under a prefix)","O(L + output)","Walk to the prefix node, then DFS below it"],
+      ["Longest common prefix","O(L)","Follow the single-child chain from the root"],
+      ["Delete word","O(L)","Unmark the end; prune nodes with no children"],
+      ["Sorted order","O(total letters)","DFS visiting children in letter order"]
+    ])],
+  ["Notes",
+    ul([
+      "Children stored in a <b>dict</b> (any alphabet) or a fixed array of 26 (faster, more memory).",
+      "Memory is the cost. A <b>radix tree</b> (compressed trie) merges single-child chains into one edge.",
+      "Used in autocomplete, spell checkers, IP routing (longest-prefix match), and T9. See <a href='#sd-structures'>structures behind the designs</a>.",
+      "A hash map answers <i>is this word present</i>; only a trie answers <i>what starts with this</i> quickly."
+    ])],
+  ["Code",codeBlk(["class Trie:", "    def __init__(self):", "        self.kids = {}           # letter -> Trie", "        self.end = False         # a word ends here", "", "    def insert(self, word):", "        n = self", "        for ch in word:", "            n = n.kids.setdefault(ch, Trie())", "        n.end = True", "", "    def _walk(self, s):", "        n = self", "        for ch in s:", "            n = n.kids.get(ch)", "            if n is None:", "                return None", "        return n", "", "    def contains(self, word):", "        n = self._walk(word)", "        return bool(n and n.end)", "", "    def starts_with(self, prefix):", "        return self._walk(prefix) is not None", "", "    def complete(self, prefix):  # autocomplete", "        out, n = [], self._walk(prefix)", "        def dfs(node, path):", "            if node.end:", "                out.append(prefix + path)", "            for ch in sorted(node.kids):", "                dfs(node.kids[ch], path + ch)", "        if n:", "            dfs(n, \"\")", "        return out"])],
+  ["Say it",
+    ul([
+      "&ldquo;A trie costs O(length of the word), whatever the dictionary size, and it shares common prefixes.&rdquo;",
+      "&ldquo;For autocomplete I walk to the prefix, then collect words below it, often with the top results cached at each node.&rdquo;"
+    ])]
+]],
+
+["sd-ds-range","Segment tree & Fenwick tree","range sums, point updates, range min and max","dsseg",[
+  ["Animation: segment tree",vis("dsseg")],
+  ["What you can do",
+    table(["Question","Prefix sums array","Fenwick tree","Segment tree"],[
+      ["Sum of a range","O(1)","O(log n)","O(log n)"],
+      ["Change one element","O(n) rebuild","O(log n)","O(log n)"],
+      ["Range min, max, gcd","Not supported","Not for general ranges","O(log n)"],
+      ["Add to a whole range","O(n)","O(log n) with a trick","O(log n) with lazy propagation"],
+      ["Code size","Tiny","Tiny","Medium"]
+    ])+'<p>No updates: use a prefix-sum array. Updates plus sums or counts: Fenwick. Anything else (min, max, range updates): segment tree.</p>'],
+  ["How they work",
+    ul([
+      "<b>Segment tree</b>: each node stores the answer (sum, min, max) for a range; the children split it in half. A query combines at most about 2 log n nodes.",
+      "An update changes one leaf and recomputes its ancestors on the way up.",
+      "<b>Fenwick tree</b> (binary indexed tree): one array where slot <code>i</code> stores the sum of a block whose size is the lowest set bit of <code>i</code>. Move with <code>i += i &amp; -i</code> (update) and <code>i -= i &amp; -i</code> (query).",
+      "Use cases: running totals with edits, counting smaller elements to the right, leaderboards by rank, range minimum with updates."
+    ])],
+  ["Code: segment tree",codeBlk(["class SegTree:                   # iterative, range sum", "    def __init__(self, arr):", "        self.n = len(arr)", "        self.t = [0] * self.n + list(arr)", "        for i in range(self.n - 1, 0, -1):", "            self.t[i] = self.t[2 * i] + self.t[2 * i + 1]", "", "    def update(self, i, v):      # arr[i] = v, O(log n)", "        i += self.n", "        self.t[i] = v", "        while i > 1:", "            i //= 2", "            self.t[i] = self.t[2 * i] + self.t[2 * i + 1]", "", "    def query(self, l, r):       # sum of arr[l..r], O(log n)", "        res, l, r = 0, l + self.n, r + self.n + 1", "        while l < r:", "            if l & 1:", "                res += self.t[l]; l += 1", "            if r & 1:", "                r -= 1; res += self.t[r]", "            l //= 2; r //= 2", "        return res"])],
+  ["Code: Fenwick tree",codeBlk(["class Fenwick:                   # prefix sums with point updates", "    def __init__(self, n):", "        self.t = [0] * (n + 1)   # 1-indexed", "", "    def add(self, i, delta):     # arr[i] += delta, 0-indexed", "        i += 1", "        while i < len(self.t):", "            self.t[i] += delta", "            i += i & -i          # jump to the next range that covers i", "", "    def prefix(self, i):         # sum of arr[0..i]", "        i += 1", "        s = 0", "        while i > 0:", "            s += self.t[i]", "            i -= i & -i          # drop the lowest set bit", "        return s", "", "    def range(self, l, r):       # sum of arr[l..r]", "        return self.prefix(r) - (self.prefix(l - 1) if l else 0)"])],
+  ["Say it",
+    ul([
+      "&ldquo;When values change, prefix sums go stale; a Fenwick or segment tree keeps range queries and updates at O(log n).&rdquo;",
+      "&ldquo;Fenwick is shorter to write; a segment tree handles min, max and range updates.&rdquo;"
+    ])]
+]],
+
+["sd-ds-uf","Union-find","disjoint sets, connectivity, Kruskal, cycle detection","dsuf",[
+  ["Animation",vis("dsuf")],
+  ["What you can do",
+    table(["Operation","Cost","Notes"],[
+      ["find(x): which set is x in","~O(1)","Climb to the root; path compression flattens the path"],
+      ["union(a, b): merge two sets","~O(1)","Attach the smaller tree under the larger (union by size)"],
+      ["connected(a, b)","~O(1)","find(a) == find(b)"],
+      ["Count components","O(1) if you keep a counter","Decrement on each successful union"],
+      ["Split a set / remove an element","Not supported","Merges only; rebuild or use a different structure"]
+    ])+'<p>&ldquo;~O(1)&rdquo; means O(&alpha;(n)), the inverse Ackermann function, below 5 for any real n.</p>'],
+  ["Use it for",
+    ul([
+      "<b>Connected components</b> in a graph that grows edge by edge (friend groups, islands, networks).",
+      "<b>Cycle detection</b> in an undirected graph: if an edge&rsquo;s ends are already connected, adding it makes a cycle.",
+      "<b>Kruskal&rsquo;s minimum spanning tree</b>: sort edges by weight, add each edge whose ends are in different sets.",
+      "<b>Equivalence merging</b>: accounts that share an email, similar strings, redundant connections."
+    ])],
+  ["Code",codeBlk(["class UnionFind:", "    def __init__(self, n):", "        self.parent = list(range(n))", "        self.size = [1] * n", "", "    def find(self, x):           # root of x's set", "        while self.parent[x] != x:", "            self.parent[x] = self.parent[self.parent[x]]   # path compression", "            x = self.parent[x]", "        return x", "", "    def union(self, a, b):       # False if already in the same set", "        ra, rb = self.find(a), self.find(b)", "        if ra == rb:", "            return False", "        if self.size[ra] < self.size[rb]:", "            ra, rb = rb, ra", "        self.parent[rb] = ra     # smaller set under the larger", "        self.size[ra] += self.size[rb]", "        return True", "", "    def connected(self, a, b):", "        return self.find(a) == self.find(b)"])],
+  ["Say it",
+    ul([
+      "&ldquo;Union-find answers &lsquo;are these connected?&rsquo; as edges arrive, in nearly constant time.&rdquo;",
+      "&ldquo;Path compression plus union by size is what makes it fast; it cannot undo a merge.&rdquo;"
+    ])]
+]],
+
+["sd-ds-graph","Graphs: BFS, DFS, topo sort","adjacency lists, shortest hops, backtracking, dependency order","dsbfs",[
+  ["Animation: BFS",vis("dsbfs")],
+  ["Animation: DFS",vis("dsdfs")],
+  ["What you can do",
+    table(["Task","Use","Cost"],[
+      ["Shortest path, unweighted","BFS (queue)","O(V + E)"],
+      ["Shortest path, weighted (no negatives)","Dijkstra (heap)","O((V + E) log V)"],
+      ["Reachability, connected components","BFS or DFS, or union-find","O(V + E)"],
+      ["Cycle detection","DFS with a visiting state, or union-find (undirected)","O(V + E)"],
+      ["Dependency order (build, courses)","Topological sort","O(V + E)"],
+      ["Minimum spanning tree","Kruskal (union-find) or Prim (heap)","O(E log E)"],
+      ["Grid problems (islands, mazes)","BFS or DFS, cells are nodes","O(rows &times; cols)"]
+    ])],
+  ["Representations",
+    table(["Form","Memory","Edge check","Best for"],[
+      ["Adjacency list (dict of lists)","O(V + E)","O(degree)","Most problems; sparse graphs"],
+      ["Adjacency matrix","O(V&sup2;)","O(1)","Dense graphs, small V"],
+      ["Edge list","O(E)","O(E)","Kruskal, sorting edges"]
+    ])+'<p>Always keep a <b>visited</b> set, or a graph with cycles loops forever.</p>'],
+  ["BFS vs DFS",
+    table(["","BFS","DFS"],[
+      ["Container","Queue","Stack (or recursion)"],
+      ["Visits","Level by level","One path to the end, then backtrack"],
+      ["Shortest hops","Yes (first arrival)","No"],
+      ["Memory","Width of the graph","Depth of the graph"],
+      ["Natural for","Nearest, minimum steps, levels","Cycles, paths, backtracking, topological sort"]
+    ])],
+  ["Code: BFS and DFS",codeBlk(["from collections import deque", "", "g = {\"A\": [\"B\", \"C\"], \"B\": [\"A\", \"D\"], \"C\": [\"A\", \"E\"],", "     \"D\": [\"B\", \"F\"], \"E\": [\"C\", \"F\"], \"F\": [\"D\", \"E\"]}", "", "def bfs(start):                  # shortest hops in an unweighted graph", "    dist, q = {start: 0}, deque([start])", "    while q:", "        u = q.popleft()", "        for v in g[u]:", "            if v not in dist:", "                dist[v] = dist[u] + 1", "                q.append(v)", "    return dist", "", "def dfs(u, seen=None):           # go deep, then backtrack", "    seen = set() if seen is None else seen", "    seen.add(u)", "    for v in g[u]:", "        if v not in seen:", "            dfs(v, seen)", "    return seen"])],
+  ["Code: topological sort",codeBlk(["from collections import deque", "", "def topo_sort(n, edges):         # Kahn: repeatedly take nodes with no prerequisites", "    out = [[] for _ in range(n)]", "    indeg = [0] * n", "    for a, b in edges:           # a must come before b", "        out[a].append(b)", "        indeg[b] += 1", "    q = deque(i for i in range(n) if indeg[i] == 0)", "    order = []", "    while q:", "        u = q.popleft()", "        order.append(u)", "        for v in out[u]:", "            indeg[v] -= 1", "            if indeg[v] == 0:", "                q.append(v)", "    return order if len(order) == n else None   # None: there is a cycle"])],
+  ["Say it",
+    ul([
+      "&ldquo;BFS gives the fewest hops in an unweighted graph; DFS suits cycles, components and ordering.&rdquo;",
+      "&ldquo;Weighted edges need Dijkstra with a heap; dependencies need a topological sort, which also detects cycles.&rdquo;"
+    ])]
+]]
+);
+
+DOCS.push(
 ["sd-w-url","Walkthrough: URL shortener","short codes, redirects, ID generation, caching, analytics","url",[
   ["Animation: a redirect",vis("url")],
   ["1 Requirements",
@@ -6399,7 +6930,7 @@ DOCS.push(
       ["<b>D</b> Dependency inversion","Depend on abstractions, not concrete classes","<code>new MySqlDb()</code> inside business logic","Pass the dependency in (injection)"]
     ])],
   ["Open / closed and dependency inversion in code",
-    'codeBlk(["# Open/closed + dependency inversion: add a discount without editing Checkout", "class Discount:                                  # abstraction", "    def apply(self, total): raise NotImplementedError", "", "class NoDiscount(Discount):", "    def apply(self, total): return total", "", "class Percent(Discount):", "    def __init__(self, pct): self.pct = pct", "    def apply(self, total): return total * (1 - self.pct / 100)", "", "class Checkout:", "    def __init__(self, discount: Discount):      # depends on the abstraction", "        self.discount = discount", "    def total(self, prices): return self.discount.apply(sum(prices))"])'+'<p>A new discount is a new class. <code>Checkout</code> never changes, and tests pass a fake <code>Discount</code>.</p>'],
+    codeBlk(["# Open/closed + dependency inversion: add a discount without editing Checkout", "class Discount:                                  # abstraction", "    def apply(self, total): raise NotImplementedError", "", "class NoDiscount(Discount):", "    def apply(self, total): return total", "", "class Percent(Discount):", "    def __init__(self, pct): self.pct = pct", "    def apply(self, total): return total * (1 - self.pct / 100)", "", "class Checkout:", "    def __init__(self, discount: Discount):      # depends on the abstraction", "        self.discount = discount", "    def total(self, prices): return self.discount.apply(sum(prices))"])+'<p>A new discount is a new class. <code>Checkout</code> never changes, and tests pass a fake <code>Discount</code>.</p>'],
   ["Liskov: the classic trap",
     ul(["<code>Square</code> as a subclass of <code>Rectangle</code>: setting width also changes height, so code that sets width then height gets a wrong area.","A subtype may not demand more (stricter inputs) or promise less (weaker results) than its base.","Fix: do not model it as is-a; make both implement a <code>Shape</code> with <code>area()</code>."])],
   ["Interface segregation",
@@ -6427,11 +6958,11 @@ DOCS.push(
       ["Prototype","Copying is cheaper than creating","<code>copy.deepcopy(obj)</code>","Shallow versus deep copy"]
     ])],
   ["Factory",
-    'codeBlk(["class Notifier:", "    def send(self, msg): raise NotImplementedError", "", "class Email(Notifier):", "    def send(self, msg): return \"email:\" + msg", "", "class Sms(Notifier):", "    def send(self, msg): return \"sms:\" + msg", "", "def make_notifier(kind):                         # simple factory", "    return {\"email\": Email, \"sms\": Sms}[kind]()  # add a type = add one entry"])'+'<p>New channel: add one dictionary entry. Callers ask for <code>"sms"</code> and get a <code>Notifier</code>.</p>'],
+    codeBlk(["class Notifier:", "    def send(self, msg): raise NotImplementedError", "", "class Email(Notifier):", "    def send(self, msg): return \"email:\" + msg", "", "class Sms(Notifier):", "    def send(self, msg): return \"sms:\" + msg", "", "def make_notifier(kind):                         # simple factory", "    return {\"email\": Email, \"sms\": Sms}[kind]()  # add a type = add one entry"])+'<p>New channel: add one dictionary entry. Callers ask for <code>"sms"</code> and get a <code>Notifier</code>.</p>'],
   ["Builder",
-    'codeBlk(["class Pizza:", "    def __init__(self, size, toppings, cheese):", "        self.size, self.toppings, self.cheese = size, toppings, cheese", "", "class PizzaBuilder:", "    def __init__(self):", "        self._size, self._toppings, self._cheese = \"M\", [], True", "    def size(self, s):      self._size = s; return self", "    def topping(self, t):   self._toppings.append(t); return self", "    def no_cheese(self):    self._cheese = False; return self", "    def build(self):        return Pizza(self._size, list(self._toppings), self._cheese)", "", "# PizzaBuilder().size(\"L\").topping(\"olives\").no_cheese().build()"])'+'<p>Each setter returns <code>self</code>, so calls chain. <code>build()</code> is the place to validate.</p>'],
+    codeBlk(["class Pizza:", "    def __init__(self, size, toppings, cheese):", "        self.size, self.toppings, self.cheese = size, toppings, cheese", "", "class PizzaBuilder:", "    def __init__(self):", "        self._size, self._toppings, self._cheese = \"M\", [], True", "    def size(self, s):      self._size = s; return self", "    def topping(self, t):   self._toppings.append(t); return self", "    def no_cheese(self):    self._cheese = False; return self", "    def build(self):        return Pizza(self._size, list(self._toppings), self._cheese)", "", "# PizzaBuilder().size(\"L\").topping(\"olives\").no_cheese().build()"])+'<p>Each setter returns <code>self</code>, so calls chain. <code>build()</code> is the place to validate.</p>'],
   ["Singleton (thread-safe)",
-    'codeBlk(["import threading", "", "class Config:", "    _inst = None", "    _lock = threading.Lock()", "", "    def __new__(cls):", "        if cls._inst is None:                    # fast path, no lock", "            with cls._lock:", "                if cls._inst is None:            # double-checked", "                    cls._inst = super().__new__(cls)", "        return cls._inst"])'+'<p>The lock is only taken on the first call. In Python, a module-level object is often simpler and just as global.</p>'],
+    codeBlk(["import threading", "", "class Config:", "    _inst = None", "    _lock = threading.Lock()", "", "    def __new__(cls):", "        if cls._inst is None:                    # fast path, no lock", "            with cls._lock:", "                if cls._inst is None:            # double-checked", "                    cls._inst = super().__new__(cls)", "        return cls._inst"])+'<p>The lock is only taken on the first call. In Python, a module-level object is often simpler and just as global.</p>'],
   ["Say it",
     ul(["&ldquo;Factory when callers should not know concrete types; builder for many optional parts.&rdquo;","&ldquo;Singleton only for truly shared state, thread-safe, and I prefer injecting it.&rdquo;"])]
 ]],
@@ -6448,9 +6979,9 @@ DOCS.push(
       ["Flyweight","Millions of similar objects","Share the common part, keep the rest outside","Characters in a text editor"]
     ])],
   ["Decorator",
-    'codeBlk(["class Coffee:", "    def cost(self): return 3.0", "", "class Milk:                                      # wraps any drink", "    def __init__(self, inner): self.inner = inner", "    def cost(self): return self.inner.cost() + 0.5", "", "class Sugar:", "    def __init__(self, inner): self.inner = inner", "    def cost(self): return self.inner.cost() + 0.2", "", "# Sugar(Milk(Coffee())).cost()  ->  3.7"])'+'<p>Wrappers stack in any order. Compare: a subclass for every combination would be 2<sup>n</sup> classes.</p>'],
+    codeBlk(["class Coffee:", "    def cost(self): return 3.0", "", "class Milk:                                      # wraps any drink", "    def __init__(self, inner): self.inner = inner", "    def cost(self): return self.inner.cost() + 0.5", "", "class Sugar:", "    def __init__(self, inner): self.inner = inner", "    def cost(self): return self.inner.cost() + 0.2", "", "# Sugar(Milk(Coffee())).cost()  ->  3.7"])+'<p>Wrappers stack in any order. Compare: a subclass for every combination would be 2<sup>n</sup> classes.</p>'],
   ["Adapter",
-    'codeBlk(["class LegacyPrinter:                             # cannot change this class", "    def print_text(self, s): return s.upper()", "", "class PrinterAdapter:                            # the interface your code expects", "    def __init__(self, legacy): self.legacy = legacy", "    def print(self, text): return self.legacy.print_text(text)"])'+'<p>You cannot change the legacy class, so translate at the boundary. The rest of your code only sees <code>print()</code>.</p>'],
+    codeBlk(["class LegacyPrinter:                             # cannot change this class", "    def print_text(self, s): return s.upper()", "", "class PrinterAdapter:                            # the interface your code expects", "    def __init__(self, legacy): self.legacy = legacy", "    def print(self, text): return self.legacy.print_text(text)"])+'<p>You cannot change the legacy class, so translate at the boundary. The rest of your code only sees <code>print()</code>.</p>'],
   ["Telling the lookalikes apart",
     table(["Pattern","Interface compared with the wrapped object","Intent"],[
       ["Adapter","Different","Make it fit"],
@@ -6477,11 +7008,11 @@ DOCS.push(
       ["Visitor","New operations on a stable class tree","Operation lives outside, each node accepts it","Compiler passes over a syntax tree"]
     ])],
   ["Strategy",
-    'codeBlk(["class Regular:", "    def price(self, km): return km * 10", "", "class Peak:", "    def price(self, km): return km * 10 * 1.5", "", "class Ride:", "    def __init__(self, pricing): self.pricing = pricing    # injected behavior", "    def fare(self, km): return self.pricing.price(km)", "", "# Ride(Peak()).fare(4) -> 60.0 ; swap the strategy at runtime, no if/else"])'+'<p>The <code>if peak: &hellip; else: &hellip;</code> disappears. A weekend or surge price is one new class.</p>'],
+    codeBlk(["class Regular:", "    def price(self, km): return km * 10", "", "class Peak:", "    def price(self, km): return km * 10 * 1.5", "", "class Ride:", "    def __init__(self, pricing): self.pricing = pricing    # injected behavior", "    def fare(self, km): return self.pricing.price(km)", "", "# Ride(Peak()).fare(4) -> 60.0 ; swap the strategy at runtime, no if/else"])+'<p>The <code>if peak: &hellip; else: &hellip;</code> disappears. A weekend or surge price is one new class.</p>'],
   ["Observer",
-    vis("observer")+'codeBlk(["class Subject:", "    def __init__(self): self._observers = []", "    def subscribe(self, fn): self._observers.append(fn)", "    def unsubscribe(self, fn): self._observers.remove(fn)", "    def publish(self, event):", "        for fn in list(self._observers):         # copy: observers may unsubscribe", "            fn(event)", "", "# orders = Subject(); orders.subscribe(send_email); orders.publish({\"id\": 7})"])'+'<p>Iterate a <em>copy</em> of the list, because a listener may unsubscribe while being called. For async, put events on a queue instead.</p>'],
+    vis("observer")+codeBlk(["class Subject:", "    def __init__(self): self._observers = []", "    def subscribe(self, fn): self._observers.append(fn)", "    def unsubscribe(self, fn): self._observers.remove(fn)", "    def publish(self, event):", "        for fn in list(self._observers):         # copy: observers may unsubscribe", "            fn(event)", "", "# orders = Subject(); orders.subscribe(send_email); orders.publish({\"id\": 7})"])+'<p>Iterate a <em>copy</em> of the list, because a listener may unsubscribe while being called. For async, put events on a queue instead.</p>'],
   ["Command",
-    'codeBlk(["class Editor:", "    def __init__(self): self.text, self.history = \"\", []", "    def run(self, cmd):", "        cmd.do(self); self.history.append(cmd)", "    def undo(self):", "        if self.history: self.history.pop().undo(self)", "", "class Append:                                    # a command = action + its undo", "    def __init__(self, s): self.s = s", "    def do(self, ed):   ed.text += self.s", "    def undo(self, ed): ed.text = ed.text[:-len(self.s)]"])'+'<p>The history list is the undo stack. For redo, keep a second stack.</p>'],
+    codeBlk(["class Editor:", "    def __init__(self): self.text, self.history = \"\", []", "    def run(self, cmd):", "        cmd.do(self); self.history.append(cmd)", "    def undo(self):", "        if self.history: self.history.pop().undo(self)", "", "class Append:                                    # a command = action + its undo", "    def __init__(self, s): self.s = s", "    def do(self, ed):   ed.text += self.s", "    def undo(self, ed): ed.text = ed.text[:-len(self.s)]"])+'<p>The history list is the undo stack. For redo, keep a second stack.</p>'],
   ["State versus Strategy",
     table(["","Strategy","State"],[
       ["Who chooses","The caller, from outside","The object itself, on events"],
@@ -6507,7 +7038,7 @@ DOCS.push(
   ["Pattern: lock the critical section, keep it small",
     ul(["Take the lock, check, change, release. Never hold it during a slow call (network, disk).","Prefer immutable objects and passing messages over sharing and locking.","For cross-process or multi-machine safety a lock in memory is not enough: use a database transaction, a conditional update, or a distributed lock."])],
   ["Producer and consumer (bounded queue)",
-    'codeBlk(["import queue, threading", "", "buf = queue.Queue(maxsize=100)                   # bounded, thread-safe buffer", "", "def producer(items):", "    for x in items:", "        buf.put(x)                               # blocks when full (back pressure)", "    buf.put(None)                                # poison pill: tell consumer to stop", "", "def consumer(handle):", "    while (x := buf.get()) is not None:          # blocks when empty", "        handle(x)", "", "lock = threading.Lock()", "count = 0", "def increment():", "    global count", "    with lock:                                   # read-modify-write must be atomic", "        count += 1"])'+'<p>A full queue slows the producer down (back pressure). The <code>None</code> poison pill ends the consumer cleanly.</p>'],
+    codeBlk(["import queue, threading", "", "buf = queue.Queue(maxsize=100)                   # bounded, thread-safe buffer", "", "def producer(items):", "    for x in items:", "        buf.put(x)                               # blocks when full (back pressure)", "    buf.put(None)                                # poison pill: tell consumer to stop", "", "def consumer(handle):", "    while (x := buf.get()) is not None:          # blocks when empty", "        handle(x)", "", "lock = threading.Lock()", "count = 0", "def increment():", "    global count", "    with lock:                                   # read-modify-write must be atomic", "        count += 1"])+'<p>A full queue slows the producer down (back pressure). The <code>None</code> poison pill ends the consumer cleanly.</p>'],
   ["Python note",
     ul(["The GIL stops two threads running Python bytecode at once, but <code>count += 1</code> is still not atomic. Use a lock.","Threads help with waiting (I/O); for CPU-heavy work use processes.","Use <code>queue.Queue</code>, <code>threading.Lock</code>, <code>concurrent.futures.ThreadPoolExecutor</code>."])],
   ["Say it",
@@ -6527,7 +7058,7 @@ DOCS.push(
       ["<code>HourlyPricing</code> (a strategy)","rate","<code>fee(seconds)</code>"],
       ["<code>ParkingLot</code>","spots, tickets, pricing, lock","<code>park()</code>, <code>unpark()</code>"]
     ])],
-  ["3 Code",'codeBlk(["import math, threading, time", "from enum import IntEnum", "", "class Size(IntEnum):", "    SMALL = 1; MEDIUM = 2; LARGE = 3", "", "class Vehicle:", "    def __init__(self, plate, size): self.plate, self.size = plate, size", "", "class Spot:", "    def __init__(self, spot_id, size):", "        self.id, self.size, self.vehicle = spot_id, size, None", "    def fits(self, v): return self.vehicle is None and self.size >= v.size", "", "class Ticket:", "    def __init__(self, tid, spot, vehicle):", "        self.id, self.spot, self.vehicle, self.entry = tid, spot, vehicle, time.time()", "", "class HourlyPricing:                             # strategy: swap for weekend, EV...", "    def __init__(self, rate): self.rate = rate", "    def fee(self, seconds): return max(1, math.ceil(seconds / 3600)) * self.rate", "", "class ParkingLot:", "    def __init__(self, spots, pricing):", "        self.spots, self.pricing = spots, pricing", "        self.tickets, self.lock, self._next = {}, threading.Lock(), 1", "", "    def park(self, v):", "        with self.lock:                          # two cars must not get one spot", "            fits = [s for s in self.spots if s.fits(v)]", "            if not fits: raise RuntimeError(\"lot full\")", "            spot = min(fits, key=lambda s: s.size)      # smallest spot that fits", "            spot.vehicle = v", "            t = Ticket(self._next, spot, v); self._next += 1", "            self.tickets[t.id] = t", "            return t", "", "    def unpark(self, ticket_id, now=None):", "        with self.lock:", "            t = self.tickets.pop(ticket_id)      # KeyError = invalid or reused ticket", "            t.spot.vehicle = None", "            return self.pricing.fee((now or time.time()) - t.entry)"])'],
+  ["3 Code",codeBlk(["import math, threading, time", "from enum import IntEnum", "", "class Size(IntEnum):", "    SMALL = 1; MEDIUM = 2; LARGE = 3", "", "class Vehicle:", "    def __init__(self, plate, size): self.plate, self.size = plate, size", "", "class Spot:", "    def __init__(self, spot_id, size):", "        self.id, self.size, self.vehicle = spot_id, size, None", "    def fits(self, v): return self.vehicle is None and self.size >= v.size", "", "class Ticket:", "    def __init__(self, tid, spot, vehicle):", "        self.id, self.spot, self.vehicle, self.entry = tid, spot, vehicle, time.time()", "", "class HourlyPricing:                             # strategy: swap for weekend, EV...", "    def __init__(self, rate): self.rate = rate", "    def fee(self, seconds): return max(1, math.ceil(seconds / 3600)) * self.rate", "", "class ParkingLot:", "    def __init__(self, spots, pricing):", "        self.spots, self.pricing = spots, pricing", "        self.tickets, self.lock, self._next = {}, threading.Lock(), 1", "", "    def park(self, v):", "        with self.lock:                          # two cars must not get one spot", "            fits = [s for s in self.spots if s.fits(v)]", "            if not fits: raise RuntimeError(\"lot full\")", "            spot = min(fits, key=lambda s: s.size)      # smallest spot that fits", "            spot.vehicle = v", "            t = Ticket(self._next, spot, v); self._next += 1", "            self.tickets[t.id] = t", "            return t", "", "    def unpark(self, ticket_id, now=None):", "        with self.lock:", "            t = self.tickets.pop(ticket_id)      # KeyError = invalid or reused ticket", "            t.spot.vehicle = None", "            return self.pricing.fee((now or time.time()) - t.entry)"])],
   ["4 Patterns used",
     ul(["<b>Strategy</b>: pricing is injected; add weekend or EV pricing as a new class.","<b>Lock</b>: <code>park</code> checks and assigns inside one critical section.","Enum <code>Size</code> with ordering gives &ldquo;fits&rdquo; as a simple comparison."])],
   ["5 Edge cases and extensions",
@@ -6546,7 +7077,7 @@ DOCS.push(
       ["<code>Controller</code>","list of elevators","<code>request(floor, direction)</code> picks a car"],
       ["Request","floor, direction","&mdash;"]
     ])],
-  ["3 Code",'codeBlk(["class Elevator:", "    def __init__(self, eid):", "        self.id, self.floor, self.dir, self.stops = eid, 0, 0, set()   # dir: 1 up, -1 down, 0 idle", "", "    def add_stop(self, floor): self.stops.add(floor)", "", "    def step(self):                              # one tick = move one floor", "        self.stops.discard(self.floor)           # doors open for this floor", "        if not self.stops:", "            self.dir = 0; return", "        ahead = [f for f in self.stops if (f - self.floor) * self.dir > 0]", "        if not ahead:                            # nothing ahead: turn toward nearest", "            nearest = min(self.stops, key=lambda f: abs(f - self.floor))", "            self.dir = 1 if nearest > self.floor else -1", "        self.floor += self.dir                   # keeps going until stops run out (SCAN)", "", "class Controller:", "    def __init__(self, n): self.cars = [Elevator(i) for i in range(n)]", "", "    def request(self, floor, direction):         # hall button press", "        def cost(e):", "            dist = abs(e.floor - floor)", "            on_the_way = e.dir == 0 or (e.dir == direction and (floor - e.floor) * e.dir >= 0)", "            return dist if on_the_way else dist + 100", "        car = min(self.cars, key=cost)", "        car.add_stop(floor)", "        return car.id"])'],
+  ["3 Code",codeBlk(["class Elevator:", "    def __init__(self, eid):", "        self.id, self.floor, self.dir, self.stops = eid, 0, 0, set()   # dir: 1 up, -1 down, 0 idle", "", "    def add_stop(self, floor): self.stops.add(floor)", "", "    def step(self):                              # one tick = move one floor", "        self.stops.discard(self.floor)           # doors open for this floor", "        if not self.stops:", "            self.dir = 0; return", "        ahead = [f for f in self.stops if (f - self.floor) * self.dir > 0]", "        if not ahead:                            # nothing ahead: turn toward nearest", "            nearest = min(self.stops, key=lambda f: abs(f - self.floor))", "            self.dir = 1 if nearest > self.floor else -1", "        self.floor += self.dir                   # keeps going until stops run out (SCAN)", "", "class Controller:", "    def __init__(self, n): self.cars = [Elevator(i) for i in range(n)]", "", "    def request(self, floor, direction):         # hall button press", "        def cost(e):", "            dist = abs(e.floor - floor)", "            on_the_way = e.dir == 0 or (e.dir == direction and (floor - e.floor) * e.dir >= 0)", "            return dist if on_the_way else dist + 100", "        car = min(self.cars, key=cost)", "        car.add_stop(floor)", "        return car.id"])],
   ["4 Algorithm in words",
     ul(["<b>SCAN (the &ldquo;elevator algorithm&rdquo;)</b>: keep going in the current direction, serving stops on the way, reverse only when nothing is ahead.","<b>Dispatch</b>: cost = distance, plus a big penalty if the car is moving away or in the wrong direction; choose the cheapest.","Idle cars take the nearest request."])],
   ["5 Patterns used",
@@ -6568,7 +7099,7 @@ DOCS.push(
       ["<code>Idle</code> (state)","&mdash;","insert &rarr; go to HasMoney; select &rarr; &ldquo;insert money first&rdquo;"],
       ["<code>HasMoney</code> (state)","&mdash;","insert adds; select checks stock and price, dispenses, returns to Idle"]
     ])],
-  ["4 Code",'codeBlk(["class Idle:", "    def insert(self, m, cents):", "        m.balance += cents; m.state = HasMoney(); return \"ok\"", "    def select(self, m, item):", "        return \"insert money first\"", "", "class HasMoney:", "    def insert(self, m, cents):", "        m.balance += cents; return \"ok\"", "    def select(self, m, item):", "        if m.stock.get(item, 0) == 0: return \"sold out\"", "        price = m.prices[item]", "        if m.balance < price: return \"need %d more\" % (price - m.balance)", "        m.stock[item] -= 1", "        change, m.balance, m.state = m.balance - price, 0, Idle()", "        return \"dispensed %s, change %d\" % (item, change)", "", "class VendingMachine:", "    def __init__(self, stock, prices):", "        self.stock, self.prices, self.balance, self.state = stock, prices, 0, Idle()", "    def insert(self, cents): return self.state.insert(self, cents)   # delegate", "    def select(self, item):  return self.state.select(self, item)"])'+'<p>Each state decides what an action means. No <code>if state == &hellip;</code> anywhere in the machine.</p>'],
+  ["4 Code",codeBlk(["class Idle:", "    def insert(self, m, cents):", "        m.balance += cents; m.state = HasMoney(); return \"ok\"", "    def select(self, m, item):", "        return \"insert money first\"", "", "class HasMoney:", "    def insert(self, m, cents):", "        m.balance += cents; return \"ok\"", "    def select(self, m, item):", "        if m.stock.get(item, 0) == 0: return \"sold out\"", "        price = m.prices[item]", "        if m.balance < price: return \"need %d more\" % (price - m.balance)", "        m.stock[item] -= 1", "        change, m.balance, m.state = m.balance - price, 0, Idle()", "        return \"dispensed %s, change %d\" % (item, change)", "", "class VendingMachine:", "    def __init__(self, stock, prices):", "        self.stock, self.prices, self.balance, self.state = stock, prices, 0, Idle()", "    def insert(self, cents): return self.state.insert(self, cents)   # delegate", "    def select(self, item):  return self.state.select(self, item)"])+'<p>Each state decides what an action means. No <code>if state == &hellip;</code> anywhere in the machine.</p>'],
   ["5 Edge cases and extensions",
     ul(["Exact change, refunds, cancel button: a <code>cancel</code> method on each state.","Money in integer cents (never floats).","Sold out: check before taking the money, or refund.","Add <code>OutOfOrder</code> as one new class; existing states stay untouched.","Payment methods (cash, card) as a strategy."])],
   ["Say it",
@@ -6582,7 +7113,7 @@ DOCS.push(
   ["2 Idea",
     ul(["<b>Hash map</b> from key to node: find any entry in O(1).","<b>Doubly linked list</b> ordered by recency: front = newest, back = oldest. Move to front or remove from the back in O(1) because we hold the node.","<b>Sentinel</b> head and tail nodes remove all the empty and one-element special cases."])],
   ["3 Animation",vis("lrulist")],
-  ["4 Code",'codeBlk(["class Node:", "    def __init__(self, k=None, v=None):", "        self.k, self.v, self.prev, self.next = k, v, None, None", "", "class LRUCache:", "    def __init__(self, capacity):", "        self.cap, self.map = capacity, {}", "        self.head, self.tail = Node(), Node()    # sentinels: no edge cases", "        self.head.next, self.tail.prev = self.tail, self.head", "", "    def _unlink(self, n):", "        n.prev.next, n.next.prev = n.next, n.prev", "", "    def _push_front(self, n):                    # front = most recently used", "        n.next, n.prev = self.head.next, self.head", "        self.head.next.prev = n", "        self.head.next = n", "", "    def get(self, k):", "        if k not in self.map: return -1", "        n = self.map[k]", "        self._unlink(n); self._push_front(n)", "        return n.v", "", "    def put(self, k, v):", "        if k in self.map:", "            n = self.map[k]; n.v = v", "            self._unlink(n)", "        else:", "            if len(self.map) == self.cap:", "                lru = self.tail.prev             # least recently used", "                self._unlink(lru); del self.map[lru.k]", "            n = self.map[k] = Node(k, v)", "        self._push_front(n)"])'],
+  ["4 Code",codeBlk(["class Node:", "    def __init__(self, k=None, v=None):", "        self.k, self.v, self.prev, self.next = k, v, None, None", "", "class LRUCache:", "    def __init__(self, capacity):", "        self.cap, self.map = capacity, {}", "        self.head, self.tail = Node(), Node()    # sentinels: no edge cases", "        self.head.next, self.tail.prev = self.tail, self.head", "", "    def _unlink(self, n):", "        n.prev.next, n.next.prev = n.next, n.prev", "", "    def _push_front(self, n):                    # front = most recently used", "        n.next, n.prev = self.head.next, self.head", "        self.head.next.prev = n", "        self.head.next = n", "", "    def get(self, k):", "        if k not in self.map: return -1", "        n = self.map[k]", "        self._unlink(n); self._push_front(n)", "        return n.v", "", "    def put(self, k, v):", "        if k in self.map:", "            n = self.map[k]; n.v = v", "            self._unlink(n)", "        else:", "            if len(self.map) == self.cap:", "                lru = self.tail.prev             # least recently used", "                self._unlink(lru); del self.map[lru.k]", "            n = self.map[k] = Node(k, v)", "        self._push_front(n)"])],
   ["5 Edge cases and extensions",
     ul(["Capacity 0 or 1; updating an existing key (does not grow the cache).","Thread safety: wrap <code>get</code> and <code>put</code> in one lock (get also mutates the list).","TTL expiry: store a timestamp; drop on read or with a sweep.","Other policies (LFU, FIFO): make the eviction policy a strategy.","Python shortcut: <code>collections.OrderedDict</code> with <code>move_to_end</code> and <code>popitem(last=False)</code>; say you know it, but write the list in an interview."])],
   ["Say it",
@@ -6600,7 +7131,7 @@ DOCS.push(
       ["Bank (interface)","&mdash;","<code>check_pin</code>, <code>debit</code>"]
     ])],
   ["3 Animation",vis("chain")],
-  ["4 Code",'codeBlk(["class Dispenser:                                 # chain: 100 -> 50 -> 20", "    def __init__(self, denom, count, nxt=None):", "        self.denom, self.count, self.nxt = denom, count, nxt", "", "    def plan(self, amount, out):                 # decide, do not change stock yet", "        n = min(amount // self.denom, self.count)", "        if n: out[self.denom] = n", "        amount -= n * self.denom", "        return self.nxt.plan(amount, out) if self.nxt else amount", "", "    def commit(self, out):", "        self.count -= out.get(self.denom, 0)", "        if self.nxt: self.nxt.commit(out)", "", "class Atm:", "    def __init__(self, chain, bank):             # bank: object with check_pin, debit", "        self.chain, self.bank = chain, bank", "", "    def withdraw(self, account, pin, amount):", "        if not self.bank.check_pin(account, pin): raise PermissionError(\"bad pin\")", "        notes = {}", "        if self.chain.plan(amount, notes) != 0:", "            raise ValueError(\"cannot dispense that amount\")", "        self.bank.debit(account, amount)         # fails if balance too low", "        self.chain.commit(notes)                 # only now touch the cash", "        return notes"])'+'<p>Order matters: <b>plan</b> the notes (no change), <b>debit</b> the account, then <b>commit</b> the cash. A failure early on leaves everything untouched.</p>'],
+  ["4 Code",codeBlk(["class Dispenser:                                 # chain: 100 -> 50 -> 20", "    def __init__(self, denom, count, nxt=None):", "        self.denom, self.count, self.nxt = denom, count, nxt", "", "    def plan(self, amount, out):                 # decide, do not change stock yet", "        n = min(amount // self.denom, self.count)", "        if n: out[self.denom] = n", "        amount -= n * self.denom", "        return self.nxt.plan(amount, out) if self.nxt else amount", "", "    def commit(self, out):", "        self.count -= out.get(self.denom, 0)", "        if self.nxt: self.nxt.commit(out)", "", "class Atm:", "    def __init__(self, chain, bank):             # bank: object with check_pin, debit", "        self.chain, self.bank = chain, bank", "", "    def withdraw(self, account, pin, amount):", "        if not self.bank.check_pin(account, pin): raise PermissionError(\"bad pin\")", "        notes = {}", "        if self.chain.plan(amount, notes) != 0:", "            raise ValueError(\"cannot dispense that amount\")", "        self.bank.debit(account, amount)         # fails if balance too low", "        self.chain.commit(notes)                 # only now touch the cash", "        return notes"])+'<p>Order matters: <b>plan</b> the notes (no change), <b>debit</b> the account, then <b>commit</b> the cash. A failure early on leaves everything untouched.</p>'],
   ["5 Edge cases and extensions",
     ul(["Amount not payable with the notes left: report it, do not debit.","Card state: idle, card inserted, authenticated (a State machine); lock the card after 3 wrong PINs.","Daily limit and fraud checks as extra steps before the debit.","Concurrency: the bank&rsquo;s debit must be atomic (a conditional update); the ATM serves one customer at a time.","Greedy works for 100/50/20; unusual note sets may need dynamic programming."])],
   ["Say it",
@@ -6614,7 +7145,7 @@ DOCS.push(
   ["2 Idea",
     ul(["Keep a counter per row, per column and for both diagonals.","Player 1 adds +1, player 2 adds &minus;1 to the counters their cell touches.","If any counter reaches &plusmn;N, that player has N in a line. That is O(1) per move."])],
   ["3 Animation",vis("ttt")],
-  ["4 Code",'codeBlk(["class TicTacToe:", "    def __init__(self, n=3):", "        self.n = n", "        self.rows, self.cols = [0] * n, [0] * n", "        self.diag = self.anti = 0", "        self.turn, self.winner, self.moves, self.taken = 1, 0, 0, set()", "", "    def move(self, r, c):", "        if self.winner or (r, c) in self.taken: raise ValueError(\"invalid move\")", "        self.taken.add((r, c)); self.moves += 1", "        d = 1 if self.turn == 1 else -1          # player 1 = +1, player 2 = -1", "        self.rows[r] += d; self.cols[c] += d", "        if r == c: self.diag += d", "        if r + c == self.n - 1: self.anti += d", "        if self.n in (abs(self.rows[r]), abs(self.cols[c]),", "                      abs(self.diag), abs(self.anti)):", "            self.winner = self.turn              # O(1) check, no board scan", "        self.turn = 2 if self.turn == 1 else 1", "        return self.winner", "", "    def is_draw(self): return not self.winner and self.moves == self.n * self.n"])'],
+  ["4 Code",codeBlk(["class TicTacToe:", "    def __init__(self, n=3):", "        self.n = n", "        self.rows, self.cols = [0] * n, [0] * n", "        self.diag = self.anti = 0", "        self.turn, self.winner, self.moves, self.taken = 1, 0, 0, set()", "", "    def move(self, r, c):", "        if self.winner or (r, c) in self.taken: raise ValueError(\"invalid move\")", "        self.taken.add((r, c)); self.moves += 1", "        d = 1 if self.turn == 1 else -1          # player 1 = +1, player 2 = -1", "        self.rows[r] += d; self.cols[c] += d", "        if r == c: self.diag += d", "        if r + c == self.n - 1: self.anti += d", "        if self.n in (abs(self.rows[r]), abs(self.cols[c]),", "                      abs(self.diag), abs(self.anti)):", "            self.winner = self.turn              # O(1) check, no board scan", "        self.turn = 2 if self.turn == 1 else 1", "        return self.winner", "", "    def is_draw(self): return not self.winner and self.moves == self.n * self.n"])],
   ["5 Edge cases and extensions",
     ul(["Out-of-range coordinates: validate and raise.","Draw: <code>moves == N*N</code> with no winner.","Undo: keep a move stack (Command pattern) and reverse the counters.","Computer opponent: minimax (3&times;3) or a heuristic; the player is a strategy.","UI separate from rules: the board class has no printing."])],
   ["Say it",
@@ -6632,7 +7163,7 @@ DOCS.push(
       ["Expense (optional record)","payer, total, shares, date","for history and audit"]
     ])],
   ["3 Animation",vis("ledger")],
-  ["4 Code",'codeBlk(["from collections import defaultdict", "", "class Ledger:", "    def __init__(self): self.net = defaultdict(int)   # cents; + is owed to them", "", "    def add_expense(self, payer, cents, people):      # equal split, no lost cents", "        base, extra = divmod(cents, len(people))", "        for i, p in enumerate(people):", "            self.net[p] -= base + (1 if i < extra else 0)", "        self.net[payer] += cents", "", "    def settle_up(self):                              # fewest-ish transfers", "        cred = sorted(([v, p] for p, v in self.net.items() if v > 0), reverse=True)", "        debt = sorted(([-v, p] for p, v in self.net.items() if v < 0), reverse=True)", "        out, i, j = [], 0, 0", "        while i < len(debt) and j < len(cred):", "            pay = min(debt[i][0], cred[j][0])", "            out.append((debt[i][1], cred[j][1], pay))   # (from, to, cents)", "            debt[i][0] -= pay; cred[j][0] -= pay", "            if debt[i][0] == 0: i += 1", "            if cred[j][0] == 0: j += 1", "        return out"])'+'<p>Balances: positive means others owe them; negative means they owe. They always sum to zero. <code>divmod</code> hands the leftover cents to the first few people, so shares add up exactly.</p>'],
+  ["4 Code",codeBlk(["from collections import defaultdict", "", "class Ledger:", "    def __init__(self): self.net = defaultdict(int)   # cents; + is owed to them", "", "    def add_expense(self, payer, cents, people):      # equal split, no lost cents", "        base, extra = divmod(cents, len(people))", "        for i, p in enumerate(people):", "            self.net[p] -= base + (1 if i < extra else 0)", "        self.net[payer] += cents", "", "    def settle_up(self):                              # fewest-ish transfers", "        cred = sorted(([v, p] for p, v in self.net.items() if v > 0), reverse=True)", "        debt = sorted(([-v, p] for p, v in self.net.items() if v < 0), reverse=True)", "        out, i, j = [], 0, 0", "        while i < len(debt) and j < len(cred):", "            pay = min(debt[i][0], cred[j][0])", "            out.append((debt[i][1], cred[j][1], pay))   # (from, to, cents)", "            debt[i][0] -= pay; cred[j][0] -= pay", "            if debt[i][0] == 0: i += 1", "            if cred[j][0] == 0: j += 1", "        return out"])+'<p>Balances: positive means others owe them; negative means they owe. They always sum to zero. <code>divmod</code> hands the leftover cents to the first few people, so shares add up exactly.</p>'],
   ["5 Edge cases and extensions",
     ul(["Never use floats for money: integer cents.","Rounding: spread the remainder (as above) so the total is exact.","Groups: one ledger per group; a person-to-person balance matrix if the app needs it.","Settle-up algorithm: match the biggest debtor with the biggest creditor; it is simple and good enough. The true minimum is NP-hard, so say &ldquo;at most N&minus;1 payments&rdquo;.","Currencies, recurring expenses, deleting an expense (reverse its entries)."])],
   ["Say it",
@@ -6651,7 +7182,7 @@ DOCS.push(
       ["<code>Logger</code>","name, level, handlers","<code>log()</code>, <code>info()</code>, <code>error()</code>; registry by name"]
     ])],
   ["3 Animation",vis("logs")],
-  ["4 Code",'codeBlk(["from enum import IntEnum", "", "class Level(IntEnum):", "    DEBUG = 10; INFO = 20; WARN = 30; ERROR = 40", "", "class Handler:                                   # strategy: where lines go", "    def __init__(self, level=Level.DEBUG): self.level = level", "    def emit(self, line): raise NotImplementedError", "", "class ConsoleHandler(Handler):", "    def emit(self, line): print(line)", "", "class MemoryHandler(Handler):", "    def __init__(self, level=Level.DEBUG): super().__init__(level); self.lines = []", "    def emit(self, line): self.lines.append(line)", "", "class Logger:", "    _registry = {}                               # one logger per name", "", "    @classmethod", "    def get(cls, name):", "        if name not in cls._registry: cls._registry[name] = Logger(name)", "        return cls._registry[name]", "", "    def __init__(self, name):", "        self.name, self.level, self.handlers = name, Level.INFO, []", "", "    def log(self, level, msg):", "        if level < self.level: return            # cheap filter first", "        line = \"%s %s: %s\" % (level.name, self.name, msg)", "        for h in self.handlers:", "            if level >= h.level: h.emit(line)", "", "    def info(self, msg):  self.log(Level.INFO, msg)", "    def error(self, msg): self.log(Level.ERROR, msg)"])'],
+  ["4 Code",codeBlk(["from enum import IntEnum", "", "class Level(IntEnum):", "    DEBUG = 10; INFO = 20; WARN = 30; ERROR = 40", "", "class Handler:                                   # strategy: where lines go", "    def __init__(self, level=Level.DEBUG): self.level = level", "    def emit(self, line): raise NotImplementedError", "", "class ConsoleHandler(Handler):", "    def emit(self, line): print(line)", "", "class MemoryHandler(Handler):", "    def __init__(self, level=Level.DEBUG): super().__init__(level); self.lines = []", "    def emit(self, line): self.lines.append(line)", "", "class Logger:", "    _registry = {}                               # one logger per name", "", "    @classmethod", "    def get(cls, name):", "        if name not in cls._registry: cls._registry[name] = Logger(name)", "        return cls._registry[name]", "", "    def __init__(self, name):", "        self.name, self.level, self.handlers = name, Level.INFO, []", "", "    def log(self, level, msg):", "        if level < self.level: return            # cheap filter first", "        line = \"%s %s: %s\" % (level.name, self.name, msg)", "        for h in self.handlers:", "            if level >= h.level: h.emit(line)", "", "    def info(self, msg):  self.log(Level.INFO, msg)", "    def error(self, msg): self.log(Level.ERROR, msg)"])],
   ["5 Patterns used",
     ul(["<b>Strategy / Observer</b>: handlers are interchangeable destinations that every line is sent to.","<b>Registry (a kind of singleton)</b>: <code>Logger.get(name)</code> returns the same instance.","<b>Chain</b> (optional): logger &rarr; parent logger, as in real libraries."])],
   ["6 Edge cases and extensions",
@@ -7115,6 +7646,7 @@ var DGROUPS=[
   ["Data & consistency",["sd-data","sd-v-dynamo","sd-cap","sd-consistency","sd-search","sd-pipeline","sd-count"]],
   ["Messaging, APIs & networking",["sd-async","sd-v-queue","sd-api","sd-http","sd-net","sd-proto"]],
   ["Modularity & splitting services",["sd-modular","sd-split","sd-micro"]],
+  ["Data structures: what you can do",["sd-ds-linear","sd-ds-hash","sd-ds-heap","sd-ds-bst","sd-ds-btree","sd-ds-trie","sd-ds-range","sd-ds-uf","sd-ds-graph"]],
   ["Web, auth & network",["sd-web","sd-auth","sd-tls","sd-netdesign","sd-security"]],
   ["Reliability & deployment",["sd-reliability","sd-retry","sd-v-fault","sd-v-region","sd-v-bg","sd-v-eks","sd-arch","sd-v-qps"]],
   ["Specialised systems",["sd-geo","sd-video","sd-upload"]],
@@ -7124,7 +7656,7 @@ var DGROUPS=[
   ["Put it together",["sd-structures","sd-classics"]]
 ];
 var SUGGEST=["binary search","reverse a string","hash map","sort by key","itertools","functools","lru_cache","closure","decorator","generator","lambda","try catch","bfs","heap","two pointers","type check"];
-var DSUGGEST=["monolith to microservices","modular monolith","strangler fig","URL shortener","news feed","chat","SOLID","design patterns","parking lot","LRU cache","CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
+var DSUGGEST=["B-tree","B+ tree","AVL tree","heap","trie","union find","segment tree","BFS DFS","hash map","monolith to microservices","modular monolith","strangler fig","URL shortener","news feed","chat","SOLID","design patterns","parking lot","LRU cache","CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
 var GIST={
 "sd-approach":["Clarify requirements and scale first","Estimate QPS, storage and bandwidth","Draw boxes, then deep-dive the bottleneck"],
 "sd-numbers":["Memory 100 ns · SSD 100 \u00b5s · same-zone hop 0.5 ms","Disk seek 10 ms · cross-continent 150 ms","1 M requests a day is about 12 QPS"],
@@ -7152,6 +7684,15 @@ var GIST={
 "sd-net":["HTTP/2 multiplexes streams on one connection","HTTP/3 uses QUIC to avoid TCP stalls","gRPC = HTTP/2 + protobuf, with streaming"],
 "sd-proto":["Field numbers are forever: never reuse","Add fields freely; reserve removed ones","Compact binary: field key + varint or length"],
 "sd-modular":["Cohesion, coupling, one owner per table","Cut by business capability, not by layer","Enforce boundaries in CI before any network"],
+"sd-ds-linear":["Array: index fast, insert in the middle slow","Linked list: rewire pointers, no jumping","Stack is LIFO, queue is FIFO"],
+"sd-ds-hash":["Hash the key, jump to the bucket","Collisions chain or probe; resize doubles","O(1) average, no ordering"],
+"sd-ds-heap":["Min or max at the root in O(1)","Push sifts up, pop sifts down","Top-k, schedulers, Dijkstra"],
+"sd-ds-bst":["Left smaller, right larger","AVL rotates to keep height at log n","Use when you need order and ranges"],
+"sd-ds-btree":["Wide pages: 3 or 4 reads for millions of rows","Overflow splits and pushes the median up","B+ tree: leaves linked for range scans"],
+"sd-ds-trie":["One node per letter, shared prefixes","Cost is word length, not dictionary size","Autocomplete and prefix search"],
+"sd-ds-range":["Range sums with updates in O(log n)","Fenwick: short; segment tree: any operation","No updates? Use prefix sums"],
+"sd-ds-uf":["Find the root, merge two sets","Path compression plus union by size","Components, cycles, Kruskal"],
+"sd-ds-graph":["BFS: queue, shortest hops","DFS: stack, cycles and backtracking","Topological sort orders dependencies"],
 "sd-split":["Split for a measured pain, not fashion","Strangler fig: proxy, shadow, move data, shift %","Split the database: IDs, read models, saga + outbox"],
 "sd-micro":["Gateway, discovery, mesh, tracing","Start with a modular monolith","Database per service; saga across them"],
 "sd-security":["authN = who, authZ = what; check every request","TLS everywhere; hash passwords with bcrypt or Argon2","Short-lived JWT, rate limits, WAF"],
