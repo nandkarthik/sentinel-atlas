@@ -4992,6 +4992,27 @@ VIS.chat=function(){
   return SV(310,"Chat message path: sender gateway, chat service with session lookup and storage, recipient gateway",b);
 };
 
+VIS.modules=function(){
+  var P=10;
+  var b='<rect class="nd" x="20" y="12" width="600" height="190" rx="8"/>'+T(36,34,"One deployable","s");
+  b+=B(40,56,120,50,"Orders")+B(200,56,120,50,"Payments")+B(360,56,120,50,"Catalog")+B(520,56,80,50,"Users");
+  b+=B(40,138,120,40,"orders tables","","ok")+B(200,138,120,40,"payment tables","","ok")+B(360,138,120,40,"catalog tables","","ok")+B(520,138,80,40,"user tables","","ok");
+  b+=L("M100 106 L100 138")+L("M260 106 L260 138")+L("M420 106 L420 138")+L("M560 106 L560 138");
+  b+=L("M160 81 L200 81","d")+L("M320 81 L360 81","d");
+  b+=seg("M160 81 L200 81",6,20,P,"acc")+seg("M320 81 L360 81",40,54,P,"acc");
+  b+=T(20,226,"Modules talk only through public interfaces (dashed).","s")+T(20,242,"Each module owns its tables. No one else reads them.","s");
+  return SV(256,"Modular monolith: modules call each other through interfaces and own their own tables",b);
+};
+VIS.strangler=function(){
+  var P=12;
+  var b=B(20,95,100,50,"Clients")+B(190,95,130,50,"Proxy","routes by rule","acc")+B(440,20,170,56,"Monolith","old orders code")+B(440,164,170,56,"Orders service","new","ok");
+  var m="M320 120 L380 120 L380 48 L440 48",n="M320 120 L380 120 L380 192 L440 192";
+  b+=L("M120 120 L190 120")+L(m)+L(n);
+  b+=seg("M120 120 L190 120",2,10,P,"")+seg(m,12,28,P,"")+seg("M120 120 L190 120",32,40,P,"")+seg(m,42,56,P,"");
+  b+=seg("M120 120 L190 120",60,68,P,"")+seg(n,70,88,P,"ok")+seg("M120 120 L190 120",78,86,P,"")+seg(n,88,98,P,"ok");
+  b+=gt(T(20,250,"1  All traffic still goes to the monolith.","s"),0,56,P)+gt(T(20,250,"2  A growing share goes to the new service. Rollback is one rule.","s"),58,98,P);
+  return SV(266,"Strangler fig: a proxy moves traffic from the monolith to a new service step by step",b);
+};
 VIS.classes=function(){
   var P=10;
   var b=B(250,20,140,50,"Order","has many items")+B(40,150,150,50,"OrderItem","owned by Order")+B(450,150,150,50,"Discount","interface")+B(250,150,140,50,"Checkout","uses Discount");
@@ -5740,6 +5761,124 @@ DOCS.push(
       "Pre-signed URLs for private files with short expiry."
     ])]
 ]],
+["sd-modular","Modularity & boundaries","coupling, cohesion, contracts, where to draw lines","modules",[
+  ["What a good boundary looks like",
+    table(["Property","Meaning","Quick test"],[
+      ["High cohesion","Things that change together live together","One feature change touches one module"],
+      ["Low coupling","Callers depend on a small, stable interface","Can I rewrite the inside without touching callers?"],
+      ["Encapsulation","One module owns its data and is its only writer","Does anyone else read or write my tables?"],
+      ["Explicit contract","The interface is written down and versioned","Is there an API or event schema, or only shared code?"],
+      ["One-way dependencies","Arrows point one direction, no cycles","Draw the arrows: any cycle is a design bug"]
+    ])],
+  ["Ways to draw the lines",
+    table(["Cut by","Idea","Watch out"],[
+      ["Business capability","Orders, payments, catalog, shipping: what the business does","Best default; matches how the company talks"],
+      ["Bounded context (DDD)","The same word means different things in different areas: a Customer in Sales is not a Customer in Support","Give each context its own model; translate at the edge"],
+      ["Team (Conway&rsquo;s law)","The system ends up shaped like the org chart","One team should be able to own a module end to end"],
+      ["Rate of change","Volatile rules (pricing, promos) apart from stable ones (ledger)","Do not split things that always change together"],
+      ["Scale or failure profile","Video transcoding and CRUD scale and fail differently","Only when the difference is measured"],
+      ["Technical layer","UI service, logic service, data service","Avoid: every feature crosses all three, so calls are chatty"]
+    ])],
+  ["Inside one module: ports and adapters",
+    ul([
+      "<b>Domain</b> in the middle: rules and entities, no framework or database imports.",
+      "<b>Ports</b> are the interfaces the domain needs (<code>OrderRepository</code>, <code>PaymentGateway</code>).",
+      "<b>Adapters</b> implement them: SQL, REST client, queue. Swap one without touching the domain; fake them in tests.",
+      "The module&rsquo;s <b>public API</b> is a thin facade. Everything else is private."
+    ])],
+  ["Make the boundary real",
+    ul([
+      "Public interface in one package; everything else non-exported (Java modules, Python <code>__all__</code>, Go <code>internal/</code>).",
+      "Lint the dependency rules in CI: ArchUnit, import-linter, dependency-cruiser. A forbidden import fails the build.",
+      "Separate database schema per module with its own credentials, so cross-module SQL fails loudly.",
+      "Modules exchange <b>IDs and small DTOs</b>, not shared entity classes.",
+      "Code owners per module; contract tests on every public interface."
+    ])],
+  ["Say it",
+    ul([
+      "&ldquo;I draw boundaries around business capabilities, so a change stays inside one module.&rdquo;",
+      "&ldquo;Each module owns its data and exposes a small interface; dependencies point one way.&rdquo;",
+      "&ldquo;I enforce that in CI, so the boundary is real before it ever becomes a network call.&rdquo; (Next: <a href='#sd-split'>splitting into services</a>.)"
+    ])]
+]],
+
+["sd-split","Monolith to services","when to split, where to cut, strangler fig, splitting the data","strangler",[
+  ["Should you split at all?",
+    table(["Good reasons","Bad reasons"],[
+      ["Teams block each other on one deploy or one release train","&ldquo;The code is messy&rdquo; (fix the modules first)"],
+      ["One part needs very different scaling","&ldquo;Microservices are modern&rdquo;"],
+      ["One part needs isolated failure (checkout must survive search going down)","Small team, unclear domain, boundaries not yet known"],
+      ["Compliance scope (keep card data in one small service)","No one on call or no deploy automation yet"],
+      ["Build and test time has become the bottleneck","Splitting everything at once"]
+    ])+'<p>Split for a <b>measured pain</b>. You trade function calls for network calls: latency, partial failure, versioning, tracing, harder local setup, and no easy transactions.</p>'],
+  ["Step 0: a modular monolith first",
+    ul([
+      "Draw the modules, put interfaces between them, and give each its own schema (see <a href='#sd-modular'>modularity</a>).",
+      "If you cannot keep modules apart <i>inside</i> one process, you will not keep services apart across a network.",
+      "Often this is enough. If you do split later, each module is already a clean seam."
+    ])],
+  ["Where to cut: an e-commerce example",
+    table(["Service","Owns (its data)","Talks to","Why separate"],[
+      ["Catalog","Products, prices, search index","Publishes <code>ProductChanged</code>","Read-heavy; scales with browsing"],
+      ["Cart","Carts in a fast key-value store","Calls Catalog for price","Short-lived data; very different storage"],
+      ["Orders","Orders, order lines, status","Calls Payments; emits <code>OrderPlaced</code>","Core workflow; owns the order lifecycle"],
+      ["Payments","Payment attempts, ledger","Payment provider; emits <code>PaymentCaptured</code>","Compliance scope; strict correctness"],
+      ["Inventory","Stock counts, reservations","Listens to <code>OrderPlaced</code>","Contention hot spot; own consistency rules"],
+      ["Notifications","Templates, delivery log","Listens to events only","Pure consumer; failure must not block orders"]
+    ])],
+  ["Which piece to extract first",
+    table(["Extract","Why"],[
+      ["<b>First:</b> edge pieces with few inbound calls (notifications, image processing, search, recommendations, reporting)","Loose coupling, clear owner, easy to roll back, little shared data"],
+      ["<b>Next:</b> a part with real scaling or release pressure (catalog, cart)","The pain you can measure justifies the cost"],
+      ["<b>Later:</b> the tangled transactional core (orders, inventory, pricing)","Joins and transactions everywhere; split only after the data is untangled"],
+      ["<b>Maybe never:</b> things that always change together","Splitting them just adds network calls to every change"]
+    ])],
+  ["Strangler fig, step by step",
+    ol([
+      "<b>Pick a seam:</b> one capability with a clear interface, such as order history or notifications.",
+      "<b>Put a facade in front</b> (proxy or API gateway) so callers use one address and you control routing.",
+      "<b>Build the new service</b> behind it. The monolith stays the live path.",
+      "<b>Shadow traffic:</b> send copies of real requests to the new service and compare answers. Nobody sees its replies yet.",
+      "<b>Move the data:</b> backfill, then keep it in sync (change data capture or events) until the new service is the owner.",
+      "<b>Shift traffic by percent</b> with a flag (1%, 10%, 50%, 100%) while watching errors and latency.",
+      "<b>Delete</b> the old code and tables. Repeat with the next seam."
+    ])+'<p>Rollback at every step is flipping the routing rule back. No big-bang rewrite, and the system keeps shipping throughout.</p>'],
+  ["Splitting the database (the hard part)",
+    table(["Problem","What to do"],[
+      ["All modules read the same tables","Schema per module in the same database first, then a database per service"],
+      ["Foreign keys across modules","Store the other side&rsquo;s <b>ID</b> only; check it through an API or an event"],
+      ["Joins across modules","API composition in a gateway or BFF, or a local read model kept up to date by events (CQRS)"],
+      ["One transaction touching two services","<b>Saga</b>: local steps plus compensations; use the <b>transactional outbox</b> so state change and event publish are atomic"],
+      ["Reference data needed everywhere (currencies, countries)","Copy it into each service through events, or a small shared read-only service"],
+      ["Reports that join everything","Stream changes (CDC) into a warehouse"]
+    ])+'<p><b>Avoid dual writes</b> (write the database, then publish the event in separate steps): a crash in between loses or duplicates the event. Use the outbox or CDC.</p>'],
+  ["How the services talk",
+    table(["Style","Use for","Cost"],[
+      ["Sync call (REST, gRPC)","A question that needs an answer now (price, auth check)","Caller depends on callee being up; set timeouts, retries with backoff, circuit breaker"],
+      ["Async event or queue","Facts that already happened (<code>OrderPlaced</code>); fan-out; work that can wait","Eventual consistency; consumers must be idempotent; harder to trace"]
+    ])+ul([
+      "Calls for <b>queries</b>, events for <b>facts</b>. Keep sync chains to two or three hops.",
+      "Contracts are backward compatible: add fields, never repurpose or remove them. Use consumer-driven contract tests.",
+      "Every request carries a trace ID and an idempotency key."
+    ])],
+  ["Distributed monolith: the smells",
+    table(["Smell","Why it hurts","Fix"],[
+      ["Services must deploy together","You got the cost without the benefit","Fix the contracts and versioning; or merge them back"],
+      ["Shared database","Any schema change breaks several teams","One owner per table; others use the API"],
+      ["Chatty calls (one page makes 30 calls)","Latency adds up; one slow service slows all","Merge the chatty pair, add a read model, or batch"],
+      ["Long sync chain A, B, C, D","Availability multiplies: four services at 99.9% each give about 99.6%","Make steps async or cut the chain"],
+      ["Shared library with business logic","Forces lockstep upgrades","Share only thin clients and schemas"],
+      ["No tracing or central logs","Nobody can find the failing hop","Add tracing and a correlation ID before splitting more"]
+    ])],
+  ["Say it",
+    ul([
+      "&ldquo;First, what is the pain? Deploy contention, uneven scale, or failure isolation. I would not split without one.&rdquo;",
+      "&ldquo;I make the monolith modular first, then extract the loosest seam with a strangler fig: proxy, shadow traffic, move data, shift by percent.&rdquo;",
+      "&ldquo;Each service owns its data. Joins become API composition or read models; cross-service transactions become sagas with an outbox.&rdquo;",
+      "&ldquo;Queries are calls, facts are events, and I add tracing, timeouts and idempotency before the second split.&rdquo;"
+    ])]
+]],
+
 ["sd-micro","Microservices plumbing","gateway, discovery, mesh, patterns","",[
   ["The pieces",
     table(["Piece","Job","Examples"],[
@@ -5758,6 +5897,7 @@ DOCS.push(
     ])+ul([
       "Costs of microservices: network failures, distributed transactions, harder debugging, more to operate.",
       "<b>Database per service</b>; talk through APIs and events, never by sharing tables.",
+      "Deep dive: <a href='#sd-modular'>modularity</a> and <a href='#sd-split'>how to split a monolith</a>.",
       "Patterns: <b>BFF</b> (a backend per client type), <b>strangler fig</b> (move pieces out of a monolith slowly), <b>sidecar</b>, <b>saga</b> for cross-service workflows."
     ])]
 ]],
@@ -6973,7 +7113,8 @@ var DGROUPS=[
   ["Start here",["sd-approach","sd-numbers","sd-pick","sd-blocks"]],
   ["Scale & traffic",["sd-v-scale","sd-v-lb","sd-v-auto","sd-traffic","sd-v-cdn","sd-v-cache","sd-algos","sd-v-rate"]],
   ["Data & consistency",["sd-data","sd-v-dynamo","sd-cap","sd-consistency","sd-search","sd-pipeline","sd-count"]],
-  ["Messaging, APIs & networking",["sd-async","sd-v-queue","sd-api","sd-http","sd-net","sd-proto","sd-micro"]],
+  ["Messaging, APIs & networking",["sd-async","sd-v-queue","sd-api","sd-http","sd-net","sd-proto"]],
+  ["Modularity & splitting services",["sd-modular","sd-split","sd-micro"]],
   ["Web, auth & network",["sd-web","sd-auth","sd-tls","sd-netdesign","sd-security"]],
   ["Reliability & deployment",["sd-reliability","sd-retry","sd-v-fault","sd-v-region","sd-v-bg","sd-v-eks","sd-arch","sd-v-qps"]],
   ["Specialised systems",["sd-geo","sd-video","sd-upload"]],
@@ -6983,7 +7124,7 @@ var DGROUPS=[
   ["Put it together",["sd-structures","sd-classics"]]
 ];
 var SUGGEST=["binary search","reverse a string","hash map","sort by key","itertools","functools","lru_cache","closure","decorator","generator","lambda","try catch","bfs","heap","two pointers","type check"];
-var DSUGGEST=["URL shortener","news feed","chat","SOLID","design patterns","parking lot","LRU cache","CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
+var DSUGGEST=["monolith to microservices","modular monolith","strangler fig","URL shortener","news feed","chat","SOLID","design patterns","parking lot","LRU cache","CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
 var GIST={
 "sd-approach":["Clarify requirements and scale first","Estimate QPS, storage and bandwidth","Draw boxes, then deep-dive the bottleneck"],
 "sd-numbers":["Memory 100 ns · SSD 100 \u00b5s · same-zone hop 0.5 ms","Disk seek 10 ms · cross-continent 150 ms","1 M requests a day is about 12 QPS"],
@@ -7010,6 +7151,8 @@ var GIST={
 "sd-http":["GET read \u00b7 POST create \u00b7 PUT replace \u00b7 PATCH change","2xx ok \u00b7 3xx moved \u00b7 4xx you \u00b7 5xx us","Safe and idempotent decide what you can retry"],
 "sd-net":["HTTP/2 multiplexes streams on one connection","HTTP/3 uses QUIC to avoid TCP stalls","gRPC = HTTP/2 + protobuf, with streaming"],
 "sd-proto":["Field numbers are forever: never reuse","Add fields freely; reserve removed ones","Compact binary: field key + varint or length"],
+"sd-modular":["Cohesion, coupling, one owner per table","Cut by business capability, not by layer","Enforce boundaries in CI before any network"],
+"sd-split":["Split for a measured pain, not fashion","Strangler fig: proxy, shadow, move data, shift %","Split the database: IDs, read models, saga + outbox"],
 "sd-micro":["Gateway, discovery, mesh, tracing","Start with a modular monolith","Database per service; saga across them"],
 "sd-security":["authN = who, authZ = what; check every request","TLS everywhere; hash passwords with bcrypt or Argon2","Short-lived JWT, rate limits, WAF"],
 "sd-retry":["Retry only transient errors: 408, 429, 502, 503, 504","Exponential backoff + full jitter; honor Retry-After","One retry layer, a budget, idempotency keys"],
