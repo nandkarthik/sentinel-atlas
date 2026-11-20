@@ -651,6 +651,543 @@ var CARDS=[
     `],
   ],
 }],
+["generators","Generators &amp; yield","lazy sequences, yield, pipelines",{
+  python:[
+    ["yield basics",`
+      def countdown(n):
+          while n > 0:
+              yield n  # pause here and hand n to the caller; resume on the next next()
+              n -= 1
+
+      g = countdown(3)  # nothing runs yet -- calling creates a generator object
+      next(g)  # 3 -- runs up to the first yield
+      list(g)  # [2, 1] -- the rest. A generator is single-use
+      next(g)  # raises StopIteration -- exhausted (for loops catch this for you)
+      for x in countdown(3): print(x)  # 3 2 1
+    `],
+    ["Generator expressions & laziness",`
+      squares = (x * x for x in range(10**9))  # parentheses = lazy, almost no memory
+      next(squares)  # 0
+      sum(x * x for x in range(1000))  # the extra () can go when it is the only argument
+      any(x > 10 for x in range(10**9))  # short-circuits: stops at the first True
+      [x * x for x in range(5)]  # square brackets build the whole list in memory
+
+      g = (x for x in range(3))
+      list(g)  # [0, 1, 2]
+      list(g)  # [] -- already consumed
+    `],
+    ["Infinite sequences & pipelines",`
+      from itertools import islice
+
+      def naturals():
+          n = 0
+          while True:  # infinite is fine: values are produced on demand
+              yield n
+              n += 1
+
+      def evens(src):
+          for x in src:
+              if x % 2 == 0: yield x
+
+      list(islice(evens(naturals()), 5))  # [0, 2, 4, 6, 8] -- each item flows through the chain
+
+      def fib():
+          a, b = 0, 1
+          while True:
+              yield a
+              a, b = b, a + b
+
+      def read_lines(path):
+          with open(path) as f:
+              for line in f: yield line.rstrip()  # one line in memory at a time
+    `],
+    ["yield from & send",`
+      def inorder(node):  # delegate to a sub-generator with yield from
+          if node:
+              yield from inorder(node.left)
+              yield node.val
+              yield from inorder(node.right)
+
+      def running_avg():  # send() pushes a value INTO the generator
+          total = n = 0
+          avg = None
+          while True:
+              x = yield avg  # gives avg out, and receives what send() passed in
+              total += x; n += 1; avg = total / n
+
+      g = running_avg(); next(g)  # "prime" it: run to the first yield
+      g.send(10)  # 10.0
+      g.send(20)  # 15.0
+      g.close()  # stop it (GeneratorExit is raised inside)
+
+      def f():
+          yield 1
+          return "done"  # the return value travels in StopIteration.value
+    `],
+    ["Iterator protocol & gotchas",`
+      class Countdown:  # the same thing by hand: __iter__ and __next__
+          def __init__(self, n): self.n = n
+          def __iter__(self): return self
+          def __next__(self):
+              if self.n <= 0: raise StopIteration
+              self.n -= 1
+              return self.n + 1
+
+      # generators ARE iterators: iter(g) is g
+      # len(g) and g[0] fail -- use list(g) or islice
+      # single pass: need it twice? make a new generator (or list it)
+      # an error inside shows up at the next() call, not where you created the generator
+      # from contextlib import contextmanager: a one-yield generator becomes a with-block
+    `],
+  ],
+  java:[
+    ["No yield: iterators & lazy streams",`
+      Iterator<Integer> countdown(int n) {  // 1. hand-written iterator: state lives in fields
+          return new Iterator<>() {
+              int cur = n;
+              public boolean hasNext() { return cur > 0; }
+              public Integer next() { return cur--; }
+          };
+      }
+
+      Stream.iterate(1, x -> x * 2).limit(5).toList();  // 2. lazy infinite stream: [1, 2, 4, 8, 16]
+      Stream.iterate(1, x -> x < 100, x -> x * 2);  // Java 9+: with a stop condition
+      Stream.generate(() -> "x").limit(3).toList();  // 3. from a Supplier: [x, x, x]
+      // streams are lazy: nothing runs until a terminal operation (toList, sum, forEach)
+      // and a stream can be used only once
+    `],
+  ],
+  scala:[
+    ["LazyList & Iterator",`
+      val nat = LazyList.from(0)  // infinite, lazy, and remembers computed values
+      nat.filter(_ % 2 == 0).take(5).toList  // List(0, 2, 4, 6, 8)
+
+      val fibs: LazyList[BigInt] =
+        BigInt(0) #:: BigInt(1) #:: fibs.zip(fibs.tail).map { case (a, b) => a + b }
+      fibs.take(8).toList  // List(0, 1, 1, 2, 3, 5, 8, 13)
+
+      Iterator.iterate(1)(_ * 2).take(5).toList  // List(1, 2, 4, 8, 16) -- one pass, not remembered
+      Iterator.unfold(1)(s => if s > 100 then None else Some((s, s * 2))).toList  // stop on None
+
+      for x <- List(1, 2, 3) yield x * 2  // "yield" here builds a collection -- it is not a generator
+    `],
+  ],
+  go:[
+    ["Channels, and range-over-func (Go 1.23)",`
+      func countdown(n int) <-chan int {  // goroutine + channel = classic generator
+          ch := make(chan int)
+          go func() {
+              defer close(ch)  // closing ends the caller's range loop
+              for ; n > 0; n-- { ch <- n }  // blocks until the consumer reads: lazy
+          }()
+          return ch
+      }
+      for v := range countdown(3) { fmt.Println(v) }  // 3 2 1
+      // if the consumer stops early the goroutine blocks forever (a leak): add a done channel or context
+
+      func Countdown(n int) iter.Seq[int] {  // Go 1.23: no goroutine, no leak
+          return func(yield func(int) bool) {
+              for ; n > 0; n-- {
+                  if !yield(n) { return }  // yield returns false when the loop breaks
+              }
+          }
+      }
+      for v := range Countdown(3) { fmt.Println(v) }  // import "iter"; also iter.Seq2, iter.Pull
+    `],
+  ],
+  cpp:[
+    ["Lazy views, callbacks, coroutines",`
+      // C++20 <ranges>: lazy views
+      auto evens = views::iota(0) | views::filter([](int x) { return x % 2 == 0; }) | views::take(5);
+      for (int x : evens) cout << x << ' ';  // 0 2 4 6 8
+      views::iota(1, 4) | views::transform([](int x) { return x * x; });  // 1 4 9
+
+      // callback style: the "generator" pushes values to you
+      void countdown(int n, auto&& visit) { for (; n > 0; --n) visit(n); }
+      countdown(3, [](int x) { cout << x << ' '; });  // 3 2 1
+
+      // co_yield and std::generator<T> arrive in C++23 (recent compilers only);
+      // before that, write a hand-made iterator class or use a library
+    `],
+  ],
+}],
+["decorators","Decorators","wrap a function; @ syntax; with arguments",{
+  python:[
+    ["The idea",`
+      import functools, time
+
+      def timed(fn):  # a decorator: takes a function, returns a replacement
+          @functools.wraps(fn)  # keep fn's __name__ and docstring
+          def wrapper(*args, **kwargs):  # accept anything, pass it through
+              t = time.perf_counter()
+              result = fn(*args, **kwargs)
+              print(f"{fn.__name__} took {time.perf_counter() - t:.4f}s")
+              return result  # don't forget to return the result
+          return wrapper
+
+      @timed  # exactly the same as:  slow = timed(slow)
+      def slow(n): return sum(range(n))
+    `],
+    ["With arguments (a decorator factory)",`
+      import functools
+
+      def retry(times=3, exceptions=(Exception,)):  # outer: takes the settings
+          def deco(fn):  # middle: takes the function
+              @functools.wraps(fn)
+              def wrapper(*a, **kw):  # inner: runs on every call
+                  for i in range(times):
+                      try:
+                          return fn(*a, **kw)
+                      except exceptions:
+                          if i == times - 1: raise  # out of tries: let it escape
+              return wrapper
+          return deco
+
+      @retry(times=5, exceptions=(IOError,))  # retry(...) runs first and returns deco
+      def fetch(): ...
+      # three levels: factory -> decorator -> wrapper
+      # "@retry" without () passes the function in as "times" -- a classic bug
+    `],
+    ["Built-in decorators you will use",`
+      from functools import cache, lru_cache, cached_property
+      from dataclasses import dataclass
+
+      @cache  # memoize, unbounded (3.9+). Arguments must be hashable
+      def fib(n): return n if n < 2 else fib(n - 1) + fib(n - 2)
+
+      @lru_cache(maxsize=128)  # bounded; fib.cache_info(), fib.cache_clear()
+      def square(x): return x * x
+
+      class Circle:
+          def __init__(self, r): self.r = r
+          @property  # read like an attribute: c.area
+          def area(self): return 3.14159 * self.r ** 2
+          @cached_property  # computed once, then stored
+          def big(self): return self.r > 100
+          @staticmethod  # no self
+          def unit(): return Circle(1)
+          @classmethod  # gets the class: cls
+          def of_diameter(cls, d): return cls(d / 2)
+
+      @dataclass  # class decorator: writes __init__, __repr__, __eq__ for you
+      class Point: x: int; y: int
+    `],
+    ["Stacking, classes, registering",`
+      @a
+      @b
+      def f(): ...  # f = a(b(f)): b wraps first (closest), a is outermost and runs first
+
+      class CountCalls:  # a class works as a decorator through __call__
+          def __init__(self, fn):
+              functools.update_wrapper(self, fn)
+              self.fn, self.calls = fn, 0
+          def __call__(self, *a, **kw):
+              self.calls += 1
+              return self.fn(*a, **kw)
+
+      REGISTRY = {}
+      def register(fn):  # a decorator does not have to wrap: it can just record
+          REGISTRY[fn.__name__] = fn
+          return fn  # return the same function
+
+      # on methods the wrapper's first argument is self -- *args covers it
+      # skip @functools.wraps and fn.__name__ becomes "wrapper": confusing in tracebacks and help()
+    `],
+  ],
+  java:[
+    ["Wrapper functions, annotations",`
+      <T> Supplier<T> timed(String name, Supplier<T> fn) {  // wrap a function in a function
+          return () -> {
+              long t = System.nanoTime();
+              T result = fn.get();
+              System.out.println(name + " took " + (System.nanoTime() - t) / 1_000_000 + " ms");
+              return result;
+          };
+      }
+      Supplier<Integer> slow = timed("slow", () -> compute());
+      slow.get();
+
+      // Java has no @decorator syntax. An annotation like @Override or @Transactional is only
+      // metadata; frameworks (Spring AOP, java.lang.reflect.Proxy) read it and wrap the call for you.
+      Function<Integer, Integer> f = x -> x + 1;
+      f.andThen(x -> x * 2);  // compose functions: another way to add behavior around a call
+    `],
+  ],
+  scala:[
+    ["Higher-order functions",`
+      def timed[A](name: String)(body: => A): A =  // by-name parameter: runs when used
+        val t = System.nanoTime
+        val result = body
+        println(s"$name took \${(System.nanoTime - t) / 1000000} ms")
+        result
+
+      timed("sum") { (1 to 1000000).sum }  // wraps any block
+
+      def logged[A, B](f: A => B): A => B = a =>  // wrap a function, get a function
+        println(s"called with $a")
+        f(a)
+
+      val loggedSquare = logged((x: Int) => x * x)
+      loggedSquare(4)  // prints, then returns 16
+      // no @ syntax for this: Scala 3 has transparent inline and macro annotations for rarer needs
+    `],
+  ],
+  go:[
+    ["Function wrappers & middleware",`
+      func timed(name string, fn func()) func() {  // takes a function, returns a wrapped one
+          return func() {
+              start := time.Now()
+              fn()
+              fmt.Println(name, "took", time.Since(start))
+          }
+      }
+      slow := timed("slow", func() { time.Sleep(10 * time.Millisecond) })
+      slow()
+
+      // the same shape is "middleware" in net/http
+      func logging(next http.Handler) http.Handler {
+          return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+              log.Println(r.Method, r.URL.Path)
+              next.ServeHTTP(w, r)
+          })
+      }
+      http.Handle("/", logging(mux))  // stack them: auth(logging(mux))
+    `],
+  ],
+  cpp:[
+    ["Wrapping with lambdas",`
+      auto timed = [](auto fn) {  // takes a callable, returns a wrapped one
+          return [fn](auto... args) {
+              auto t = chrono::steady_clock::now();
+              auto result = fn(args...);
+              cout << "took " << chrono::duration_cast<chrono::microseconds>(
+                  chrono::steady_clock::now() - t).count() << " us\\n";
+              return result;
+          };
+      };
+
+      auto slowSquare = timed([](int x) { return x * x; });
+      slowSquare(12);  // 144, and prints the time
+      // no @ syntax. Generic lambdas (auto parameters) make this work for any signature
+      // functions returning void need a separate branch (the result variable would be void)
+    `],
+  ],
+}],
+["lambdas","Lambdas","anonymous functions in every language",{
+  python:[
+    ["Syntax & limits",`
+      square = lambda x: x * x  # lambda args: ONE expression, returned automatically
+      add = lambda a, b=1: a + b  # defaults, *args and **kwargs work too
+      (lambda x: x + 1)(5)  # call it right away: 6
+      sign = lambda x: "pos" if x > 0 else "neg"  # a conditional expression is fine
+
+      # an expression only: no assignment, return, try or for inside
+      # PEP 8: don't assign a lambda to a name -- write def (better name in tracebacks)
+      # lambdas capture variables, not values: see Closures for the loop gotcha
+    `],
+    ["Where lambdas are used",`
+      sorted(words, key=lambda w: (len(w), w))  # by length, then alphabetically
+      max(people, key=lambda p: p.age)  # oldest person
+      sorted(d.items(), key=lambda kv: kv[1], reverse=True)  # dict by value, largest first
+      list(map(lambda x: x * 2, nums))  # prefer [x * 2 for x in nums]
+      list(filter(lambda x: x % 2, nums))  # prefer [x for x in nums if x % 2]
+
+      from functools import reduce
+      reduce(lambda a, b: a * b, nums, 1)  # fold: product, starting from 1
+
+      from operator import itemgetter, attrgetter
+      sorted(pairs, key=itemgetter(1))  # clearer than lambda p: p[1]
+      sorted(people, key=attrgetter("age"))
+    `],
+  ],
+  java:[
+    ["Syntax & functional interfaces",`
+      Function<Integer, Integer> sq = x -> x * x;  // one argument, expression body
+      BiFunction<Integer, Integer, Integer> add = (a, b) -> a + b;
+      Supplier<String> hello = () -> "hi";  // no arguments, returns a value
+      Consumer<String> show = s -> System.out.println(s);  // takes a value, returns nothing
+      Predicate<Integer> even = n -> n % 2 == 0;  // returns boolean
+      UnaryOperator<Integer> inc = n -> n + 1;  // Function<T,T>
+      BinaryOperator<Integer> mul = (a, b) -> a * b;  // BiFunction<T,T,T>
+      Runnable r = () -> { doWork(); };  // block body: use return for a value
+
+      sq.apply(5); even.test(4); hello.get(); show.accept("x");  // each interface has its own method name
+      // a lambda fits ANY interface with exactly one abstract method; the target type decides
+    `],
+    ["Method references & comparators",`
+      list.forEach(System.out::println);  // object::method
+      Function<String, Integer> len = String::length;  // Type::instanceMethod
+      Supplier<List<String>> make = ArrayList::new;  // constructor reference
+
+      people.sort(Comparator.comparing(Person::age).thenComparing(Person::name));
+      people.sort(Comparator.comparingInt(Person::age).reversed());
+      nums.stream().filter(n -> n % 2 == 0).map(n -> n * n).toList();  // toList: Java 16+
+
+      even.negate();  // Predicate: and, or, negate
+      sq.andThen(inc);  // Function: andThen, compose
+    `],
+  ],
+  scala:[
+    ["Function literals & placeholders",`
+      val sq = (x: Int) => x * x  // function literal
+      val add: (Int, Int) => Int = (a, b) => a + b  // parameter types come from the annotation
+      List(1, 2, 3).map(_ * 2)  // _ stands for the single parameter
+      List(1, 2, 3).foldLeft(0)(_ + _)  // each _ is a new parameter, left to right: 6
+      List(1, 2, 3).map(x => x * 2)  // same as the placeholder form
+
+      def inc(x: Int) = x + 1
+      List(1, 2).map(inc)  // a method becomes a function automatically (eta-expansion)
+      sq andThen inc  // compose: inc(sq(x))
+
+      Map("a" -> 1).map { case (k, v) => s"$k=$v" }  // pattern-matching lambda for tuples
+      words.sortBy(w => (w.length, w))
+    `],
+  ],
+  go:[
+    ["Function literals",`
+      square := func(x int) int { return x * x }  // a function literal is a value
+      func(msg string) { fmt.Println(msg) }("hi")  // call it immediately
+
+      type Op func(int, int) int  // function types are first-class
+      ops := map[string]Op{"add": func(a, b int) int { return a + b }}
+      ops["add"](2, 3)  // 5
+
+      sort.Slice(people, func(i, j int) bool { return people[i].Age < people[j].Age })  // the usual use
+      slices.SortFunc(people, func(a, b Person) int { return cmp.Compare(a.Age, b.Age) })  // Go 1.21+
+      defer func() { recover() }()  // a deferred closure, very common
+      go func() { work() }()  // a goroutine
+      // no short arrow syntax: always func, types and braces
+    `],
+  ],
+  cpp:[
+    ["Syntax & captures",`
+      auto sq = [](int x) { return x * x; };  // [capture](parameters){ body }
+      auto add = [](auto a, auto b) { return a + b; };  // generic lambda (C++14)
+      int k = 10;
+      auto byVal = [k](int x) { return x + k; };  // copy k at creation
+      auto byRef = [&k](int x) { return x + k; };  // reference to k
+      auto all = [=]() { return k; };  // copy everything used; [&] = reference everything used
+
+      sort(v.begin(), v.end(), [](int a, int b) { return a > b; });  // comparator
+      auto it = find_if(v.begin(), v.end(), [](int x) { return x % 2 == 0; });
+      function<int(int)> f = sq;  // type-erased holder; prefer auto when you can
+      [](int n) { return n * 2; }(21);  // call right away: 42
+      // the return type is deduced; write -> double when return statements differ
+    `],
+  ],
+}],
+["closures","Closures","a function that remembers its scope",{
+  python:[
+    ["A closure remembers its scope",`
+      def make_counter():
+          count = 0
+          def inc():
+              nonlocal count  # without this, count += 1 raises UnboundLocalError
+              count += 1
+              return count
+          return inc
+
+      c = make_counter()
+      c(); c()  # 1, 2 -- each make_counter() call has its own count
+
+      def multiplier(n): return lambda x: x * n
+      double = multiplier(2)
+      double(21)  # 42 -- n is remembered
+      double.__closure__[0].cell_contents  # 2 -- captured variables live in cells
+    `],
+    ["Gotcha: late binding in loops",`
+      fs = [lambda: i for i in range(3)]
+      [f() for f in fs]  # [2, 2, 2] -- all share ONE i, read when called
+
+      fs = [lambda i=i: i for i in range(3)]  # a default argument freezes the value now
+      [f() for f in fs]  # [0, 1, 2]
+
+      def make(i): return lambda: i  # or a factory: each call gets its own i
+      fs = [make(i) for i in range(3)]
+      [f() for f in fs]  # [0, 1, 2]
+    `],
+    ["Uses & when to use a class",`
+      def make_account(balance):  # private state without a class
+          def deposit(x):
+              nonlocal balance
+              balance += x
+              return balance
+          def get(): return balance
+          return deposit, get
+
+      deposit, get = make_account(100)
+      deposit(50); get()  # 150
+      # also closures: decorators, callbacks with state, functools.partial-style helpers
+      # one or two operations -> closure; several methods sharing state -> a class
+      # global x = module level; nonlocal x = nearest enclosing function
+    `],
+  ],
+  java:[
+    ["Effectively final",`
+      int base = 10;
+      Function<Integer, Integer> add = x -> x + base;  // fine: base never changes
+      // base++;  // would not compile: captured locals must be effectively final
+
+      int[] count = {0};  // workaround: mutate a box instead
+      Runnable inc = () -> count[0]++;
+      AtomicInteger n = new AtomicInteger();  // the thread-safe version
+      Supplier<Integer> next = n::incrementAndGet;
+
+      // fields (this.x) and static variables CAN be changed inside a lambda; only locals are restricted
+      // loops: for (int i...) { run(() -> i); } does not compile -- copy first: int j = i;
+    `],
+  ],
+  scala:[
+    ["Closures over vals and vars",`
+      var count = 0
+      val inc = () => { count += 1; count }  // captures the variable itself, can change it
+      inc(); inc()  // 1, 2
+
+      def adder(n: Int): Int => Int = x => x + n  // returns a closure
+      val add5 = adder(5)
+      add5(1)  // 6
+
+      val fs = (0 until 3).map(i => () => i)  // each iteration gets a fresh i
+      fs.map(f => f())  // Vector(0, 1, 2)
+      // vars are captured by reference: later changes are visible to the closure
+    `],
+  ],
+  go:[
+    ["Captured by reference",`
+      func counter() func() int {
+          n := 0
+          return func() int { n++; return n }  // n outlives counter() because the closure holds it
+      }
+      c := counter()
+      c(); c()  // 1, 2
+
+      var fs []func() int
+      for i := 0; i < 3; i++ { fs = append(fs, func() int { return i }) }
+      // Go 1.22+: each iteration has its own i, so the results are 0, 1, 2
+      // before 1.22 (older go.mod): all return 3 -- fix with i := i inside the loop
+      // same trap with go func() { use(i) }() in old versions: pass it as an argument instead
+    `],
+  ],
+  cpp:[
+    ["Capture by value, by reference",`
+      int x = 1;
+      auto byVal = [x]() { return x; };  // snapshot taken now
+      auto byRef = [&x]() { return x; };  // live view of x
+      x = 5;  // byVal() is still 1, byRef() is now 5
+
+      auto counter = [n = 0]() mutable { return ++n; };  // init-capture (C++14): the lambda owns n
+      counter(); counter();  // 1, 2 -- mutable allows changing its own copy
+
+      auto p = make_unique<int>(7);
+      auto f = [q = std::move(p)]() { return *q; };  // move-only capture
+
+      function<int()> bad() { int local = 3; return [&local] { return local; }; }
+      // DANGER: returns a reference to a dead local (undefined behavior). Capture by value when it escapes
+      // [this] captures the pointer: the object must outlive the lambda
+    `],
+  ],
+}],
+
 ["concurrency","Concurrency","threads, locks, async/futures, channels",{
   python:[
     [null,`
@@ -2615,14 +3152,81 @@ var CARDS=[
   ],
 }],
 
-["itertools","Combinatorics","permutations, combinations, running totals",{
-  python:[[null,`
-    from itertools import permutations, combinations, product, accumulate
-    list(permutations([1,2,3], 2))  # ordered pairs: (1,2),(1,3),(2,1)...
-    list(combinations([1,2,3], 2))  # unordered pairs: (1,2),(1,3),(2,3)
-    list(product([0,1], repeat=2))  # (0,0),(0,1),(1,0),(1,1)
-    list(accumulate([1,2,3,4]))  # running total: [1,3,6,10]
-  `]],
+["itertools","Combinatorics &amp; itertools","permutations, chaining, grouping, slicing",{
+  python:[
+    ["Combinatorics",`
+      from itertools import permutations, combinations, combinations_with_replacement, product
+      list(permutations([1,2,3], 2))  # ordered pairs: (1,2),(1,3),(2,1)... 6 results
+      list(permutations([1,2,3]))  # r omitted = full length: all 6 orderings
+      list(combinations([1,2,3], 2))  # unordered, no repeats: (1,2),(1,3),(2,3)
+      list(combinations_with_replacement([1,2], 2))  # (1,1),(1,2),(2,2)
+      list(product([0,1], repeat=2))  # (0,0),(0,1),(1,0),(1,1) -- like nested loops
+      list(product("ab", [1,2]))  # ('a',1),('a',2),('b',1),('b',2)
+    `],
+    ["How big does it get?",`
+      from itertools import permutations, combinations, product
+      # n items, pick r:  permutations n!/(n-r)!   combinations n!/(r!(n-r)!)   product k**r
+      # permutations of 10 = 3,628,800 ; combinations(10, 3) = 120 ; product([0,1], repeat=10) = 1024
+      # all of these are lazy iterators -- loop over them, don't list() a huge one
+      sum(1 for _ in combinations(range(20), 3))  # count without storing: 1140
+      # the output order follows the input order, so sort the input first for sorted output
+    `],
+    ["Running totals & chaining",`
+      from itertools import accumulate, chain, islice, count, cycle, repeat
+      import operator
+      list(accumulate([1,2,3,4]))  # running sum: [1,3,6,10]
+      list(accumulate([1,2,3,4], operator.mul))  # running product: [1,2,6,24]
+      list(accumulate([3,1,4,1,5], max))  # running max: [3,3,4,4,5]
+      list(accumulate([1,2,3], initial=100))  # start from a value: [100,101,103,106]
+      list(chain([1,2], (3,), "ab"))  # join iterables: [1,2,3,'a','b']
+      list(chain.from_iterable([[1,2],[3],[4,5]]))  # flatten one level: [1,2,3,4,5]
+      list(islice(count(10, 5), 4))  # infinite counter, take 4: [10,15,20,25]
+      list(islice(cycle("ab"), 5))  # a,b,a,b,a -- endless repeat, so always islice it
+      list(repeat(0, 3))  # [0,0,0]
+    `],
+    ["Slicing any iterator (islice)",`
+      from itertools import islice
+      it = iter(range(100))
+      list(islice(it, 3))  # first 3: [0,1,2] -- consumes them from it
+      list(islice(it, 2, 8, 2))  # (start, stop, step), counted from the CURRENT position: [5,7,9]
+      next(islice(range(10), 4, None), None)  # item at index 4 of any iterable, None if too short: 4
+      # no negative indices and no going back; a generator can't be indexed with [ ]
+    `],
+    ["Filtering & grouping",`
+      from itertools import groupby, takewhile, dropwhile, filterfalse, compress, starmap, zip_longest
+      list(takewhile(lambda x: x < 3, [1,2,5,1]))  # [1,2] -- stops at the first failure
+      list(dropwhile(lambda x: x < 3, [1,2,5,1]))  # [5,1] -- drops only the leading run
+      list(filterfalse(lambda x: x % 2, range(6)))  # keeps the falsy ones: [0,2,4]
+      list(compress("abcd", [1,0,1,0]))  # pick by mask: ['a','c']
+      list(starmap(pow, [(2,3),(3,2)]))  # unpack each tuple as arguments: [8,9]
+      list(zip_longest([1,2,3], "ab", fillvalue="-"))  # [(1,'a'),(2,'b'),(3,'-')]
+
+      # groupby groups CONSECUTIVE equal keys, so sort by the same key first
+      words = sorted(["apple","avocado","banana","blueberry","cherry"])
+      {k: list(g) for k, g in groupby(words, key=lambda w: w[0])}  # {'a':[..],'b':[..],'c':[..]}
+      # each group g is a lazy view: use it before moving to the next group
+    `],
+    ["pairwise, batched, tee (newer Python)",`
+      from itertools import pairwise, batched, tee  # pairwise: 3.10+, batched: 3.12+
+      list(pairwise([1,4,9,16]))  # (1,4),(4,9),(9,16) -- sliding pairs
+      [b - a for a, b in pairwise([1,4,9,16])]  # differences between neighbors: [3,5,7]
+      list(batched(range(7), 3))  # (0,1,2),(3,4,5),(6,) -- chunks of 3
+      a, b = tee(iter([1,2,3]))  # two independent iterators over one source
+      # older Python: zip(xs, xs[1:]) is pairwise for a list
+    `],
+    ["Interview recipes",`
+      from itertools import product, chain, combinations
+      dirs = [(0,1),(1,0),(0,-1),(-1,0)]
+      r, c = 2, 3  # a grid cell
+      [(r + dr, c + dc) for dr, dc in dirs]  # its 4 neighbors
+      list(product(range(2), repeat=3))  # all 8 bit patterns -- brute-force subsets
+      list(chain.from_iterable(combinations([1,2,3], k) for k in range(4)))  # all subsets (power set)
+      list(zip(*matrix))  # transpose: rows become columns
+      list(chain.from_iterable(matrix))  # flatten a matrix to one list
+      list(dict.fromkeys([3,1,3,2,1]))  # dedupe, keep order: [3,1,2]
+      next((x for x in xs if x > 2), None)  # first match or None
+    `],
+  ],
   java:[[null,`
     IntStream.rangeClosed(1, 4).boxed().toList();  // [1,2,3,4]
     nums.stream().mapToInt(Integer::intValue).sum();  // reduce/sum
@@ -6091,7 +6695,7 @@ DOCS.push(
 
 var LANGS=[["python","Python"],["java","Java"],["scala","Scala"],["go","Go"],["cpp","C++"]];
 var CGROUPS=[
-  ["Language basics",["vartypes","controlflow","functions","errors","classes","generics","imports","basics","concurrency"]],
+  ["Language basics",["vartypes","controlflow","functions","lambdas","closures","decorators","generators","errors","classes","generics","imports","basics","concurrency"]],
   ["Data structures",["list","matrix","linkedlist","stack","queue","heap","map","set","tree","graph"]],
   ["Strings, math & algorithms",["strings","sorting","math","itertools","twoptr","window","prefix","bitmask"]],
   ["Quick tables",["gotchas","complexity"]]
@@ -6109,7 +6713,7 @@ var DGROUPS=[
   ["Low-level design: problems",["sd-l-parking","sd-l-elevator","sd-l-vending","sd-l-lru","sd-l-atm","sd-l-tictactoe","sd-l-splitwise","sd-l-logger"]],
   ["Put it together",["sd-structures","sd-classics"]]
 ];
-var SUGGEST=["binary search","reverse a string","hash map","sort by key","closure","try catch","bfs","heap","two pointers","type check"];
+var SUGGEST=["binary search","reverse a string","hash map","sort by key","closure","decorator","generator","itertools","lambda","try catch","bfs","heap","two pointers","type check"];
 var DSUGGEST=["URL shortener","news feed","chat","SOLID","design patterns","parking lot","LRU cache","CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
 var GIST={
 "sd-approach":["Clarify requirements and scale first","Estimate QPS, storage and bandwidth","Draw boxes, then deep-dive the bottleneck"],
