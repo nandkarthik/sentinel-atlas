@@ -4037,6 +4037,37 @@ VIS.retry=function(){
   return SV(246,"A client retries a failed request with exponential backoff and jitter: two 503 replies, then a 200",b);
 };
 
+VIS.tls=function(){
+  var P=10,b=B(20,20,90,190,"Browser")+B(530,20,90,190,"Server");
+  var rows=[[60,"M110 60 L530 60","",2,14,"ClientHello: TLS versions, ciphers, key share",14],
+            [100,"M530 100 L110 100","",20,32,"ServerHello + certificate + key share + Finished",32],
+            [140,"M110 140 L530 140","",40,52,"Finished, then the HTTP request (encrypted)",52],
+            [180,"M530 180 L110 180","ok",60,72,"HTTP response (encrypted)",72]];
+  rows.forEach(function(r){
+    b+=L(r[1])+seg(r[1],r[3],r[4],P,r[2]);
+    b+=gt(T(320,r[0]-8,r[5],r[2]==="ok"?"b ok":"s","middle"),r[6]-12,98,P);
+  });
+  b+=T(20,236,"One round trip before data (TLS 1.3). Keys come from an ephemeral Diffie-Hellman exchange,","s");
+  b+=T(20,252,"the certificate proves who the server is, and a fast symmetric cipher encrypts the data.","s");
+  return SV(268,"TLS 1.3 handshake: ClientHello, server certificate and key share, client Finished with the first request, then encrypted data",b);
+};
+
+VIS.auth=function(){
+  var P=10,b=B(20,16,90,40,"Client")+B(275,16,90,40,"Auth server")+B(480,16,110,40,"API");
+  b+=L("M65 56 L65 205","d")+L("M320 56 L320 205","d")+L("M535 56 L535 205","d");
+  var rows=[[90,"M65 90 L320 90","",2,14,192,"1 login (password + MFA)"],
+            [125,"M320 125 L65 125","ok",22,34,192,"2 access JWT + refresh token"],
+            [160,"M65 160 L535 160","",44,56,427,"3 Bearer JWT"],
+            [195,"M535 195 L65 195","ok",66,78,300,"4 200 OK"]];
+  rows.forEach(function(r){
+    b+=seg(r[1],r[3],r[4],P,r[2]);
+    b+=gt(T(r[6],r[0]-8,r[7],r[2]==="ok"?"b ok":"s","middle"),r[3]+10,98,P);
+  });
+  b+=gt(T(535,222,"checks the signature","s","middle")+T(535,236,"itself: no lookup","s","middle"),58,98,P);
+  b+=T(20,258,"Short-lived JWT (minutes); the refresh token gets a new one.","s");
+  return SV(272,"Login returns a short-lived JWT; the client sends it to the API, which verifies the signature without a database lookup",b);
+};
+
 function vis(n){return '<div class="vis" data-vis="'+n+'"></div>'}
 function expandVis(h){return h.replace(/<div class="vis" data-vis="(\w+)"><\/div>/g,function(m,n){return '<div class="vis">'+VIS[n]()+'</div>'})}
 
@@ -4635,6 +4666,13 @@ DOCS.push(
       ["API key","Identifies an app, not a person; rate-limit and rotate it"],
       ["mTLS","Both sides present certificates; used between services"]
     ])],
+  ["Deeper dives",
+    ul([
+      "<a href='#sd-web'>Browser storage &amp; cookies</a>: cookies, localStorage, CSP, XSS, CSRF.",
+      "<a href='#sd-auth'>Authentication &amp; JWT</a>: sessions, tokens, OAuth, OIDC, passkeys.",
+      "<a href='#sd-tls'>TLS / SSL &amp; certificates</a>: handshake, certificates, termination, mTLS.",
+      "<a href='#sd-netdesign'>Network design decisions</a>: DNS, VPC, L4 vs L7, timeouts."
+    ])],
   ["Checklist for a design",
     ul([
       "<b>TLS everywhere</b>; encrypt data at rest (KMS-managed keys); keep secrets in a secrets manager, never in code.",
@@ -4782,6 +4820,271 @@ DOCS.push(
 
 function codeBlk(lines){return '<pre><code>'+esc(lines.join("\n"))+'</code></pre>'}
 DOCS.push(
+["sd-web","Browser storage & cookies","cookies, localStorage, IndexedDB, flags, headers","",[
+  ["Where a browser can keep data",
+    table(["Place","Size","Lifetime","Sent to server?","Use for"],[
+      ["Cookie","about 4 KB each","Session, or until <code>Expires</code> / <code>Max-Age</code>","<b>Yes</b>, on every matching request","Session ID, auth token, server-needed preferences"],
+      ["localStorage","about 5 MB per origin","Until cleared","No","UI settings, harmless cache. Not secrets"],
+      ["sessionStorage","about 5 MB per origin","One tab","No","Per-tab state: wizard steps, drafts"],
+      ["IndexedDB","Large (quota, often hundreds of MB)","Until cleared","No","Offline data, big structured data, PWAs"],
+      ["Cache API + Service Worker","Quota","Until cleared","No","Offline pages and assets, PWAs"],
+      ["JavaScript memory","RAM","Until reload","No","Short-lived access token"],
+      ["HTTP cache","Browser managed","Set by <code>Cache-Control</code>","No (revalidates)","Static files"]
+    ])+'<p>Cookies travel with every request, so keep them small. localStorage and sessionStorage are synchronous and string-only. Any script on the page can read localStorage, so an XSS bug exposes everything in it.</p>'],
+  ["Cookie attributes",
+    table(["Attribute","Effect"],[
+      ["<code>HttpOnly</code>","JavaScript cannot read it. Blocks token theft through XSS"],
+      ["<code>Secure</code>","Sent over HTTPS only"],
+      ["<code>SameSite=Lax</code>","Not sent on cross-site POST, fetch or iframes; sent on normal link clicks. Browser default, limits CSRF"],
+      ["<code>SameSite=Strict</code>","Never sent on cross-site requests; even a link from another site arrives logged out"],
+      ["<code>SameSite=None; Secure</code>","Sent cross-site. Needed for embeds and third-party use"],
+      ["<code>Domain</code> / <code>Path</code>","Which hosts and paths receive it. Omit <code>Domain</code> to keep it to the exact host"],
+      ["<code>Max-Age</code> / <code>Expires</code>","Lifetime; omit for a session cookie"],
+      ["<code>__Host-</code> prefix","Forces Secure, Path=/, no Domain: cannot be overwritten by a sibling subdomain"],
+      ["<code>Partitioned</code>","Separate copy per top-level site (CHIPS), for embedded third-party cookies"]
+    ])+'<p>A good login cookie: <code>Set-Cookie: sid=...; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=3600</code></p>'],
+  ["Where to keep a login token",
+    table(["Option","XSS risk","CSRF risk","Verdict"],[
+      ["HttpOnly + Secure + SameSite cookie","Script cannot read it","Low with SameSite (add a CSRF token for safety)","<b>Best for browser apps</b>"],
+      ["localStorage","Any injected script steals it","None (not sent automatically)","Avoid for tokens"],
+      ["sessionStorage","Same as localStorage, one tab","None","Avoid for tokens"],
+      ["JS memory (access token) + HttpOnly refresh cookie","Lost on reload; needs the cookie to renew","Refresh call needs CSRF protection","Good for SPAs"],
+      ["Native app","Use the OS keychain or keystore","None","Never plain files"]
+    ])],
+  ["Attacks to name, and the fix",
+    table(["Attack","What happens","Defense"],[
+      ["XSS (cross-site scripting)","Attacker script runs in your page","Escape output, CSP, HttpOnly cookies, avoid <code>innerHTML</code>"],
+      ["CSRF","Another site makes the browser send your cookie","SameSite cookies, CSRF token, check <code>Origin</code>"],
+      ["Clickjacking","Your page hidden in an iframe, user clicks it","<code>frame-ancestors</code> in CSP or <code>X-Frame-Options</code>"],
+      ["Session fixation","Attacker plants a known session ID","New session ID after login"],
+      ["Session hijack","Cookie stolen on the network","HTTPS, <code>Secure</code>, HSTS, short lifetime"],
+      ["Open redirect","Login redirect goes to attacker site","Allow-list return URLs"]
+    ])],
+  ["Security headers to set",
+    table(["Header","Purpose"],[
+      ["<code>Strict-Transport-Security</code> (HSTS)","Browser uses HTTPS only for this site, for a long time"],
+      ["<code>Content-Security-Policy</code>","Allow-list where scripts, styles and frames may load from; best XSS backstop"],
+      ["<code>X-Content-Type-Options: nosniff</code>","Browser must trust the declared content type"],
+      ["<code>Referrer-Policy</code>","How much of the URL is sent to other sites"],
+      ["<code>Permissions-Policy</code>","Turn off camera, microphone, location for the page"],
+      ["<code>Access-Control-Allow-Origin</code> (CORS)","Which other origins may read responses. Never <code>*</code> together with credentials"]
+    ])+'<p><b>Same-origin policy</b>: a page can freely read only its own origin (scheme + host + port). CORS is the server relaxing that for chosen origins.</p>'],
+  ["Also available to a web page",
+    table(["Feature","What it gives"],[
+      ["<code>fetch</code> / XHR","HTTP calls; add <code>credentials: &quot;include&quot;</code> to send cookies cross-origin"],
+      ["WebSocket, SSE","Two-way and server-push connections"],
+      ["Service Worker","Offline support, background caching, push"],
+      ["Web Worker","Heavy work off the main thread"],
+      ["Web Push, Notifications","Messages when the page is closed"],
+      ["BroadcastChannel, <code>storage</code> event","Talk between tabs of the same origin"],
+      ["WebAuthn","Passkeys: log in with a device key, phishing-resistant"],
+      ["Geolocation, camera, clipboard","Need user permission and HTTPS"]
+    ])+'<p>Details: <a href="#sd-auth">Authentication &amp; JWT</a>, <a href="#sd-tls">TLS &amp; certificates</a>, <a href="#sd-http">HTTP essentials</a>.</p>']
+]],
+["sd-auth","Authentication & JWT","sessions vs JWT, OAuth, OIDC, passkeys, authorization","auth",[
+  ["Animation: login with a JWT",vis("auth")],
+  ["Sessions vs JWT",
+    table(["","Session cookie","JWT (bearer token)"],[
+      ["Where the state lives","Server or Redis (cookie holds an ID)","In the token itself (signed claims)"],
+      ["Check on each request","Look up the session","Verify the signature; no lookup"],
+      ["Revoke","Delete the session: instant","Hard: wait for expiry, or keep a deny-list"],
+      ["Scales","Needs a shared session store","Any server can verify; good across services"],
+      ["Size","Tiny","Larger, sent every time"],
+      ["Best for","Browser apps with one backend","APIs, mobile, many services"]
+    ])+'<p>Rule of thumb: a website with its own backend uses sessions; service-to-service and mobile APIs use short-lived JWTs.</p>'],
+  ["Inside a JWT",
+    codeBlk([
+      "header.payload.signature        (three base64url parts)",
+      "",
+      "header:  {\"alg\":\"RS256\",\"typ\":\"JWT\",\"kid\":\"key-42\"}",
+      "payload: {\"iss\":\"https://auth.example.com\",",
+      "          \"sub\":\"user-981\",",
+      "          \"aud\":\"orders-api\",",
+      "          \"exp\":1767225600,",
+      "          \"iat\":1767224700,",
+      "          \"scope\":\"orders:read\"}",
+      "signature = sign(header + \".\" + payload, key)"
+    ])+ul([
+      "A JWT is <b>signed, not encrypted</b>: anyone can read the payload. Never put secrets in it.",
+      "<b>HS256</b>: one shared secret signs and verifies. <b>RS256 / ES256</b>: private key signs, public key verifies (published as a JWKS endpoint), so services verify without being able to forge.",
+      "Claims: <code>iss</code> issuer, <code>sub</code> subject, <code>aud</code> audience, <code>exp</code> expiry, <code>iat</code> issued at, <code>jti</code> unique ID."
+    ])],
+  ["How to verify a JWT",
+    ol([
+      "Check the signature with the key picked by <code>kid</code>, and an <b>algorithm you expect</b>. Reject <code>none</code> and never trust the header to choose.",
+      "Check <code>exp</code> (and <code>nbf</code>), allowing a small clock skew.",
+      "Check <code>iss</code> is your auth server and <code>aud</code> is this API.",
+      "Check <code>scope</code> or roles for the action, then check the user may touch <b>this</b> resource."
+    ])],
+  ["Access and refresh tokens",
+    table(["Token","Life","Stored","Purpose"],[
+      ["Access token (JWT)","5&ndash;15 min","Memory, or a cookie","Sent to the API on every call"],
+      ["Refresh token","Days to weeks","HttpOnly cookie or secure storage","Trade for a new access token"]
+    ])+ul([
+      "<b>Rotate</b> the refresh token on each use. If an old one is used again, someone stole it: revoke the whole family.",
+      "Revoking a JWT early: short expiry, a deny-list of <code>jti</code> values (small, in Redis), or a per-user token version.",
+      "Log out = delete the refresh token on the server and clear the cookie."
+    ])],
+  ["OAuth 2.0 and OIDC",
+    table(["Flow","Use for","Note"],[
+      ["Authorization code + PKCE","Web apps, SPAs, mobile apps","The standard; PKCE protects the code from interception"],
+      ["Client credentials","Service to service, no user","Client ID + secret (or mTLS) gets a token"],
+      ["Device code","TVs, CLIs","User approves on another device"],
+      ["Refresh token","Renew access","See above"],
+      ["Implicit, password grant","Nothing","Deprecated; do not use"]
+    ])+ul([
+      "<b>OAuth</b> = delegated access (&ldquo;let this app read my calendar&rdquo;). <b>OIDC</b> adds identity: an <code>id_token</code> says who logged in. The <b>access token</b> is for the API; the <b>id_token</b> is for the app.",
+      "Roles: resource owner (user), client (app), authorization server (issues tokens), resource server (API).",
+      "<b>SAML</b> is the older enterprise SSO standard; OIDC is its modern replacement."
+    ])],
+  ["Ways to authenticate",
+    table(["Method","Strength","Note"],[
+      ["Password","Weak alone","Hash with Argon2id or bcrypt; check breached lists; rate limit"],
+      ["MFA (TOTP, push, SMS)","Strong","SMS is weakest (SIM swap)"],
+      ["Passkeys (WebAuthn)","Strongest","Device key, phishing-resistant, no password to steal"],
+      ["SSO (OIDC / SAML)","Strong","One login for many apps; central control"],
+      ["API key","Identifies an app","Hash at rest, rotate, scope, rate limit"],
+      ["mTLS","Strong","Both sides hold certificates; service to service"]
+    ])],
+  ["Authorization models",
+    table(["Model","Idea","Good for"],[
+      ["ACL","A list per resource of who may do what","Files, simple sharing"],
+      ["RBAC","Users get roles; roles hold permissions","Most business apps"],
+      ["ABAC","Rules on attributes (department, time, owner)","Fine-grained policy"],
+      ["ReBAC","Relationships (owner, member, parent folder)","Docs, social apps (Google Zanzibar)"],
+      ["Scopes","What a token may do for one app","OAuth APIs"]
+    ])+'<p>Check on <b>every</b> request, on the server, per resource. Hiding a button is not security. Missing checks cause IDOR (changing an ID in the URL shows someone else&rsquo;s data).</p>'],
+  ["Say it in an interview",
+    ul([
+      "&ldquo;Users log in with a password plus MFA or a passkey. The auth server issues a 10-minute JWT and a rotating refresh token in an HttpOnly cookie.&rdquo;",
+      "&ldquo;Services verify the JWT signature with the public key from a JWKS endpoint, check issuer, audience and expiry, then check the user may access that resource.&rdquo;",
+      "&ldquo;For instant revoke I keep a small deny-list in Redis; for third-party access I use OAuth with authorization code and PKCE.&rdquo;"
+    ])]
+]],
+["sd-tls","TLS / SSL & certificates","handshake, certificates, termination, mTLS, HSTS","tls",[
+  ["Animation: TLS handshake",vis("tls")],
+  ["SSL, TLS, HTTPS",
+    ul([
+      "<b>SSL</b> is the old name and is broken. Today&rsquo;s protocol is <b>TLS</b>; people still say &ldquo;SSL certificate&rdquo;. Use TLS 1.2 or newer; prefer <b>TLS 1.3</b>.",
+      "<b>HTTPS</b> = HTTP inside a TLS connection.",
+      "TLS gives three things: <b>confidentiality</b> (nobody reads it), <b>integrity</b> (nobody changes it), <b>authentication</b> (the server is who it says)."
+    ])],
+  ["The handshake, step by step (TLS 1.3)",
+    ol([
+      "<b>ClientHello</b>: supported versions and ciphers, plus the client&rsquo;s half of a key exchange.",
+      "<b>ServerHello</b>: chosen cipher, server&rsquo;s key half, and its <b>certificate</b>.",
+      "The client checks the certificate chain, the host name and the dates.",
+      "Both sides compute the same session key (ephemeral Diffie-Hellman) and send <b>Finished</b>.",
+      "Application data is encrypted with a fast <b>symmetric</b> cipher (AES-GCM or ChaCha20)."
+    ])+ul([
+      "Cost: TCP handshake (1 round trip) + TLS 1.3 (1 round trip). TLS 1.2 needed 2. HTTP/3 (QUIC) merges them.",
+      "<b>Forward secrecy</b>: the keys are temporary, so stealing the server&rsquo;s key later does not decrypt old recordings."
+    ])],
+  ["Certificates",
+    table(["Term","Meaning"],[
+      ["Certificate authority (CA)","Trusted organization that signs certificates; browsers ship a list of trusted roots"],
+      ["Chain","Leaf certificate &rarr; intermediate &rarr; root. The server must send the leaf and intermediates"],
+      ["SAN","Host names the certificate covers; the name you visit must be listed"],
+      ["Validity","Short on purpose (Let&rsquo;s Encrypt: 90 days). <b>Automate renewal</b> (ACM, cert-manager)"],
+      ["Wildcard","<code>*.example.com</code> covers one level of subdomains"],
+      ["DV / OV / EV","Domain-validated (automatic), organization-validated, extended. Encryption is the same"],
+      ["Self-signed / private CA","Fine inside your own systems, if clients trust your root"],
+      ["OCSP stapling","Server attaches a fresh revocation answer so the client does not call the CA"],
+      ["Certificate Transparency","Public logs of issued certificates; catches wrongly issued ones"]
+    ])],
+  ["Where to end TLS",
+    table(["Choice","How","Pick when"],[
+      ["Terminate at the load balancer or CDN","Decrypt at the edge, plain HTTP inside the private network","Most web apps: simple, the LB can read headers and route, central certificates"],
+      ["Re-encrypt to the backend","Edge decrypts, then new TLS to the service","Compliance needs encryption in transit everywhere"],
+      ["Pass-through (L4)","The LB forwards encrypted bytes untouched","The backend must hold the key, or custom protocols; the LB cannot read HTTP"],
+      ["mTLS between services","Both sides present certificates (service mesh adds it for you)","Zero-trust internal traffic, strong service identity"]
+    ])],
+  ["Speed",
+    ul([
+      "<b>Reuse connections</b> (keep-alive, pooling, HTTP/2): the handshake cost is paid once.",
+      "<b>Session resumption</b> skips most of the handshake on a repeat visit. <b>0-RTT</b> sends data in the first flight but can be replayed: allow it only for safe GET requests.",
+      "Terminate close to users (CDN edge) so the handshake round trips are short.",
+      "ECDSA certificates are smaller and faster than RSA; keep the chain short."
+    ])],
+  ["HSTS, pinning and common failures",
+    table(["Topic","Notes"],[
+      ["HSTS","<code>Strict-Transport-Security: max-age=31536000; includeSubDomains</code>. After the first visit the browser never uses plain HTTP. Preload lists cover the first visit"],
+      ["Certificate pinning","App trusts only a specific key. Safe to avoid in most cases: a rotation mistake locks users out"],
+      ["Expired certificate","Top cause of outages. Automate renewal and alert 30 days ahead"],
+      ["Name mismatch","The host is not in the SAN"],
+      ["Incomplete chain","Server forgot the intermediate; works in some browsers, fails in others"],
+      ["Mixed content","HTTPS page loading HTTP assets; browsers block it"],
+      ["Wrong clock","Client or server time skewed, so the certificate looks expired"]
+    ])]
+]],
+["sd-netdesign","Network design decisions","DNS, VPC, subnets, L4 vs L7, timeouts, latency","",[
+  ["The path of a request",
+    ol([
+      "<b>DNS</b>: name to IP. Decide the routing policy and the TTL.",
+      "<b>CDN / edge</b>: cache static files, end TLS near the user, absorb DDoS.",
+      "<b>WAF and rate limit</b>: block bad traffic before it reaches your code.",
+      "<b>Load balancer</b>: spread across servers in several zones; health checks.",
+      "<b>API gateway or ingress</b>: auth, routing, throttling.",
+      "<b>Service</b> in a private subnet, then the <b>database</b> in a deeper private subnet."
+    ])+'<p>At each hop ask: what fails here, how long can it hang, and what happens next?</p>'],
+  ["DNS decisions",
+    table(["Decision","Options and trade-off"],[
+      ["Routing policy","Simple, weighted (canary), latency-based, geolocation, failover (health-checked)"],
+      ["TTL","Low (30&ndash;60 s): fast failover, more lookups. High: cheaper, but changes and failover are slow"],
+      ["Alias / CNAME","Point the name at a load balancer or CDN, not an IP that can change"],
+      ["Caching","Resolvers and apps cache answers, so DNS failover is never instant; some clients ignore TTL"],
+      ["Anycast","One IP announced from many places; traffic goes to the nearest. Used by CDNs and DNS itself"]
+    ])],
+  ["VPC layout (AWS words)",
+    table(["Piece","Job","Rule"],[
+      ["Public subnet","Load balancers, NAT gateway","Only things that must face the internet"],
+      ["Private app subnet","Servers, containers","No public IP; outbound through NAT"],
+      ["Private data subnet","Databases, caches","Reachable only from the app subnet"],
+      ["Security group","Stateful firewall per resource","Allow-list by source group, not by IP range"],
+      ["Network ACL","Stateless firewall per subnet","Coarse extra layer; rarely the main control"],
+      ["NAT gateway","Outbound internet from private subnets","Costs money per GB; use VPC endpoints for AWS services"],
+      ["VPC endpoint / PrivateLink","Reach S3, DynamoDB, other services without the internet","Cheaper and safer than NAT"],
+      ["Peering / Transit Gateway","Connect VPCs","Transit Gateway for many VPCs"],
+      ["VPN / Direct Connect","Connect to an office or data center","Direct Connect: steady, private, slower to set up"]
+    ])+'<p>Spread each subnet tier across at least 2&ndash;3 availability zones.</p>'],
+  ["Picks",
+    table(["Need","Pick","Why"],[
+      ["HTTP routing, paths, headers","L7 load balancer (ALB)","Reads the request; routes by path or host"],
+      ["Raw TCP/UDP, static IPs, extreme speed","L4 load balancer (NLB)","Faster, keeps client IP, no HTTP awareness"],
+      ["Reliable ordered delivery","TCP","Retransmits; the default for APIs"],
+      ["Lowest latency, loss is acceptable","UDP (or QUIC)","Games, voice, video calls, DNS"],
+      ["Many small calls to one host","HTTP/2 + connection pool","One connection, many streams"],
+      ["Users spread worldwide","CDN + multi-region","Shorten distance; see Multi-region"],
+      ["Internal service calls","gRPC or HTTP/2 with mTLS","Compact, fast, typed"],
+      ["Keep traffic off the internet","Private subnets + endpoints","Smaller attack surface, lower cost"]
+    ])],
+  ["Timeouts and connections",
+    ul([
+      "Set a <b>connect timeout</b> (1&ndash;3 s) separate from the <b>read timeout</b>. Total time must fit the user&rsquo;s deadline.",
+      "<b>Idle timeouts must be ordered</b>: the backend keep-alive timeout should be <b>longer</b> than the load balancer&rsquo;s idle timeout (ALB default 60 s). Otherwise the LB reuses a connection the server already closed and you get random 502s.",
+      "<b>Pool and reuse connections</b>; cap the pool size per server so a slow dependency cannot exhaust sockets.",
+      "Reconnect with backoff and jitter, or every client reconnects at once after a blip (thundering herd).",
+      "Health-check the same path real traffic uses; keep the check cheap."
+    ])],
+  ["Latency math",
+    table(["Fact","Value"],[
+      ["Light in fiber","about 5 ms per 1,000 km, one way"],
+      ["Same availability zone round trip","about 0.5 ms"],
+      ["US coast to coast round trip","about 60&ndash;70 ms"],
+      ["US to Europe round trip","about 80&ndash;100 ms"],
+      ["New HTTPS connection (TCP + TLS 1.3)","2 round trips before the request even starts"],
+      ["Reused HTTP/2 connection","0 extra round trips"]
+    ])+'<p>You cannot beat the speed of light, so the main levers are: fewer round trips (reuse, batching, HTTP/2), and shorter distance (CDN, regions).</p>'],
+  ["Network failures to name",
+    table(["Failure","Effect","Answer"],[
+      ["Packet loss, congestion","Slow, retransmits","Timeouts, retries with backoff, QUIC"],
+      ["Network partition","Zones cannot talk","Decide C or A (see CAP); quorum"],
+      ["DNS outage or stale record","Cannot find the service","Multiple providers, sane TTL, client-side caching"],
+      ["SYN flood, DDoS","Connections exhausted","CDN and DDoS protection, SYN cookies, rate limits"],
+      ["Half-open connections","Peer vanished, socket stays","Keep-alive probes, timeouts"],
+      ["Reconnect storm","Everyone returns at once","Jittered backoff, connection limits"]
+    ])+'<p>See also: <a href="#sd-net">Protocols &amp; multiplexing</a>, <a href="#sd-tls">TLS &amp; certificates</a>, <a href="#sd-retry">Retries &amp; status codes</a>.</p>']
+]],
 ["sd-http","HTTP essentials","methods, status codes, headers, cookies, CORS, TLS","",[
   ["Anatomy of a request",
     codeBlk([
@@ -4968,13 +5271,14 @@ var DGROUPS=[
   ["Start here",["sd-approach","sd-numbers","sd-pick","sd-blocks"]],
   ["Scale & traffic",["sd-v-scale","sd-v-lb","sd-v-auto","sd-traffic","sd-v-cdn","sd-v-cache","sd-algos","sd-v-rate"]],
   ["Data & consistency",["sd-data","sd-v-dynamo","sd-cap","sd-consistency","sd-search","sd-pipeline","sd-count"]],
-  ["Messaging, APIs & networking",["sd-async","sd-v-queue","sd-api","sd-http","sd-net","sd-proto","sd-micro","sd-security"]],
+  ["Messaging, APIs & networking",["sd-async","sd-v-queue","sd-api","sd-http","sd-net","sd-proto","sd-micro"]],
+  ["Web, auth & network",["sd-web","sd-auth","sd-tls","sd-netdesign","sd-security"]],
   ["Reliability & deployment",["sd-reliability","sd-retry","sd-v-fault","sd-v-region","sd-v-bg","sd-v-eks","sd-arch","sd-v-qps"]],
   ["Specialised systems",["sd-geo","sd-video","sd-upload"]],
   ["Put it together",["sd-structures","sd-classics"]]
 ];
 var SUGGEST=["binary search","reverse a string","hash map","sort by key","closure","try catch","bfs","heap","two pointers","type check"];
-var DSUGGEST=["CAP theorem","retries","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
+var DSUGGEST=["CAP theorem","retries","JWT","cookies","TLS","load balancer","cache","CDN","rate limit","DynamoDB","gRPC","protobuf","large file upload","geohash","blue green","kafka"];
 var GIST={
 "sd-approach":["Clarify requirements and scale first","Estimate QPS, storage and bandwidth","Draw boxes, then deep-dive the bottleneck"],
 "sd-numbers":["Memory 100 ns · SSD 100 \u00b5s · same-zone hop 0.5 ms","Disk seek 10 ms · cross-continent 150 ms","1 M requests a day is about 12 QPS"],
@@ -5004,6 +5308,10 @@ var GIST={
 "sd-micro":["Gateway, discovery, mesh, tracing","Start with a modular monolith","Database per service; saga across them"],
 "sd-security":["authN = who, authZ = what; check every request","TLS everywhere; hash passwords with bcrypt or Argon2","Short-lived JWT, rate limits, WAF"],
 "sd-retry":["Retry only transient errors: 408, 429, 502, 503, 504","Exponential backoff + full jitter; honor Retry-After","One retry layer, a budget, idempotency keys"],
+"sd-web":["Cookie: sent every request; HttpOnly + Secure + SameSite","localStorage: 5 MB, readable by any script, no secrets","IndexedDB for big offline data; CSP and HSTS headers"],
+"sd-auth":["Session cookie: easy revoke. JWT: stateless, short-lived","Verify signature, exp, iss, aud; rotate refresh tokens","OAuth code + PKCE; OIDC for identity; passkeys"],
+"sd-tls":["TLS 1.3: 1 round trip, forward secrecy","Certificate chain, SAN, auto-renew (expiry is the top outage)","Terminate at the LB; mTLS between services"],
+"sd-netdesign":["Public subnet: LB. Private: apps and databases","L7 for HTTP routing, L4 for raw speed","Backend keep-alive must outlast the LB idle timeout"],
 "sd-reliability":["Timeouts, retries with backoff, circuit breakers","Rate limit and shed load","Backups, failover, test the restore"],
 "sd-v-fault":["Spread over 3 zones; no single point of failure","Health checks remove bad servers","Size so two zones can carry everything"],
 "sd-v-region":["Pick the pattern by RTO and RPO","Latency or failover routing in Route 53","Replicate data across regions"],
