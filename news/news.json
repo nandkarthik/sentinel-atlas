@@ -1,8 +1,470 @@
 {
- "generated": "2026-11-25T10:02:19Z",
+ "generated": "2026-11-26T09:45:52Z",
  "windowDays": 7,
  "sections": {
   "world": [
+   {
+    "title": "Musk's plan to send a million SpaceX data satellites into space approved",
+    "link": "https://www.bbc.co.uk/news/articles/cwp836l8n1jgo",
+    "source": "BBC News",
+    "date": "2026-11-26T09:27:44Z"
+   },
+   {
+    "title": "Situation in India-China border areas remain ‘generally stable’, says China",
+    "link": "https://www.thehindu.com/news/international/situation-in-india-china-border-areas-remain-generally-stable-says-china/article71745929.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T09:14:39Z"
+   },
+   {
+    "title": "Israeli attacks on Gaza kill senior education official, seven other people",
+    "link": "https://www.aljazeera.com/news/2026/11/26/israeli-attacks-on-gaza-kill-senior-education-official-seven-other-people",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T09:00:06Z"
+   },
+   {
+    "title": "Why has North Korea expelled a Swiss diplomat from Pyongyang?",
+    "link": "https://www.aljazeera.com/news/2026/11/26/why-has-north-korea-expelled-a-swiss-diplomat-from-pyongyang",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T08:54:49Z"
+   },
+   {
+    "title": "Explosion occurs at oil facility in Thailand’s Bangkok",
+    "link": "https://www.aljazeera.com/news/2026/11/26/explosion-occurs-at-oil-facility-in-thailands-bangkok",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T08:49:20Z"
+   },
+   {
+    "title": "‘Unbelievable catch’: Pakistan motorbike passenger becomes cricket sensation",
+    "link": "https://www.thehindu.com/sport/cricket/unbelievable-catch-pakistan-motorbike-passenger-becomes-cricket-sensation/article71745859.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T08:39:16Z"
+   },
+   {
+    "title": "Thanksgiving and National Day of Mourning: What is the history?",
+    "link": "https://www.aljazeera.com/news/2026/11/26/thanksgiving-and-national-day-of-mourning-what-is-the-history",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T08:33:51Z"
+   },
+   {
+    "title": "Two screenings of Pakistani TV show cancelled in India after backlash",
+    "link": "https://www.bbc.co.uk/news/articles/cky97x7delz9o",
+    "source": "BBC News",
+    "date": "2026-11-26T08:30:12Z"
+   },
+   {
+    "title": "Ms Rachel on Gaza: ‘everybody should speak out’",
+    "link": "https://www.aljazeera.com/video/newsfeed/2026/11/26/ms-rachel-on-gaza-everybody-should-speak",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T08:29:53Z"
+   },
+   {
+    "title": "Elon Musk says every child in U.S. will get two SpaceX shares",
+    "link": "https://www.thehindu.com/news/international/elon-musk-says-every-child-in-us-will-get-two-spacex-shares/article71745692.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T08:27:03Z"
+   },
+   {
+    "title": "Rescuers recover bodies after flood at illegal Indonesia gold mine",
+    "link": "https://www.aljazeera.com/video/newsfeed/2026/11/26/rescuers-recover-bodies-after-flood-at-illegal-indonesia-gold-mine",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T08:23:51Z"
+   },
+   {
+    "title": "FedEx airplane overruns runway at Miami airport, closing all but one runway",
+    "link": "https://www.thehindu.com/news/international/fedex-airplane-overruns-runway-at-miami-airport-closing-all-but-one-runway/article71745686.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T08:11:34Z"
+   },
+   {
+    "title": "Sheikh Hasina’s return gambit tests Bangladesh’s political fault lines",
+    "link": "https://www.thehindu.com/news/international/sheikh-hasinas-return-gambit-tests-bangladeshs-political-fault-lines/article71745537.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T08:00:29Z"
+   },
+   {
+    "title": "U.S. Army declares success in detonation of lead-based explosives stockpile in Iowa",
+    "link": "https://www.thehindu.com/news/international/us-army-declares-success-in-detonation-of-lead-based-explosives-stockpile-in-iowa/article71745045.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T07:55:02Z"
+   },
+   {
+    "title": "Cyril Ramaphosa wins court bid to overturn impeachment report",
+    "link": "https://www.thehindu.com/news/international/cyril-ramaphosa-wins-court-bid-to-overturn-impeachment-report/article71745568.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T07:44:55Z"
+   },
+   {
+    "title": "Guinea orders residents to clean up the capital months after deadly rubbish dump collapse",
+    "link": "https://www.bbc.co.uk/news/articles/cqwy4377yxnlo",
+    "source": "BBC News",
+    "date": "2026-11-26T07:43:48Z"
+   },
+   {
+    "title": "Photos: Rallies around the world denounce violence against women",
+    "link": "https://www.aljazeera.com/gallery/2026/11/26/photos-rallies-around-the-world-denounce-violence-against-women",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T07:43:14Z"
+   },
+   {
+    "title": "DR Congo Ebola cases surpass 12,000 as fighting disrupts response in east",
+    "link": "https://www.aljazeera.com/news/2026/11/26/dr-congo-ebola-cases-surpass-12000-as-fighting-disrupts-response-in-east",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T07:41:30Z"
+   },
+   {
+    "title": "New UK-EU treaty has 10-year termination clause, BBC understands",
+    "link": "https://www.bbc.co.uk/news/articles/c98r7p65edvgo",
+    "source": "BBC News",
+    "date": "2026-11-26T07:40:04Z"
+   },
+   {
+    "title": "At least 13 dead in Indonesia gold mine flood as rescue efforts intensify",
+    "link": "https://www.aljazeera.com/news/2026/11/26/at-least-13-dead-in-indonesia-gold-mine-flood-as-rescue-efforts-intensify",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T07:38:00Z"
+   },
+   {
+    "title": "FedEx plane overshoots Miami runway, causing brief suspension of flights at airport",
+    "link": "https://www.bbc.co.uk/news/articles/ckm2mz3prq77o",
+    "source": "BBC News",
+    "date": "2026-11-26T07:34:47Z"
+   },
+   {
+    "title": "Thirteen dead as mine disaster highlights illegal hunt for gold",
+    "link": "https://www.bbc.co.uk/news/articles/cmde1zr0nlyro",
+    "source": "BBC News",
+    "date": "2026-11-26T07:31:24Z"
+   },
+   {
+    "title": "DR Congo demands answers over Ugandan general's threats",
+    "link": "https://www.bbc.co.uk/news/articles/cwz0k90rgpm8o",
+    "source": "BBC News",
+    "date": "2026-11-26T07:24:39Z"
+   },
+   {
+    "title": "U.S. announces new 25% tariffs on India, second-highest in the 14 countries against which action has been taken",
+    "link": "https://www.thehindu.com/news/international/donald-trump-tariffs-us-midterm-elections/article71743081.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T07:20:09Z"
+   },
+   {
+    "title": "French navy intercepts suspected drug-smuggling semi-submersible",
+    "link": "https://www.aljazeera.com/video/newsfeed/2026/11/26/french-navy-intercepts-suspected-drug-smuggling-semi-submersible",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T07:15:39Z"
+   },
+   {
+    "title": "War and drought threaten livelihoods of Sudan’s farmers",
+    "link": "https://www.aljazeera.com/features/2026/11/26/war-and-drought-threaten-livelihoods-of-sudans-farmers",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T06:56:34Z"
+   },
+   {
+    "title": "The world must choose between nuclear abolition and nuclear catastrophe",
+    "link": "https://www.aljazeera.com/opinions/2026/11/26/the-world-must-choose-between-nuclear-abolition-and-nuclear-catastrophe",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T06:53:05Z"
+   },
+   {
+    "title": "Australia’s Digital Duty of Care law: Why Big Tech is under pressure",
+    "link": "https://www.thehindu.com/sci-tech/technology/australias-digital-duty-of-care-law-why-big-tech-is-under-pressure/article71745512.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T06:52:42Z"
+   },
+   {
+    "title": "Who really wants Pedro Sanchez out of power?",
+    "link": "https://www.aljazeera.com/opinions/2026/11/26/who-really-wants-pedro-sanchez-out-of-power",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T06:36:25Z"
+   },
+   {
+    "title": "Jannik Sinner ruled out of 2027 Australian Open after knee surgery",
+    "link": "https://www.aljazeera.com/sports/2026/11/26/jannik-sinner-australian-open-2027-knee-injury-surgery-tennis",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T06:32:48Z"
+   },
+   {
+    "title": "Fuel tanker crash ignites massive fire on highway surrounding Cairo, killing at least 31 people",
+    "link": "https://www.thehindu.com/news/international/fuel-tanker-crash-ignites-massive-fire-on-highway-surrounding-cairo/article71744262.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T06:26:42Z"
+   },
+   {
+    "title": "India, Netherlands upgrade ties; sign 17 MoUs on water, renewable energy, and semiconductors",
+    "link": "https://www.thehindu.com/news/national/india-netherlands-elevating-ties-to-strategic-partnership-says-pm-modi/article70988590.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T06:20:12Z"
+   },
+   {
+    "title": "Gaza meningitis cases surge as collapsing infrastructure fuels health fears",
+    "link": "https://www.aljazeera.com/news/2026/11/26/gaza-meningitis-cases-surge-as-collapsing-infrastructure-fuels-health-fears",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T06:14:15Z"
+   },
+   {
+    "title": "How Silicon Valley became central to Israel’s war on Palestinians",
+    "link": "https://www.aljazeera.com/news/2026/11/26/how-silicon-valley-central-israel-war-palestinians",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T06:12:53Z"
+   },
+   {
+    "title": "Sri Lanka mass grave revives quest for answers to forgotten Muslim massacre",
+    "link": "https://www.aljazeera.com/news/2026/11/26/sri-lanka-mass-grave-revives-quest-for-answers-to-forgotten-muslim-massacre",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T06:10:52Z"
+   },
+   {
+    "title": "ICC judge Kimberly Prost tries war crimes. She’s a target of US sanctions",
+    "link": "https://www.aljazeera.com/news/2026/11/26/icc-judge-kimberly-prost-tries-war-crimes-shes-a-target-of-us-sanctions",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T06:07:35Z"
+   },
+   {
+    "title": "Desperate appeals from women on death row in Iran after protests",
+    "link": "https://www.bbc.co.uk/news/articles/cm8x0ve4yd7wo",
+    "source": "BBC News",
+    "date": "2026-11-26T06:01:58Z"
+   },
+   {
+    "title": "South Korea’s central bank hikes interest rates amid AI chip boom",
+    "link": "https://www.aljazeera.com/economy/2026/11/26/south-koreas-central-bank-hikes-interest-rates-raises-gdp-growth-forecast",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T05:49:40Z"
+   },
+   {
+    "title": "Duran Duran guitarist Andy Taylor dies aged 65",
+    "link": "https://www.bbc.co.uk/news/articles/cmp3vk6vr44po",
+    "source": "BBC News",
+    "date": "2026-11-26T05:19:35Z"
+   },
+   {
+    "title": "Puerto Rico’s Supreme Court cancels major power contract",
+    "link": "https://www.aljazeera.com/news/2026/11/26/puerto-ricos-supreme-court-cancels-major-power-contract",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T05:09:55Z"
+   },
+   {
+    "title": "Nepal flash floods: Kathmandu begins process to declare 213 missing Indians presumed dead",
+    "link": "https://www.thehindu.com/news/national/nepal-flash-floods-kathmandu-begins-process-to-declare-213-indians-missing-presumed-dead/article71745222.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T05:04:14Z"
+   },
+   {
+    "title": "Watch: BBC confronts German man suspected of supplying migrant gangs with small boats",
+    "link": "https://www.bbc.co.uk/news/videos/cvglrz5yr79go",
+    "source": "BBC News",
+    "date": "2026-11-26T05:00:27Z"
+   },
+   {
+    "title": "German boat dealer suspected of supplying Channel smuggling gangs, BBC finds",
+    "link": "https://www.bbc.co.uk/news/articles/cqlymky8kpzjo",
+    "source": "BBC News",
+    "date": "2026-11-26T05:00:24Z"
+   },
+   {
+    "title": "Six killed, including children, in plane crash off Mississippi coast",
+    "link": "https://www.aljazeera.com/news/2026/11/26/six-killed-including-children-in-plane-crash-off-mississippi-coast",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T04:48:42Z"
+   },
+   {
+    "title": "Brazil blasts ‘unacceptable’ new US tariff proposals",
+    "link": "https://www.aljazeera.com/news/2026/11/26/brazil-blasts-unacceptable-new-us-tariff-proposals",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T04:47:47Z"
+   },
+   {
+    "title": "The Standard of Living: looking into the human side of economics",
+    "link": "https://www.thehindu.com/entertainment/theatre/the-standard-of-living-looking-into-the-human-side-of-economics/article71744001.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T04:46:50Z"
+   },
+   {
+    "title": "North Korea's Kim vows to build more nuclear weapons after ignoring Trump's overture",
+    "link": "https://www.thehindu.com/news/international/north-koreas-kim-vows-to-build-more-nuclear-weapons-after-ignoring-trumps-overture/article71745171.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T04:35:38Z"
+   },
+   {
+    "title": "Racecourse office blown away in Brazil",
+    "link": "https://www.aljazeera.com/video/newsfeed/2026/11/26/racecourse-office-blown-away-in-brazil",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T04:17:31Z"
+   },
+   {
+    "title": "US announces new tariffs on host of countries including China",
+    "link": "https://www.bbc.co.uk/news/articles/c893r9ke5p97o",
+    "source": "BBC News",
+    "date": "2026-11-26T04:10:58Z"
+   },
+   {
+    "title": "Macy's postpones Thanksgiving parade due to severe weather",
+    "link": "https://www.bbc.co.uk/news/articles/cwkgr38l2g9yo",
+    "source": "BBC News",
+    "date": "2026-11-26T04:04:14Z"
+   },
+   {
+    "title": "Colombian president taunts arrested supermarket hostage-takers",
+    "link": "https://www.aljazeera.com/video/newsfeed/2026/11/26/colombian-president-taunts-arrested-supermarket-hostage-takers",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T03:23:24Z"
+   },
+   {
+    "title": "Anthropic CEO Amodei denies wanting humanity to ‘surrender’ free will to AI",
+    "link": "https://www.aljazeera.com/economy/2026/11/26/anthropic-ceo-amodei-denies-wanting-humanity-to-surrender-free-will-to-ai",
+    "source": "Al Jazeera",
+    "date": "2026-11-26T03:20:23Z"
+   },
+   {
+    "title": "MEA separates Sheikh Hasina’s plans to return to Bangladesh from issue of extradition",
+    "link": "https://www.thehindu.com/news/national/mea-separates-sheikh-hasinas-plans-to-return-to-bangladesh-from-issue-of-extradition/article71743712.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T02:52:12Z"
+   },
+   {
+    "title": "Jensen Huang needs a new playbook for his second innings at Nvidia",
+    "link": "https://www.thehindu.com/sci-tech/technology/jensen-huang-needs-a-new-playbook-for-his-second-innings-at-nvidia/article71745086.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T02:47:13Z"
+   },
+   {
+    "title": "Plane crash off coast of Mississippi kills extended family of six on fishing trip",
+    "link": "https://www.thehindu.com/news/international/plane-crash-off-coast-of-mississippi-kills-extended-family-of-six-on-fishing-trip/article71745032.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T01:54:49Z"
+   },
+   {
+    "title": "Bad weather postpones Macy’s 100th Thanksgiving Day Parade for first time ever",
+    "link": "https://www.thehindu.com/news/international/bad-weather-postpones-macys-100th-thanksgiving-day-parade-for-first-time-ever/article71745030.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T01:34:38Z"
+   },
+   {
+    "title": "California warns of flooding as King Tides peak over Thanksgiving",
+    "link": "https://www.bbc.co.uk/news/articles/ckn806qq760po",
+    "source": "BBC News",
+    "date": "2026-11-26T01:22:55Z"
+   },
+   {
+    "title": "US Army says controlled blast of explosives in Iowa was 'huge success'",
+    "link": "https://www.bbc.co.uk/news/articles/cwg7l5ve251ko",
+    "source": "BBC News",
+    "date": "2026-11-26T00:23:05Z"
+   },
+   {
+    "title": "Has global jihadism failed, or is it simply changing shape?",
+    "link": "https://www.bbc.co.uk/news/articles/cmx2x4e0n5jro",
+    "source": "BBC News",
+    "date": "2026-11-26T00:22:18Z"
+   },
+   {
+    "title": "A renovation was meant to improve these Hong Kong homes - it ended in a blaze that killed 168",
+    "link": "https://www.bbc.co.uk/news/articles/cqx2wrkyrdn8o",
+    "source": "BBC News",
+    "date": "2026-11-25T23:26:50Z"
+   },
+   {
+    "title": "Andy Taylor, guitarist of new wave icons Duran Duran, dies at 65",
+    "link": "https://www.thehindu.com/entertainment/music/andy-taylor-guitarist-of-new-wave-icons-duran-duran-dies-at-65/article71744266.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T22:46:30Z"
+   },
+   {
+    "title": "Thirty-one killed in massive fire as fuel tanker crashes on Cairo highway",
+    "link": "https://www.bbc.co.uk/news/articles/cqy7rn30v314o",
+    "source": "BBC News",
+    "date": "2026-11-25T22:18:06Z"
+   },
+   {
+    "title": "North Korea expels Swiss diplomat in sanctions row",
+    "link": "https://www.bbc.co.uk/news/articles/cq0l34e4kkr5o",
+    "source": "BBC News",
+    "date": "2026-11-25T21:51:17Z"
+   },
+   {
+    "title": "Moment Nasa spacecraft hit asteroid - and what happened next",
+    "link": "https://www.bbc.co.uk/news/videos/cwe9kxpgz2kpo",
+    "source": "BBC News",
+    "date": "2026-11-25T20:11:46Z"
+   },
+   {
+    "title": "What we know about Trump's Thanksgiving tariffs",
+    "link": "https://www.bbc.co.uk/news/videos/c3x29v11ed1xo",
+    "source": "BBC News",
+    "date": "2026-11-25T19:38:05Z"
+   },
+   {
+    "title": "Ukraine says it struck two oil refineries in Russia's Samara region",
+    "link": "https://www.thehindu.com/news/international/ukraine-says-it-struck-two-oil-refineries-in-russias-samara-region/article71743934.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T18:09:47Z"
+   },
+   {
+    "title": "Kremlin rejects ex-U.K. PM Johnson's call for a token Western force in Ukraine as unacceptable",
+    "link": "https://www.thehindu.com/news/international/kremlin-rejects-ex-uk-pm-johnsons-call-for-a-token-western-force-in-ukraine-as-unacceptable/article71743922.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T18:09:14Z"
+   },
+   {
+    "title": "Israeli strike kills Hamas official, his wife and children",
+    "link": "https://www.thehindu.com/news/international/israeli-strike-kills-hamas-official-his-wife-and-children/article71743893.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:59:46Z"
+   },
+   {
+    "title": "Iran says ships hit mines in Hormuz, warns vessels to coordinate passage",
+    "link": "https://www.thehindu.com/news/international/iran-says-ships-hit-mines-in-hormuz-warns-vessels-to-coordinate-passage/article71743889.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:58:32Z"
+   },
+   {
+    "title": "Trump’s tariff plan explained: Which countries could be hit and why?",
+    "link": "https://www.thehindu.com/videos/trumps-tariff-plan-explained-which-countries-could-be-hit-and-why/article71743829.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:40:18Z"
+   },
+   {
+    "title": "Trump's accounts traded Nvidia shares 44 times this year, records show",
+    "link": "https://www.bbc.co.uk/news/articles/cq772vk664yvo",
+    "source": "BBC News",
+    "date": "2026-11-25T16:42:11Z"
+   },
+   {
+    "title": "Greatest catch ever? Man on motorbike takes incredible grab",
+    "link": "https://www.bbc.co.uk/sport/cricket/videos/cwx2e0g93l3eo",
+    "source": "BBC News",
+    "date": "2026-11-25T16:23:03Z"
+   },
+   {
+    "title": "Execution of proclamation orders against Hafiz Saeed, five other 26/11 accused still awaited",
+    "link": "https://www.thehindu.com/news/international/execution-of-proclamation-orders-against-hafiz-saeed-five-other-2611-accused-still-awaited/article71742602.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T15:05:31Z"
+   },
+   {
+    "title": "Five Russian military jets hit in airfield strike, says Ukraine",
+    "link": "https://www.bbc.co.uk/news/articles/ck9q8xp5r5pgo",
+    "source": "BBC News",
+    "date": "2026-11-25T14:46:41Z"
+   },
+   {
+    "title": "Bangladesh tightens border security ahead of Hasina's planned return; deploys 108 BGB platoons",
+    "link": "https://www.thehindu.com/news/international/bangladesh-tightens-border-security-ahead-of-hasinas-planned-return-deploys-108-bgb-platoons/article71742554.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T13:23:52Z"
+   },
+   {
+    "title": "UK police charge two men over a break-in at Prince William and Princess Catherine’s country home",
+    "link": "https://www.thehindu.com/news/international/uk-police-charge-two-men-over-a-break-in-at-prince-william-and-princess-catherines-country-home/article71742079.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T13:17:35Z"
+   },
+   {
+    "title": "U.S. set to slap tariffs on China, EU and others after probe on excess industrial capacity: report",
+    "link": "https://www.thehindu.com/news/international/trump-administration-set-to-unveil-new-tariffs-after-probeon-excess-factory-capacity-sources/article71740905.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T10:09:32Z"
+   },
    {
     "title": "Sporting Lisbon vs Manchester United: Champions League – teams, prediction",
     "link": "https://www.aljazeera.com/sports/2026/11/25/sporting-lisbon-vs-manchester-united-champions-league-teams-prediction",
@@ -52,16 +514,40 @@
     "date": "2026-11-25T08:08:57Z"
    },
    {
+    "title": "Nvidia's Jensen Huang says he is in therapy as comeback rally fades",
+    "link": "https://www.thehindu.com/news/international/nvidias-jensen-huang-says-he-is-in-therapy-as-comeback-rally-fades/article71740890.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T07:38:43Z"
+   },
+   {
     "title": "Sentences served, but Gaza prisoners remain behind Israeli bars",
     "link": "https://www.aljazeera.com/news/2026/11/25/sentences-served-but-gaza-prisoners-remain-behind-israeli-bars",
     "source": "Al Jazeera",
     "date": "2026-11-25T07:31:44Z"
    },
    {
+    "title": "Microsoft declares ‘Code Red’ after historic outage, internal memos show",
+    "link": "https://www.thehindu.com/sci-tech/technology/microsoft-declares-code-red-after-historic-outage-internal-memos-show/article71740915.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T07:28:13Z"
+   },
+   {
     "title": "Zimbabwe issues arrest warrant for Robert Mugabe's son over missed court date",
     "link": "https://www.bbc.co.uk/news/articles/c6d917jn5gq7o",
     "source": "BBC News",
     "date": "2026-11-25T07:26:54Z"
+   },
+   {
+    "title": "At least two Indians among 11 injured in Houthi attack in Riyadh; New Delhi condemns strike",
+    "link": "https://www.thehindu.com/news/national/houthi-attack-in-saudi-capital-riyadh-indians-injured/article71740914.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T07:25:07Z"
+   },
+   {
+    "title": "WHO chief calls on U.S. to lift oil blockade on Cuba, citing health impact",
+    "link": "https://www.thehindu.com/news/international/who-chief-calls-on-us-to-lift-oil-blockade-on-cuba-citing-health-impact/article71740941.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T07:14:58Z"
    },
    {
     "title": "Pakistan rejoices as country’s first astronaut enters orbit",
@@ -110,12 +596,6 @@
     "link": "https://www.bbc.co.uk/news/articles/cw8dv112r5gmo",
     "source": "BBC News",
     "date": "2026-11-25T06:00:36Z"
-   },
-   {
-    "title": "At least two Indians among 11 injured in Houthi attack in Riyadh; New Delhi condemns strike",
-    "link": "https://www.thehindu.com/news/national/houthi-attack-in-saudi-capital-riyadh-indians-injured/article71740914.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T05:58:03Z"
    },
    {
     "title": "North Korea declares a Swiss diplomat persona non grata and orders him to leave",
@@ -176,12 +656,6 @@
     "link": "https://www.thehindu.com/news/international/three-fort-hood-shooting-survivors-lose-final-appeal-to-witness-nidal-hasans-execution/article71741064.ece",
     "source": "The Hindu",
     "date": "2026-11-25T04:42:05Z"
-   },
-   {
-    "title": "WHO chief calls on U.S. to lift oil blockade on Cuba, citing health impact",
-    "link": "https://www.thehindu.com/news/international/who-chief-calls-on-us-to-lift-oil-blockade-on-cuba-citing-health-impact/article71740941.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T04:28:21Z"
    },
    {
     "title": "Huawei says U.S. conviction 'without legal or factual merit'",
@@ -248,483 +722,471 @@
     "link": "https://www.bbc.co.uk/news/videos/cmz74l0yzzvyo",
     "source": "BBC News",
     "date": "2026-11-25T03:28:37Z"
-   },
-   {
-    "title": "Democrats clinch a historic House majority of at least 259 seats, the largest since 1990",
-    "link": "https://www.thehindu.com/news/international/democrats-clinch-a-historic-house-majority-of-at-least-259-seats-the-largest-since-1990/article71740984.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T03:25:14Z"
-   },
-   {
-    "title": "Israeli Defence Minister says Iran is developing chemical weapons",
-    "link": "https://www.thehindu.com/news/international/israeli-defence-minister-says-iran-is-developing-chemical-weapons/article71740979.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T03:16:13Z"
-   },
-   {
-    "title": "Thomas Markle charged in U.S. on second count of possessing child sexual abuse material",
-    "link": "https://www.thehindu.com/news/international/thomas-markle-charged-in-us-on-second-count-of-possessing-child-sexual-abuse-material/article71740964.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T03:03:03Z"
-   },
-   {
-    "title": "U.S. set to slap tariffs on China, EU and others after probe on excess industrial capacity: report",
-    "link": "https://www.thehindu.com/news/international/trump-administration-set-to-unveil-new-tariffs-after-probeon-excess-factory-capacity-sources/article71740905.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T03:00:59Z"
-   },
-   {
-    "title": "Huawei found guilty of stealing US trade secrets but acquitted of racketeering",
-    "link": "https://www.bbc.co.uk/news/articles/cmy49ngydqzpo",
-    "source": "BBC News",
-    "date": "2026-11-25T02:59:27Z"
-   },
-   {
-    "title": "Pakistani astronaut launches into space aboard Chinese rocket",
-    "link": "https://www.aljazeera.com/video/newsfeed/2026/11/25/pakistani-astronaut-launches-into-space-aboard-chinese-rocket",
-    "source": "Al Jazeera",
-    "date": "2026-11-25T02:44:45Z"
-   },
-   {
-    "title": "Kilmar Abrego Garcia self-deports to Spain after lengthy US legal battle",
-    "link": "https://www.aljazeera.com/news/2026/11/25/kilmar-abrego-garcia-self-deports-to-spain-after-lengthy-us-legal-battle",
-    "source": "Al Jazeera",
-    "date": "2026-11-25T02:40:59Z"
-   },
-   {
-    "title": "WHO chief urges end to US fuel blockade on Cuba",
-    "link": "https://www.aljazeera.com/news/2026/11/25/who-chief-urges-end-to-us-fuel-blockade-on-cuba",
-    "source": "Al Jazeera",
-    "date": "2026-11-25T02:23:19Z"
-   },
-   {
-    "title": "Microsoft declares ‘Code Red’ after historic outage, internal memos show",
-    "link": "https://www.thehindu.com/sci-tech/technology/microsoft-declares-code-red-after-historic-outage-internal-memos-show/article71740915.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T01:59:24Z"
-   },
-   {
-    "title": "Lies, a disguise and surfboard bags: How a jealous Sydney policeman tried to cover up double murder",
-    "link": "https://www.bbc.co.uk/news/articles/cmrrg749d02do",
-    "source": "BBC News",
-    "date": "2026-11-25T01:51:43Z"
-   },
-   {
-    "title": "Thomas Markle charged in US for possessing child sex abuse images",
-    "link": "https://www.bbc.co.uk/news/articles/crwy4egxn592o",
-    "source": "BBC News",
-    "date": "2026-11-25T01:40:42Z"
-   },
-   {
-    "title": "Senegal fans celebrate AFCON legal victory over Morocco",
-    "link": "https://www.aljazeera.com/video/newsfeed/2026/11/25/senegal-fans-celebrate-afcon-legal-victory-over-morocco",
-    "source": "Al Jazeera",
-    "date": "2026-11-25T01:39:53Z"
-   },
-   {
-    "title": "Nvidia's Jensen Huang says he is in therapy as comeback rally fades",
-    "link": "https://www.thehindu.com/news/international/nvidias-jensen-huang-says-he-is-in-therapy-as-comeback-rally-fades/article71740890.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T01:37:20Z"
-   },
-   {
-    "title": "Israel’s Eisenkot secures first coalition partner in bid to form government",
-    "link": "https://www.aljazeera.com/news/2026/11/25/israels-eisenkot-secures-first-coalition-partner-in-bid-to-form-government",
-    "source": "Al Jazeera",
-    "date": "2026-11-25T01:30:44Z"
-   },
-   {
-    "title": "Iran whips singer Parastoo Ahmadi 74 times over YouTube concert",
-    "link": "https://www.aljazeera.com/video/newsfeed/2026/11/25/iran-whips-singer-parastoo-ahmadi-74-times-over-youtube-concert",
-    "source": "Al Jazeera",
-    "date": "2026-11-25T01:21:02Z"
-   },
-   {
-    "title": "Poll finds US voters want government to end Iran war regardless of terms",
-    "link": "https://www.aljazeera.com/news/2026/11/25/poll-finds-us-voters-want-government-to-end-iran-war-regardless-of-terms",
-    "source": "Al Jazeera",
-    "date": "2026-11-25T01:14:22Z"
-   },
-   {
-    "title": "Trump's rescue of Nvidia's Huang brings political risks",
-    "link": "https://www.bbc.co.uk/news/articles/ckj05m2zdyryo",
-    "source": "BBC News",
-    "date": "2026-11-25T01:03:05Z"
-   },
-   {
-    "title": "The rising cost of putting food on the table in India",
-    "link": "https://www.bbc.co.uk/news/articles/cmy0xj41kl50o",
-    "source": "BBC News",
-    "date": "2026-11-25T01:02:13Z"
-   },
-   {
-    "title": "Shot in the face at 15: The lives shattered by Cameroon's decade of conflict",
-    "link": "https://www.bbc.co.uk/news/articles/crd6128y1qn1o",
-    "source": "BBC News",
-    "date": "2026-11-25T01:00:36Z"
-   },
-   {
-    "title": "Clashing political visions reflect a divided Spain ahead of election",
-    "link": "https://www.bbc.co.uk/news/articles/cq5y1212y4pwo",
-    "source": "BBC News",
-    "date": "2026-11-25T00:58:34Z"
-   },
-   {
-    "title": "Russia's own figures show it has lost almost 500,000 people in Ukraine war",
-    "link": "https://www.bbc.co.uk/news/articles/cmx27g533zwyo",
-    "source": "BBC News",
-    "date": "2026-11-25T00:56:51Z"
-   },
-   {
-    "title": "My family died in Ukraine. My mum blamed Zelensky's troops - the truth is complicated",
-    "link": "https://www.bbc.co.uk/news/articles/cw24e17v9e51o",
-    "source": "BBC News",
-    "date": "2026-11-25T00:54:13Z"
-   },
-   {
-    "title": "Radar issue delaying flights at Chicago O’Hare airport",
-    "link": "https://www.thehindu.com/news/international/us-chicago-o-hare-international-airport-flight-delays-november-2026-updates/article71740881.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T00:18:57Z"
-   },
-   {
-    "title": "Is China behind a wave of AI fake videos targeting Taiwan?",
-    "link": "https://www.bbc.co.uk/news/articles/cv702rw7dzx5o",
-    "source": "BBC News",
-    "date": "2026-11-24T23:05:11Z"
-   },
-   {
-    "title": "These North Koreans say they were spied on, beaten and jailed for being Christian",
-    "link": "https://www.bbc.co.uk/news/articles/cqgkv8kp7145o",
-    "source": "BBC News",
-    "date": "2026-11-24T23:03:59Z"
-   },
-   {
-    "title": "Israel’s Eisenkot clinches first coalition agreement in bid to form government",
-    "link": "https://www.thehindu.com/news/international/israels-eisenkot-clinches-first-coalition-agreement-in-bid-to-form-government/article71740200.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T22:56:23Z"
-   },
-   {
-    "title": "Chinese tech giant Huawei is guilty of conspiracy to steal trade secrets, U.S. jury finds",
-    "link": "https://www.thehindu.com/sci-tech/technology/chinese-tech-giant-huawei-is-guilty-of-conspiracy-to-steal-trade-secrets-us-jury-finds/article71740060.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T22:55:50Z"
-   },
-   {
-    "title": "Malaysia to repatriate another 6,803 Myanmar nationals despite ICJ genocide ruling",
-    "link": "https://www.thehindu.com/news/international/malaysia-to-repatriate-another-6803-myanmar-nationals-despite-icj-genocide-ruling/article71740198.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T22:36:29Z"
-   },
-   {
-    "title": "Watch: Flock of turkeys chases woman on Massachusetts pavement",
-    "link": "https://www.bbc.co.uk/news/videos/cknv4mq93gd2o",
-    "source": "BBC News",
-    "date": "2026-11-24T22:07:30Z"
-   },
-   {
-    "title": "DR Congo says military aircraft missing as rebels claim to shoot down plane",
-    "link": "https://www.bbc.co.uk/news/articles/cwy7r5z8gg65o",
-    "source": "BBC News",
-    "date": "2026-11-24T19:27:23Z"
-   },
-   {
-    "title": "Nigerian monarch, 92, suspended after sexual assault claims",
-    "link": "https://www.bbc.co.uk/news/articles/cmglrz462nn6o",
-    "source": "BBC News",
-    "date": "2026-11-24T19:10:31Z"
-   },
-   {
-    "title": "Indian government has 'lost the plot', says 'cockroach' leader barred from UK flight",
-    "link": "https://www.bbc.co.uk/news/articles/cm5y1ezx2gqyo",
-    "source": "BBC News",
-    "date": "2026-11-24T18:07:46Z"
-   },
-   {
-    "title": "Iran rules out talks with U.S. until its seven conditions are met",
-    "link": "https://www.thehindu.com/news/international/iran-rules-out-talks-with-us-until-its-seven-conditions-are-met/article71739875.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T17:36:11Z"
-   },
-   {
-    "title": "A Russian strike on Ukraine kills two, wounds 48 as Kyiv explains its attack in Libya",
-    "link": "https://www.thehindu.com/news/international/russian-attack-kills-two-people-wounds-22-in-ukraines-zaporizhzhia-official-says/article71737237.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T17:14:46Z"
-   },
-   {
-    "title": "Yemen officials say strike on buses, trucks kills 26",
-    "link": "https://www.thehindu.com/news/international/yemen-officials-say-strike-on-buses-trucks-kills-26/article71739839.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T17:08:30Z"
-   },
-   {
-    "title": "Israeli strikes in Gaza kill seven including senior security official",
-    "link": "https://www.thehindu.com/news/international/hamas-security-official-killed-in-israel-strikes-in-gaza/article71738279.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T16:57:13Z"
-   },
-   {
-    "title": "The first genocide conviction of a state: What it means | The Hindu Editorial",
-    "link": "https://www.thehindu.com/videos/the-first-genocide-conviction-of-a-state-what-it-means-the-hindu-editorial/article71739738.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T16:51:54Z"
-   },
-   {
-    "title": "French ex-President Sarkozy and wife Carla Bruni to face trial",
-    "link": "https://www.bbc.co.uk/news/articles/c65y17pwv1z7o",
-    "source": "BBC News",
-    "date": "2026-11-24T16:49:07Z"
-   },
-   {
-    "title": "U.S. blacklists Megaspeed chip firm linked to Nvidia scandal",
-    "link": "https://www.thehindu.com/news/international/us-blacklists-megaspeed-chip-firm-linked-to-nvidia-scandal/article71739692.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T16:44:57Z"
-   },
-   {
-    "title": "Hasina to return to Bangladesh on December 16, says Awami League",
-    "link": "https://www.thehindu.com/news/international/former-bangladesh-pm-sheikh-hasina-return-to-bangladesh/article71737182.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T16:43:42Z"
-   },
-   {
-    "title": "Israeli air strike kills Hamas internal security chief in Gaza",
-    "link": "https://www.bbc.co.uk/news/articles/c6rrg7ggq190o",
-    "source": "BBC News",
-    "date": "2026-11-24T15:35:53Z"
-   },
-   {
-    "title": "Land mine casualties soar in Syria, two years after war",
-    "link": "https://www.bbc.co.uk/news/articles/c893rl37ywdgo",
-    "source": "BBC News",
-    "date": "2026-11-24T15:17:28Z"
-   },
-   {
-    "title": "China announces shock corruption probe into Politburo member",
-    "link": "https://www.thehindu.com/news/international/china-announces-shock-corruption-probe-into-politburo-member/article71738737.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T14:56:14Z"
-   },
-   {
-    "title": "Kaliningrad: Why Russia’s Baltic exclave is a new flashpoint",
-    "link": "https://www.thehindu.com/news/international/kaliningrad-why-russias-baltic-exclave-is-a-new-flashpoint/article71547624.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T14:45:07Z"
-   },
-   {
-    "title": "Estonia on the edge as Russia-NATO tensions rise",
-    "link": "https://www.thehindu.com/news/international/estonia-on-the-edge-as-russia-nato-tensions-rise/article71612139.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T14:08:49Z"
-   },
-   {
-    "title": "Brazil turns heat on Big Tech and Bolsonaro camp over foreign interference in elections",
-    "link": "https://www.thehindu.com/news/international/brazil-turns-heat-on-big-tech-and-bolsonaro-camp-over-foreign-interference-in-elections/article71714470.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:57:53Z"
-   },
-   {
-    "title": "After Donald Trump’s midterm poll rout, South America breathes easy as far-right feels the heat",
-    "link": "https://www.thehindu.com/news/international/after-trumps-midterm-poll-rout-south-america-breathes-easy-as-far-right-feels-the-heat/article71673628.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:57:20Z"
-   },
-   {
-    "title": "Lula da Silva | The Pele of Brazil’s politics",
-    "link": "https://www.thehindu.com/news/international/lula-da-silva-the-pele-of-brazils-politics/article71650597.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:56:46Z"
-   },
-   {
-    "title": "Lula wins a record fourth presidential term as Brazil defeats far-right, defies Trump and Meta",
-    "link": "https://www.thehindu.com/news/international/brazils-lula-da-silva-defies-odds-to-clinch-poll-victory-against-flavio-bolsonaro/article71625437.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:55:45Z"
-   },
-   {
-    "title": "Lula takes to streets with people’s demands as Flávio leans on Big Tech in Brazil’s presidential race",
-    "link": "https://www.thehindu.com/news/international/lula-takes-to-streets-with-peoples-demands-as-flavio-leans-on-big-tech-in-brazils-presidential-race/article71603422.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:55:00Z"
-   },
-   {
-    "title": "Brazil lurches to the right as Lula falters in the first round of presidential election",
-    "link": "https://www.thehindu.com/news/international/brazil-presidential-election-lula-bolsonaro/article71548352.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:54:16Z"
-   },
-   {
-    "title": "Flávio Bolsonaro | The Lula challenger",
-    "link": "https://www.thehindu.com/news/international/flavio-bolsonaro-the-lula-challenger/article71541618.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:53:34Z"
-   },
-   {
-    "title": "Lula draws the line amid Trump interference in Brazil’s close and tough election",
-    "link": "https://www.thehindu.com/news/international/lula-draws-the-line-amid-trump-interference-in-brazils-close-and-tough-election/article71524237.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:52:57Z"
-   },
-   {
-    "title": "Brazil, India are building strategic ties for a changing world, says Brazil’s Foreign Minister",
-    "link": "https://www.thehindu.com/news/national/brazil-india-are-building-strategic-ties-for-a-changing-world-says-brazils-foreign-minister/article71459802.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:50:48Z"
-   },
-   {
-    "title": "Sri Lanka’s Opposition lawmakers accuse government of preventing parliamentary debate on Imran Khan’s release",
-    "link": "https://www.thehindu.com/news/international/sri-lankas-opposition-lawmakers-accuse-government-of-preventing-parliamentary-debate-on-imran-khans-release/article71738317.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T12:45:56Z"
-   },
-   {
-    "title": "Russian governor detained in rare criminal case against regional leader",
-    "link": "https://www.bbc.co.uk/news/articles/cmwy868v3nneo",
-    "source": "BBC News",
-    "date": "2026-11-24T12:45:43Z"
-   },
-   {
-    "title": "Vietnam Blast: Six killed, dozens injured in a hot pot eatery blast in Hanoi",
-    "link": "https://www.thehindu.com/news/international/vietnam-blast-six-killed-dozens-injured-in-a-hot-pot-eatery-blast-in-hanoi/article71738306.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T11:58:47Z"
-   },
-   {
-    "title": "Pope Francis' diary reveals claims he saw the devil three times",
-    "link": "https://www.bbc.co.uk/news/articles/cm78270l4z7no",
-    "source": "BBC News",
-    "date": "2026-11-24T11:10:57Z"
-   },
-   {
-    "title": "Nato chief vows defence against space threat after Russian nuclear satellite reports",
-    "link": "https://www.bbc.co.uk/news/articles/c9x2er1ry2mzo",
-    "source": "BBC News",
-    "date": "2026-11-24T10:58:51Z"
-   },
-   {
-    "title": "Trump faces backlash after saying he 'convinced' Nvidia to reinstate CEO Jensen Huang",
-    "link": "https://www.bbc.co.uk/news/articles/cq5y1k8ez407o",
-    "source": "BBC News",
-    "date": "2026-11-24T10:53:37Z"
-   },
-   {
-    "title": "Was Jensen Huang too big to fire? Why Nvidia, Trump brought him back",
-    "link": "https://www.aljazeera.com/features/2026/11/24/was-jensen-huang-too-big-to-fire-why-nvidia-trump-brought-him-back",
-    "source": "Al Jazeera",
-    "date": "2026-11-24T10:48:38Z"
-   },
-   {
-    "title": "Israeli air strikes in Gaza kill 7 as doctors warn of meningitis outbreak",
-    "link": "https://www.aljazeera.com/news/2026/11/24/israeli-air-strikes-in-gaza-kill-7-as-doctors-warn-of-meningitis-outbreak",
-    "source": "Al Jazeera",
-    "date": "2026-11-24T10:47:41Z"
-   },
-   {
-    "title": "Iran carries out flogging of singer and her team, Iranian website says",
-    "link": "https://www.thehindu.com/news/international/iran-carries-out-flogging-of-singer-and-her-team-iranian-website-says/article71737731.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T10:31:43Z"
-   },
-   {
-    "title": "Sheikh Hasina could only be brought back to Bangladesh in handcuffs: Humaiun Kobir",
-    "link": "https://www.thehindu.com/news/international/sheikh-hasina-could-only-be-brought-back-to-bangladesh-in-handcuffs-humaiun-kobir/article71737801.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T09:58:46Z"
-   },
-   {
-    "title": "Why S Korea issued air raid alert after Russian jets flew near its airspace",
-    "link": "https://www.aljazeera.com/news/2026/11/24/why-s-korea-issued-air-raid-alert-after-russian-jets-flew-near-its-airspace",
-    "source": "Al Jazeera",
-    "date": "2026-11-24T09:53:55Z"
-   },
-   {
-    "title": "Russian strike kills two in Ukraine, days after ship attack off Libya",
-    "link": "https://www.aljazeera.com/news/2026/11/24/russian-attack-kills-two-people-in-ukraines-zaporizhzhia",
-    "source": "Al Jazeera",
-    "date": "2026-11-24T09:51:26Z"
-   },
-   {
-    "title": "How Herat defied the Taliban regime, chanting ‘women, work and freedom’",
-    "link": "https://www.thehindu.com/news/international/how-herat-defied-the-taliban-regime-chanting-women-work-and-freedom/article71109347.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T09:40:57Z"
-   },
-   {
-    "title": "Watch: Moment troops raid home and capture Mexican drug lord",
-    "link": "https://www.bbc.co.uk/news/videos/cm62p9y3y04qo",
-    "source": "BBC News",
-    "date": "2026-11-24T09:09:41Z"
-   },
-   {
-    "title": "A framework for nuclear risk reduction cannot wait",
-    "link": "https://www.thehindu.com/opinion/op-ed/a-framework-for-nuclear-risk-reduction-cannot-wait/article71735816.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T09:00:38Z"
-   },
-   {
-    "title": "COP31 talks fail as EU, others reject any climate deal without language on a fossil fuel phase-out",
-    "link": "https://www.thehindu.com/sci-tech/energy-and-environment/cop31-fails-to-agree-on-climate-deal-in-chaotic-finale/article71731651.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T08:53:47Z"
-   },
-   {
-    "title": "U.S. targets chip smuggling to China after Huang's return to scandal-hit Nvidia",
-    "link": "https://www.thehindu.com/news/international/us-targets-chip-smuggling-to-china-after-huangs-return-to-scandal-hit-nvidia/article71737766.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T08:51:30Z"
-   },
-   {
-    "title": "NASA’s Voyager 1 reaches one light-day from Earth on November 18: What does it mean?",
-    "link": "https://www.thehindu.com/sci-tech/science/voyager-1-reaches-one-light-day-from-earth-on-november-18-what-it-means-nasa-latest-news/article71704297.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T08:46:48Z"
-   },
-   {
-    "title": "Prince and Princess of Wales in Mumbai for Earthshot Prize 2026: All you need to know",
-    "link": "https://www.thehindu.com/news/cities/mumbai/prince-of-wales-earthshot-prize-2026-in-mumbai-everything-you-need-to-know/article71706725.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T08:46:29Z"
-   },
-   {
-    "title": "India, Canada ‘very close’ to concluding trade pact negotiations: Official",
-    "link": "https://www.thehindu.com/news/national/india-canada-very-close-to-concluding-trade-pact-negotiations-official/article71737579.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T08:42:32Z"
-   },
-   {
-    "title": "India and Israel: Cut from different cloths",
-    "link": "https://www.thehindu.com/news/international/the-view-from-india-newsletter-india-and-israel-cut-from-different-cloths/article71735254.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T08:37:50Z"
-   },
-   {
-    "title": "US army says detonation of lead explosives in Iowa will proceed",
-    "link": "https://www.aljazeera.com/news/2026/11/24/us-army-says-detonation-of-lead-explosives-in-iowa-will-proceed",
-    "source": "Al Jazeera",
-    "date": "2026-11-24T08:24:08Z"
-   },
-   {
-    "title": "Malaysia set to return thousands of Rohingya refugees to Myanmar",
-    "link": "https://www.aljazeera.com/news/2026/11/24/malaysia-set-to-return-thousands-of-rohingya-refugees-to-myanmar-2",
-    "source": "Al Jazeera",
-    "date": "2026-11-24T08:21:41Z"
-   },
-   {
-    "title": "Moment Mexican troops captured cartel leader ‘El Chapo Isidro’",
-    "link": "https://www.aljazeera.com/video/newsfeed/2026/11/24/moment-mexican-troops-captured-cartel-leader-el-chapo",
-    "source": "Al Jazeera",
-    "date": "2026-11-24T08:17:26Z"
-   },
-   {
-    "title": "Pakistan’s Zeeshan Ali set for historic flight to China’s space station",
-    "link": "https://www.aljazeera.com/news/2026/11/24/pakistans-zeeshan-ali-set-for-historic-flight-to-chinas-space-station",
-    "source": "Al Jazeera",
-    "date": "2026-11-24T07:55:18Z"
    }
   ],
   "ap": [
+   {
+    "title": "Atchannaidu Directs Coast Guard-Assisted Search For Missing Fisherman",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/atchannaidu-directs-coast-guard-assisted-search-for-missing-fisherman-off-vizag-2008145",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T09:38:49Z"
+   },
+   {
+    "title": "Gram Panchayat Polls: Tension Erupts Outside Polling Booth in Keserapalli",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/gram-panchayat-polls-tension-erupts-outside-polling-booth-in-keserapalli-2008138",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T09:09:04Z"
+   },
+   {
+    "title": "Panchayat Polls: MLA Bhuma Akhila Priya's Vehicle Attacked In Ahobilam",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/panchayat-polls-clashes-erupt-between-tdp-ysrcp-in-allagadda-nandyal-2008136",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T08:59:28Z"
+   },
+   {
+    "title": "Polling under way in 23 urban local bodies and 3,240 gram panchayats in Andhra Pradesh | LIVE",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/urban-local-bodies-polls-andhra-pradesh-tdp-ysrcp-live-updates-november-26-2026/article71745216.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T06:30:41Z"
+   },
+   {
+    "title": "Four killed as SUV rams lorry near Tadipatri in Anantapur district",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/four-killed-as-suv-rams-lorry-near-tadipatri-in-anantapur-district/article71745179.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T06:28:22Z"
+   },
+   {
+    "title": "Who is Vardhaman Jain? The Person Who Donated 121KG Gold worth Rs.206 Crore to Tirumala Temple",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/who-is-vardhaman-jain-the-person-who-donated-121kg-gold-to-tirumala-temple-2008105",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T06:20:24Z"
+   },
+   {
+    "title": "Naidu Appreciates Vardhaman Jain's 121 Kg Gold Donation",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/tirupati-chennai-devotee-to-donate-121-kg-gold-ornaments-to-lord-venkateswara-2008100",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T05:44:37Z"
+   },
+   {
+    "title": "YS Sharmila's Daughter Anjili Reddy's Wedding Held at Bengaluru Resort",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ys-sharmilas-daughter-weds-in-christian-ceremony-at-bengaluru-resort-hindu-rites-on-thursday-2008093",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T05:18:08Z"
+   },
+   {
+    "title": "A.P. leading in promoting circular economy: Kommareddy Pattabhi Ram",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/ap-leading-in-promoting-circular-economy-kommareddy-pattabhi-ram/article71743688.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T03:25:07Z"
+   },
+   {
+    "title": "A.P. government increases incentives for villages which unanimously elect Gram Panchayats",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/ap-government-increases-incentives-for-villages-which-unanimously-elect-gram-panchayats/article71745070.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T03:02:06Z"
+   },
+   {
+    "title": "AP Municipal Elections Live: Naidu and Family Cast Their Votes",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-municipal-elections-2026-live-polling-begins-in-four-corporations-2008074",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T03:00:22Z"
+   },
+   {
+    "title": "AP Gram Panchayat Elections 2026 Results LIVE: Counting Begins",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-gram-panchayat-elections-2026-live-first-phase-results-polling-begins-in-3240-panchayats-2008073",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T02:49:45Z"
+   },
+   {
+    "title": "Hyderabad Wedding Trip Ends in Tragedy, Four Killed in Anantapur",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/hyderabad-wedding-trip-ends-in-tragedy-four-killed-eight-injured-in-anantapur-2008072",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T02:39:04Z"
+   },
+   {
+    "title": "Nellore: Vijayawada-Bengaluru Travels Bus Catches Fire, Passengers Safe",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/nellore-private-bus-travelling-from-vijayawada-to-bengaluru-catches-fire-passengers-safe-2008071",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T02:30:27Z"
+   },
+   {
+    "title": "Polls for 3,803 Sarpanches, 29,608 Ward Members on Nov. 29",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/polls-for-3803-sarpanches-29608-ward-members-on-nov-29-2008029",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:02:55Z"
+   },
+   {
+    "title": "AP High Court Bars Unauthorised Recording Of Proceedings",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/high-court-bars-unauthorised-recording-of-proceedings-2008018",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:45:15Z"
+   },
+   {
+    "title": "Sana Satish Takes Dig At Jagan Over Assembly Absence",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/sana-satish-takes-dig-at-jagan-over-assembly-absence-2008011",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:34:56Z"
+   },
+   {
+    "title": "PIL Seeks CBI Probe Into Sports Quota Teacher Recruitment Under DSC-2025",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/pil-seeks-cbi-probe-into-sports-quota-teacher-recruitment-under-dsc-2025-2008010",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:33:04Z"
+   },
+   {
+    "title": "Nellore, Prakasam Officials Complete Arrangements For Polls Today",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/nellore-prakasam-officials-complete-arrangements-for-polls-today-2008008",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:26:39Z"
+   },
+   {
+    "title": "ITDA Makes Trade Registration Mandatory For Coffee Buyers In ASR",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/itda-makes-trade-registration-mandatory-for-coffee-buyers-in-asr-2008005",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:23:11Z"
+   },
+   {
+    "title": "SRM University-A.P. signs MoU with AiDEM to facilitate global career opportunities for students",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/srm-university-ap-signs-mou-with-aidem-to-facilitate-global-career-opportunities-for-students/article71743454.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T18:20:56Z"
+   },
+   {
+    "title": "Rice Traders Must Register, Follow Government-Fixed Prices",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/rice-traders-must-register-follow-government-fixed-prices-2008002",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:20:38Z"
+   },
+   {
+    "title": "Pothole-Ridden B.N. Road Poses Safety Concerns In Anakapalli",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/pothole-ridden-bn-road-poses-safety-concerns-in-anakapalli-2008000",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:19:11Z"
+   },
+   {
+    "title": "Guntur, Bapatla Districts Deploy Over 3,000 Police Personnel For Polls",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/guntur-bapatla-districts-deploy-over-3000-police-personnel-for-polls-2007995",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:11:39Z"
+   },
+   {
+    "title": "NFIR Demands OPS Restoration, Filling Of Railway Vacancies",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/nfir-demands-ops-restoration-filling-of-railway-vacancies-2007994",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:11:11Z"
+   },
+   {
+    "title": "SRM University-AP Signs MoU With Japanese Recruitment Firm",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/srm-university-ap-signs-mou-with-japanese-recruitment-firm-2007991",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:04:35Z"
+   },
+   {
+    "title": "J.B. Srinivas Formally Assumes Charge as Tirupati Mayor",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/jb-srinivas-formally-assumes-charge-as-tirupati-mayor-2007990",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:01:56Z"
+   },
+   {
+    "title": "Vijayasai Compares Self to Thackeray, Kanshi Ram; Out of 2029 Race",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/vijayasai-equates-self-with-thackeray-kanshi-ram-wont-contest-in-2029-2007989",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:01:47Z"
+   },
+   {
+    "title": "150 Railway Employees With Disabilities Compete In Para Sports",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/150-railway-employees-with-disabilities-compete-in-para-sports-2007988",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:01:20Z"
+   },
+   {
+    "title": "Telangana Plans To Draw 2 TMC Ft Of Sagar Water Daily, Alleges AP",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/telangana-plans-to-draw-2-tmc-ft-of-sagar-water-daily-alleges-ap-2007986",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:00:25Z"
+   },
+   {
+    "title": "YSRC Seeks Additional Police Deployment for Municipal Polls",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ysrc-seeks-additional-police-deployment-for-municipal-polls-2007985",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:57:41Z"
+   },
+   {
+    "title": "Tirupati Collector Clarifies Over Anjaneyapuram Temple Controversy",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/tirupati-collector-clarifies-over-anjaneyapuram-temple-controversy-2007978",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:47:17Z"
+   },
+   {
+    "title": "Elaborate Security Arrangements for First Phase of Gram Panchayat Polls",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/elaborate-security-arrangements-for-first-phase-of-gram-panchayat-polls-2007975",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:46:19Z"
+   },
+   {
+    "title": "Srisailam Releases December Darshan, Seva Tickets",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/srisailam-releases-december-darshan-seva-tickets-2007974",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:45:33Z"
+   },
+   {
+    "title": "MyTDP App Crosses 10-Lakh Registrations; Reflects People's Trust In TD: Lokesh",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/mytdp-app-crosses-10-lakh-registrations-reflects-peoples-trust-in-td-lokesh-2007972",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:42:40Z"
+   },
+   {
+    "title": "Tirupati Food Safety Checks Stymied by Raid Tip-Offs, Staff Shortage",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/tirupati-food-safety-checks-stymied-by-raid-tip-offs-staff-shortage-2007968",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:39:29Z"
+   },
+   {
+    "title": "AP Records 18.7% Growth in Own Revenue, Collects Rs 74,342 Crore",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-records-187-growth-in-own-revenue-collects-rs-74342-crore-2007962",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:31:12Z"
+   },
+   {
+    "title": "AP First State To Introduce Circular Economy Policy",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-first-state-to-introduce-circular-economy-policy-2007958",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:28:11Z"
+   },
+   {
+    "title": "CM Naidu Seeks Report on Illegal Sand Mining, Damage to Drinking Water Pipeline",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/cm-naidu-seeks-report-on-illegal-sand-mining-damage-to-drinking-water-pipeline-2007957",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:26:21Z"
+   },
+   {
+    "title": "Rice prices soar in Nellore district; traders told to limit stocks, register on portal",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/rice-prices-soar-in-nellore-district-traders-told-to-limit-stocks-register-on-portal/article71743206.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:22:53Z"
+   },
+   {
+    "title": "World Bank, ADB Teams Review Amaravati Development Projects",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/world-bank-adb-teams-review-amaravati-development-projects-2007955",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:20:47Z"
+   },
+   {
+    "title": "CM Naidu orders expansion of Dharani rice sales to 500 centres in Andhra Pradesh",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/cm-naidu-orders-expansion-of-dharani-rice-sales-to-500-centres-in-andhra-pradesh/article71743399.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:17:14Z"
+   },
+   {
+    "title": "Policy stability, speed of doing business fuel Andhra Pradesh’s investment drive, says APEDB CEO",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/policy-stability-speed-of-doing-business-fuel-andhra-pradeshs-investment-drive-says-apedb-ceo/article71742951.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:10:24Z"
+   },
+   {
+    "title": "Vizag to Get Country’s First Modernised ITI Cluster Under PM-SETU",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/vizag-to-get-countrys-first-modernised-iti-cluster-under-pm-setu-2007950",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:07:28Z"
+   },
+   {
+    "title": "Moderate rain likely for two days in State",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/moderate-rain-likely-for-two-days-in-state/article71743450.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:05:04Z"
+   },
+   {
+    "title": "Andhra Pradesh first State to introduce circular economy policy, says Pattabhi Ram",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/andhra-pradesh-first-state-to-introduce-circular-economy-policy-says-pattabhi-ram/article71743331.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:00:04Z"
+   },
+   {
+    "title": "Panchayat Poll Battle Begins Amid Heavy Security",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/panchayat-poll-battle-begins-amid-heavy-security-2007944",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:59:00Z"
+   },
+   {
+    "title": "NTR DCP calls for women unity to curb violence, drive social change",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/ntr-dcp-calls-for-women-unity-to-curb-violence-drive-social-change/article71743281.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:58:20Z"
+   },
+   {
+    "title": "Heavy rain disrupts normal life in Prakasam and Nellore districts",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/heavy-rain-disrupts-normal-life-in-prakasam-and-nellore-districts/article71743365.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:58:15Z"
+   },
+   {
+    "title": "DEFCORE 2026 Highlights Vizag’s Potential As Defence Manufacturing Hub",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/defcore-2026-highlights-vizags-potential-as-defence-manufacturing-hub-2007942",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:55:10Z"
+   },
+   {
+    "title": "R&B Minister’s wife unanimously elected Banaganapalle sarpanch",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/rb-ministers-wife-unanimously-elected-banaganapalle-sarpanch/article71742908.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:51:38Z"
+   },
+   {
+    "title": "SP instructs police staff to remain vigilant against malpractices during Guntur urban local body elections",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/sp-instructs-police-staff-to-remain-vigilant-against-malpractices-during-guntur-urban-local-body-elections/article71743237.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:47:57Z"
+   },
+   {
+    "title": "MV Maa Makeover On Vizag Beach Going On Despite NGT Curbs Controversy Erupted Amid Social Media Claims",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/mv-maa-makeover-on-vizag-beach-going-on-despite-ngt-curbs-controversy-erupted-amid-social-media-claims-2007939",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:46:56Z"
+   },
+   {
+    "title": "Tirupati Mayor signs first file to address drinking water shortage",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/tirupati-mayor-signs-first-file-to-address-drinking-water-shortage/article71742935.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:46:37Z"
+   },
+   {
+    "title": "CMRF sanctions ₹20.25 lakh for injured Srikalahasti temple guard",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/cmrf-sanctions-2025-lakh-for-injured-srikalahasti-temple-guard/article71743041.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:44:04Z"
+   },
+   {
+    "title": "Health Secretary urges medical students to stay updated with emerging technologies",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/health-secretary-urges-medical-students-to-stay-updated-with-emerging-technologies/article71743008.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:39:43Z"
+   },
+   {
+    "title": "‘MyTDP’ has a million members now",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/mytdp-has-a-million-members-now/article71743017.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:35:15Z"
+   },
+   {
+    "title": "Anjaneya temple removed following due process, says Tirupati Collector",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/anjaneya-temple-removed-following-due-process-says-tirupati-collector/article71743151.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:29:50Z"
+   },
+   {
+    "title": "Andhra CM Chandrababu Naidu for Tirumala on November 26",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/andhra-cm-chandrababu-naidu-for-tirumala-on-november-26/article71743139.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:28:39Z"
+   },
+   {
+    "title": "Revised fee payment schedule announced for A.P. SSC Public Exams 2027",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/revised-fee-payment-schedule-announced-for-ap-ssc-public-exams-2027/article71743134.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:27:57Z"
+   },
+   {
+    "title": "Google, LLF To Train 10,000 Women Entrepreneurs in Vizag, Anakapalli",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/google-llf-to-train-10000-women-entrepreneurs-in-vizag-anakapalli-2007930",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:26:41Z"
+   },
+   {
+    "title": "APPSC reschedules assistant professors’, RGUKT lecturers’ exams to December 20-24",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/appsc-reschedules-assistant-professors-rgukt-lecturers-exams-to-december-20-24/article71743042.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:15:12Z"
+   },
+   {
+    "title": "BJP leader serves legal notice on Tamil Nadu CM over Deepathoon lamp issue",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/bjp-leader-serves-legal-notice-on-tamil-nadu-cm-over-deepathoon-lamp-issue/article71742860.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:09:10Z"
+   },
+   {
+    "title": "Andhra CM calls for report on illegal sand mining, damage to drinking water pipeline in Kadapa",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/andhra-cm-calls-for-report-on-illegal-sand-mining-damage-to-drinking-water-pipeline-in-kadapa/article71742802.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T15:55:30Z"
+   },
+   {
+    "title": "CM Naidu Orders Sale of Red Gram Dal At ₹100, Palm Oil At ₹125 Through Ration Shops",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/common-people-should-not-face-burden-of-rising-prices-of-essential-commodities-naidu-2007910",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T15:23:10Z"
+   },
+   {
+    "title": "Andhra Pradesh Rythu Sangham seeks immediate aid for farmers affected by drought and cyclones",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/andhra-pradesh-rythu-sangham-seeks-immediate-aid-for-farmers-affected-by-drought-and-cyclones/article71742134.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T14:44:54Z"
+   },
+   {
+    "title": "Chittoor expands dialysis facilities, but access remains a hurdle",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/chittoor-expands-dialysis-facilities-but-access-remains-a-hurdle/article71742366.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T14:40:15Z"
+   },
+   {
+    "title": "NIELIT brings a talent boost to Amaravati Quantum Valley",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/nielit-brings-a-talent-boost-to-amaravati-quantum-valley/article71739231.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T14:33:20Z"
+   },
+   {
+    "title": "Chittoor district plans fodder cultivation on 6,000 acres",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/chittoor-district-plans-fodder-cultivation-on-6000-acres/article71742437.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T14:27:20Z"
+   },
+   {
+    "title": "Nellore livestock assistant secures third place in National Gopal Ratna Awards",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/nellore-livestock-assistant-secures-third-place-in-national-gopal-ratna-awards/article71742118.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T14:17:19Z"
+   },
+   {
+    "title": "Srisailam temple organises Karthika Vanabhojanalu",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/srisailam-temple-organises-karthika-vanabhojanalu/article71742182.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T14:13:33Z"
+   },
+   {
+    "title": "AP Chief Minister Chandrababu Naidu To Visit Tirumala on Thursday",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-chief-minister-chandrababu-naidu-to-visit-tirumala-on-thursday-2007890",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T14:12:27Z"
+   },
+   {
+    "title": "Andhra’s revenue rises 18.7% to ₹74,342 crore; Naidu asks officials to raise more without burdening people",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/andhras-own-revenue-rises-187-to-74342-crore-naidu-asks-officials-to-raise-more-without-burdening-people/article71742097.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T14:09:05Z"
+   },
+   {
+    "title": "Madanapalle tomato prices outpace Karnataka markets despite dry spell",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/madanapalle-tomato-prices-outpace-karnataka-markets-despite-dry-spell/article71742154.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T13:37:13Z"
+   },
+   {
+    "title": "YSRCP demands apology over demolition of Anjaneya Swamy temple in Tirupati district for NH expansion",
+    "link": "https://www.thehindu.com/news/national/andhra-pradesh/ysrcp-demands-apology-over-demolition-of-anjaneya-swamy-temple-in-tirupati-district-for-nh-expansion/article71742055.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T12:53:04Z"
+   },
+   {
+    "title": "AP ULB Polls: SEC Orders Indelible Ink On Little Finger Of Left Hand",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-ulb-polls-indelible-ink-to-be-applied-on-left-hand-little-finger-2007849",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T12:31:12Z"
+   },
+   {
+    "title": "Increase Revenue Without Additional Tax Burden On People: CM Naidu",
+    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/increase-revenue-without-additional-tax-burden-on-people-naidu-to-officials-2007838",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T11:33:55Z"
+   },
    {
     "title": "AP HC Bans Unauthorised Recording and Live Streaming of Court Proceedings",
     "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-high-court-bans-recording-live-streaming-screenshots-of-court-proceedings-2007800",
@@ -744,16 +1206,10 @@
     "date": "2026-11-25T08:21:17Z"
    },
    {
-    "title": "Atchannaidu Says 7 Missing Kakinada Fishermen Are Safe",
+    "title": "7 Fishermen Return Safely to Kakinada; Search Continues For 14 Others",
     "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/atchannaidu-says-7-missing-kakinada-fishermen-are-safe-2007764",
     "source": "Deccan Chronicle",
     "date": "2026-11-25T07:16:59Z"
-   },
-   {
-    "title": "NIELIT brings a talent boost to Amaravati Quantum Valley",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/nielit-brings-a-talent-boost-to-amaravati-quantum-valley/article71739231.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T06:50:53Z"
    },
    {
     "title": "Prey and water may be why tiger Explorer has stopped exploring in Andhra’s NTR district",
@@ -808,482 +1264,536 @@
     "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/satyam-junction-towards-gurudwara-rtc-bus-loses-control-rams-into-vehicles-in-visakhapatnam-2007709",
     "source": "Deccan Chronicle",
     "date": "2026-11-25T02:31:46Z"
-   },
-   {
-    "title": "Nandyal: Child Dies After Fire Engulfs Thatched House",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/nandyal-five-year-old-boy-charred-to-death-as-thatched-house-catches-fire-2007708",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T02:04:16Z"
-   },
-   {
-    "title": "23 AP Urban Local Bodies, Gram Panchayats To go To Polls In Phase I on Nov. 26",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/23-ap-urban-local-bodies-gram-panchayats-to-go-to-polls-in-phase-i-on-nov-26-2007697",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T21:46:05Z"
-   },
-   {
-    "title": "YSRC Mayoral Candidate Good, But In Wrong Party: TD MLA Kondababu",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ysrc-mayoral-candidate-good-but-in-wrong-party-td-mla-kondababu-2007680",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T20:22:33Z"
-   },
-   {
-    "title": "AP Representatives to Attend World Mayors Forum in Mumbai",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-representatives-to-attend-world-mayors-forum-in-mumbai-2007673",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T19:28:10Z"
-   },
-   {
-    "title": "Vizag To Host Four-Day International Stone Fest In Dec.",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/vizag-to-host-four-day-international-stone-fest-in-dec-2007672",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T19:21:18Z"
-   },
-   {
-    "title": "Karthika Deepotsavams Illuminate Indrakeeladri and Dokiparru",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/karthika-deepotsavams-illuminate-indrakeeladri-and-dokiparru-2007671",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T19:12:48Z"
-   },
-   {
-    "title": "11 Die in Road Accidents, Drowning Incidents Across AP",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/11-die-in-road-accidents-drowning-incidents-across-ap-2007670",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T19:08:45Z"
-   },
-   {
-    "title": "AP CM Clears Rs 88,625-Crore Investments; 54,419 Jobs Promised",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-cm-clears-rs-88625-crore-investments-54419-jobs-promised-2007667",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T19:02:20Z"
-   },
-   {
-    "title": "Capital Region’s Focus on Ports, Logistics, Cargo Infrastructure",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/capital-regions-focus-on-ports-logistics-cargo-infrastructure-2007664",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T18:56:33Z"
-   },
-   {
-    "title": "1,420 police personnel deployed for first phase panchayat polls in Palnadu",
-    "link": "https://www.thehindu.com/news/cities/Vijayawada/1420-police-personnel-deployed-for-first-phase-panchayat-polls-in-palnadu/article71738197.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T18:56:14Z"
-   },
-   {
-    "title": "23 AP Urban Local Bodies, Gram Panchayats to Go to Polls in Phase I on Nov 26",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/23-ap-urban-local-bodies-gram-panchayats-to-go-to-polls-in-phase-i-on-nov-26-2007663",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T18:54:08Z"
-   },
-   {
-    "title": "AP To Add Four Ailments To Annual Health Screening Programme In 2026-27",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ap-to-add-four-ailments-to-annual-health-screening-programme-in-2026-27-2007661",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T18:48:56Z"
-   },
-   {
-    "title": "Women Confront Jana Sena MLA During Campaign in Kadapa Village",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/women-confront-jana-sena-mla-during-campaign-in-kadapa-village-2007660",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T18:47:49Z"
-   },
-   {
-    "title": "CM Naidu Calls for Advance Farm Action Plans To Minimise Crop Losses",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/naidu-calls-for-advance-farm-action-plans-to-minimise-crop-losses-2007657",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T18:43:23Z"
-   },
-   {
-    "title": "Andhra Pradesh extends Employees Health Scheme facilities to retired transport staff",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/andhra-pradesh-extends-employees-health-scheme-facilities-to-retired-transport-staff/article71737712.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T18:38:36Z"
-   },
-   {
-    "title": "Rain likely across Andhra Pradesh for next three days",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/rain-likely-across-andhra-pradesh-for-next-three-days/article71739285.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T18:36:41Z"
-   },
-   {
-    "title": "Bi-weekly special trains between Tirupati and Vizag extended till January 29, 2027",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/bi-weekly-special-trains-between-tirupati-and-vizag-extended-till-january-29-2027/article71738768.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T18:32:56Z"
-   },
-   {
-    "title": "Neurosurgeon throws light on non-invasive procedure",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/neurosurgeon-throws-light-on-non-invasive-procedure/article71739362.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T18:30:26Z"
-   },
-   {
-    "title": "Andhra Loyola College holds workshop on mushroom cultivation",
-    "link": "https://www.thehindu.com/news/cities/Vijayawada/andhra-loyola-college-holds-workshop-on-mushroom-cultivation/article71739313.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T18:27:22Z"
-   },
-   {
-    "title": "Death of APSRTC outsourced staffer at Rayachoti depot triggers safety concerns",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/death-of-apsrtc-outsourced-staffer-at-rayachoti-depot-triggers-safety-concerns/article71739201.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T18:24:37Z"
-   },
-   {
-    "title": "BJP Promises Golden Future For Rajamahendravaram",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/bjp-promises-golden-future-for-rajamahendravaram-2007652",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T18:18:33Z"
-   },
-   {
-    "title": "DEFCORE 2026 to spotlight MSME component makers in Visakhapatnam from November 25 to 27",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/defcore-2026-to-spotlight-msme-component-makers-in-visakhapatnam-from-november-25-to-27/article71739389.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T18:08:10Z"
-   },
-   {
-    "title": "St. Joseph’s College students win top honours at NAVDISHA 2026",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/st-josephs-college-students-win-top-honours-at-navdisha-2026/article71738687.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T18:05:29Z"
-   },
-   {
-    "title": "Naidu Invited To Inaugurate 37th Vijayawada Book Festival On Jan. 1",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/naidu-invited-to-inaugurate-37th-vijayawada-book-festival-on-jan-1-2007649",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T18:04:13Z"
-   },
-   {
-    "title": "Election Campaigns End With Big Promises In Kakinada District",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/election-campaigns-end-with-big-promises-in-kakinada-district-2007648",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T18:04:12Z"
-   },
-   {
-    "title": "Punetha Calls for Peaceful Local Body Polls",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/punetha-calls-for-peaceful-local-body-polls-2007647",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T18:03:05Z"
-   },
-   {
-    "title": "46,080 Police Personnel Being Deployed For Thursday’s Elections",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/46080-police-personnel-being-deployed-for-thursdays-elections-2007646",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:59:58Z"
-   },
-   {
-    "title": "Factional Rivalries Rising In Rayalaseema Villages Ahead Of Panchayat Polls",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/factional-rivalries-rising-in-rayalaseema-villages-ahead-of-panchayat-polls-2007645",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:57:55Z"
-   },
-   {
-    "title": "Jana Sena’s Kolagani Sirisha Elected Atmakur Municipal Vice-Chairperson",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/jana-senas-kolagani-sirisha-elected-atmakur-municipal-vice-chairperson-2007639",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:44:49Z"
-   },
-   {
-    "title": "Naidu To Visit Tirumala On November 26",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/naidu-to-visit-tirumala-on-november-26-2007634",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:39:14Z"
-   },
-   {
-    "title": "APEPDCL warns consumers of fake electricity bill messages",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/apepdcl-warns-consumers-of-fake-electricity-bill-messages/article71739457.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T17:27:44Z"
-   },
-   {
-    "title": "Poor Water Storage In AP Dams Raises Concern Over Supply",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/poor-water-storage-in-ap-dams-raises-concern-over-supply-2007623",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:16:00Z"
-   },
-   {
-    "title": "APSSDC to organise overseas recruitment drive in Visakhapatnam",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/apssdc-to-organise-overseas-recruitment-drive-in-visakhapatnam/article71739526.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T17:06:34Z"
-   },
-   {
-    "title": "Bullayya College to hold national seminar on microbiology",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/bullayya-college-to-hold-national-seminar-on-microbiology/article71739498.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T17:04:58Z"
-   },
-   {
-    "title": "Jagan’s Post on Relocating Hanuman Temple Triggers Political Exchanges",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/jagans-post-on-relocating-hanuman-temple-triggers-political-exchanges-2007603",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:32:05Z"
-   },
-   {
-    "title": "Police Use CCTV Cameras To Trace Woman's Forgotten Bag",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/police-use-cctv-cameras-to-trace-womans-forgotten-bag-2007600",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:26:28Z"
-   },
-   {
-    "title": "Jagan calls for fair elections in Srikakulam",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/jagan-calls-for-fair-elections-in-srikakulam/article71739295.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T16:11:45Z"
-   },
-   {
-    "title": "Nine killed in three road accidents in Andhra, five of them near Bhogapuram",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/nine-killed-in-three-road-accidents-in-andhra-five-of-them-near-bhogapuram/article71737536.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:48:37Z"
-   },
-   {
-    "title": "Triple-engine rule will ensure development of Srikakulam: Union Minister",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/triple-engine-rule-will-ensure-development-of-srikakulam-union-minister/article71739018.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:37:09Z"
-   },
-   {
-    "title": "TTD, in association with LIC, launches insurance cover for pilgrims",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/ttd-in-association-with-lic-launches-insurance-cover-for-pilgrims/article71738438.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:32:07Z"
-   },
-   {
-    "title": "Siblings drown in village pond in Vizianagaram district",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/siblings-drown-in-village-pond-in-vizianagaram-district/article71739398.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:27:59Z"
-   },
-   {
-    "title": "YSRCP and government trade charges over temple demolition in Tirupati",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/ysrcp-and-government-trade-charges-over-temple-demolition-in-tirupati/article71738919.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:27:08Z"
-   },
-   {
-    "title": "Srisailam glows with lamps on Karthika Pournami",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/srisailam-glows-with-lamps-on-karthika-pournami/article71738703.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:22:26Z"
-   },
-   {
-    "title": "NDA manifesto promises ₹100 crore for development of temples",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/nda-manifesto-promises-100-crore-for-development-of-temples/article71738907.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:20:12Z"
-   },
-   {
-    "title": "TDP faces dissent over Vice-Chairperson nominee in Rajampeta Municipality",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/tdp-faces-dissent-over-vice-chairperson-nominee-in-rajampeta-municipality/article71739147.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:19:17Z"
-   },
-   {
-    "title": "Women throng Kapila Theertham for Karthika Deepotsavam",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/women-throng-kapila-theertham-for-karthika-deepotsavam/article71739223.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:13:44Z"
-   },
-   {
-    "title": "DGP inaugurates advanced command centre in Nellore",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/dgp-inaugurates-advanced-command-centre-in-nellore/article71739132.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:09:16Z"
-   },
-   {
-    "title": "Expanded NCD survey in Andhra Pradesh to cover four additional health conditions",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/expanded-ncd-survey-in-andhra-pradesh-to-cover-four-additional-health-conditions/article71739085.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:09:09Z"
-   },
-   {
-    "title": "YSRCP alleges intimidation of women candidates in local body elections",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/ysrcp-alleges-intimidation-of-women-candidates-in-local-body-elections/article71738215.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T14:23:18Z"
-   },
-   {
-    "title": "Cyclones Hit Hard on ASR Tourism, Footfall Falls by 60 PC",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/cyclones-hit-hard-on-asr-tourism-footfall-falls-by-60-pc-2007564",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T14:19:11Z"
-   },
-   {
-    "title": "Karthika Pournami celebrations light up Rayalaseema temples",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/karthika-pournami-celebrations-light-up-rayalaseema-temples/article71738609.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:55:43Z"
-   },
-   {
-    "title": "SIPB clears investment proposals worth ₹88,625 cr., potential to create 54,419 jobs",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/sipb-clears-investment-proposals-worth-88625-crore-with-potential-to-create-54419-jobs/article71738644.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:54:30Z"
-   },
-   {
-    "title": "Malla Reddy group sets up first campus in A.P. in Tirupati",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/malla-reddy-group-sets-up-first-campus-in-ap-in-tirupati/article71737847.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:46:55Z"
-   },
-   {
-    "title": "Rayalaseema on high alert ahead of panchayat polls",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/rayalaseema-on-high-alert-ahead-of-panchayat-polls/article71738523.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:42:39Z"
-   },
-   {
-    "title": "ULB elections: SEC directs officials to ensure faster, transparent counting of votes",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/ulb-elections-sec-directs-officials-to-ensure-faster-transparent-counting-of-votes/article71738505.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:34:40Z"
-   },
-   {
-    "title": "Tirumala: Life Insurance Scheme Launched For Srivari Pilgrims",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/tirumala-srivari-yatra-suraksha-group-life-insurance-scheme-launched-for-pilgrims-2007531",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T11:42:13Z"
-   },
-   {
-    "title": "Tenders floated for ₹4,299-crore Bikkavolu-Duvvada rail lines to ease congestion around Visakhapatnam",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/tenders-floated-for-4299-crore-bikkavolu-duvvada-rail-lines-to-ease-congestion-around-visakhapatnam/article71737568.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T11:25:24Z"
-   },
-   {
-    "title": "APSCHE to hold 10 regional workshops on All-India Survey on Higher Education data",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/apsche-to-hold-10-regional-workshops-on-all-india-survey-on-higher-education-data/article71737701.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T11:18:21Z"
-   },
-   {
-    "title": "7 Fishermen From Kakinada Go Missing Near Puri; Coast Guard Steps Up search Operations",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/fishing-boat-carrying-7-fishermen-from-kakinada-goes-missing-near-puri-2007506",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T10:44:15Z"
-   },
-   {
-    "title": "After Heritage Sites, YS Jagan Targets CM Naidu Over Temple Demolition",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/after-heritage-sites-ys-jagan-targets-cm-naidu-over-temple-demolition-2007503",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T10:26:21Z"
-   },
-   {
-    "title": "Chlorine gas leaks from tanker abandoned for a decade in Andhra’s NTR district",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/chlorine-gas-leaks-from-tanker-abandoned-for-a-decade-in-andhras-ntr-district/article71737730.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T09:24:51Z"
-   },
-   {
-    "title": "CM Expresses Concern Over 8 Deaths in Road Accidents, Seeks Probe",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/cm-naidu-expresses-concernt-over-8-deaths-in-multiple-road-accidents-seeks-review-2007481",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T09:16:40Z"
-   },
-   {
-    "title": "Vizianagaram: Brother, Sister Drown in River Stream",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/vizianagaram-brother-sister-drown-in-river-stream-2007475",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T08:52:30Z"
-   },
-   {
-    "title": "Forest Officials Launch Special Operation To Capture Tiger in Kanumuru",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/ntr-district-forest-officials-launch-special-operation-to-capture-tiger-explorer-in-kanumuru-2007470",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T08:35:13Z"
-   },
-   {
-    "title": "Over 300 cases booked in Rayalaseema in crackdown on rice hoarding and overpricing",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/over-300-cases-booked-in-rayalaseema-in-crackdown-on-rice-hoarding-and-overpricing/article71737297.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T08:15:18Z"
-   },
-   {
-    "title": "Two Burnt Alive in Tipper-Trailer Collision in Anakapalli",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/two-burnt-alive-in-tipper-trailer-collision-in-anakapalli-2007428",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T06:40:54Z"
-   },
-   {
-    "title": "Andhra departments meet in Mangalagiri to plan school education programmes for 2027-28",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/andhra-departments-meet-in-mangalagiri-to-plan-school-education-programmes-for-2027-28/article71734584.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T06:14:02Z"
-   },
-   {
-    "title": "Four killed in car-lorry collision near Bhogapuram on NH-16",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/four-killed-in-car-lorry-collision-near-bhogapuram-on-nh-16/article71737167.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T06:06:41Z"
-   },
-   {
-    "title": "Palnadu: Two Ayyappa Devotees Die in Road Accident Near Utkoor",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/palnadu-two-ayyappa-devotees-die-in-road-accident-near-utkoor-2007415",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T06:03:28Z"
-   },
-   {
-    "title": "Two AP Ayyappa Devotees Killed, 10 Injured in Tamil Nadu Road Accident",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/two-ap-ayyappa-devotees-killed-10-injured-in-tamil-nadu-road-accident-2007407",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T05:28:47Z"
-   },
-   {
-    "title": "Vizianagaram: Road Accident Claims Five Lives Near Bhogapuram Toll Gate",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/vizianagaram-four-killed-in-jeep-lorry-collision-near-bhogapuram-2007393",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T03:38:12Z"
-   },
-   {
-    "title": "Intermittent Rain Lashes Several Parts of Prakasam District",
-    "link": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/intermittent-rain-lashes-several-parts-of-prakasam-district-2007391",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T03:29:50Z"
-   },
-   {
-    "title": "Ban on collection of wild shrimp seed at SACB proposed",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/ban-on-collection-of-wild-shrimp-seed-at-sacb-proposed/article71734691.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T03:11:41Z"
-   },
-   {
-    "title": "PAV to organise health seminar on November 29",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/pav-to-organise-health-seminar-on-november-29/article71734853.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T03:10:36Z"
-   },
-   {
-    "title": "Andhra Pradesh SEC declares 87 candidates as Deputy Mayors, Vice-Chairpersons",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/andhra-pradesh-sec-declares-87-candidates-as-deputy-mayors-vice-chairpersons/article71735988.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T03:07:53Z"
-   },
-   {
-    "title": "Vangaveeti Radha Krishna takes oath as 13th Mayor of Vijayawada",
-    "link": "https://www.thehindu.com/news/national/andhra-pradesh/vangaveeti-radha-krishna-takes-oath-as-13th-mayor-of-vijayawada/article71735674.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T03:04:23Z"
    }
   ],
   "ts": [
    {
-    "title": "Bachupally Tragedy: TGHRC Takes Suo Motu Note of Three Workers' Deaths",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/bachupally-tragedy-tghrc-takes-suo-motu-note-of-three-workers-deaths-2007799",
+    "title": "Fake Profiles Won't Hide Your Identity, Hyderabad Cyber Police Warn",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/fake-profiles-wont-hide-your-identity-hyderabad-cyber-police-warn-2008147",
     "source": "Deccan Chronicle",
-    "date": "2026-11-25T09:49:21Z"
+    "date": "2026-11-26T09:43:55Z"
+   },
+   {
+    "title": "Defence, aerospace sector outpaces IT and pharma growth in Telangana: Minister Uttam Kumar Reddy",
+    "link": "https://www.thehindu.com/news/national/telangana/defence-aerospace-sector-outpaces-it-and-pharma-growth-in-telangana-minister-uttam-kumar-reddy/article71745871.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T09:41:47Z"
+   },
+   {
+    "title": "Hyderabad: Cyber Crime Police Arrest Two for Impersonation, Circulating Obscene Photos",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-cyber-crime-police-arrest-two-for-impersonation-circulating-obscene-photos-2008146",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T09:39:42Z"
+   },
+   {
+    "title": "Pullela Gopichand Joins Kishan Reddy's March Against Drug Abuse On Day 2",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/pullela-gopichand-joins-kishan-reddys-march-against-drug-abuse-on-day-2-2008125",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T08:20:22Z"
+   },
+   {
+    "title": "21-cr travelator bridge to link Nampally Railway Station, Hyderabad Metro Station; 10 of 20 foundations completed",
+    "link": "https://www.thehindu.com/news/cities/Hyderabad/21-cr-travelator-bridge-to-link-nampally-railway-station-hyderabad-metro-station/article71745578.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T08:10:17Z"
+   },
+   {
+    "title": "Telangana HC Orders Jail Term for Cyberabad CP, Medchal DCP",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/telangana-hc-orders-jail-term-for-cyberabad-cp-medchal-dcp-2008124",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T08:00:30Z"
+   },
+   {
+    "title": "CM Revanth Leads Samvidhan Raksha March Marking Constitution Day",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/cm-revanth-leads-samvidhan-raksha-march-marking-constitution-day-2008119",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T07:25:20Z"
+   },
+   {
+    "title": "Cyberabad | Contractor’s work order canceled over supply of drainage water through green tanker; circle manager suspended",
+    "link": "https://www.thehindu.com/news/cities/Hyderabad/cyberabad-contractors-work-order-canceled-over-supply-of-drainage-water-through-green-tanker-circle-manager-suspended/article71745463.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T07:02:37Z"
+   },
+   {
+    "title": "Hyderabad must raise public transport share from 28% to at least 40%, and eventually beyond 60%: London official",
+    "link": "https://www.thehindu.com/news/national/telangana/public-transport-key-to-tackling-hyderabad-traffic-woes-london-official/article71743233.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T06:54:03Z"
+   },
+   {
+    "title": "Cyberabad Moves summit to focus on traffic congestion, public transport and urban mobility",
+    "link": "https://www.thehindu.com/news/national/telangana/cyberabad-moves-summit-to-focus-on-traffic-congestion-public-transport-and-urban-mobility/article71743745.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T06:42:05Z"
+   },
+   {
+    "title": "Hyderabad Oocyte Racket: Women's Commission Urges Governor For Probe",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-egg-retrieval-racket-womens-commission-urges-guv-to-recommend-special-probe-2008104",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T06:12:52Z"
+   },
+   {
+    "title": "Mahabubabad: Tribal College Student Delivers In Bathroom, Baby Dies",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/mahabubabad-tribal-college-student-delivers-in-bathroom-baby-dies-pocso-case-booked-2008102",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T05:54:43Z"
+   },
+   {
+    "title": "Adilabad Honour Killing: Father Kills Daughter Over Love Affair",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/adilabad-honour-killing-father-kills-daughter-over-love-affair-2008089",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T05:03:41Z"
+   },
+   {
+    "title": "Telangana CEO cites RTI guide to justify rejection of SIR expenditure query",
+    "link": "https://www.thehindu.com/news/national/telangana/ceo-cites-rti-guide-to-justify-rejection-of-sir-expenditure-query/article71743184.ece",
+    "source": "The Hindu",
+    "date": "2026-11-26T02:28:03Z"
+   },
+   {
+    "title": "Hyderabad: Techie Dies in Road Accident Near Kondapur",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-techie-dies-in-road-accident-near-kondapur-2008068",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-26T02:06:03Z"
+   },
+   {
+    "title": "Study Inscriptions Of Devagiri Yadavas, Says Expert",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/study-inscriptions-of-devagiri-yadavas-says-expert-2008045",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:54:48Z"
+   },
+   {
+    "title": "Astroguide for November 26, Thursday",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/astroguide-for-november-26-thursday-2008042",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:49:54Z"
+   },
+   {
+    "title": "Probationary IPS Officers Call on Governor Shiv Pratap Shukla",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/probationary-ips-officers-call-on-governor-shiv-pratap-shukla-2008041",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:48:02Z"
+   },
+   {
+    "title": "RERA Penalises GKH Properties, Seeks Litigation Details From Another Builder",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/rera-penalises-gkh-properties-seeks-litigation-details-from-another-builder-2008040",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:46:12Z"
+   },
+   {
+    "title": "Kishan Reddy Sleeps Along With Activists After 12-Km Anti-Drug Walk",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/kishan-reddy-sleeps-along-with-activists-after-12-km-anti-drug-walk-2008038",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:28:56Z"
+   },
+   {
+    "title": "Every Eligible Poor Family To Get Indiramma House: Ponguleti",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/every-eligible-poor-family-to-get-indiramma-house-ponguleti-2008036",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:20:52Z"
+   },
+   {
+    "title": "HYDRAA Chief Warns of Action Against STP Violations",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/hydraa-chief-warns-of-action-against-stp-violations-2008035",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:12:26Z"
+   },
+   {
+    "title": "MLC Alleges KTR’s Links With Oasis Fertility",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/mlc-alleges-ktrs-links-with-oasis-fertility-2008034",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:08:01Z"
+   },
+   {
+    "title": "Relatives of Septic Tank Victims Accuse Cops of Negligence",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/relatives-of-septic-tank-victims-accuse-cops-of-negligence-2008033",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:06:54Z"
+   },
+   {
+    "title": "74% in Telangana Depend on Two-Wheelers; Cyberabad CP Calls for Shift to Public Transport",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/74-in-telangana-depend-on-two-wheelers-cyberabad-cp-calls-for-shift-to-public-transport-2008031",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:05:47Z"
+   },
+   {
+    "title": "Employee Confidence in Job Security Decline, Says Study",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/employee-confidence-in-job-security-decline-says-study-2008026",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T19:01:02Z"
+   },
+   {
+    "title": "HYDRAA Protects ₹70-Crore Park Land In Khajaguda From Encroachment",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/hydraa-protects-70-crore-park-land-in-khajaguda-from-encroachment-2008025",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:58:08Z"
+   },
+   {
+    "title": "Women’s Commission urges Telangana Governor to recommend special investigation into illegal oocyte racket",
+    "link": "https://www.thehindu.com/news/national/telangana/womens-commission-urges-telangana-governor-to-recommend-special-investigation-into-illegal-oocyte-racket/article71742026.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T18:53:51Z"
+   },
+   {
+    "title": "Minister Laxman Blames BRS For Denying Kaleshwaram Water To Dharmapuri",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/minister-laxman-blames-brs-for-denying-kaleshwaram-water-to-dharmapuri-2008020",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:48:48Z"
+   },
+   {
+    "title": "CCS Probes Sale of Unapproved Weight-Loss Drug Retatrutide After Decoy Bust",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/ccs-probes-sale-of-unapproved-weight-loss-drug-retatrutide-after-decoy-bust-2008016",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:43:45Z"
+   },
+   {
+    "title": "Akbaruddin Owaisi questions low spending, high dropouts in minority schools",
+    "link": "https://www.thehindu.com/news/cities/Hyderabad/akbaruddin-owaisi-questions-low-spending-high-dropouts-in-minority-schools/article71743385.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T18:41:18Z"
+   },
+   {
+    "title": "CMC Suspends Circle Manager Over Drain Water Supply In Green Tankers",
+    "link": "https://www.deccanchronicle.com/cmc-suspends-circle-manager-over-drain-water-supply-in-green-tankers",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:24:06Z"
+   },
+   {
+    "title": "Oppn. protest against auction of truck park in Kukatpally",
+    "link": "https://www.thehindu.com/news/national/telangana/oppn-protest-against-auction-of-truck-park-in-kukatpally/article71743955.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T18:22:14Z"
+   },
+   {
+    "title": "Governor to Visit Kondagattu on Nov. 30",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/governor-to-visit-kondagattu-on-nov-30-2007999",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:15:55Z"
+   },
+   {
+    "title": "CJP Joins Indefinite Relay Hunger Strike By Jawaharnagar Residents",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/cjp-joins-indefinite-relay-hunger-strike-by-jawaharnagar-residents-2007998",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:15:49Z"
+   },
+   {
+    "title": "SCR To Develop Jammikunta, Uppal Railway Stations",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/scr-to-develop-jammikunta-uppal-railway-stations-2007997",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:14:07Z"
+   },
+   {
+    "title": "Contract Assistant Professors Stage State-Wide Dharnas",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/contract-assistant-professors-stage-state-wide-dharnas-2007996",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:14:02Z"
+   },
+   {
+    "title": "4-Month-Old Baby Girl Sold For ₹2.90 Lakh; 12 Arrested",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/4-month-old-baby-girl-sold-for-290-lakh-12-arrested-2007992",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:05:45Z"
+   },
+   {
+    "title": "Basar IIIT Student Lost Money In Investment App Before Suicide",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/basar-iiit-student-lost-money-in-investment-app-before-suicide-2007987",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T18:01:18Z"
+   },
+   {
+    "title": "Toxic Gas Leak From A Abandoned Cylinder; 3 Fall Sick",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/toxic-gas-leak-from-a-abandoned-cylinder-3-fall-sick-2007984",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:55:34Z"
+   },
+   {
+    "title": "MLC Polls: CEO Releases Draft Voter List",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/mlc-polls-ceo-releases-draft-voter-list-2007983",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:54:50Z"
+   },
+   {
+    "title": "Revanth To Launch ₹450-Crore Works In Nagarkurnool District",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/revanth-to-launch-450-crore-works-in-nagarkurnool-district-2007982",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:54:34Z"
+   },
+   {
+    "title": "Former Discom Official Accuses ACB Officers Of Seeking ₹30-Lakh Bribe",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/former-discom-official-accuses-acb-officers-of-seeking-30-lakh-bribe-2007976",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:46:56Z"
+   },
+   {
+    "title": "Bandi Sanjay bats for railway station at Kondagattu",
+    "link": "https://www.thehindu.com/news/national/telangana/bandi-sanjay-bats-for-railway-station-at-kondagattu/article71743634.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:45:13Z"
+   },
+   {
+    "title": "HC Directs State to Credit Gratuity Amount Due to Wife of a Deceased Employee",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/hc-directs-state-to-credit-gratuity-amount-due-to-wife-of-a-deceased-employee-2007973",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:43:01Z"
+   },
+   {
+    "title": "College Student Delivers in Hostel Bathroom, Baby Dies",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/college-student-delivers-in-hostel-bathroom-baby-dies-2007969",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:39:54Z"
+   },
+   {
+    "title": "KRMB meet exposed State govt.’s lie on AP’s NSP tunnel project: BRS",
+    "link": "https://www.thehindu.com/news/national/telangana/krmb-meet-exposed-state-govts-lie-on-aps-nsp-tunnel-project-brs/article71743663.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:36:09Z"
+   },
+   {
+    "title": "De-Novo draft electoral rolls published for MLC constituencies",
+    "link": "https://www.thehindu.com/news/national/telangana/de-novo-draft-electoral-rolls-published-for-mlc-constituencies/article71743329.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:23:59Z"
+   },
+   {
+    "title": "Indigenous Defence Systems Cut Costs, Give Greater Control Over Upgrades: DRDO DG at DLRL Annual Day",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/indigenous-defence-systems-cut-costs-give-greater-control-over-upgrades-drdo-dg-at-dlrl-annual-day-2007956",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:21:43Z"
+   },
+   {
+    "title": "Fog, Poor Visibility Raise Accident Risks on NH-44",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/fog-poor-visibility-raise-accident-risks-on-nh-44-2007953",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:19:10Z"
+   },
+   {
+    "title": "Telangana Agriculture dept. focuses on value addition to crops, food processing and allied sectors",
+    "link": "https://www.thehindu.com/news/national/telangana/telangana-agriculture-dept-focuses-on-crops-value-addition-food-processing-and-allied-sectors/article71742587.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:12:59Z"
+   },
+   {
+    "title": "Telangana CM keen on expanding ration basket; providing essential commodities to FSC holders comes up for discussion again",
+    "link": "https://www.thehindu.com/news/national/telangana/telangana-cm-keen-on-expanding-ration-basket-providing-essential-commodities-to-fsc-holders-comes-up-for-discussion-again/article71743606.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:12:27Z"
+   },
+   {
+    "title": "₹300-crore Bhadrachalam temple development works under way, structures designed to last 200 years: Ponguleti Srinivasa Reddy",
+    "link": "https://www.thehindu.com/news/national/telangana/300-crore-bhadrachalam-temple-development-works-under-way-structures-designed-to-last-200-years-ponguleti-srinivasa-reddy/article71743249.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:08:51Z"
+   },
+   {
+    "title": "Hyderabad City Engagements",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-city-engagements-2007949",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:06:16Z"
+   },
+   {
+    "title": "Sridhar Babu takes stock of Godavari Pushkaralu-2027, Integrated Residential School works in Manthani",
+    "link": "https://www.thehindu.com/news/national/telangana/sridhar-babu-takes-stock-of-godavari-pushkaralu-2027-integrated-residential-school-works-in-manthani/article71742679.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T17:02:38Z"
+   },
+   {
+    "title": "Panjagutta To Become India’s First AI-Powered Police Station; DGP, CP Review Works",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/panjagutta-to-become-indias-first-ai-powered-police-station-dgp-cp-review-works-2007945",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T17:00:46Z"
+   },
+   {
+    "title": "TIFRH, Virupaksha Organics Sign Mou To Develop Advanced, Quantum Materials",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/tifrh-virupaksha-organics-sign-mou-to-develop-advanced-quantum-materials-2007943",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:58:45Z"
+   },
+   {
+    "title": "BRS, Left Leaders Detained During Protest Against HMDA Land Auction",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/brs-left-leaders-detained-during-protest-against-hmda-land-auction-2007941",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:54:34Z"
+   },
+   {
+    "title": "Christian Bodies Urge To Boycott TG’s Christmas Aid For Burial Grounds",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/christian-bodies-urge-to-boycott-tgs-christmas-aid-for-burial-grounds-2007940",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:50:44Z"
+   },
+   {
+    "title": "IIIT Hyderabad Researcher Pranjal Paul Selected For 2026 Google PhD Fellowship",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/iiit-hyderabad-researcher-pranjal-paul-selected-for-2026-google-phd-fellowship-2007938",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:46:41Z"
+   },
+   {
+    "title": "‘AI, quantum sensing to shape India’s electronic warfare capabilities’",
+    "link": "https://www.thehindu.com/news/cities/Hyderabad/ai-quantum-sensing-to-shape-indias-electronic-warfare-capabilities/article71742163.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:42:28Z"
+   },
+   {
+    "title": "Ichoda Police Arrest Man for Harassing Woman",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/ichoda-police-arrest-man-for-harassing-woman-2007936",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:41:31Z"
+   },
+   {
+    "title": "Congress’ Rank And File To Join Constitution March Today",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/congress-rank-and-file-to-join-constitution-march-today-2007933",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:35:56Z"
+   },
+   {
+    "title": "Family of Hyderabad man detained in Russia seeks MEA intervention",
+    "link": "https://www.thehindu.com/news/national/telangana/family-of-hyderabad-man-detained-in-russia-seeks-mea-intervention/article71742958.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:33:46Z"
+   },
+   {
+    "title": "Kishan Reddy flags off anti-drug march, urges youth to join the cause",
+    "link": "https://www.thehindu.com/news/national/telangana/kishan-reddy-flags-off-anti-drug-march-urges-youth-to-join-the-cause/article71742137.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T16:26:30Z"
+   },
+   {
+    "title": "Hyderabad Must Double Public Transport Usage: Expert",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-must-double-public-transport-usage-expert-2007928",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:25:46Z"
+   },
+   {
+    "title": "M.M. Keeravani To Compose Four-Language Anthem for Invest Telangana Global Summit 2026",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/mm-keeravani-to-compose-four-language-anthem-for-invest-telangana-global-summit-2026-2007926",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:21:52Z"
+   },
+   {
+    "title": "Hyderabad Gears Up for Thanksgiving Celebrations",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-gears-up-for-thanksgiving-celebrations-2007925",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:15:57Z"
+   },
+   {
+    "title": "Stadiums In Telangana Get Spruced Up For Khelo India Games",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/stadiums-in-telangana-get-spruced-up-for-khelo-india-games-2007923",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T16:02:27Z"
+   },
+   {
+    "title": "Meaningful employment opportunities need of the hour: MLC candidate",
+    "link": "https://www.thehindu.com/news/national/telangana/meaning-employment-opportunities-need-of-the-hour-mlc-candidate/article71742199.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T15:58:52Z"
+   },
+   {
+    "title": "No Let-Up in Recoveries From Defaulting Rice Millers: Uttam",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/no-let-up-in-recoveries-from-defaulting-rice-millers-uttam-2007918",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T15:48:08Z"
+   },
+   {
+    "title": "I4C Warning On WhatsApp Web Raises Security Concerns Among Hyderabad Employees",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/i4c-warning-on-whatsapp-web-raises-security-concerns-among-hyderabad-employees-2007915",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T15:38:32Z"
+   },
+   {
+    "title": "NCERT Printing Quality Row Highlights Textbook Readability Concerns",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/ncert-printing-quality-row-highlights-textbook-readability-concerns-2007914",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T15:34:36Z"
+   },
+   {
+    "title": "RERA penalises three realty firms for violating norms",
+    "link": "https://www.thehindu.com/news/national/telangana/rera-penalises-three-realty-firms-for-violating-norms/article71742675.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T15:22:34Z"
+   },
+   {
+    "title": "Cyberabad civic body plans ₹169-crore net-zero headquarters on the edge of Kotha Kunta lake",
+    "link": "https://www.thehindu.com/news/cities/Hyderabad/cyberabad-civic-body-plans-169-crore-net-zero-headquarters-on-the-edge-of-kotha-kunta-lake/article71742492.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T14:56:55Z"
+   },
+   {
+    "title": "Every Eligible Poor Family to Get Indiramma House: Ponguleti",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/every-eligible-poor-family-to-get-indiramma-house-ponguleti-2007898",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T14:33:11Z"
+   },
+   {
+    "title": "Revanth Reddy: Khelo India Games To Lay Foundation for Telangana’s Sports Development",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/revanth-reddy-khelo-india-games-to-lay-foundation-for-telanganas-sports-development-2007887",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T14:05:18Z"
+   },
+   {
+    "title": "TIFR-Hyd, Virupaksha Organics join hands for advanced materials research",
+    "link": "https://www.thehindu.com/news/national/telangana/tifr-hyd-virupaksha-organics-join-hands-for-advanced-materials-research/article71741993.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T13:15:19Z"
+   },
+   {
+    "title": "Body Of Missing Telangana BSF Jawan Found In Assam's Kushiyara River",
+    "link": "https://www.deccanchronicle.com/nation/body-of-missing-telangana-bsf-jawan-gd-k-venu-found-in-assams-kushiyara-river-2007858",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T12:45:50Z"
+   },
+   {
+    "title": "Fire breaks out at house in Basar; family escapes unhurt, valuables gutted",
+    "link": "https://www.thehindu.com/news/national/telangana/fire-breaks-out-at-house-in-basar-family-escapes-unhurt-valuables-gutted/article71741825.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T11:12:06Z"
+   },
+   {
+    "title": "Telangana Govt to set up single window system for hassle free development of poultry sector: CM Revanth Reddy",
+    "link": "https://www.thehindu.com/news/national/telangana/telangana-govt-to-set-up-single-window-system-for-hassle-free-development-of-poultry-sector-cm-revanth-reddy/article71741870.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T10:58:37Z"
+   },
+   {
+    "title": "CMC Calls Tenders For Rs 169 Cr Twin-Tower Office At Izzath Nagar",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/cyberabad-cmc-invites-tenders-for-rs-169-crore-twin-tower-office-at-izzath-nagar-2007826",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T10:51:01Z"
    },
    {
     "title": "Stage being set for Khelo India in Telangana from December 11 to 22",
     "link": "https://www.thehindu.com/news/national/telangana/stage-being-set-for-khelo-india-in-telangana-from-december-11-to-22/article71741820.ece",
     "source": "The Hindu",
-    "date": "2026-11-25T09:49:11Z"
+    "date": "2026-11-25T10:40:38Z"
+   },
+   {
+    "title": "Revanth Not for Fight with Centre",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/focus-on-governance-not-fights-with-centre-or-neighbouring-states-revanth-2007815",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T10:26:17Z"
+   },
+   {
+    "title": "Hyderabad | HUMTA identifies 120 locations for skywalks, FoBs and other pedestrian infra facilities",
+    "link": "https://www.thehindu.com/news/cities/Hyderabad/space-for-pedestrians-other-road-users-in-hyderabad-by-2050-promises-humta/article71741392.ece",
+    "source": "The Hindu",
+    "date": "2026-11-25T10:18:17Z"
+   },
+   {
+    "title": "Bachupally Workers' Death: TSHRC Seeks Detailed Report By Dec 22",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/human-rights-commission-takes-suo-motu-cognizance-of-bachupally-workers-death-seeks-reports-by-december-22-2007808",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T10:13:25Z"
    },
    {
     "title": "Telangana CM reviews IIIT-Hyderabad junction FoB designs",
     "link": "https://www.thehindu.com/news/cities/Hyderabad/telangana-cm-reviews-iiit-hyderabad-junction-fob-designs/article71741757.ece",
     "source": "The Hindu",
-    "date": "2026-11-25T09:19:14Z"
+    "date": "2026-11-25T10:04:09Z"
+   },
+   {
+    "title": "Bachupally Tragedy: TGHRC Takes Suo Motu Note of Three Workers' Deaths",
+    "link": "https://www.deccanchronicle.com/southern-states/telangana/bachupally-tragedy-tghrc-takes-suo-motu-note-of-three-workers-deaths-2007799",
+    "source": "Deccan Chronicle",
+    "date": "2026-11-25T09:49:21Z"
    },
    {
     "title": "Telangana HRC takes suo-motu cognizance of three workers’ deaths at Bachupally apartment; seeks detailed report",
@@ -1296,519 +1806,69 @@
     "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-man-stabbed-with-knife-during-mobile-phone-snatching-attempt-2007790",
     "source": "Deccan Chronicle",
     "date": "2026-11-25T09:08:22Z"
-   },
-   {
-    "title": "Cyberabad Moves: Why Public Transport Can Fix Hyderabad's IT Corridor Traffic",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/cyberabad-moves-why-public-transport-can-fix-hyderabads-it-corridor-traffic-2007784",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T08:45:30Z"
-   },
-   {
-    "title": "Hyderabad for pedestrians, other road users by 2050: HUMTA’s plan",
-    "link": "https://www.thehindu.com/news/cities/Hyderabad/space-for-pedestrians-other-road-users-in-hyderabad-by-2050-promises-humta/article71741392.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T08:40:27Z"
-   },
-   {
-    "title": "Telangana to Introduce Single-Window System for Poultry Farms: Revanth Reddy",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/telangana-to-introduce-single-window-system-for-poultry-farms-revanth-reddy-2007783",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T08:30:06Z"
-   },
-   {
-    "title": "Sangareddy: Seven Students Fall Ill at SC Girls' Hostel in Jogipet",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/sangareddy-four-students-fall-ill-at-sc-girls-hostel-in-jogipet-2007779",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T08:12:19Z"
-   },
-   {
-    "title": "Cloudy Wednesday for Hyderabad; rain recorded in few parts of Rangareddy, Sangareddy",
-    "link": "https://www.thehindu.com/news/national/telangana/cloudy-wednesday-for-hyderabad-rain-recorded-in-few-parts-of-rangareddy-sangareddy/article71741328.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T07:47:56Z"
-   },
-   {
-    "title": "Hyderabad: Two Techies Among Six Who Test Positive for Drugs",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-two-techies-among-six-who-test-positive-for-drugs-2007769",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T07:33:07Z"
-   },
-   {
-    "title": "Deepam Row: Ramchander Rao Accuses TVK Government of Vote-Bank Politics Above SC Order",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/deepam-row-ramchander-rao-accuses-tvk-government-of-vote-bank-politics-above-sc-order-2007760",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T06:56:13Z"
-   },
-   {
-    "title": "Chlorine Gas Leak Contained At Mission Bhagiratha WTP At Aswapuram",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/chlorine-gas-leak-contained-at-mission-bhagiratha-wtp-at-aswapuram-plant-after-three-days-2007750",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T06:39:35Z"
-   },
-   {
-    "title": "Hyderabad: Techie Found Dead Inside Parked Car",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-techie-found-dead-inside-parked-car-2007739",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T06:15:07Z"
-   },
-   {
-    "title": "Hyderabad airport commissions facility to raise storage capacity by 140%",
-    "link": "https://www.thehindu.com/news/cities/Hyderabad/hyderabad-airport-commissions-facility-to-raise-storage-capacity-by-140/article71738689.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T06:14:57Z"
-   },
-   {
-    "title": "Case against school mgmt after boy dies while playing with swing",
-    "link": "https://www.thehindu.com/news/cities/Hyderabad/case-against-school-mgmt-after-boy-dies-while-playing-with-swing/article71739532.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T06:06:30Z"
-   },
-   {
-    "title": "Brigade Group acquires 2.25-acre in Secunderabad for ₹180 crore",
-    "link": "https://www.thehindu.com/news/cities/Hyderabad/brigade-group-acquires-225-acre-in-secunderabad-for-180-crore/article71739447.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T06:02:22Z"
-   },
-   {
-    "title": "Venkatesh Flags Off Kishan Reddy's Nasha Mukt Bharat Padayatra",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/nasha-mukt-bharat-padayatra-venkatesh-flags-off-kishan-reddys-three-day-anti-drug-campaign-2007736",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T05:56:50Z"
-   },
-   {
-    "title": "Nirmal: Fire Destroys Rs 10 Lakh Cash, Gold Saved for Daughter's Wedding",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/nirmal-fire-destroys-rs-10-lakh-cash-gold-saved-for-daughters-wedding-2007727",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T05:03:08Z"
-   },
-   {
-    "title": "Vikarabad: Woman Jumps From Second Floor of Building in Parigi",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/vikarabad-woman-jumps-from-second-floor-of-building-in-parigi-2007724",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T04:35:18Z"
-   },
-   {
-    "title": "Adilabad: Man Held for Harassing Own Sister",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/adilabad-man-held-for-harassing-own-sister-2007723",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T04:32:59Z"
-   },
-   {
-    "title": "Khammam: Woman and Six-Year-Old Son Die After Consuming Rat Poison",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/khammam-woman-and-six-year-old-son-die-after-consuming-rat-poison-2007716",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T03:51:20Z"
-   },
-   {
-    "title": "Warangal: Super Speciality Hospital Named Mahatma Gandhi Super Speciality Hospital",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/telangana-issues-go-naming-warangal-super-speciality-hospital-as-mahatma-gandhi-super-speciality-hospital-mgssh-2007715",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T03:15:11Z"
-   },
-   {
-    "title": "Bhadrachalam: Youth Found Dead Under Suspicious Circumstances at Home",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/bhadrachalam-youth-found-dead-under-suspicious-circumstances-at-home-2007714",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-25T03:07:14Z"
-   },
-   {
-    "title": "Owaisi condemns Murtuza Pahalwan’s murder",
-    "link": "https://www.thehindu.com/news/national/telangana/owaisi-condemns-murtuza-pahalwans-murder/article71739154.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T01:41:06Z"
-   },
-   {
-    "title": "IRISET takes Kavach training to campuses, signs MoUs with 26 engineering colleges",
-    "link": "https://www.thehindu.com/news/cities/Hyderabad/iriset-takes-kavach-training-to-campuses-signs-mous-with-26-engineering-colleges/article71739106.ece",
-    "source": "The Hindu",
-    "date": "2026-11-25T01:34:28Z"
-   },
-   {
-    "title": "Umar, Sai, Sankith Shine; Anas, Ankith Also Impressive in ‘C’ Division Cricket Matches",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/umar-sai-sankith-shine-anas-ankith-also-impressive-in-c-division-cricket-matches-2007678",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T20:19:16Z"
-   },
-   {
-    "title": "HMDA to get treated waste water from Coca Cola to sustain greenery on the ORR",
-    "link": "https://www.thehindu.com/news/national/telangana/hmda-to-get-treated-waste-water-from-coca-cola-to-sustain-greenery-on-the-orr/article71739485.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T19:26:05Z"
-   },
-   {
-    "title": "Telangana HC Urges Family Courts, Lawyers To Adopt a Magnanimous Approach in Matrimonial Disputes",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/telangana-hc-urges-family-courts-lawyers-to-adopt-a-magnanimous-approach-in-matrimonial-disputes-2007669",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T19:08:25Z"
-   },
-   {
-    "title": "Engagements in Hyderabad on Wednesday, November 25, 2026",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/engagements-in-hyderabad-on-wednesday-november-25-2026-2007666",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T19:01:23Z"
-   },
-   {
-    "title": "Telangana HC Rules Criminal Appeals Against Conviction Cannot Be Dismissed for Non-Prosecution",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/telangana-hc-rules-criminal-appeals-against-conviction-cannot-be-dismissed-for-non-prosecution-2007656",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T18:31:30Z"
-   },
-   {
-    "title": "CJP Volunteers Appeal To Authorities To Address Shortage Of Basic Facilities",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/cjp-volunteers-appeal-to-authorities-to-address-shortage-of-basic-facilities-2007644",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:56:34Z"
-   },
-   {
-    "title": "SC Collegium Recommends Transfer Of Two HC Chief Justices",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/sc-collegium-recommends-transfer-of-two-hc-chief-justices-2007643",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:53:12Z"
-   },
-   {
-    "title": "Gulmohar Park Pilot Project to Pave Way for Wider Water Conservation",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/gulmohar-park-pilot-project-to-pave-way-for-wider-water-conservation-2007642",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:52:32Z"
-   },
-   {
-    "title": "CM Revanth: Commence Musi Phase-1 Works From Jan 2027",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/cm-revanth-commence-musi-phase-1-works-from-jan-2027-2007641",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:50:48Z"
-   },
-   {
-    "title": "Basar IIIT Student Dies By Suicide; Online Betting Losses Suspected",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/basar-iiit-student-dies-by-suicide-online-betting-losses-suspected-2007640",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:50:29Z"
-   },
-   {
-    "title": "KCR’s attender among two killed in road accident in Rajanna Sircilla district",
-    "link": "https://www.thehindu.com/news/national/telangana/kcrs-attender-among-two-killed-in-road-accident-in-rajanna-sircilla-district/article71739701.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T17:45:41Z"
-   },
-   {
-    "title": "Traffic Advisory For 'Hyderabad Walks For Nasha Mukth Bharath' Padayatra",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/traffic-advisory-for-hyderabad-walks-for-nasha-mukth-bharath-padayatra-2007638",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:43:55Z"
-   },
-   {
-    "title": "17 Accidents on Greenfield Highway in 4 Months; 13 Killed",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/17-accidents-on-greenfield-highway-in-4-months-13-killed-2007633",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:37:34Z"
-   },
-   {
-    "title": "Put an End to the Practice of Travelling Alone in a Vehicle: Cyberabad Commissioner",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/put-an-end-to-the-practice-of-travelling-alone-in-a-vehicle-cyberabad-commissioner-2007632",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:37:11Z"
-   },
-   {
-    "title": "NIT Warangal Prof. Receives National Award",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/nit-warangal-prof-receives-national-award-2007631",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:36:28Z"
-   },
-   {
-    "title": "14-year-Old Boy Drowns In Godavari During Kartika Purnima Dip",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/14-year-old-boy-drowns-in-godavari-during-kartika-purnima-dip-2007630",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:32:03Z"
-   },
-   {
-    "title": "Isolated Rain likely In Telangana Over Next Three Days: IMD",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/isolated-rain-likely-in-telangana-over-next-three-days-imd-2007629",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:28:53Z"
-   },
-   {
-    "title": "Kandikonda Hill Witnesses Lakshmi Narasimha Swamy Jatara",
-    "link": "https://www.deccanchronicle.com/kandikonda-hill-witnesses-lakshmi-narasimha-swamy-jatara",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:24:32Z"
-   },
-   {
-    "title": "Welfare Minister Warns Bandi Sanjay of Retaliation",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/welfare-minister-warns-bandi-sanjay-of-retaliation-2007626",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:21:44Z"
-   },
-   {
-    "title": "Revanth To Launch Indiramma Sari Distribution on Nov. 26",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/revanth-to-launch-indiramma-sari-distribution-on-nov-26-2007625",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:21:18Z"
-   },
-   {
-    "title": "24-hr Multi-Speciality Animal Hospital in Begum Bazaar",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/ghspca-offers-free-treatment-to-strays-at-24-hr-multi-speciality-hospital-in-begum-bazaar-2007624",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:18:19Z"
-   },
-   {
-    "title": "Cyberabad Police Place Special Focus On Human Trafficking",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/cyberabad-police-place-special-focus-on-human-trafficking-2007620",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:13:08Z"
-   },
-   {
-    "title": "Hyderabad Police Stations To Turn Smart With Artificial Intelligence",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-police-stations-to-turn-smart-with-artificial-intelligence-2007618",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:10:33Z"
-   },
-   {
-    "title": "HMWSSB Says Apartment STP Cleaning Not Under It’s Purview",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/hmwssb-says-apartment-stp-cleaning-not-under-its-purview-2007617",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:03:48Z"
-   },
-   {
-    "title": "Build Playgrounds In Every Village Instead Of Selling Government Land, Says Kishan Reddy",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/build-playgrounds-in-every-village-instead-of-selling-government-land-says-kishan-reddy-2007616",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T17:03:23Z"
-   },
-   {
-    "title": "Revanth’s ‘90 Seats’ Dream Will End Up In Losing Deposit In All Those Seats, Says Telangana BJP Chief",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/revanths-90-seats-dream-will-end-up-in-losing-deposit-in-all-those-seats-says-telangana-bjp-chief-2007615",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:57:47Z"
-   },
-   {
-    "title": "CSIR-NGRI To Host National Sports Tournament in Hyderabad",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/csir-ngri-to-host-national-sports-tournament-in-hyderabad-2007612",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:53:31Z"
-   },
-   {
-    "title": "Contractors Send Workers Into Toxic Septic Tanks Despite Knowing Risks: SKA",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/contractors-send-workers-into-toxic-septic-tanks-despite-knowing-risks-ska-2007611",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:49:17Z"
-   },
-   {
-    "title": "Anurag Thakur To Attend Constitution Day Event In City",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/anurag-thakur-to-attend-constitution-day-event-in-city-2007610",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:49:16Z"
-   },
-   {
-    "title": "Two-Day Giri Ustavalu At Gond Kings’ Fort In Utnoor To Promote Tourism",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/two-day-giri-ustavalu-at-gond-kings-fort-in-utnoor-to-promote-tourism-2007608",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:42:31Z"
-   },
-   {
-    "title": "Telangana Tourism Expands Double-Decker Bus Routes Ahead of Khelo India Meet",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/telangana-tourism-expands-double-decker-bus-routes-ahead-of-khelo-india-meet-2007604",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:38:18Z"
-   },
-   {
-    "title": "Phase-I of Musi rejuvenation project to be completed by January 2027",
-    "link": "https://www.thehindu.com/news/national/telangana/phase-i-of-musi-rejuvenation-project-to-be-completed-by-january-2027/article71739660.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T16:31:46Z"
-   },
-   {
-    "title": "Revanth Caught Red-Handed, Hence Blaming BRS on Palnadu, Alleges Harish Rao",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/revanth-caught-red-handed-hence-blaming-brs-on-palnadu-alleges-harish-rao-2007598",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:23:08Z"
-   },
-   {
-    "title": "China Seeks Long-Term Medical Cooperation With Indian Doctors",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/china-seeks-long-term-medical-cooperation-with-indian-doctors-2007597",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:21:25Z"
-   },
-   {
-    "title": "Political Tensions Rise in Warangal West Over Resignation Challenge",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/political-tensions-rise-in-warangal-west-over-resignation-challenge-2007594",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:17:36Z"
-   },
-   {
-    "title": "Choppadandi Agriculture Society To Give Rs 500 Bonus Per Quintal For Pulses",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/choppadandi-agriculture-society-to-give-rs-500-bonus-per-quintal-for-pulses-2007593",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:13:37Z"
-   },
-   {
-    "title": "Risk Of Landmines Holds Up Tourism In Karreguttalu Hills",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/risk-of-landmines-holds-up-tourism-in-karreguttalu-hills-2007591",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:12:27Z"
-   },
-   {
-    "title": "Guru Nanak’s message of equality, harmony resonates at Prakash Purab",
-    "link": "https://www.thehindu.com/news/cities/Hyderabad/guru-nanaks-message-of-equality-harmony-resonates-at-prakash-purab/article71739522.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T16:11:03Z"
-   },
-   {
-    "title": "Centre to strengthen border surveillance, expand de-addiction centres from 300 to 2,000: Kishan Reddy",
-    "link": "https://www.thehindu.com/news/national/telangana/centre-to-strengthen-border-surveillance-expand-de-addiction-centres-from-300-to-2000-kishan-reddy/article71737932.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T16:08:39Z"
-   },
-   {
-    "title": "Sikhs Celebrate Prakash Purab",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/sikhs-celebrate-prakash-purab-2007587",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T16:06:20Z"
-   },
-   {
-    "title": "Sessions Court cannot dismiss appeal for ‘petitioner’s non appearance’: HC",
-    "link": "https://www.thehindu.com/news/national/telangana/sessions-court-cannot-dismiss-appeal-for-petitioners-non-appearance-hc/article71739530.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T16:02:05Z"
-   },
-   {
-    "title": "₹10,000 crore five-month programme planned to prepare Telangana for El Nino",
-    "link": "https://www.thehindu.com/news/national/telangana/10000-crore-five-month-programme-planned-to-prepare-telangana-for-el-nino/article71739410.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:52:46Z"
-   },
-   {
-    "title": "Telangana Panchayats See Own Revenue Dwindling",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/telangana-panchayats-see-own-revenue-dwindling-2007585",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T15:52:40Z"
-   },
-   {
-    "title": "Telangana tops country in number of works under VB-G RAM G, ranks third in employment generation",
-    "link": "https://www.thehindu.com/news/national/telangana/telangana-tops-country-in-number-of-works-under-vb-g-ram-g-ranks-third-in-employment-generation/article71738501.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:44:36Z"
-   },
-   {
-    "title": "Padi Kaushik Reddy’s lies on pensions exposed: Congress",
-    "link": "https://www.thehindu.com/news/national/telangana/padi-kaushik-reddys-lies-on-pensions-exposed-congress/article71739273.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:44:17Z"
-   },
-   {
-    "title": "Hyderabad OTS Advertising Wins Dual Recognition At Media Awards",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-ots-advertising-wins-dual-recognition-at-media-awards-2007584",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T15:38:59Z"
-   },
-   {
-    "title": "Gaddiannaram: Satyanarayana Temple Attracts Huge Pilgrim Rush In Karthika Masam",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/gaddiannaram-satyanarayana-temple-attracts-huge-pilgrim-rush-in-karthika-masam-2007582",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T15:32:41Z"
-   },
-   {
-    "title": "SCCL to provide free education to contract workers’ children",
-    "link": "https://www.thehindu.com/news/national/telangana/sccl-to-provide-free-education-to-contract-workers-children/article71739146.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:27:10Z"
-   },
-   {
-    "title": "Three workers die after entering gated community’s septic tank",
-    "link": "https://www.thehindu.com/news/national/telangana/three-workers-die-after-entering-gated-communitys-septic-tank/article71739359.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:25:24Z"
-   },
-   {
-    "title": "Ancient Sculptures lies Neglected In Nallamala",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/ancient-sculptures-lies-neglected-in-nallamala-2007580",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T15:24:26Z"
-   },
-   {
-    "title": "Cold snap loosens its grip on Telangana, people experience milder winter in November third week",
-    "link": "https://www.thehindu.com/news/national/telangana/cold-snap-loosens-its-grip-on-telangana-people-experience-milder-winter/article71737567.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T15:19:06Z"
-   },
-   {
-    "title": "State Wakf Board to Meet After 2 Years",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/state-wakf-board-to-meet-after-2-years-2007578",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T15:18:22Z"
-   },
-   {
-    "title": "Telangana Govt To Introduce Bill in Dec for Inter-School Education Merger",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/telangana-govt-to-introduce-bill-in-dec-for-inter-school-education-merger-2007577",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T15:16:43Z"
-   },
-   {
-    "title": "10 Stray Dogs Allegedly Beaten To Death By Hired Individuals In Asifabad Village",
-    "link": "https://www.deccanchronicle.com/southern-states/telangana/10-stray-dogs-allegedly-beaten-to-death-by-hired-individuals-in-asifabad-village-2007575",
-    "source": "Deccan Chronicle",
-    "date": "2026-11-24T15:10:04Z"
-   },
-   {
-    "title": "Plea to preserve Kakatiya heritage in Nagarkurnool district",
-    "link": "https://www.thehindu.com/news/national/telangana/plea-to-preserve-kakatiya-heritage-in-nagarkurnool-district/article71738875.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T14:58:21Z"
-   },
-   {
-    "title": "BRS caused damage to Palamuru Ranga Reddy LI project, farmers: Congress MP",
-    "link": "https://www.thehindu.com/news/national/telangana/brs-caused-damage-to-palamuru-ranga-reddy-li-project-farmers-congress-mp/article71739002.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T14:53:11Z"
-   },
-   {
-    "title": "Govt. has no moral right to question Centre’s support to Telangana: BJP chief",
-    "link": "https://www.thehindu.com/news/national/telangana/govt-has-no-moral-right-to-question-centres-support-to-telangana-bjp-chief/article71738734.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T14:45:18Z"
-   },
-   {
-    "title": "Kavach remains flagship programme as IRISET sets training record",
-    "link": "https://www.thehindu.com/news/national/telangana/kavach-remains-flagship-programme-as-iriset-sets-training-record/article71738647.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T14:44:55Z"
-   },
-   {
-    "title": "‘Money-doubling’ fraud racket busted",
-    "link": "https://www.thehindu.com/news/national/telangana/money-doubling-fraud-racket-busted/article71738770.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T14:21:23Z"
-   },
-   {
-    "title": "IIT-Hyderabad director urges graduates to develop indigenous technologies",
-    "link": "https://www.thehindu.com/news/national/telangana/iit-hyderabad-director-urges-graduates-to-develop-indigenous-technologies/article71738550.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T14:17:08Z"
-   },
-   {
-    "title": "BRS rebuts CM’s allegations against it on AP’s illegal projects",
-    "link": "https://www.thehindu.com/news/national/telangana/brs-rebuts-cms-allegations-against-it-on-aps-illegal-projects/article71738349.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:59:51Z"
-   },
-   {
-    "title": "Telangana looks to expand stevia cultivation",
-    "link": "https://www.thehindu.com/news/cities/Hyderabad/telangana-looks-to-expand-stevia-cultivation/article71738721.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:55:49Z"
-   },
-   {
-    "title": "Medchal accident victim gets free treatment under PM-RAHAT",
-    "link": "https://www.thehindu.com/news/cities/Hyderabad/medchal-accident-victim-gets-free-treatment-under-pm-rahat-money-paid-by-family-returned-by-hosp-mgmt/article71738590.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:48:19Z"
-   },
-   {
-    "title": "CM’s promise of ₹1 crore a mirage for Sigachi blast victims’ kin in Telangana",
-    "link": "https://www.thehindu.com/news/national/telangana/cms-promise-of-1-crore-a-mirage-for-sigachi-blast-victims-kin-in-telangana/article71735412.ece",
-    "source": "The Hindu",
-    "date": "2026-11-24T13:33:52Z"
    }
   ],
   "te": [
+   {
+    "title": "Viral: పెళ్లిలో నోట్ల వర్షం.. ఊడ్చేందుకు చీపుర్లు!",
+    "link": "https://www.sakshi.com/video/news-videos/anant-singhs-daughter-wedding-goes-viral-2970917",
+    "source": "Sakshi",
+    "date": "2026-11-26T09:40:02Z"
+   },
+   {
+    "title": "కృనాల్ పాండ్యాపై బూట్లు విసిరిన ప్రేక్షకుడు",
+    "link": "https://www.sakshi.com/telugu-news/sports/krunal-pandya-narrowly-escapes-being-hit-shoes-smat-2026-2970916",
+    "source": "Sakshi",
+    "date": "2026-11-26T09:39:47Z"
+   },
+   {
+    "title": "చీరలో మెరిసిపోతున్న శ్రద్ధాకపూర్‌ (ఫోటోలు)",
+    "link": "https://www.sakshi.com/photos/movies/shraddha-kapoor-shines-beautiful-saree-2970915",
+    "source": "Sakshi",
+    "date": "2026-11-26T09:34:54Z"
+   },
+   {
+    "title": "సమంత రీఎంట్రీ.. హీరో విశాల్‌ ఆశలు..!",
+    "link": "https://www.sakshi.com/telugu-news/movies/vishal-abhimanyudu-2-samantha-re-entry-movies-2970914",
+    "source": "Sakshi",
+    "date": "2026-11-26T09:32:46Z"
+   },
+   {
+    "title": "వామ్మో.. తగ్గినట్టే తగ్గి.. ఈ రోజు రేట్లు ఎలా ఉన్నాయంటే?",
+    "link": "https://www.sakshi.com/video/business/gold-prices-rise-again-big-shock-buyers-2970913",
+    "source": "Sakshi",
+    "date": "2026-11-26T09:29:54Z"
+   },
+   {
+    "title": "సిజేరియన్ అన్నారు..కానీ ఆవేళ..!",
+    "link": "https://www.sakshi.com/telugu-news/family/samantha-mother-law-padma-shri-shobha-raju-exclusive-interview-2970912",
+    "source": "Sakshi",
+    "date": "2026-11-26T09:15:46Z"
+   },
+   {
+    "title": "మాటలతో తేలేలాలేదు.. టీవీఎస్‌ ఆస్తులపై హైకోర్టులో దావా",
+    "link": "https://www.sakshi.com/telugu-news/business/tvs-group-succession-dispute-lakshmi-venu-moves-madras-high-court-asset",
+    "source": "Sakshi",
+    "date": "2026-11-26T09:14:21Z"
+   },
+   {
+    "title": "అందుకే అతడిని ఇండియాకు పంపేశారు: కివీస్‌ స్టార్‌",
+    "link": "https://www.sakshi.com/telugu-news/sports/phenomenal-spinner-new-zealand-star-kuldeep-yadav-omission-2970910",
+    "source": "Sakshi",
+    "date": "2026-11-26T09:12:00Z"
+   },
+   {
+    "title": "మార్కెట్‌ ఇన్వెస్టర్లకు కేవైసీ రూల్స్‌ మార్చిన సెబీ",
+    "link": "https://www.sakshi.com/telugu-news/business/sebi-simplifies-kyc-rules-investors-no-more-repeated-document-submission",
+    "source": "Sakshi",
+    "date": "2026-11-26T09:00:52Z"
+   },
+   {
+    "title": "32 ఏళ్లకే రిటైర్మెంట్‌ ప్రకటించిన మాజీ కెప్టెన్‌",
+    "link": "https://www.sakshi.com/telugu-news/sports/former-tamil-nadu-captain-baba-aparajith-retires-professional-cricket-32-2970908",
+    "source": "Sakshi",
+    "date": "2026-11-26T08:55:48Z"
+   },
    {
     "title": "కోర్టు వెలుపల హత్యాయత్నం.. కత్తులతో దాడి, కాల్పులు",
     "link": "https://www.sakshi.com/telugu-news/national/man-hand-chopped-machete-then-shot-outside-pune-court-2970004",
